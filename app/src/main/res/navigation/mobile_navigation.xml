@@ -32,6 +32,12 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.petsns.ProfileFragment"
-        android:label="@string/title_setting"
+        android:label="profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_snstop"
+        android:name="com.example.petsns.snstopFragment"
+        android:label="snstop"
+        tools:layout="@layout/fragment_snstop" />
 </navigation>
