@@ -19,7 +19,7 @@
     <item
         android:id="@+id/navigation_route"
         android:icon="@drawable/routetouka"
-        android:title="r散歩" />
+        android:title="散歩" />
 
     <item
         android:id="@+id/navigation_setting"
