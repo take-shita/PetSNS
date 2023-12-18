@@ -34,4 +34,5 @@
         android:name="com.example.petsns.ProfileFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_profile" />
+
 </navigation>
