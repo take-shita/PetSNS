@@ -35,4 +35,22 @@
         android:label="profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/navigation_board"
+        android:name="com.example.petsns.BoardFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_board" />
+
+    <fragment
+        android:id="@+id/navigation_contest"
+        android:name="com.example.petsns.ContestFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_contest" />
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.petsns.routeFragment"
+        android:label="route"
+        tools:layout="@layout/fragment_route" />
+
 </navigation>
