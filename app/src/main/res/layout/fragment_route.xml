@@ -10,16 +10,15 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        tools:layout_editor_absoluteX="-25dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <Button
-        android:id="@+id/route"
-        android:layout_width="121dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="460dp"
+        android:id="@+id/start"
+        android:layout_width="185dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="456dp"
         android:backgroundTint="#F2A955"
         android:text="START"
         android:textColor="@color/black"
@@ -27,25 +26,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
         android:layout_marginTop="576dp"
-        android:text="Button"
+        android:background="@drawable/frame_style"
+        app:backgroundTint="@null"
+        android:text="ルート"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="352dp"
         android:layout_marginTop="576dp"
-        android:text="Button"
+        android:background="@drawable/frame_style"
+        app:backgroundTint="@null"
+        android:text="距離を設定"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
