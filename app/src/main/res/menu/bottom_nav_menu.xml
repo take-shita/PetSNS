@@ -2,33 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_snstop"
+        android:icon="@drawable/inutouka"
+        android:title="snstop" />
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:icon="@drawable/kontesttouka"
+        android:title="contest" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/keijibantouka"
+        android:title="掲示板" />
+
+    <item
+        android:id="@+id/navigation_route"
+        android:icon="@drawable/routetouka"
+        android:title="散歩" />
 
     <item
         android:id="@+id/navigation_setting"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_setting" />
+        android:icon="@drawable/settingtouka"
+        android:title="設定" />
 
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_profile" />
 
-    <item
-        android:id="@+id/navigation_snstop"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="snstop" />
 
 </menu>

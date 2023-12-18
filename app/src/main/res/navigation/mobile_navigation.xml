@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_snstop">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.petsns.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_snstop"
+        android:name="com.example.petsns.snstopFragment"
+        android:label="@string/title_snstop"
+        tools:layout="@layout/fragment_snstop" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -36,8 +36,21 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/navigation_snstop"
-        android:name="com.example.petsns.snstopFragment"
-        android:label="snstop"
-        tools:layout="@layout/fragment_snstop" />
+        android:id="@+id/navigation_board"
+        android:name="com.example.petsns.BoardFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_board" />
+
+    <fragment
+        android:id="@+id/navigation_contest"
+        android:name="com.example.petsns.ContestFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_contest" />
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.petsns.routeFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route" />
+
 </navigation>
