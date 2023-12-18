@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/navigation_route"
         android:name="com.example.petsns.routeFragment"
-        android:label="route"
+        android:label="散歩"
         tools:layout="@layout/fragment_route" />
 
 </navigation>
