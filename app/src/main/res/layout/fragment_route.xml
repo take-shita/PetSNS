@@ -10,7 +10,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello"
         tools:layout_editor_absoluteX="-25dp"
         tools:layout_editor_absoluteY="0dp" />
 
