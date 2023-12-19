@@ -10,17 +10,21 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-25dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/start"
         android:layout_width="185dp"
         android:layout_height="70dp"
         android:layout_marginStart="208dp"
-        android:layout_marginTop="456dp"
+        android:layout_marginTop="428dp"
         android:backgroundTint="#F2A955"
-        android:text="START"
+        android:text="@string/START"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,9 +36,9 @@
         android:layout_marginStart="144dp"
         android:layout_marginTop="576dp"
         android:background="@drawable/frame_style"
-        app:backgroundTint="@null"
-        android:text="ルート"
+        android:text="@string/ルート"
         android:textColor="@color/black"
+        app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,9 +49,22 @@
         android:layout_marginStart="352dp"
         android:layout_marginTop="576dp"
         android:background="@drawable/frame_style"
-        app:backgroundTint="@null"
-        android:text="距離を設定"
+        android:text="@string/距離を設定"
         android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/Text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="144dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/_00_00"
+        android:textSize="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
