@@ -10,4 +10,5 @@
     <string name="ルート">ルート</string>
     <string name="距離を設定">距離を設定</string>
     <string name="_00_00">00:00</string>
+    <string name="時間">時間</string>
 </resources>
