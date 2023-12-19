@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.setting.phone;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class settingFragment extends Fragment {
+import com.example.petsns.R;
 
-    private SettingViewModel mViewModel;
+public class phoneFragment extends Fragment {
 
-    public static settingFragment newInstance() {
-        return new settingFragment();
+    private PhoneViewModel mViewModel;
+
+    public static phoneFragment newInstance() {
+        return new phoneFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        return inflater.inflate(R.layout.fragment_phone, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
         // TODO: Use the ViewModel
     }
 

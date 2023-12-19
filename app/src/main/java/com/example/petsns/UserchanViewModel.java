@@ -2,6 +2,6 @@ package com.example.petsns;
 
 import androidx.lifecycle.ViewModel;
 
-public class RouteViewModel extends ViewModel {
+public class UserchanViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 }

@@ -12,24 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class snstopFragment extends Fragment {
+public class passchanFragment extends Fragment {
 
-    private SnstopViewModel mViewModel;
+    private PasschanViewModel mViewModel;
 
-    public static snstopFragment newInstance() {
-        return new snstopFragment();
+    public static passchanFragment newInstance() {
+        return new passchanFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_snstop, container, false);
+        return inflater.inflate(R.layout.fragment_passchan, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SnstopViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(PasschanViewModel.class);
         // TODO: Use the ViewModel
     }
 

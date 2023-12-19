@@ -2,6 +2,6 @@ package com.example.petsns;
 
 import androidx.lifecycle.ViewModel;
 
-public class Pass1ViewModel extends ViewModel {
+public class PasschanViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 }
