@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_snstop"
         android:icon="@drawable/inutouka"
-        android:title="snstop" />
+        android:title="TOP" />
 
     <item
         android:id="@+id/navigation_contest"
