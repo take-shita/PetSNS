@@ -26,7 +26,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/toukoutouka"
+                android:src="@drawable/toukoutouka"
                 tools:ignore="SpeakableTextPresentCheck"/>
         </LinearLayout>
 
@@ -55,7 +55,7 @@
                     android:layout_column="1"
                     android:gravity="left|bottom"
                     android:text="田實　優斗"
-                    android:textSize="85dp" />
+                    android:textSize="45dp" />
 
                 <ImageView
                     android:layout_width="170dp"
@@ -64,7 +64,7 @@
                     android:layout_rowSpan="2"
                     android:layout_column="2"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/cbr250rr" />
+                    android:src="@drawable/cbr250rr" />
 
                 <Space
                     android:layout_width="10dp"
@@ -79,7 +79,7 @@
                     android:layout_row="1"
                     android:layout_column="1"
                     android:text="yuto_1234"
-                    android:textSize="20dp" />
+                    android:textSize="22dp" />
 
                 <TextView
                     android:layout_width="581dp"
@@ -88,7 +88,7 @@
                     android:layout_column="1"
                     android:layout_columnSpan="2"
                     android:text="よろしくお願いします"
-                    android:textSize="20dp" />
+                    android:textSize="22dp" />
             </GridLayout>
 
             <!--
