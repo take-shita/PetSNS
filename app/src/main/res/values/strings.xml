@@ -6,4 +6,6 @@
     <string name="title_setting">setting</string>
     <string name="title_profile">profile</string>
     <string name="title_snstop">snstop</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

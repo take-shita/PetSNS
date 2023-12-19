@@ -39,7 +39,8 @@
         android:id="@+id/navigation_board"
         android:name="com.example.petsns.ui.board.BoardFragment"
         android:label="profile"
-        tools:layout="@layout/fragment_board" />
+        tools:layout="@layout/fragment_board" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_contest"

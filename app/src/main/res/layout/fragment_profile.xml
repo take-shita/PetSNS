@@ -48,10 +48,7 @@
 
                 <LinearLayout
                     android:layout_width="82dp"
-                    android:layout_height="82dp"
-                    android:cardBackgroundColor="@color/colorAccent"
-                    android:cardCornerRadius="20dp"
-                    android:cardElevation="0dp">
+                    android:layout_height="82dp">
 
                     <TextView
                         android:layout_width="319dp"
@@ -62,7 +59,7 @@
                         android:layout_width="82dp"
                         android:layout_height="82dp"
                         android:scaleType="centerCrop"
-                        tools:src="@drawable/cbr" />
+                        tools:src="@drawable/cbr250rr" />
 
                 </LinearLayout>
 
