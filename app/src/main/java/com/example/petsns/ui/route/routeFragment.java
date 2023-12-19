@@ -1,9 +1,6 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.util.Locale;
 
 
 import com.example.petsns.R;
@@ -49,6 +43,18 @@ public class routeFragment extends Fragment {
 
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route2);
+            }
+        });
+
+
+        Button btn1 = view.findViewById(R.id.route1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route4);
             }
         });
 

@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_navigation_route_to_navigation_route2"
             app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
     </fragment>
 
     <fragment
@@ -83,7 +86,45 @@
         <action
             android:id="@+id/action_navigation_route3_to_navigation_route2"
             app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/navigation_route4"
+        android:name="com.example.petsns.ui.route.route4Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route4" >
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route5"
+            app:destination="@id/navigation_route5" />
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route6"
+            app:destination="@id/navigation_route6" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route5"
+        android:name="com.example.petsns.ui.route.route5Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route5" >
+        <action
+            android:id="@+id/action_navigation_route5_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route6"
+        android:name="com.example.petsns.ui.route.route6Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route6" >
+
+        <action
+            android:id="@+id/action_navigation_route6_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
 
 </navigation>
