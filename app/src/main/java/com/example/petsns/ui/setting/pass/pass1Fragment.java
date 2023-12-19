@@ -50,6 +50,15 @@ public class pass1Fragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
             }
         });
+        Button bt4 = view.findViewById(R.id.bt4);
+
+        bt4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_setting);
+            }
+        });
     }
+
 
 }

@@ -37,5 +37,17 @@ public class pass2Fragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button bt5 = view.findViewById(R.id.bt5);
+
+        bt5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
+            }
+        });
+    }
 
 }
