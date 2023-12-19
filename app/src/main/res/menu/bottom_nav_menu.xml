@@ -7,12 +7,12 @@
         android:title="snstop" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_contest"
         android:icon="@drawable/kontesttouka"
         android:title="contest" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_board"
         android:icon="@drawable/keijibantouka"
         android:title="掲示板" />
 

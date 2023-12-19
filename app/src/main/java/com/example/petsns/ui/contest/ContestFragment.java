@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.contest;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileFragment extends Fragment {
+import com.example.petsns.R;
 
-    private ProfileViewModel mViewModel;
+public class ContestFragment extends Fragment {
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
+    private ContestViewModel mViewModel;
+
+    public static ContestFragment newInstance() {
+        return new ContestFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_contest, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ContestViewModel.class);
         // TODO: Use the ViewModel
     }
 

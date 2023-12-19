@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.setting.pass;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BoardFragment extends Fragment {
+import com.example.petsns.R;
 
-    private BoardViewModel mViewModel;
+public class pass1Fragment extends Fragment {
 
-    public static BoardFragment newInstance() {
-        return new BoardFragment();
+    private Pass1ViewModel mViewModel;
+
+    public static pass1Fragment newInstance() {
+        return new pass1Fragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_board, container, false);
+        return inflater.inflate(R.layout.fragment_pass1, container, false);
+
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(BoardViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(Pass1ViewModel.class);
         // TODO: Use the ViewModel
     }
 
