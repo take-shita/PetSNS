@@ -51,6 +51,35 @@
         android:id="@+id/navigation_route"
         android:name="com.example.petsns.ui.route.routeFragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route" />
+        tools:layout="@layout/fragment_route" >
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route2"
+        android:name="com.example.petsns.ui.route.route2Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route2" >
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route"
+            app:destination="@id/navigation_route" />
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route3"
+            app:destination="@id/navigation_route3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route3"
+        android:name="com.example.petsns.ui.route.route3Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route3" >
+
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+    </fragment>
+
 
 </navigation>

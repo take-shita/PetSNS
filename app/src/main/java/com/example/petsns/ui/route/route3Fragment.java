@@ -3,7 +3,6 @@ package com.example.petsns.ui.route;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,51 +13,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.util.Locale;
-
 
 import com.example.petsns.R;
 
-public class routeFragment extends Fragment {
+public class route3Fragment extends Fragment {
 
+    private Route3ViewModel mViewModel;
 
-    private RouteViewModel mViewModel;
-
-    public static routeFragment newInstance() {
-        return new routeFragment();
+    public static route3Fragment newInstance() {
+        return new route3Fragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route, container, false);
+        return inflater.inflate(R.layout.fragment_route3, container, false);
     }
 
 
-    //    画面遷移---------------------------------------------------------------------------------------------
+
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt_jude = view.findViewById(R.id.set);
-        bt_jude.setOnClickListener(new View.OnClickListener() {
+        Button btn = view.findViewById(R.id.time1);
+        btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route2);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route2);
             }
         });
 
     }
-//    -----------------------------------------------------------------------------------------------------------
 
-
-
-
-}
-
-
+    }
 
