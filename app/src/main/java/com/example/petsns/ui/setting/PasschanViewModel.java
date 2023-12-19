@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.setting;
 
 import androidx.lifecycle.ViewModel;
 

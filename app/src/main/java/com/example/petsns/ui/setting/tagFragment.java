@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.setting;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.petsns.R;
 
 public class tagFragment extends Fragment {
 
