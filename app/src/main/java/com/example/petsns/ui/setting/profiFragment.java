@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.setting;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class emailFragment extends Fragment {
+import com.example.petsns.R;
 
-    private EmailViewModel mViewModel;
+public class profiFragment extends Fragment {
 
-    public static emailFragment newInstance() {
-        return new emailFragment();
+    private ProfiViewModel mViewModel;
+
+    public static profiFragment newInstance() {
+        return new profiFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_email, container, false);
+        return inflater.inflate(R.layout.fragment_profi, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EmailViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ProfiViewModel.class);
         // TODO: Use the ViewModel
     }
 
