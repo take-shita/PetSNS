@@ -16,49 +16,44 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route3Fragment extends Fragment {
+public class route4Fragment extends Fragment {
 
-    private Route3ViewModel mViewModel;
+    private Route4ViewModel mViewModel;
 
-    public static route3Fragment newInstance() {
-        return new route3Fragment();
+    public static route4Fragment newInstance() {
+        return new route4Fragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route3, container, false);
+        return inflater.inflate(R.layout.fragment_route4, container, false);
     }
-
-
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btn = view.findViewById(R.id.time1);
+        Button bt = view.findViewById(R.id.place);
+        bt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route4_to_navigation_route5);
+            }
+        });
+
+        Button btn = view.findViewById(R.id.favorite);
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route2);
-            }
-        });
-
-
-        Button btn1 = view.findViewById(R.id.route1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route4);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route4_to_navigation_route6);
             }
         });
 
     }
-
-    }
-
+}
