@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_snstop"
         android:name="com.example.petsns.ui.snstop.snstopFragment"
-        android:label="@string/title_snstop"
+        android:label="sns"
         tools:layout="@layout/fragment_snstop" />
 
     <fragment

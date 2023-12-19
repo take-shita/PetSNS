@@ -6,12 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".ui.snstop.snstopFragment">
 
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/cbr250rr"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-        android:src="@drawable/cbr250rr" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/inutouka"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>
