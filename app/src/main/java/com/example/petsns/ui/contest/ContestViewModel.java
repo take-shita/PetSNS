@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.contest;
 
 import androidx.lifecycle.ViewModel;
 

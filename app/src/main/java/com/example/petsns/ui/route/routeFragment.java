@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.route;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class pass2Fragment extends Fragment {
+import com.example.petsns.R;
 
-    private Pass2ViewModel mViewModel;
+public class routeFragment extends Fragment {
 
-    public static pass2Fragment newInstance() {
-        return new pass2Fragment();
+    private RouteViewModel mViewModel;
+
+    public static routeFragment newInstance() {
+        return new routeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pass2, container, false);
+        return inflater.inflate(R.layout.fragment_route, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Pass2ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(RouteViewModel.class);
         // TODO: Use the ViewModel
     }
 
