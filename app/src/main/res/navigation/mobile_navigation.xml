@@ -8,8 +8,12 @@
     <fragment
         android:id="@+id/navigation_snstop"
         android:name="com.example.petsns.ui.snstop.snstopFragment"
-        android:label="@string/title_snstop"
-        tools:layout="@layout/fragment_snstop" />
+        android:label="sns"
+        tools:layout="@layout/fragment_snstop" >
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -26,7 +30,7 @@
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.example.petsns.ui.setting.settingFragment"
-        android:label="@string/title_setting"
+        android:label="設定"
         tools:layout="@layout/fragment_setting" />
 
     <fragment
@@ -38,14 +42,13 @@
     <fragment
         android:id="@+id/navigation_board"
         android:name="com.example.petsns.ui.board.BoardFragment"
-        android:label="profile"
-        tools:layout="@layout/fragment_board" >
-    </fragment>
+        android:label="掲示板"
+        tools:layout="@layout/fragment_board" />
 
     <fragment
         android:id="@+id/navigation_contest"
         android:name="com.example.petsns.ui.contest.ContestFragment"
-        android:label="profile"
+        android:label="コンテスト"
         tools:layout="@layout/fragment_contest" />
 
     <fragment
