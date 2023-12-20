@@ -58,6 +58,18 @@ public class routeFragment extends Fragment {
             }
         });
 
+
+        Button btn = view.findViewById(R.id.start1);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route7);
+            }
+        });
+
     }
 //    -----------------------------------------------------------------------------------------------------------
 

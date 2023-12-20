@@ -15,6 +15,9 @@
             app:destination="@id/navigation_profile" />
     </fragment>
 
+
+
+
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.petsns.ui.dashboard.DashboardFragment"
@@ -26,6 +29,190 @@
         android:name="com.example.petsns.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.petsns.ui.profile.ProfileFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_board"
+        android:name="com.example.petsns.ui.board.BoardFragment"
+        android:label="掲示板"
+        tools:layout="@layout/fragment_board" />
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_contest"
+        android:name="com.example.petsns.ui.contest.ContestFragment"
+        android:label="Contest"
+        tools:layout="@layout/fragment_contest" >
+        <action
+            android:id="@+id/action_navigation_contest_to_navigation_contest_view"
+            app:destination="@id/navigation_contest_view" />
+        <action
+            android:id="@+id/action_navigation_contest_to_navigation_contest_info"
+            app:destination="@id/navigation_contest_info" />
+        <action
+            android:id="@+id/action_navigation_contest_to_navigation_contest_post"
+            app:destination="@id/navigation_contest_post" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_contest_view"
+        android:name="com.example.petsns.ui.contest.ContestViewFragment"
+        android:label="ContestView"
+        tools:layout="@layout/fragment_contest_view" >
+        <action
+            android:id="@+id/action_navigation_contest_view_to_navigation_contest"
+            app:destination="@id/navigation_contest" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_contest_info"
+        android:name="com.example.petsns.ui.contest.ContestInfoFragment"
+        android:label="ContestInfo"
+        tools:layout="@layout/fragment_contest_info" >
+        <action
+            android:id="@+id/action_navigation_contest_info_to_navigation_contest"
+            app:destination="@id/navigation_contest" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_contest_post"
+        android:name="com.example.petsns.ui.contest.ContestPostFragment"
+        android:label="ContestPost"
+        tools:layout="@layout/fragment_contest_post" >
+        <action
+            android:id="@+id/action_navigation_contest_post_to_navigation_contest"
+            app:destination="@id/navigation_contest" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.petsns.ui.route.routeFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route" >
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route2"
+        android:name="com.example.petsns.ui.route.route2Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route2" >
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route"
+            app:destination="@id/navigation_route" />
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route3"
+            app:destination="@id/navigation_route3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route3"
+        android:name="com.example.petsns.ui.route.route3Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route3" >
+
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route4"
+        android:name="com.example.petsns.ui.route.route4Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route4" >
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route5"
+            app:destination="@id/navigation_route5" />
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route6"
+            app:destination="@id/navigation_route6" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route5"
+        android:name="com.example.petsns.ui.route.route5Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route5" >
+        <action
+            android:id="@+id/action_navigation_route5_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route6"
+        android:name="com.example.petsns.ui.route.route6Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route6" >
+
+        <action
+            android:id="@+id/action_navigation_route6_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route7"
+        android:name="com.example.petsns.ui.route.route7Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route7" >
+        <action
+            android:id="@+id/action_navigation_route7_to_navigation_route8"
+            app:destination="@id/navigation_route8" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route8"
+        android:name="com.example.petsns.ui.route.route8Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route8" >
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route9"
+            app:destination="@id/navigation_route9" />
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route9"
+        android:name="com.example.petsns.ui.route.route9Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route9" >
+        <action
+            android:id="@+id/action_navigation_route9_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_setting"
@@ -101,6 +288,7 @@
             android:id="@+id/action_navigation_email_to_navigation_setting"
             app:destination="@id/navigation_setting" />
     </fragment>
+
 
     <fragment
         android:id="@+id/navigation_passchan"
@@ -246,5 +434,6 @@
             android:id="@+id/action_navigation_route6_to_navigation_route"
             app:destination="@id/navigation_route" />
     </fragment>
+
 
 </navigation>

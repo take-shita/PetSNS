@@ -1,4 +1,4 @@
-package com.example.petsns.ui.snstop;
+package com.example.petsns.ui.contest;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,42 +12,47 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.petsns.R;
 
-import android.widget.Button;
-import android.widget.ImageButton;
+public class ContestViewFragment extends Fragment {
 
-public class snstopFragment extends Fragment {
+    private ContestViewViewModel mViewModel;
 
-    private SnstopViewModel mViewModel;
-
-    public static snstopFragment newInstance() {
-        return new snstopFragment();
+    public static ContestViewFragment newInstance() {
+        return new ContestViewFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_snstop, container, false);
+
+        return inflater.inflate(R.layout.fragment_contest_view, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SnstopViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ContestViewViewModel.class);
         // TODO: Use the ViewModel
     }
 
-    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageButton prof_bt = view.findViewById(R.id.top_prof);
-        prof_bt.setOnClickListener(new View.OnClickListener() {
+        Button btnBack = view.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_view_to_navigation_contest);
             }
         });
+
+
+
     }
+
 }
