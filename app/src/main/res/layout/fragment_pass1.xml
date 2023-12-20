@@ -21,21 +21,22 @@
         app:layout_constraintVertical_bias="0.036" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passwordField"
         android:layout_width="290dp"
         android:layout_height="68dp"
+        android:hint="パスワード"
         android:ems="10"
-        android:text="password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.268" />
+        app:layout_constraintVertical_bias="0.268"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/bt3"
+        android:id="@+id/bt01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#0773C8"
@@ -48,7 +49,7 @@
         app:layout_constraintVertical_bias="0.528" />
 
     <Button
-        android:id="@+id/bt4"
+        android:id="@+id/bt02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#F80202"

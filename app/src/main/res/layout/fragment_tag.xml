@@ -22,12 +22,45 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="494dp"
+        android:layout_height="41dp"
         android:text="タイムラインに表示したい動物を選択してください"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.245" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="516dp"
+        android:layout_height="130dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20"
+        app:layout_constraintVertical_bias="0.743"
+        tools:ignore="MissingConstraints">
+
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="好きな動物"
+            android:textSize="24dp"
+            tools:layout_editor_absoluteX="87dp"
+            tools:layout_editor_absoluteY="127dp" />
+
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="苦手な動物"
+            android:textSize="24dp"
+            tools:layout_editor_absoluteX="291dp"
+            tools:layout_editor_absoluteY="77dp" />
+    </com.google.android.material.tabs.TabLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

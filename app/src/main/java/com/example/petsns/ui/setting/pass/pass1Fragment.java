@@ -41,24 +41,23 @@ public class pass1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt3 = view.findViewById(R.id.bt3);
+        Button bt01 = view.findViewById(R.id.bt01);
 
-        bt3.setOnClickListener(new View.OnClickListener() {
+        bt01.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
             }
         });
-        Button bt4 = view.findViewById(R.id.bt4);
+        Button bt02 = view.findViewById(R.id.bt02);
 
-        bt4.setOnClickListener(new View.OnClickListener() {
+        bt02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_setting);
             }
         });
     }
-
 
 }

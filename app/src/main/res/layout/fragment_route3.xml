@@ -53,15 +53,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/clock"
-        android:layout_width="318dp"
-        android:layout_height="105dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="200dp"
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="248dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="@string/_00_00"
-        android:textSize="80dp"
+        android:inputType="time"
+        android:text="00:00"
+        android:textSize="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
