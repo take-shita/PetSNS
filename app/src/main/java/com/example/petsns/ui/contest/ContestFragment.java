@@ -1,8 +1,11 @@
 package com.example.petsns.ui.contest;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +15,17 @@ import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.PopupWindow;
 import android.view.Gravity;
+
+import com.example.petsns.MainActivity;
 import com.example.petsns.R;
+import android.content.Context;
+
 public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
@@ -64,9 +72,26 @@ public class ContestFragment extends Fragment {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_info);
-//                DialogFragment dialogFragment = new ContestInfoFragment();
-//                dialogFragment.show(getSupportFragmentManager(), "my_dialog");
+                Context context = requireContext();
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.fragment_contest_info);
+
+//                Window window = dialog.getWindow();
+//                if (window != null) {
+//                    // 幅と高さをピクセル単位で設定
+//                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                }
+
+                Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
         btnEntry.setOnClickListener(new View.OnClickListener() {
