@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/btnTw"
+        android:id="@+id/btnContestPost"
         android:layout_width="140dp"
         android:layout_height="55dp"
         android:layout_marginStart="328dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnVi"
+        android:id="@+id/btnContestView"
         android:layout_width="140dp"
         android:layout_height="55dp"
         android:layout_marginStart="328dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnEn"
+        android:id="@+id/btnContestEntry"
         android:layout_width="140dp"
         android:layout_height="55dp"
         android:layout_marginStart="152dp"
@@ -39,7 +39,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/btnRl"
+        android:id="@+id/btnContestInfo"
         android:layout_width="140dp"
         android:layout_height="55dp"
         android:layout_marginStart="152dp"
