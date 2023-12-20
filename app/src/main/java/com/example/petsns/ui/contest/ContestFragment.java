@@ -41,12 +41,34 @@ public class ContestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnVi = view.findViewById(R.id.btnVi);
+        Button btnView = view.findViewById(R.id.btnContestView);
+        Button btnPost = view.findViewById(R.id.btnContestPost);
+        Button btnInfo= view.findViewById(R.id.btnContestInfo);
+        Button btnEntry=view.findViewById(R.id.btnContestEntry);
 
-        btnVi.setOnClickListener(new View.OnClickListener() {
+        btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_view);
+            }
+        });
+        btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+            }
+        });
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_info);
+            }
+        });
+
+        btnEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
