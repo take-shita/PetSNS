@@ -108,6 +108,268 @@
         <action
             android:id="@+id/action_navigation_route_to_navigation_route4"
             app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route2"
+        android:name="com.example.petsns.ui.route.route2Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route2" >
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route"
+            app:destination="@id/navigation_route" />
+        <action
+            android:id="@+id/action_navigation_route2_to_navigation_route3"
+            app:destination="@id/navigation_route3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route3"
+        android:name="com.example.petsns.ui.route.route3Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route3" >
+
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route4"
+        android:name="com.example.petsns.ui.route.route4Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route4" >
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route5"
+            app:destination="@id/navigation_route5" />
+        <action
+            android:id="@+id/action_navigation_route4_to_navigation_route6"
+            app:destination="@id/navigation_route6" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route5"
+        android:name="com.example.petsns.ui.route.route5Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route5" >
+        <action
+            android:id="@+id/action_navigation_route5_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route6"
+        android:name="com.example.petsns.ui.route.route6Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route6" >
+
+        <action
+            android:id="@+id/action_navigation_route6_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route7"
+        android:name="com.example.petsns.ui.route.route7Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route7" >
+        <action
+            android:id="@+id/action_navigation_route7_to_navigation_route8"
+            app:destination="@id/navigation_route8" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route8"
+        android:name="com.example.petsns.ui.route.route8Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route8" >
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route9"
+            app:destination="@id/navigation_route9" />
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route9"
+        android:name="com.example.petsns.ui.route.route9Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route9" >
+        <action
+            android:id="@+id/action_navigation_route9_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.example.petsns.ui.setting.settingFragment"
+        android:label="設定"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_pass1"
+            app:destination="@id/navigation_pass1" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_pass2"
+            app:destination="@id/navigation_pass2"/>
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_passchan"
+            app:destination="@id/navigation_passchan" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_icon"
+            app:destination="@id/navigation_icon" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_userchan"
+            app:destination="@id/navigation_userchan" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_tag"
+            app:destination="@id/navigation_tag" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_repot"
+            app:destination="@id/navigation_repot" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_pass1"
+        android:name="com.example.petsns.ui.setting.pass.pass1Fragment"
+        android:label="パスワードを入力"
+        tools:layout="@layout/fragment_pass1" >
+        <action
+            android:id="@+id/action_navigation_pass1_to_navigation_phone"
+            app:destination="@id/navigation_phone" />
+        <action
+            android:id="@+id/action_navigation_pass1_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_phone"
+        android:name="com.example.petsns.ui.setting.phone.phoneFragment"
+        android:label="電話番号追加・変更"
+        tools:layout="@layout/fragment_phone" >
+        <action
+            android:id="@+id/action_navigation_phone_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_pass2"
+        android:name="com.example.petsns.ui.setting.pass.pass2Fragment"
+        android:label="パスワードを入力"
+        tools:layout="@layout/fragment_pass2" >
+        <action
+            android:id="@+id/action_navigation_pass2_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+        <action
+            android:id="@+id/action_navigation_pass2_to_navigation_email"
+            app:destination="@id/navigation_email" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_email"
+        android:name="com.example.petsns.ui.setting.emailFragment"
+        android:label="メールアドレスを追加"
+        tools:layout="@layout/fragment_email" >
+        <action
+            android:id="@+id/action_navigation_email_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_passchan"
+        android:name="com.example.petsns.ui.setting.passchanFragment"
+        android:label="パスワード変更"
+        tools:layout="@layout/fragment_passchan" >
+        <action
+            android:id="@+id/action_navigation_passchan_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_icon"
+        android:name="com.example.petsns.ui.setting.iconFragment"
+        android:label="アイコン変更"
+        tools:layout="@layout/fragment_icon" >
+        <action
+            android:id="@+id/action_navigation_icon_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_userchan"
+        android:name="com.example.petsns.ui.setting.userchanFragment"
+        android:label="ユーザー名変更"
+        tools:layout="@layout/fragment_userchan" >
+        <action
+            android:id="@+id/action_navigation_userchan_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_tag"
+        android:name="com.example.petsns.ui.setting.tagFragment"
+        android:label="タグの選択"
+        tools:layout="@layout/fragment_tag" >
+        <action
+            android:id="@+id/action_navigation_tag_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_repot"
+        android:name="com.example.petsns.ui.setting.repotFragment"
+        android:label="報告・要望"
+        tools:layout="@layout/fragment_repot" >
+        <action
+            android:id="@+id/action_navigation_repot_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.petsns.ui.profile.ProfileFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_board"
+        android:name="com.example.petsns.ui.board.BoardFragment"
+        android:label="掲示板"
+        tools:layout="@layout/fragment_board" />
+
+    <fragment
+        android:id="@+id/navigation_contest"
+        android:name="com.example.petsns.ui.contest.ContestFragment"
+        android:label="コンテスト"
+        tools:layout="@layout/fragment_contest" />
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.petsns.ui.route.routeFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route" >
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route2"
+            app:destination="@id/navigation_route2" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route4"
+            app:destination="@id/navigation_route4" />
     </fragment>
 
     <fragment
@@ -173,67 +435,5 @@
             app:destination="@id/navigation_route" />
     </fragment>
 
-
-
-
-    <fragment
-        android:id="@+id/navigation_setting"
-        android:name="com.example.petsns.ui.setting.settingFragment"
-        android:label="設定"
-        tools:layout="@layout/fragment_setting" >
-        <action
-            android:id="@+id/action_navigation_setting_to_navigation_pass1"
-            app:destination="@id/navigation_pass1" />
-        <action
-            android:id="@+id/action_navigation_setting_to_navigation_pass2"
-            app:destination="@id/navigation_pass2"/>
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_pass1"
-        android:name="com.example.petsns.ui.setting.pass.pass1Fragment"
-        android:label="パスワードを入力"
-        tools:layout="@layout/fragment_pass1" >
-        <action
-            android:id="@+id/action_navigation_pass1_to_navigation_phone"
-            app:destination="@id/navigation_phone" />
-        <action
-            android:id="@+id/action_navigation_pass1_to_navigation_setting"
-            app:destination="@id/navigation_setting" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_phone"
-        android:name="com.example.petsns.ui.setting.phone.phoneFragment"
-        android:label="電話番号追加・変更"
-        tools:layout="@layout/fragment_phone" >
-        <action
-            android:id="@+id/action_navigation_phone_to_navigation_setting"
-            app:destination="@id/navigation_setting" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_pass2"
-        android:name="com.example.petsns.ui.setting.pass.pass2Fragment"
-        android:label="パスワードを入力"
-        tools:layout="@layout/fragment_pass2" >
-        <action
-            android:id="@+id/action_navigation_pass2_to_navigation_setting"
-            app:destination="@id/navigation_setting" />
-        <action
-            android:id="@+id/action_navigation_pass2_to_navigation_email"
-            app:destination="@id/navigation_email" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_email"
-        android:name="com.example.petsns.ui.setting.emailFragment"
-        android:label="メールアドレスを追加"
-        tools:layout="@layout/fragment_email" >
-        <action
-            android:id="@+id/action_navigation_email_to_navigation_setting"
-            app:destination="@id/navigation_setting" />
-    </fragment>
 
 </navigation>

@@ -9,31 +9,36 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:background="#F2A955"
+        android:text="散歩停止"
+        android:textSize="50dp"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="42dp" />
 
     <Button
-        android:id="@+id/distance1"
+        android:id="@+id/end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="476dp"
-        android:background="@drawable/frame_style"
-        android:text="@string/距離を設定"
-        android:textColor="@color/black"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="560dp"
+        android:background="@drawable/frame_style2"
+        android:text="■"
+        android:textSize="60dp"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/time"
+        android:id="@+id/restart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="548dp"
-        android:background="@drawable/frame_style"
-        android:text="@string/時間"
+        android:layout_marginStart="368dp"
+        android:layout_marginTop="560dp"
+        android:background="@drawable/frame_style3"
+        android:text="▶"
+        android:textSize="60dp"
         android:textColor="@color/black"
+
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

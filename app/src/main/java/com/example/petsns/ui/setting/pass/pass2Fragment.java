@@ -48,6 +48,14 @@ public class pass2Fragment extends Fragment {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
             }
         });
+        Button btncan = view.findViewById(R.id.btncan);
+
+        btncan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_setting));
+            }
+        });
     }
 
 }

@@ -9,30 +9,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F2A955"
+        android:text="終了"
+        android:textSize="50dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <Button
-        android:id="@+id/distance1"
+    <TextView
+        android:id="@+id/text0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="476dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="316dp"
+        android:text="お疲れ様でした"
+        android:textSize="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="217dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="488dp"
         android:background="@drawable/frame_style"
-        android:text="@string/距離を設定"
+        android:text="お気に入りに追加"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/time"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="548dp"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="675dp"
         android:background="@drawable/frame_style"
-        android:text="@string/時間"
+        android:text="戻る"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
