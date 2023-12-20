@@ -138,6 +138,18 @@
                         android:text="フォロー42人"
                         android:textSize="24dp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:orientation="horizontal">
+                    <Space
+                        android:layout_width="27dp"
+                        android:layout_height="1dp" />
+                    <TextView
+                        android:layout_width="547dp"
+                        android:layout_height="2dp"
+                        android:background="@color/black" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
