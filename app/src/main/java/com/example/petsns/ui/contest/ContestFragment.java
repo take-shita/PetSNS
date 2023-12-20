@@ -1,5 +1,6 @@
 package com.example.petsns.ui.contest;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -14,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.PopupWindow;
+import android.view.Gravity;
 import com.example.petsns.R;
-
 public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
@@ -46,6 +47,7 @@ public class ContestFragment extends Fragment {
         Button btnInfo= view.findViewById(R.id.btnContestInfo);
         Button btnEntry=view.findViewById(R.id.btnContestEntry);
 
+        TextView txt= view.findViewById(R.id.textView25);
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,15 +58,17 @@ public class ContestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+
             }
         });
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_info);
+//               Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_info);
+//                DialogFragment dialogFragment = new ContestInfoFragment();
+//                dialogFragment.show(getSupportFragmentManager(), "my_dialog");
             }
         });
-
         btnEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.example.petsns.ui.contest;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class ContestInfoFragment extends Fragment {
+public class ContestInfoFragment extends DialogFragment {
 
     private ContestInfoViewModel mViewModel;
 
