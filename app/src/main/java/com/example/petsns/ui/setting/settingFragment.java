@@ -55,6 +55,51 @@ public class settingFragment extends Fragment {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_pass2));
             }
         });
+        Button bt3 = view.findViewById(R.id.bt3);
+
+        bt3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_passchan));
+            }
+        });
+        Button bt6 = view.findViewById(R.id.bt6);
+
+        bt6.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_icon));
+            }
+        });
+        Button bt7 = view.findViewById(R.id.bt7);
+
+        bt7.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_userchan));
+            }
+        });
+        Button bt8 = view.findViewById(R.id.bt8);
+
+        bt8.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_tag));
+            }
+        });
+        Button bt9 = view.findViewById(R.id.bt9);
+
+        bt9.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_repot));
+            }
+        });
     }
 }
 
