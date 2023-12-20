@@ -260,11 +260,11 @@
         android:label="パスワードを入力"
         tools:layout="@layout/fragment_pass1" >
         <action
-            android:id="@+id/action_navigation_pass1_to_navigation_phone"
-            app:destination="@id/navigation_phone" />
-        <action
             android:id="@+id/action_navigation_pass1_to_navigation_setting"
             app:destination="@id/navigation_setting" />
+        <action
+            android:id="@+id/action_navigation_pass1_to_navigation_phone"
+            app:destination="@id/navigation_phone" />
     </fragment>
 
     <fragment
