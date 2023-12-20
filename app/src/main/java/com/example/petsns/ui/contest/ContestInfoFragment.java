@@ -17,11 +17,13 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
+
 public class ContestInfoFragment extends DialogFragment {
 
     private ContestInfoViewModel mViewModel;
 
     public static ContestInfoFragment newInstance() {
+
         return new ContestInfoFragment();
     }
 
