@@ -43,12 +43,18 @@
 
 
 
-
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.petsns.ui.profile.ProfileFragment"
         android:label="profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_snspost"
+            app:destination="@id/navigation_snspost" />
+    </fragment>
 
 
 
