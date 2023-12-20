@@ -18,6 +18,7 @@
                 android:layout_width="27dp"
                 android:layout_height="81dp" />
             <ImageButton
+                android:id="@+id/snstopback"
                 android:layout_width="81dp"
                 android:layout_height="81dp"
                 android:scaleType="fitXY"
@@ -30,6 +31,7 @@
                 android:background="#FFC88A"
                 />
             <ImageButton
+                android:id="@+id/toukoubtn"
                 android:layout_width="81dp"
                 android:layout_height="81dp"
                 android:scaleType="fitXY"
@@ -135,7 +137,7 @@
                         android:layout_width="547dp"
                         android:layout_height="54dp"
                         android:gravity="center"
-                        android:text="フォロー42人"
+                        android:text="投稿"
                         android:textSize="24dp" />
                 </LinearLayout>
                 <LinearLayout
@@ -149,6 +151,55 @@
                         android:layout_width="547dp"
                         android:layout_height="2dp"
                         android:background="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/cbr250rr" />
+                        <TextView
+                            android:layout_width="189dp"
+                            android:layout_height="54dp"
+                            android:gravity="left|center"
+                            android:text="田實　優斗"
+                            android:textSize="24dp" />
+                        <TextView
+                            android:layout_width="108dp"
+                            android:layout_height="54dp"
+                            android:gravity="center"
+                            android:text="17h"
+                            android:textSize="24dp" />
+                        <ImageButton
+                            android:id="@+id/hartbtn"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/harttouka"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="81dp"
+                            android:layout_height="54dp"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textSize="24dp" />
+                        <ImageButton
+                            android:id="@+id/sakujobtn"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/sakujotouka"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            android:background="@null"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
