@@ -25,14 +25,14 @@
         android:layout_width="290dp"
         android:layout_height="68dp"
         android:ems="10"
-        android:text="password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277" />
+        app:layout_constraintVertical_bias="0.277"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/bt5"
@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.538" />
 
     <Button
-        android:id="@+id/bt6"
+        android:id="@+id/btncan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#F60404"

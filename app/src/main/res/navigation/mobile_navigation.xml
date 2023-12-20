@@ -13,9 +13,20 @@
         <action
             android:id="@+id/action_navigation_snstop_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_snspost"
+            app:destination="@id/navigation_snspost" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/navigation_snspost"
+        android:name="com.example.petsns.snspostFragment"
+        android:label="post"
+        tools:layout="@layout/fragment_snspost" >
+        <action
+            android:id="@+id/action_navigation_snspost_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
+    </fragment>
 
 
     <fragment
@@ -32,12 +43,18 @@
 
 
 
-
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.petsns.ui.profile.ProfileFragment"
         android:label="profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_snspost"
+            app:destination="@id/navigation_snspost" />
+    </fragment>
 
 
 
@@ -225,6 +242,21 @@
         <action
             android:id="@+id/action_navigation_setting_to_navigation_pass2"
             app:destination="@id/navigation_pass2"/>
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_passchan"
+            app:destination="@id/navigation_passchan" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_icon"
+            app:destination="@id/navigation_icon" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_userchan"
+            app:destination="@id/navigation_userchan" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_tag"
+            app:destination="@id/navigation_tag" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_repot"
+            app:destination="@id/navigation_repot" />
 
     </fragment>
 
@@ -234,11 +266,11 @@
         android:label="パスワードを入力"
         tools:layout="@layout/fragment_pass1" >
         <action
-            android:id="@+id/action_navigation_pass1_to_navigation_phone"
-            app:destination="@id/navigation_phone" />
-        <action
             android:id="@+id/action_navigation_pass1_to_navigation_setting"
             app:destination="@id/navigation_setting" />
+        <action
+            android:id="@+id/action_navigation_pass1_to_navigation_phone"
+            app:destination="@id/navigation_phone" />
     </fragment>
 
     <fragment
@@ -273,5 +305,60 @@
             android:id="@+id/action_navigation_email_to_navigation_setting"
             app:destination="@id/navigation_setting" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_passchan"
+        android:name="com.example.petsns.ui.setting.passchanFragment"
+        android:label="パスワード変更"
+        tools:layout="@layout/fragment_passchan" >
+        <action
+            android:id="@+id/action_navigation_passchan_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_icon"
+        android:name="com.example.petsns.ui.setting.iconFragment"
+        android:label="アイコン変更"
+        tools:layout="@layout/fragment_icon" >
+        <action
+            android:id="@+id/action_navigation_icon_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_userchan"
+        android:name="com.example.petsns.ui.setting.userchanFragment"
+        android:label="ユーザー名変更"
+        tools:layout="@layout/fragment_userchan" >
+        <action
+            android:id="@+id/action_navigation_userchan_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_tag"
+        android:name="com.example.petsns.ui.setting.tagFragment"
+        android:label="タグの選択"
+        tools:layout="@layout/fragment_tag" >
+        <action
+            android:id="@+id/action_navigation_tag_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_repot"
+        android:name="com.example.petsns.ui.setting.repotFragment"
+        android:label="報告・要望"
+        tools:layout="@layout/fragment_repot" >
+        <action
+            android:id="@+id/action_navigation_repot_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+
+
+
 
 </navigation>

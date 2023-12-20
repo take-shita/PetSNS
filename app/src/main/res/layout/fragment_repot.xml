@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.iconFragment">
+    tools:context=".ui.setting.repotFragment">
 
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="アイコン変更"
+        android:text="報告・要望"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,39 +21,30 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/btnsend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="変更"
+        android:text="送信"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.633" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="121dp"
-        android:layout_height="126dp"
-        android:src="@drawable/cbr250rr"
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="254dp"
+        android:layout_height="191dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/file"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.177"
+        app:layout_constraintVertical_bias="0.372"
         tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

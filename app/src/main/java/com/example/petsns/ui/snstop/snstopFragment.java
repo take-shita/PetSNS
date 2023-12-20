@@ -49,5 +49,14 @@ public class snstopFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile);
             }
         });
+
+
+        ImageButton post = view.findViewById(R.id.post);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_snspost);
+            }
+        });
     }
 }

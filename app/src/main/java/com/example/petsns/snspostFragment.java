@@ -1,4 +1,4 @@
-package com.example.petsns.ui.setting.pass;
+package com.example.petsns;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,51 +13,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.example.petsns.R;
 
-public class pass1Fragment extends Fragment {
+public class snspostFragment extends Fragment {
 
-    private Pass1ViewModel mViewModel;
+    private SnspostViewModel mViewModel;
 
-    public static pass1Fragment newInstance() {
-        return new pass1Fragment();
+    public static snspostFragment newInstance() {
+        return new snspostFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pass1, container, false);
-
-
+        return inflater.inflate(R.layout.fragment_snspost, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Pass1ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SnspostViewModel.class);
         // TODO: Use the ViewModel
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt01 = view.findViewById(R.id.bt01);
-
-        bt01.setOnClickListener(new View.OnClickListener() {
-
+        Button back = view.findViewById(R.id.cancel_btn);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
-        Button bt02 = view.findViewById(R.id.bt02);
 
-        bt02.setOnClickListener(new View.OnClickListener() {
+        Button post = view.findViewById(R.id.post_btn);
+        post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_setting);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
     }
-
 }
