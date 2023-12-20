@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.538" />
 
     <Button
-        android:id="@+id/bt6"
+        android:id="@+id/btncan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#F60404"
