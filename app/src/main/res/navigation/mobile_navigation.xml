@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_navigation_route_to_navigation_route4"
             app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
     </fragment>
 
     <fragment
@@ -121,6 +124,9 @@
         <action
             android:id="@+id/action_navigation_route3_to_navigation_route4"
             app:destination="@id/navigation_route4" />
+        <action
+            android:id="@+id/action_navigation_route3_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
     </fragment>
 
 
@@ -158,5 +164,40 @@
             android:id="@+id/action_navigation_route6_to_navigation_route"
             app:destination="@id/navigation_route" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_route7"
+        android:name="com.example.petsns.ui.route.route7Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route7" >
+        <action
+            android:id="@+id/action_navigation_route7_to_navigation_route8"
+            app:destination="@id/navigation_route8" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route8"
+        android:name="com.example.petsns.ui.route.route8Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route8" >
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route9"
+            app:destination="@id/navigation_route9" />
+        <action
+            android:id="@+id/action_navigation_route8_to_navigation_route7"
+            app:destination="@id/navigation_route7" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route9"
+        android:name="com.example.petsns.ui.route.route9Fragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route9" >
+        <action
+            android:id="@+id/action_navigation_route9_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
 
 </navigation>

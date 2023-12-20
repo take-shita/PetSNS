@@ -4,36 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2A955"
     tools:context=".ui.route.routeFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/place"
-        android:layout_width="126dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="520dp"
-        android:background="@drawable/frame_style"
-        android:text="指定場所"
-        android:textColor="@color/black"
-        app:backgroundTint="@null"
+        android:layout_marginStart="16dp"
+        android:text="散歩開始"
+        android:textSize="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/favorite"
-        android:layout_width="139dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="596dp"
-        android:background="@drawable/frame_style"
-        android:text="お気に入り"
-        android:textColor="@color/black"
+        android:id="@+id/stop"
+        android:layout_width="118dp"
+        android:layout_height="112dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="552dp"
+        android:background="@drawable/frame_style2"
+        android:text="| |"
+        android:textSize="40dp"
+        android:textStyle="bold"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

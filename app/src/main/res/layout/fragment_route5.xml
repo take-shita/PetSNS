@@ -20,7 +20,7 @@
         android:layout_marginTop="225dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:text="指定場所を入力してください"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,9 @@
         android:layout_height="69dp"
         android:layout_marginStart="220dp"
         android:layout_marginTop="540dp"
+        android:backgroundTint="#F2A955"
         android:text="START画面へ"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
