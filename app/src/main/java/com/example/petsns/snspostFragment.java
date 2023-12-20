@@ -41,6 +41,15 @@ public class snspostFragment extends Fragment {
         Button back = view.findViewById(R.id.cancel_btn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
+
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+            }
+        });
+
+        Button post = view.findViewById(R.id.post_btn);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
