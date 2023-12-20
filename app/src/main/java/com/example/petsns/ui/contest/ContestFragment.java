@@ -62,11 +62,31 @@ public class ContestFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_view);
             }
         });
+
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+                Context context = requireContext();
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.fragment_contest_post);
 
+//                Window window = dialog.getWindow();
+//                if (window != null) {
+//                    // 幅と高さをピクセル単位で設定
+//                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                }
+
+                Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
         btnInfo.setOnClickListener(new View.OnClickListener() {
