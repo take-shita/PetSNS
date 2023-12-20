@@ -42,7 +42,7 @@ public class ContestViewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnBack = view.findViewById(R.id.btnBack);
+        Button btnBack = view.findViewById(R.id.btnContestTopBack);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

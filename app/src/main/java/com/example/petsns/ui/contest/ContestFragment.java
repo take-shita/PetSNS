@@ -1,5 +1,6 @@
 package com.example.petsns.ui.contest;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -14,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.PopupWindow;
+import android.view.Gravity;
 import com.example.petsns.R;
-
 public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
@@ -41,12 +42,37 @@ public class ContestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnVi = view.findViewById(R.id.btnVi);
+        Button btnView = view.findViewById(R.id.btnContestView);
+        Button btnPost = view.findViewById(R.id.btnContestPost);
+        Button btnInfo= view.findViewById(R.id.btnContestInfo);
+        Button btnEntry=view.findViewById(R.id.btnContestEntry);
 
-        btnVi.setOnClickListener(new View.OnClickListener() {
+        TextView txt= view.findViewById(R.id.textView25);
+        btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_view);
+            }
+        });
+        btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+
+            }
+        });
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//               Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_info);
+//                DialogFragment dialogFragment = new ContestInfoFragment();
+//                dialogFragment.show(getSupportFragmentManager(), "my_dialog");
+            }
+        });
+        btnEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
