@@ -6,38 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".ui.snstop.snstopFragment">
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/profButton"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/cbr250rr"-->
-<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/cbr250rr"/>
 
-    <Button
-        android:id="@+id/button22"
-        android:layout_width="80dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#00000000"
-        android:text=""
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:background="#FFC88A">
 
+        <ImageButton
+            android:id="@+id/top_prof"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/cbr250rr"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/search_tag"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="361dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/search"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/post"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/toukoutouka"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="817dp"
-        tools:ignore="SpeakableTextPresentCheck">
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:background="#fdf5ed"
+        android:layout_marginTop="80dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <ImageView
                 android:layout_width="match_parent"
@@ -73,12 +90,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/inutouka" />
-
-            <Button
-                android:id="@+id/button21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
 
 
         </LinearLayout>

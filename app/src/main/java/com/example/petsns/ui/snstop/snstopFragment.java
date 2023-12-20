@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.petsns.R;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class snstopFragment extends Fragment {
 
@@ -41,7 +42,7 @@ public class snstopFragment extends Fragment {
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button prof_bt = view.findViewById(R.id.button22);
+        ImageButton prof_bt = view.findViewById(R.id.top_prof);
         prof_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

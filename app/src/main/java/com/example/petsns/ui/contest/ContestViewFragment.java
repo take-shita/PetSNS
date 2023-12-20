@@ -1,4 +1,4 @@
-package com.example.petsns.ui.setting.phone;
+package com.example.petsns.ui.contest;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,39 +13,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.example.petsns.R;
 
-public class phoneFragment extends Fragment {
+public class ContestViewFragment extends Fragment {
 
-    private PhoneViewModel mViewModel;
+    private ContestViewViewModel mViewModel;
 
-    public static phoneFragment newInstance() {
-        return new phoneFragment();
+    public static ContestViewFragment newInstance() {
+        return new ContestViewFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_phone, container, false);
+
+        return inflater.inflate(R.layout.fragment_contest_view, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ContestViewViewModel.class);
         // TODO: Use the ViewModel
     }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btncan = view.findViewById(R.id.btncan);
+        Button btnBack = view.findViewById(R.id.btnBack);
 
-        btncan.setOnClickListener(new View.OnClickListener() {
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_setting);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_view_to_navigation_contest);
             }
         });
+
+
+
     }
+
 }
