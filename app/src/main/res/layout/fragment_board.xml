@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".ui.board.BoardFragment">
 
 
@@ -47,3 +48,6 @@
         tools:layout_editor_absoluteX="477dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+    tools:context=".ui.board.BoardFragment"/>
+>>>>>>> 02a642687911a14d4c4d6a8188f587d6414e1aee
