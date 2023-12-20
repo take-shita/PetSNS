@@ -108,7 +108,7 @@
                         android:layout_width="54dp"
                         android:layout_height="54dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/cbr250rr" />
+                        android:src="@drawable/pentatouka" />
                     <ImageView
                         android:layout_width="54dp"
                         android:layout_height="54dp"
