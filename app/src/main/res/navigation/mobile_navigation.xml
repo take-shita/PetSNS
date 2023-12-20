@@ -13,9 +13,20 @@
         <action
             android:id="@+id/action_navigation_snstop_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_snspost"
+            app:destination="@id/navigation_snspost" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/navigation_snspost"
+        android:name="com.example.petsns.snspostFragment"
+        android:label="post"
+        tools:layout="@layout/fragment_snspost" >
+        <action
+            android:id="@+id/action_navigation_snspost_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
+    </fragment>
 
 
     <fragment
