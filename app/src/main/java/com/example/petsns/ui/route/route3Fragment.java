@@ -53,7 +53,7 @@ public class route3Fragment extends Fragment {
 
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
-//        timerText = view7.findViewById(R.id.timer1);
+        timerText = view7.findViewById(R.id.timer1);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,12 +63,12 @@ public class route3Fragment extends Fragment {
 
 
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startStop();
-            }
-        });
+//        startButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startStop();
+//            }
+//        });
 
         return view;
     }
@@ -139,16 +139,16 @@ public class route3Fragment extends Fragment {
             }
         });
 
-//        Button bt = view.findViewById(R.id.start1);
-//        bt.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
-//            }
-//        });
+        Button bt = view.findViewById(R.id.start1);
+        bt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
+            }
+        });
 
 
 
@@ -157,18 +157,3 @@ public class route3Fragment extends Fragment {
 }
 
 
-// CountDownTimer timer = new CountDownTimer(10000, 100) {
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            int time = (int)millisUntilFinished/1000;
-//            TextView tm = view.findViewById(R.id.timer);
-//            tm.setText("あと" + millisUntilFinished + "秒");
-//
-//
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            onFinish();
-//        }
-//    }.start();
