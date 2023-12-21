@@ -8,11 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.tabs.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.petsns.R;
+import androidx.fragment.app.FragmentManager;
+
+import androidx.fragment.app.FragmentTransaction;
 
 public class tagFragment extends Fragment {
 
@@ -25,6 +29,8 @@ public class tagFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+
         return inflater.inflate(R.layout.fragment_tag, container, false);
     }
 
@@ -35,4 +41,46 @@ public class tagFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);  // この行を適切なIDに変更してください
+
+        // タブが選択されたときのリスナー
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // タブが選択されたときに対応するFragmentを表示
+                switch (tab.getPosition()) {
+                    case 0:
+                        replaceFragment(new TagLikeFragment());
+                        break;
+                    case 1:
+                        replaceFragment(new TagDislikeFragment());
+                        break;
+                    // 必要に応じて他のタブに対する処理を追加
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // 他のタブが選択されたときの処理
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // 同じタブが再度選択されたときの処理
+            }
+        });
+
+        // 最初のタブを表示
+        replaceFragment(new TagLikeFragment());
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);  // この行を適切なIDに変更してください
+        transaction.commit();
+    }
 }
