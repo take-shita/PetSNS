@@ -47,7 +47,7 @@ public class pass1Fragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
+                Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
             }
         });
         Button bt02 = view.findViewById(R.id.bt02);
@@ -55,7 +55,7 @@ public class pass1Fragment extends Fragment {
         bt02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_setting);
+                Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_setting));
             }
         });
     }
