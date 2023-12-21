@@ -2,9 +2,11 @@ package com.example.petsns;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
+import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,16 +21,44 @@ import android.widget.ImageView;
 public class snspostFragment extends Fragment {
 
     private SnspostViewModel mViewModel;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     public static snspostFragment newInstance() {
         return new snspostFragment();
     }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_snspost, container, false);
+        // 画像選択ボタンのクリックリスナー
+        view.findViewById(R.id.selectImageBtn).setOnClickListener(v -> pickImage());
+
+        return view;
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_snspost, container, false);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (getView() != null && requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+
+            // ここで取得したURIを使用して画像を表示または処理する
+            // 例: ImageViewに画像を表示
+             ImageView imageView = getView().findViewById(R.id.imageView);
+             imageView.setImageURI(selectedImageUri);
+        }
     }
+
+
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
