@@ -51,7 +51,7 @@ public class route3Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_route3, container, false);
         View view7 = inflater.inflate(R.layout.fragment_route7, container, false);
 
-        timerTextView = view.findViewById(R.id.timer);
+        timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
         timerText = view7.findViewById(R.id.timer1);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +76,12 @@ public class route3Fragment extends Fragment {
     private void startStop() {
         if (countDownTimer == null) {
             // タイマーが動作していない場合、タイマーを開始
-            countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            String timeString = timerText.getText().toString();
+            long timeInMillis = Long.parseLong(timeString) * 1000;
+            countDownTimer = new CountDownTimer(timeInMillis, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
+//                    timerText.setText("残り時間: " + millisUntilFinished / 1000 + "秒");
                     timeLeftInMillis = millisUntilFinished;
                     updateCountdownText();
                 }
@@ -89,8 +92,11 @@ public class route3Fragment extends Fragment {
                     countDownTimer = null;
 //                    startButton.setText("Start");
                 }
+
             }.start();
+
             startButton.setText("Stop");
+
         } else {
             // タイマーが動作している場合、タイマーを停止
             countDownTimer.cancel();
@@ -104,7 +110,7 @@ public class route3Fragment extends Fragment {
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
         String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
-        timerTextView.setText(timeLeftFormatted);
+        timerText.setText(timeLeftFormatted);
     }
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
