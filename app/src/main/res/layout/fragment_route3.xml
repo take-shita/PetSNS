@@ -54,14 +54,14 @@
 
     <EditText
         android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="248dp"
+        android:layout_width="255dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="260dp"
         android:ems="10"
         android:inputType="time"
         android:text="00:00"
-        android:textSize="50dp"
+        android:textSize="96sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

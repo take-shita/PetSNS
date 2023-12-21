@@ -58,15 +58,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/Text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="144dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="@string/_00_00"
-        android:textSize="80dp"
+        android:id="@+id/text2"
+        android:layout_width="458dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="258dp"
+        android:hint="目標距離（メートル）"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

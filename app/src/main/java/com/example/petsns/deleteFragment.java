@@ -12,24 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class popup1Fragment extends Fragment {
+public class deleteFragment extends Fragment {
 
-    private Popup1ViewModel mViewModel;
+    private DeleteViewModel mViewModel;
 
-    public static popup1Fragment newInstance() {
-        return new popup1Fragment();
+    public static deleteFragment newInstance() {
+        return new deleteFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_popup1, container, false);
+        return inflater.inflate(R.layout.fragment_delete, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Popup1ViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(DeleteViewModel.class);
         // TODO: Use the ViewModel
     }
 

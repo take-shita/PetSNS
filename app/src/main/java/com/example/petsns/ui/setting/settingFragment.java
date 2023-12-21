@@ -8,13 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import android.app.Dialog;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.petsns.R;
-
+import android.content.Context;
 public class settingFragment extends Fragment {
 
     private SettingViewModel mViewModel;
@@ -63,6 +64,66 @@ public class settingFragment extends Fragment {
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_passchan));
             }
+        });
+        Button bt4 = view.findViewById(R.id.bt4);
+        bt4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public  void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog= new Dialog(context);
+                dialog.setContentView(R.layout.fragment_delete);
+
+                // レイアウトファイルをインフレート
+                dialog.setContentView(R.layout.fragment_delete);
+
+                // ダイアログのサイズを設定
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 500; // 幅を変更
+                params.height = 300; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) { dialog.dismiss(); }
+                });
+
+                    dialog.show();
+                }
+
+        });
+        Button bt5 = view.findViewById(R.id.bt5);
+        bt5.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public  void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog= new Dialog(context);
+                dialog.setContentView(R.layout.fragment_logout);
+
+                // レイアウトファイルをインフレート
+                dialog.setContentView(R.layout.fragment_logout);
+
+                // ダイアログのサイズを設定
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 500; // 幅を変更
+                params.height = 300; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) { dialog.dismiss(); }
+                });
+
+                dialog.show();
+            }
+
         });
         Button bt6 = view.findViewById(R.id.bt6);
 
