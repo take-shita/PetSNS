@@ -47,6 +47,7 @@
     </RelativeLayout>
 
     <ImageButton
+        android:id="@+id/tag_btn"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="520dp"

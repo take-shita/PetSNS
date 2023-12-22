@@ -7,10 +7,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class tag_postFragment extends Fragment {
 
@@ -33,4 +35,25 @@ public class tag_postFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button back = view.findViewById(R.id.cancel_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+            }
+        });
+
+        Button select_tag = view.findViewById(R.id.decision_btn);
+        select_tag.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+            }
+        });
+    }
 }

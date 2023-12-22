@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".tag_postFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="100dp"
+        android:text="キャンセル" />
+
+    <Button
+        android:id="@+id/decision_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="選択" />
 
 </FrameLayout>
