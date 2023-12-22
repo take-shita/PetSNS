@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#FFC88A">
+        android:background="#FFFFFF">
 
         <ImageButton
             android:id="@+id/top_prof"
@@ -45,15 +45,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="SpeakableTextPresentCheck"
-        android:background="#fdf5ed"
+        android:background="#FFFFFF"
         android:layout_marginTop="80dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="match_parent"
