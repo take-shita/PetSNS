@@ -18,6 +18,12 @@ import com.example.petsns.R;
 public class routeFragment extends Fragment {
 
 
+
+
+
+
+
+
     private RouteViewModel mViewModel;
 
     public static routeFragment newInstance() {
@@ -70,7 +76,12 @@ public class routeFragment extends Fragment {
             }
         });
 
+
+
+
     }
+
+
 //    -----------------------------------------------------------------------------------------------------------
 
 

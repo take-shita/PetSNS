@@ -35,9 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="195dp"
-        android:layout_marginTop="233dp"
+        android:layout_marginTop="218dp"
         android:ems="10"
-        android:inputType="time"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

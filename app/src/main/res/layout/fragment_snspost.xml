@@ -30,24 +30,28 @@
 
     </LinearLayout>
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ImageButton
-        android:id="@+id/image_btn"
+        android:id="@+id/selectImageBtn"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="425dp"
-        android:layout_marginTop="150dp"
-        android:elevation="1dp"
+        android:layout_marginTop="230dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/picture"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"/>
+
+    </RelativeLayout>
 
     <ImageButton
+        android:id="@+id/tag_btn"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="520dp"
-        android:layout_marginTop="150dp"
-        android:elevation="1dp"
+        android:layout_marginTop="230dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/tag"
@@ -63,21 +67,20 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="80dp"
-            android:background="@null"
             android:ems="100"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:textSize="25dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:hint="ここに投稿内容を入力"/>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="176dp"
             android:scaleType="fitStart"
             android:adjustViewBounds="true"/>
-
-
-
     </LinearLayout>
+
 </FrameLayout>
