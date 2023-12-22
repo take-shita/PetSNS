@@ -8,37 +8,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:ignore="UselessParent">
+<!--        ヘッダー-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
-            android:background="#FFC88A">
+            android:background="@color/white">
             <Space
                 android:layout_width="30dp"
-                android:layout_height="90dp" />
+                android:layout_height="80dp" />
             <ImageButton
                 android:id="@+id/snstopback"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/yajirusitouka"
-                tools:ignore="SpeakableTextPresentCheck"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                 android:background="@null"/>
             <Space
-                android:layout_width="361dp"
-                android:layout_height="90dp"
-                android:background="#FFC88A" />
+                android:layout_width="381dp"
+                android:layout_height="80dp"
+                tools:ignore="VisualLintBounds" />
             <ImageButton
                 android:id="@+id/toukoubtn"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/toukoutouka"
-                tools:ignore="SpeakableTextPresentCheck"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds"
                 android:background="@null"/>
         </LinearLayout>
-
+<!--ヘッダー下から-->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +71,8 @@
                         android:layout_column="1"
                         android:gravity="left|bottom"
                         android:text="田實　優斗"
-                        android:textSize="35dp" />
+                        android:textSize="35dp"
+                        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
 
                     <ImageView
                         android:layout_width="120dp"
@@ -78,7 +81,8 @@
                         android:layout_rowSpan="2"
                         android:layout_column="2"
                         android:scaleType="fitXY"
-                        android:src="@drawable/cbr250rr" />
+                        android:src="@drawable/cbr250rr"
+                        tools:ignore="ContentDescription" />
 
                     <Space
                         android:layout_width="30dp"
@@ -94,7 +98,8 @@
                         android:layout_column="1"
                         android:gravity="left|center"
                         android:text="yuto_1234"
-                        android:textSize="22dp" />
+                        android:textSize="22dp"
+                        tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
                 </GridLayout>
 
                 <LinearLayout
@@ -109,13 +114,16 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/pentatouka" />
+                        android:src="@drawable/pentatouka"
+                        tools:ignore="ContentDescription" />
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="-15dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ramunetouka" />
+                        android:src="@drawable/ramunetouka"
+                        tools:ignore="ContentDescription,RtlHardcoded" />
+
                     <TextView
                         android:layout_width="210dp"
                         android:layout_height="60dp"
@@ -123,7 +131,8 @@
                         android:layout_column="1"
                         android:gravity="left|center"
                         android:text="フォロー42人"
-                        android:textSize="24dp" />
+                        android:textSize="24sp"
+                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck" />
                         </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,12 +141,14 @@
                     <Space
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
+
                     <TextView
                         android:layout_width="541dp"
                         android:layout_height="60dp"
                         android:gravity="center"
                         android:text="投稿"
-                        android:textSize="24dp" />
+                        android:textSize="24dp"
+                        tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,70 +174,83 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/cbr250rr" />
+                            android:src="@drawable/cbr250rr"
+                            tools:ignore="ContentDescription" />
+
                         <TextView
                             android:layout_width="210dp"
                             android:layout_height="60dp"
                             android:gravity="left|center"
                             android:text="田實　優斗"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
+
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="60dp"
                             android:gravity="center"
                             android:text="17h"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
+
                         <ImageButton
                             android:id="@+id/hartbtn"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:background="@null"
                             android:scaleType="fitXY"
                             android:src="@drawable/harttouka"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            android:background="@null"/>
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
                         <TextView
                             android:layout_width="90dp"
                             android:layout_height="60dp"
                             android:gravity="center"
                             android:text="3"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
                         <ImageButton
                             android:id="@+id/sakujobtn"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sakujotouka"
-                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                             android:background="@null"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center"
                             android:text="かわいいねぇ"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center"
                             android:text="#ハリネズミ"
                             android:textColor="#2385DB"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="#CCCCCC"/>
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/harinezumi"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            android:adjustViewBounds="true"/>
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
@@ -245,38 +269,42 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/cbr250rr" />
+                            android:src="@drawable/cbr250rr"
+                            tools:ignore="ContentDescription" />
                         <TextView
                             android:layout_width="210dp"
                             android:layout_height="60dp"
                             android:gravity="left|center"
                             android:text="田實　優斗"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="60dp"
                             android:gravity="center"
                             android:text="17h"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,SpUsage" />
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/harttouka"
-                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                             android:background="@null"/>
                         <TextView
                             android:layout_width="90dp"
                             android:layout_height="60dp"
                             android:gravity="center"
                             android:text="3"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,SpUsage" />
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sakujotouka"
-                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                             android:background="@null"/>
                     </LinearLayout>
                     <LinearLayout
@@ -288,14 +316,16 @@
                             android:layout_height="wrap_content"
                             android:gravity="left|center"
                             android:text="かわいいねぇ"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center"
                             android:text="#ハリネズミ"
                             android:textColor="#2385DB"
-                            android:textSize="24dp" />
+                            android:textSize="24dp"
+                            tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
@@ -305,7 +335,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/harinezumi"
-                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                             android:adjustViewBounds="true"/>
                         <TextView
                             android:layout_width="match_parent"

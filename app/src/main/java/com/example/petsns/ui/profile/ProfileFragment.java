@@ -68,8 +68,8 @@ public class ProfileFragment extends Fragment {
                 ImageButton hai = dialog.findViewById(R.id.haibtn);
                 ImageButton iie = dialog.findViewById(R.id.iiebtn);
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 700; // 幅を変更
-                params.height = 900; // 高さを変更
+                params.width = 811; // 幅を変更
+                params.height = 372; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
                 hai.setOnClickListener(new View.OnClickListener() {
                     @Override

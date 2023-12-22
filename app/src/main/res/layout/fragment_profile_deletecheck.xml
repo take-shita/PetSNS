@@ -7,12 +7,14 @@ tools:context=".ui.profile.profile_deletecheckFragment">
 <LinearLayout
     android:layout_width="578dp"
     android:layout_height="248dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="UselessParent">
     <GridLayout
         android:layout_width="578dp"
         android:layout_height="248dp"
         android:columnCount="11"
-        android:rowCount="6">
+        android:rowCount="6"
+        tools:ignore="UselessParent">
         <TextView
             android:layout_width="578dp"
             android:layout_height="4dp"
@@ -26,7 +28,8 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:layout_row="5"
             android:layout_column="0"
             android:background="#ff0000"
-            android:layout_columnSpan="11"/>
+            android:layout_columnSpan="11"
+            tools:ignore="VisualLintBounds" />
         <TextView
             android:layout_width="4dp"
             android:layout_height="240dp"
@@ -40,7 +43,8 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:layout_row="1"
             android:layout_column="10"
             android:background="#ff0000"
-            android:layout_rowSpan="4"/>
+            android:layout_rowSpan="4"
+            tools:ignore="VisualLintBounds" />
 
         <Space
             android:layout_width="570dp"
@@ -61,7 +65,8 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:layout_column="2"
             android:layout_rowSpan="2"
             android:scaleType="fitXY"
-            android:src="@drawable/bankentouka" />
+            android:src="@drawable/bankentouka"
+            tools:ignore="ContentDescription" />
 
         <Space
             android:layout_width="30dp"
@@ -77,7 +82,8 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:gravity="center"
             android:layout_columnSpan="5"
             android:text="投稿を削除しますか？"
-            android:textSize="32dp" />
+            android:textSize="32dp"
+            tools:ignore="HardcodedText,SpUsage" />
         <Space
             android:layout_width="30dp"
             android:layout_height="60dp"
@@ -92,7 +98,7 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:scaleType="centerInside"
             android:src="@drawable/hai"
             android:background="@null"
-            tools:ignore="SpeakableTextPresentCheck"/>
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck"/>
         <Space
             android:layout_width="30dp"
             android:layout_height="60dp"
@@ -107,7 +113,7 @@ tools:context=".ui.profile.profile_deletecheckFragment">
             android:scaleType="centerInside"
             android:src="@drawable/iie"
             android:background="@null"
-            tools:ignore="SpeakableTextPresentCheck"/>
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck"/>
         <Space
             android:layout_width="30dp"
             android:layout_height="60dp"
