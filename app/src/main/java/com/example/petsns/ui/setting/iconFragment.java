@@ -37,7 +37,7 @@ public class iconFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_icon, container,false);
 
-        view.findViewById(R.id.selectImageBtn);
+        view.findViewById(R.id.selectImageBtn).setOnClickListener(v -> pickImage());
         return view;
     }
 
