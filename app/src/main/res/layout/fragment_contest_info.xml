@@ -5,62 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.contest.ContestInfoFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FFC88A"
+        android:elevation="1dp">
+        <Button
+            android:id="@+id/btnContestTopBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="571dp"
+            android:text="トップに戻る"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnContestTopBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="571dp"
-        android:text="トップに戻る"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/txtEntry"
+            android:layout_width="410dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="276dp"
+            android:background="#6CB3FF"
+            android:text=" エントリー期間"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtEntry"
-        android:layout_width="410dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="88dp"
-        android:background="#6CB3FF"
-        android:text=" エントリー期間"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/txtEntryDate"
-        android:layout_width="365dp"
-        android:layout_height="134dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="132dp"
-        android:text="2024/12/20 00:00:00～2024/12/25 23:59:59"
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtEntryDate"
+            android:layout_width="365dp"
+            android:layout_height="134dp"
+            android:layout_marginTop="116dp"
+            android:text="2024/12/20 00:00:00～2024/12/25 23:59:59"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtPost"
-        android:layout_width="410dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="276dp"
-        android:background="#6CB3FF"
-        android:text=" 投稿期間"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtPost"
+            android:layout_width="410dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="48dp"
+            android:background="#6CB3FF"
+            android:text=" 投稿期間"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtPostDate"
-        android:layout_width="365dp"
-        android:layout_height="134dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="368dp"
-        android:text="2024/12/23 00:00:00～2024/12/25 23:59:59"
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtPostDate"
+            android:layout_width="365dp"
+            android:layout_height="134dp"
+            android:layout_marginTop="368dp"
+            android:text="2024/12/23 00:00:00～2024/12/25 23:59:59"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

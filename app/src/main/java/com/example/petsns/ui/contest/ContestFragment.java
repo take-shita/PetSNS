@@ -102,12 +102,18 @@ public class ContestFragment extends Fragment {
         });
 
         btnInfo= view.findViewById(R.id.btnContestInfo);
+
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = requireContext();
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.fragment_contest_info);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 700; // 幅を変更
+                params.height = 900; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
                 Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
 

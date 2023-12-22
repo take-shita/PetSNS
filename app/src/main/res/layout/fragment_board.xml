@@ -6,25 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".ui.board.BoardFragment">
 
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="448dp"
-        android:layout_marginTop="612dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="171dp"
-        android:layout_height="148dp"
-        android:layout_marginStart="412dp"
-        android:layout_marginTop="660dp"
-        android:src="@mipmap/ic_launcher"
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="438dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="66dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="506dp"
+        android:layout_marginTop="15dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="119dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="556dp"
+        android:background="@drawable/round_button_background"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!--    <ImageButton-->
+<!--        android:id="@+id/imageButton3"-->
+<!--        android:layout_width="119dp"-->
+<!--        android:layout_height="125dp"-->
+<!--        android:layout_marginStart="188dp"-->
+<!--        android:layout_marginTop="560dp"-->
+<!--        android:background="@drawable/round_button_background"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@drawable/cbr250rr"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
