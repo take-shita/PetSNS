@@ -61,7 +61,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="15dp"
                 android:elevation="0dp"
-                android:text="#猫"
+                android:text="#"
                 android:textColor="#2385DD"
                 android:textSize="25dp" />
 
