@@ -100,6 +100,11 @@ public class snspostFragment extends Fragment {
 
                 Button btnClose = dialog.findViewById(R.id.cancel_btn);
 
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 700; // 幅を変更
+                params.height = 1200; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
