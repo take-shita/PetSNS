@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_notifications" />
 
 
-
+<!--    プロフィール画面-->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.petsns.ui.profile.ProfileFragment"
@@ -63,8 +63,20 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_profile_deletecheck"
+            app:destination="@id/navigation_profile_deletecheck" />
     </fragment>
-
+    <!-- 投稿削除確認ポップアップ画面-->
+    <fragment
+        android:id="@+id/navigation_profile_deletecheck"
+        android:name="com.example.petsns.ui.profile.profile_deletecheckFragment"
+        android:label="profile_deletecheck"
+        tools:layout="@layout/fragment_profile_deletecheck" >
+        <action
+            android:id="@+id/action_navigation_profile_deletecheck_to_navigation_profile"
+            app:destination="@id/navigation_profile_deletecheck" />
+    </fragment>
 
 
 

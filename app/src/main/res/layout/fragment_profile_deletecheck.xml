@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="578dp"
-    android:layout_height="248dp"
-    tools:context=".profile_deletecheckFragment">
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="578dp"
+android:layout_height="248dp"
+tools:context=".ui.profile.profile_deletecheckFragment">
 <LinearLayout
     android:layout_width="578dp"
     android:layout_height="248dp"
@@ -83,35 +83,31 @@
             android:layout_height="60dp"
             android:layout_row="3"
             android:layout_column="4" />
-        <Button
+        <ImageButton
             android:id="@+id/haibtn"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:gravity="center|bottom"
             android:layout_column="5"
             android:layout_row="3"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:backgroundTint="@color/white"
-            android:text="はい"
-            android:textColor="@color/black"
-            android:textSize="27dp"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/hai"
+            android:background="@null"
+            tools:ignore="SpeakableTextPresentCheck"/>
         <Space
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_row="3"
             android:layout_column="6" />
-        <Button
+        <ImageButton
             android:id="@+id/iiebtn"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:gravity="center|bottom"
             android:layout_column="7"
             android:layout_row="3"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:backgroundTint="@color/white"
-            android:text="いいえ"
-            android:textColor="@color/black"
-            android:textSize="27dp"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/iie"
+            android:background="@null"
+            tools:ignore="SpeakableTextPresentCheck"/>
         <Space
             android:layout_width="30dp"
             android:layout_height="60dp"

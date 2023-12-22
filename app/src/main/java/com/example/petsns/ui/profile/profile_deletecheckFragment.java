@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.profile;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,15 +12,15 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
+
+import com.example.petsns.R;
 
 public class profile_deletecheckFragment extends Fragment {
 
     private ProfileDeletecheckViewModel mViewModel;
 
-    public static profile_deletecheckFragment newInstance() {
-        return new profile_deletecheckFragment();
-    }
+    public static profile_deletecheckFragment newInstance() {return new profile_deletecheckFragment();}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -37,17 +37,19 @@ public class profile_deletecheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnBack = view.findViewById(R.id.btnContestTopBack);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ImageButton hai = view.findViewById(R.id.haibtn);
+        hai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_info_to_navigation_contest);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_profile_deletecheck_to_navigation_profile);
             }
         });
-
-
-
+        ImageButton iie = view.findViewById(R.id.iiebtn);
+        iie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_profile_deletecheck_to_navigation_profile);
+            }
+        });
     }
-
 }
