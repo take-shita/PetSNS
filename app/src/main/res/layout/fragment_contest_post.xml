@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.contest.ContestPostFragment">
 
+
     <ImageButton
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="404dp"
+        android:layout_marginTop="288dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -21,33 +23,32 @@
     <ImageButton
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="468dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnContestTopBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
         android:text="キャンセル"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="30dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="6dp" />
 
     <Button
         android:id="@+id/btnContestPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
         android:text="投稿"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="30dp"
+        tools:layout_editor_absoluteX="345dp"
+        tools:layout_editor_absoluteY="7dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
