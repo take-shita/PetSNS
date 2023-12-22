@@ -65,11 +65,19 @@ public class ProfileFragment extends Fragment {
                 Context context = requireContext();
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.fragment_profile_deletecheck);
+                ImageButton hai = dialog.findViewById(R.id.haibtn);
                 ImageButton iie = dialog.findViewById(R.id.iiebtn);
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
                 params.width = 700; // 幅を変更
                 params.height = 900; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                hai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
                 iie.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

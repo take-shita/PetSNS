@@ -63,9 +63,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
-        <action
-            android:id="@+id/action_navigation_profile_to_navigation_profile_deletecheck"
-            app:destination="@id/navigation_profile_deletecheck" />
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_profile_to_navigation_profile_deletecheck"-->
+<!--            app:destination="@id/navigation_profile_deletecheck" />-->
     </fragment>
     <!-- 投稿削除確認ポップアップ画面-->
     <fragment
