@@ -17,6 +17,13 @@
         android:id="@+id/decision_btn"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:text="選択" />
+        android:text="決定" />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </FrameLayout>
