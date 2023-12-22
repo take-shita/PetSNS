@@ -147,6 +147,8 @@ public class route3Fragment extends Fragment {
             }
         });
 
+
+
 //        Button bt = view.findViewById(R.id.start1);
 //        bt.setOnClickListener(new View.OnClickListener() {
 //
@@ -163,5 +165,3 @@ public class route3Fragment extends Fragment {
 
     }
 }
-
-

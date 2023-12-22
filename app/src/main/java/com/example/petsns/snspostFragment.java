@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class snspostFragment extends Fragment {
@@ -84,6 +85,14 @@ public class snspostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+            }
+        });
+
+        ImageButton tag_select = view.findViewById(R.id.tag_btn);
+        tag_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
             }
         });
     }
