@@ -26,8 +26,16 @@
         <action
             android:id="@+id/action_navigation_snspost_to_navigation_snstop"
             app:destination="@id/navigation_snstop" />
+        <action
+            android:id="@+id/action_navigation_snspost_to_navigation_tag_post"
+            app:destination="@id/navigation_tag_post" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_tag_post"
+        android:name="com.example.petsns.tag_postFragment"
+        android:label="tag_post"
+        tools:layout="@layout/fragment_tag_post" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

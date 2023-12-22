@@ -66,12 +66,12 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="80dp"
-            android:background="@null"
             android:ems="100"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:textSize="25dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:hint="ここに投稿内容を入力"/>
 
         <ImageView
             android:id="@+id/imageView"
