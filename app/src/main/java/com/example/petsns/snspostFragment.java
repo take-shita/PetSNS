@@ -3,6 +3,8 @@ package com.example.petsns;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,7 +94,20 @@ public class snspostFragment extends Fragment {
         tag_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
+                Context context = requireContext();
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.fragment_tag_post);
+
+                Button btnClose = dialog.findViewById(R.id.cancel_btn);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }

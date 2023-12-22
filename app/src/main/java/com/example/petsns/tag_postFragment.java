@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ public class tag_postFragment extends Fragment {
 
     private TagPostViewModel mViewModel;
 
+    private ViewGroup buttonContainer;
     public static tag_postFragment newInstance() {
         return new tag_postFragment();
     }
@@ -25,7 +29,34 @@ public class tag_postFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tag_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_tag_post, container,false);
+        buttonContainer = view.findViewById(R.id.buttonContainer);
+
+        displayButtons();
+
+        return view;
+
+    }
+
+    private void displayButtons() {
+        // 表示するボタンの数
+        int buttonCount = 10;
+
+        for (int i = 0; i < buttonCount; i++) {
+            Button button = new Button(requireContext());
+            button.setText("Button " + (i + 1));
+
+            // ボタンがクリックされたときの処理を追加
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // ボタンがクリックされたときの処理を記述
+                }
+            });
+
+            // ボタンをコンテナに追加
+            buttonContainer.addView(button);
+        }
     }
 
     @Override
@@ -33,27 +64,5 @@ public class tag_postFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(TagPostViewModel.class);
         // TODO: Use the ViewModel
-    }
-
-    public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Button back = view.findViewById(R.id.cancel_btn);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
-            }
-        });
-
-        Button select_tag = view.findViewById(R.id.decision_btn);
-        select_tag.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
-            }
-        });
     }
 }
