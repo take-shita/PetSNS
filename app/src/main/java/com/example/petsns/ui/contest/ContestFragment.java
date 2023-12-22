@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +31,12 @@ import android.content.Context;
 public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
+    private TextView popupText;
+    Button btnView;
+    Button btnPost;
+    Button btnInfo;
+    Button btnEntry;
+
 
     public static ContestFragment newInstance() {
         return new ContestFragment();
@@ -44,18 +52,18 @@ public class ContestFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ContestViewModel.class);
-        // TODO: Use the ViewModel
+
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnView = view.findViewById(R.id.btnContestView);
-        Button btnPost = view.findViewById(R.id.btnContestPost);
-        Button btnInfo= view.findViewById(R.id.btnContestInfo);
-        Button btnEntry=view.findViewById(R.id.btnContestEntry);
 
         TextView txt= view.findViewById(R.id.textView25);
+
+
+
+        btnView = view.findViewById(R.id.btnContestView);
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +71,9 @@ public class ContestFragment extends Fragment {
             }
         });
 
+
+        btnPost = view.findViewById(R.id.btnContestPost);
+        popupText = view.findViewById(R.id.popupText);
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,11 +83,10 @@ public class ContestFragment extends Fragment {
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.fragment_contest_post);
 
-//                Window window = dialog.getWindow();
-//                if (window != null) {
-//                    // 幅と高さをピクセル単位で設定
-//                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                }
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 700; // 幅を変更
+                params.height = 1200; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
                 Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
 
@@ -90,6 +100,8 @@ public class ContestFragment extends Fragment {
                 dialog.show();
             }
         });
+
+        btnInfo= view.findViewById(R.id.btnContestInfo);
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,12 +109,6 @@ public class ContestFragment extends Fragment {
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.fragment_contest_info);
 
-//                Window window = dialog.getWindow();
-//                if (window != null) {
-//                    // 幅と高さをピクセル単位で設定
-//                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                }
-
                 Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
@@ -115,16 +121,33 @@ public class ContestFragment extends Fragment {
                 dialog.show();
             }
         });
+
+
+        btnEntry=view.findViewById(R.id.btnContestEntry);
         btnEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnEntry.setEnabled(false);
                 btnPost.setEnabled(true);
+                showPopup();
             }
         });
 
 
 
     }
+    private void showPopup() {
+        // ポップアップ表示
+        popupText.setVisibility(View.VISIBLE);
+
+        // 3秒後にポップアップを非表示にする
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popupText.setVisibility(View.INVISIBLE);
+            }
+        }, 3000);
+    }
+
 
 }
