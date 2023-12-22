@@ -139,6 +139,8 @@ public class route3Fragment extends Fragment {
             }
         });
 
+
+
 //        Button bt = view.findViewById(R.id.start1);
 //        bt.setOnClickListener(new View.OnClickListener() {
 //
@@ -155,20 +157,3 @@ public class route3Fragment extends Fragment {
 
     }
 }
-
-
-// CountDownTimer timer = new CountDownTimer(10000, 100) {
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            int time = (int)millisUntilFinished/1000;
-//            TextView tm = view.findViewById(R.id.timer);
-//            tm.setText("あと" + millisUntilFinished + "秒");
-//
-//
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            onFinish();
-//        }
-//    }.start();
