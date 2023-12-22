@@ -49,11 +49,11 @@ public class route3Fragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_route3, container, false);
-        View view7 = inflater.inflate(R.layout.fragment_route7, container, false);
+//        View view7 = inflater.inflate(R.layout.fragment_route7, container, false);
 
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
-        timerText = view7.findViewById(R.id.timer1);
+//        timerText = view7.findViewById(R.id.timer1);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +81,15 @@ public class route3Fragment extends Fragment {
             countDownTimer = new CountDownTimer(timeInMillis, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-//                    timerText.setText("残り時間: " + millisUntilFinished / 1000 + "秒");
+//                    timerText.setText("残り時間：" + millisUntilFinished / 1000 + "秒");
                     timeLeftInMillis = millisUntilFinished;
                     updateCountdownText();
+                }
+
+                private void navigateToNewScreen() {
+                    // 新しい画面に遷移するためのコードを追加
+                    // ここで Navigation などを使用して別の画面に遷移します
+                    Navigation.findNavController(requireView()).navigate(R.id.action_navigation_route3_to_navigation_route7);
                 }
 
                 @Override
@@ -104,6 +110,8 @@ public class route3Fragment extends Fragment {
             startButton.setText("Start");
         }
     }
+
+
 
     private void updateCountdownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
@@ -139,16 +147,16 @@ public class route3Fragment extends Fragment {
             }
         });
 
-        Button bt = view.findViewById(R.id.start1);
-        bt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
-            }
-        });
+//        Button bt = view.findViewById(R.id.start1);
+//        bt.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
+//            }
+//        });
 
 
 
