@@ -67,6 +67,7 @@ public class ContestFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
+//                btnPost.setEnabled(false);
                 Context context = requireContext();
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.fragment_contest_post);
@@ -117,7 +118,8 @@ public class ContestFragment extends Fragment {
         btnEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                btnEntry.setEnabled(false);
+                btnPost.setEnabled(true);
             }
         });
 
