@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="指定場所"
-        android:textSize="50dp" />
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextText"
@@ -19,21 +21,38 @@
         android:layout_marginStart="151dp"
         android:layout_marginTop="225dp"
         android:ems="10"
+        android:hint="指定場所を入力してください"
         android:inputType="text"
-        android:text="指定場所を入力してください"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/top"
         android:layout_width="158dp"
         android:layout_height="69dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="540dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="680dp"
         android:backgroundTint="#F2A955"
         android:text="START画面へ"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/kensaku"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="472dp"
+        android:layout_marginTop="276dp"
+        android:background="@null"
+        android:src="@android:drawable/ic_menu_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- 候補の区切り文字 -->
+    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,14 +10,17 @@
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="300dp"
         android:text="キャンセル" />
 
     <Button
         android:id="@+id/decision_btn"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
+        android:layout_marginTop="200dp"
         android:text="決定" />
+
+
 
     <LinearLayout
         android:id="@+id/buttonContainer"
