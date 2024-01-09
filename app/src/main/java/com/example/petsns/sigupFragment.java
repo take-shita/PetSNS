@@ -12,24 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class profile_deletecheckFragment extends Fragment {
+public class sigupFragment extends Fragment {
 
-    private ProfileDeletecheckViewModel mViewModel;
+    private SigupViewModel mViewModel;
 
-    public static profile_deletecheckFragment newInstance() {
-        return new profile_deletecheckFragment();
+    public static sigupFragment newInstance() {
+        return new sigupFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile_deletecheck, container, false);
+        return inflater.inflate(R.layout.fragment_sigup, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileDeletecheckViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SigupViewModel.class);
         // TODO: Use the ViewModel
     }
 

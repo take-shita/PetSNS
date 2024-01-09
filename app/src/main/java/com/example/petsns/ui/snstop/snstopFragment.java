@@ -2,6 +2,8 @@ package com.example.petsns.ui.snstop;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -56,6 +58,33 @@ public class snstopFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_snspost);
+            }
+        });
+
+
+        ImageButton tag_select = view.findViewById(R.id.search_tag);
+        tag_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.fragment_tag_post);
+
+                Button btnClose = dialog.findViewById(R.id.cancel_btn);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 700; // 幅を変更
+                params.height = 1200; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }

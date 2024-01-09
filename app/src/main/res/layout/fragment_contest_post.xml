@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.contest.ContestPostFragment">
 
+
     <ImageButton
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="576dp"
+        android:layout_marginTop="288dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/picture"
@@ -22,7 +23,7 @@
     <ImageButton
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="468dp"
         android:background="@null"
         android:scaleType="fitXY"
         android:src="@drawable/tag"
@@ -34,21 +35,23 @@
 
     <Button
         android:id="@+id/btnContestTopBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
         android:text="キャンセル"
+        android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnContestPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="232dp"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:text="投稿"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

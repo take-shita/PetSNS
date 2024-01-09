@@ -117,7 +117,6 @@ public class route3Fragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route4);
             }
         });
-
         Button bt = view.findViewById(R.id.start1);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +126,5 @@ public class route3Fragment extends Fragment {
         });
     }
 }
-
 
 

@@ -21,13 +21,22 @@
     <fragment
         android:id="@+id/navigation_snspost"
         android:name="com.example.petsns.snspostFragment"
-        android:label="post"
+        android:label="投稿"
         tools:layout="@layout/fragment_snspost" >
         <action
             android:id="@+id/action_navigation_snspost_to_navigation_snstop"
             app:destination="@id/navigation_snstop" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_tag_post"
+        android:name="com.example.petsns.tag_postFragment"
+        android:label="タグを選択"
+        tools:layout="@layout/fragment_tag_post" >
+        <action
+            android:id="@+id/action_navigation_tag_post_to_navigation_snspost"
+            app:destination="@id/navigation_snspost" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -42,7 +51,7 @@
         tools:layout="@layout/fragment_notifications" />
 
 
-
+<!--    プロフィール画面-->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.petsns.ui.profile.ProfileFragment"
@@ -54,8 +63,20 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_profile_to_navigation_profile_deletecheck"-->
+<!--            app:destination="@id/navigation_profile_deletecheck" />-->
     </fragment>
-
+    <!-- 投稿削除確認ポップアップ画面-->
+    <fragment
+        android:id="@+id/navigation_profile_deletecheck"
+        android:name="com.example.petsns.ui.profile.profile_deletecheckFragment"
+        android:label="profile_deletecheck"
+        tools:layout="@layout/fragment_profile_deletecheck" >
+        <action
+            android:id="@+id/action_navigation_profile_deletecheck_to_navigation_profile"
+            app:destination="@id/navigation_profile_deletecheck" />
+    </fragment>
 
 
 
