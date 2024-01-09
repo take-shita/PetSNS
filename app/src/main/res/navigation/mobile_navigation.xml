@@ -242,7 +242,14 @@
 
 
     <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.example.petsns.routeFragment"
+        android:label="route"
+        tools:layout="@layout/fragment_route" />
+
+    <fragment
         android:id="@+id/navigation_setting"
+<<<<<<< Updated upstream
         android:name="com.example.petsns.ui.setting.settingFragment"
         android:label="設定"
         tools:layout="@layout/fragment_setting" >
@@ -369,6 +376,11 @@
 
 
 
+=======
+        android:name="com.example.petsns.settingFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_setting" />
+>>>>>>> Stashed changes
 
 
 </navigation>
