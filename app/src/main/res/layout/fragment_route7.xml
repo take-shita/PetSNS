@@ -30,14 +30,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/timer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="195dp"
-        android:layout_marginTop="218dp"
-        android:ems="10"
-        android:inputType="date"
+        android:layout_width="300dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="197dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

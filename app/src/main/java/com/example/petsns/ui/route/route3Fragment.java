@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.example.petsns.R;
 
 public class route3Fragment extends Fragment {
 
-
     private TextView timerTextView;
     private Button startButton;
     private EditText timerText;
@@ -32,8 +32,6 @@ public class route3Fragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     private Route3ViewModel mViewModel;
 
     public static route3Fragment newInstance() {
@@ -43,32 +41,19 @@ public class route3Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//
-//        消さない
-//        return inflater.inflate(R.layout.fragment_route3, container, false);
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_route3, container, false);
-//        View view7 = inflater.inflate(R.layout.fragment_route7, container, false);
 
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
-//        timerText = view7.findViewById(R.id.timer1);
+//        timerTextView = view.findViewById(R.id.timer1); // Access timer1 directly from the current layout
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startStop();
             }
         });
-
-
-
-//        startButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startStop();
-//            }
-//        });
 
         return view;
     }
@@ -81,24 +66,20 @@ public class route3Fragment extends Fragment {
             countDownTimer = new CountDownTimer(timeInMillis, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-//                    timerText.setText("残り時間：" + millisUntilFinished / 1000 + "秒");
                     timeLeftInMillis = millisUntilFinished;
-                    updateCountdownText();
-                }
-
-                private void navigateToNewScreen() {
-                    // 新しい画面に遷移するためのコードを追加
-                    // ここで Navigation などを使用して別の画面に遷移します
-                    Navigation.findNavController(requireView()).navigate(R.id.action_navigation_route3_to_navigation_route7);
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateCountdownText();
+                        }
+                    });
                 }
 
                 @Override
                 public void onFinish() {
                     // タイマーが終了したときの処理
                     countDownTimer = null;
-//                    startButton.setText("Start");
                 }
-
             }.start();
 
             startButton.setText("Stop");
@@ -111,14 +92,11 @@ public class route3Fragment extends Fragment {
         }
     }
 
-
-
     private void updateCountdownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
-
         String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
-        timerText.setText(timeLeftFormatted);
+        timerTextView.setText(timeLeftFormatted);
     }
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
@@ -126,42 +104,27 @@ public class route3Fragment extends Fragment {
 
         Button btn = view.findViewById(R.id.time1);
         btn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route2);
             }
         });
 
-
         Button btn1 = view.findViewById(R.id.route1);
         btn1.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route4);
             }
         });
-
-
-
-//        Button bt = view.findViewById(R.id.start1);
-//        bt.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
-//            }
-//        });
-
-
-
-
+        Button bt = view.findViewById(R.id.start1);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
+            }
+        });
     }
 }
+
+

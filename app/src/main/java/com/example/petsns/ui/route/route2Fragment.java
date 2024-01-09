@@ -2,6 +2,9 @@ package com.example.petsns.ui.route;
 
 import android.os.Bundle;
 
+import android.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,7 +17,7 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route2Fragment extends Fragment {
+public class route2Fragment extends DialogFragment {
 
     private Route2ViewModel mViewModel;
 
