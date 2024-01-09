@@ -1,7 +1,5 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.petsns.R;
 
@@ -40,6 +39,17 @@ public class route5Fragment extends Fragment {
 
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route5_to_navigation_route);
+            }
+        });
+
+        ImageButton btn = view.findViewById(R.id.kensaku);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route5_to_navigation_route10);
             }
         });
     }

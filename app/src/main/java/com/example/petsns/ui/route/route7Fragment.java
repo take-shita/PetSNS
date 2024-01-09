@@ -3,6 +3,10 @@ package com.example.petsns.ui.route;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,23 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.example.petsns.R;
 
 public class route7Fragment extends Fragment {
 
-    private Route7ViewModel mViewModel;
+   public route7Fragment(){
 
-    public static route7Fragment newInstance() {
-        return new route7Fragment();
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route7, container, false);
-    }
-
+   }
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -43,5 +37,6 @@ public class route7Fragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route7_to_navigation_route8);
             }
         });
+
     }
 }

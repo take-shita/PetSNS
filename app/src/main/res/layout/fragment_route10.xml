@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.route.routeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-16dp" />
+
+    <Button
+        android:id="@+id/kouho1"
+        android:layout_width="197dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="336dp"
+        android:background="@drawable/frame_style"
+        android:text="上荒田の杜公園"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/kouho2"
+        android:layout_width="197dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="408dp"
+        android:background="@drawable/frame_style"
+        android:text="荒田公園"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/kouho3"
+        android:layout_width="197dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="484dp"
+        android:background="@drawable/frame_style"
+        android:text="中村公園"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/kouho4"
+        android:layout_width="197dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="624dp"
+        android:background="@drawable/frame_style"
+        android:text="鴨池児童公園"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/kouho5"
+        android:layout_width="197dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="556dp"
+        android:background="@drawable/frame_style"
+        android:text="新生公園"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
