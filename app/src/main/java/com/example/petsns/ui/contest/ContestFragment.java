@@ -28,6 +28,13 @@ import com.example.petsns.MainActivity;
 import com.example.petsns.R;
 import android.content.Context;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import android.os.AsyncTask;
+
 public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
@@ -68,6 +75,7 @@ public class ContestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_view);
+
             }
         });
 
@@ -155,5 +163,41 @@ public class ContestFragment extends Fragment {
         }, 3000);
     }
 
+    private class HttpRequestTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String url = params[0];
+            try {
+                URL obj = new URL(url);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+                // リクエストメソッドの設定（GETやPOSTなど）
+                con.setRequestMethod("GET");
+
+                // レスポンスコードの取得
+                int responseCode = con.getResponseCode();
+
+                // レスポンスデータの取得
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                return response.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // レスポンスを処理するコードをここに記述
+        }
+    }
 
 }
