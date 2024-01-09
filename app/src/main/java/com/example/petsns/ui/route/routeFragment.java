@@ -1,5 +1,7 @@
 package com.example.petsns.ui.route;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 import com.example.petsns.R;
@@ -40,16 +43,6 @@ public class routeFragment extends DashboardFragment {
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt_jude = view.findViewById(R.id.set);
-        bt_jude.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route2);
-            }
-        });
 
 
         Button btn1 = view.findViewById(R.id.route1);
@@ -72,6 +65,39 @@ public class routeFragment extends DashboardFragment {
 
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route7);
+            }
+        });
+
+        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
+        ro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_route2);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 900; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button a = dialog.findViewById(R.id.distance1);
+                Button b = dialog.findViewById(R.id.time);
+
+                a.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 
