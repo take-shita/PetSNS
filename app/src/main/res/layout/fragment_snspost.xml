@@ -45,13 +45,13 @@
                 android:id="@+id/editTextTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="150dp"
                 android:layout_marginTop="80dp"
                 android:elevation="0dp"
                 android:ems="100"
                 android:gravity="start|top"
                 android:hint="ここに投稿内容を入力"
                 android:inputType="textMultiLine"
+                android:minHeight="150dp"
                 android:textSize="25dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
