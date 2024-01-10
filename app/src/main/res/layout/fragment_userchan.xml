@@ -46,20 +46,6 @@
         app:layout_constraintVertical_bias="0.416"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/editTextDate2"
-        android:layout_width="290dp"
-        android:layout_height="68dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.348"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
@@ -79,9 +65,34 @@
         android:text="変更"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintHorizontal_bias="0.718"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585" />
+        app:layout_constraintVertical_bias="0.594" />
+
+    <Button
+        android:id="@+id/btncan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="戻る"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="291dp"
+        android:layout_height="75dp"
+        android:text="田實　優斗"
+        android:textSize="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.341"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.219" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

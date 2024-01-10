@@ -1,29 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tag_postFragment">
 
 
-    <Button
-        android:id="@+id/cancel_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginTop="300dp"
-        android:text="キャンセル" />
+    <TextView
+        android:layout_width="357dp"
+        android:layout_height="29dp"
+        android:text="検索したい動物のタグを選択してください"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174" />
 
     <Button
-        android:id="@+id/decision_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginTop="200dp"
-        android:text="決定" />
+        android:id="@+id/bird"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="鳥類"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.246" />
 
     <Button
         android:id="@+id/mamma"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="哺乳類"/>
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="哺乳類"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/insect"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="虫類"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.539" />
+
+    <Button
+        android:id="@+id/fish"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="水生生物"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.537" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#ff0000"
+        android:text="キャンセル"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
+
+    <Button
+        android:id="@+id/decision_btn"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#0000ff"
+        android:text="検索"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.773" />
+
+    <Button
+        android:id="@+id/amphi"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="両生類"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
+
+    <Button
+        android:id="@+id/rep"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="爬虫類"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
