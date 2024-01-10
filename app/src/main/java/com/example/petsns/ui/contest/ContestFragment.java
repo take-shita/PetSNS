@@ -28,12 +28,14 @@ import com.example.petsns.MainActivity;
 import com.example.petsns.R;
 import android.content.Context;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import android.os.AsyncTask;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ContestFragment extends Fragment {
 
@@ -49,11 +51,23 @@ public class ContestFragment extends Fragment {
         return new ContestFragment();
     }
 
+
+    private FirebaseFirestore db;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_contest, container, false);
+
+        // Firestoreの参照を取得
+
+
+
         return inflater.inflate(R.layout.fragment_contest, container, false);
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -62,8 +76,22 @@ public class ContestFragment extends Fragment {
 
     }
 
+
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        db = FirebaseFirestore.getInstance();
+        // ボタンのクリックリスナーを設定
+        Button addButton = view.findViewById(R.id.sample);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAccountInfo();
+            }
+        });
+
+
 
 
         TextView txt= view.findViewById(R.id.textView25);
@@ -78,6 +106,7 @@ public class ContestFragment extends Fragment {
 
             }
         });
+
 
 
         btnPost = view.findViewById(R.id.btnContestPost);
@@ -163,41 +192,33 @@ public class ContestFragment extends Fragment {
         }, 3000);
     }
 
-    private class HttpRequestTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String url = params[0];
-            try {
-                URL obj = new URL(url);
-                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-                // リクエストメソッドの設定（GETやPOSTなど）
-                con.setRequestMethod("GET");
 
-                // レスポンスコードの取得
-                int responseCode = con.getResponseCode();
+    public void addAccountInfo() {
+    // ドキュメントの参照
+            String documentId="a";
+//            CollectionReference accountRef = db.collection("sample01");
+            DocumentReference documentRef = db.collection("sample01").document(documentId);
+            // アカウント情報のデータ
+            Map<String, Object> accountData = new HashMap<>();
+//            accountData.put("id", "1234");
+            accountData.put("account_name", "example_user");
+            accountData.put("password", "password123");
 
-                // レスポンスデータの取得
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
+            documentRef.set(accountData)
+                    .addOnSuccessListener(aVoid -> {
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
+                    })
+                    .addOnFailureListener(e -> {
 
-                return response.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
+                    });
 
-        @Override
-        protected void onPostExecute(String result) {
-            // レスポンスを処理するコードをここに記述
-        }
+        //        accountRef.add(accountData)
+        //                .addOnSuccessListener(documentReference -> {
+        //                    // 成功時の処理
+        //                })
+        //                .addOnFailureListener(e -> {
+        //                    // 失敗時の処理
+        //                });
     }
-
 }

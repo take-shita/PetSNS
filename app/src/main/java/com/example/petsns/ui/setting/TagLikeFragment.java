@@ -1,21 +1,37 @@
 package com.example.petsns.ui.setting;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.ListView;
 import com.example.petsns.R;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TagLikeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class TagLikeFragment extends Fragment {
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +78,36 @@ public class TagLikeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tag_like, container, false);
+    }
+
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button bth = view.findViewById(R.id.bth);
+
+        bth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_popup_mammalian);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 800; // 幅を変更
+                params.height = 600; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) { dialog.dismiss(); }
+                });
+
+                dialog.show();
+            }
+        });
     }
 }
