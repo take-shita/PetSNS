@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "923444149354",
+    "project_id": "sample-eaf65",
+    "storage_bucket": "sample-eaf65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923444149354:android:1f736b92559779f4869e13",
+        "android_client_info": {
+          "package_name": "com.example.petsns"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNbmN6F2lQ1i_-hA9aMG0ugTzhqIUGxQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
