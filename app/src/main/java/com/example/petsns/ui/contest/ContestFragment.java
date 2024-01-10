@@ -31,6 +31,8 @@ import android.content.Context;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import  com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,6 +43,8 @@ public class ContestFragment extends Fragment {
 
     private ContestViewModel mViewModel;
     private TextView popupText;
+
+    private TextView sampleText;
     Button btnView;
     Button btnPost;
     Button btnInfo;
@@ -84,9 +88,11 @@ public class ContestFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         // ボタンのクリックリスナーを設定
         Button addButton = view.findViewById(R.id.sample);
+        sampleText=view.findViewById(R.id.textView38);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 addAccountInfo();
             }
         });
@@ -195,30 +201,46 @@ public class ContestFragment extends Fragment {
 
 
     public void addAccountInfo() {
-    // ドキュメントの参照
-            String documentId="a";
-//            CollectionReference accountRef = db.collection("sample01");
-            DocumentReference documentRef = db.collection("sample01").document(documentId);
-            // アカウント情報のデータ
-            Map<String, Object> accountData = new HashMap<>();
-//            accountData.put("id", "1234");
-            accountData.put("account_name", "example_user");
-            accountData.put("password", "password123");
 
-            documentRef.set(accountData)
-                    .addOnSuccessListener(aVoid -> {
+        CollectionReference collectionRef = db.collection("sample01");
+        collectionRef.orderBy("account_name", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
 
-                    })
-                    .addOnFailureListener(e -> {
+                        DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
 
-                    });
+                        String documentId = documentSnapshot.getId();
+                        int intDocumentID = Integer.parseInt(documentId)+1;
+                        String nextDocumentID=Integer.toString(intDocumentID);
 
-        //        accountRef.add(accountData)
-        //                .addOnSuccessListener(documentReference -> {
-        //                    // 成功時の処理
-        //                })
-        //                .addOnFailureListener(e -> {
-        //                    // 失敗時の処理
-        //                });
+                        DocumentReference documentRef = db.collection("sample01").document(nextDocumentID);
+                        // アカウント情報のデータ
+                        Map<String, Object> accountData = new HashMap<>();
+                        accountData.put("account_name", "example_user");
+                        accountData.put("password", "password123");
+                        documentRef.set(accountData)
+                                .addOnSuccessListener(aVoid -> {
+                                    sampleText.setText(nextDocumentID+"を追加しました");
+                                })
+                                .addOnFailureListener(e -> {
+                                    sampleText.setText("追加失敗");
+                                });
+
+                        // フィールドの取得
+//                        String fieldName = documentSnapshot.getString("account_name");
+
+                        // ここで取得した date を使用できます
+
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // 失敗時の処理
+                    sampleText.setText("一番新しいの参照できません");
+                });
+
     }
+
+
 }
