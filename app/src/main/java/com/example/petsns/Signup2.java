@@ -16,35 +16,24 @@ import android.widget.Button;
 import android.content.Intent;
 
 import androidx.lifecycle.ViewModelProvider;
-public class Signup extends AppCompatActivity {
+public class Signup2 extends AppCompatActivity{
     private SigupViewModel viewModel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_signup2);
 
         Button btnNext=findViewById(R.id.btnNext);
-        EditText textID=findViewById(R.id.textID);
-        EditText textPass=findViewById(R.id.textPass);
-        EditText textMail=findViewById(R.id.textMail);
         viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
 
-        String id=textID.getText().toString();
-        String pass=textPass.getText().toString();
-        String mail=textMail.getText().toString();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.setUserName(id);
-                viewModel.setEmail(mail);
-                viewModel.setPassword(pass);
-
                 Context context = v.getContext();
 
-                Intent intent = new Intent(context, Signup2.class);
+                Intent intent = new Intent(context, Signup3.class);
                 startActivity(intent);
-
             }
         });
     }
