@@ -109,5 +109,55 @@ public class TagLikeFragment extends Fragment {
                 dialog.show();
             }
         });
+        Button btb = view.findViewById(R.id.btb);
+
+        btb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_popup_bird);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 800; // 幅を変更
+                params.height = 600; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) { dialog.dismiss(); }
+                });
+
+                dialog.show();
+            }
+        });
+        Button bti = view.findViewById(R.id.bti);
+
+        bti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_popup_insect);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 800; // 幅を変更
+                params.height = 600; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) { dialog.dismiss(); }
+                });
+
+                dialog.show();
+            }
+        });
     }
 }
