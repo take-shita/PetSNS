@@ -37,13 +37,30 @@
         app:layout_constraintVertical_bias="0.245" />
 
     <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="決定"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.783" />
+
+    <Button
         android:id="@+id/bth"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="哺乳類"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.28"
+=======
+        app:layout_constraintHorizontal_bias="0.247"
+>>>>>>> dd41acab1e53f5232571a093067603d6736c150f
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.366" />
@@ -67,10 +84,17 @@
         android:text="虫類"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.497" />
+=======
+        app:layout_constraintHorizontal_bias="0.748"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.637" />
+>>>>>>> dd41acab1e53f5232571a093067603d6736c150f
 
     <Button
         android:id="@+id/btr"
@@ -88,10 +112,14 @@
         android:id="@+id/bts"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="水生生物類"
+        android:text="水生生物"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.28"
+=======
+        app:layout_constraintHorizontal_bias="0.249"
+>>>>>>> dd41acab1e53f5232571a093067603d6736c150f
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.636" />
@@ -103,6 +131,7 @@
         android:text="爬虫類"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.731"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -119,4 +148,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.789" />
+=======
+        app:layout_constraintHorizontal_bias="0.247"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> dd41acab1e53f5232571a093067603d6736c150f
 </androidx.constraintlayout.widget.ConstraintLayout>
