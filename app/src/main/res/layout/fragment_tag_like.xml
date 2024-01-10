@@ -26,8 +26,8 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="494dp"
-        android:layout_height="41dp"
+        android:layout_width="441dp"
+        android:layout_height="34dp"
         android:text="タイムラインに表示したい動物を選択してください"
         android:textSize="19dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +100,7 @@
         android:id="@+id/bts"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="水生生物類"
+        android:text="水生生物"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.249"

@@ -84,8 +84,10 @@ public class snstopFragment extends Fragment {
                     }
                 });
 
+
                 dialog.show();
             }
         });
+
     }
 }
