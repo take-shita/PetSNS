@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".popup_mammalianFragment">
 
-
+<Button
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:text="イッヌ"/>
 
 
 </FrameLayout>
