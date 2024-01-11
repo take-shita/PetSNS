@@ -72,23 +72,6 @@ public class tag_postFragment extends Fragment {
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageButton mamma_select = view.findViewById(R.id.mamma);
-        mamma_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = requireContext();
-                Dialog dialog=new Dialog(context);
-                dialog.setContentView(R.layout.fragment_popup_mammalian);
-
-
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 700; // 幅を変更
-                params.height = 1200; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
-                dialog.show();
-            }
-        });
 
     };
 }

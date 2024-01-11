@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_navigation_tag_post_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
+        <action
+            android:id="@+id/action_navigation_tag_post_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
     </fragment>
 
     <fragment
