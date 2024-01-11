@@ -76,6 +76,8 @@ public class Signup2 extends AppCompatActivity{
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Context context = v.getContext();
 
                 Intent intent = new Intent(context, Signup3.class);
