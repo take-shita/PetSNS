@@ -16,6 +16,19 @@
         <action
             android:id="@+id/action_navigation_snstop_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_tag_search"
+            app:destination="@id/navigation_tag_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_tag_search"
+        android:name="com.example.petsns.tag_searchFragment"
+        android:label="タグ検索（類選択）"
+        tools:layout="@layout/fragment_tag_search">
+        <action
+            android:id="@+id/action_navigation_tag_search_to_navigation_snstop"
+            app:destination="@id/navigation_snstop" />
     </fragment>
 
     <fragment
@@ -26,6 +39,9 @@
         <action
             android:id="@+id/action_navigation_snspost_to_navigation_snstop"
             app:destination="@id/navigation_snstop" />
+        <action
+            android:id="@+id/action_navigation_snspost_to_navigation_tag_post"
+            app:destination="@id/navigation_tag_post" />
     </fragment>
 
     <fragment

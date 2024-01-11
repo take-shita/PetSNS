@@ -17,6 +17,9 @@ public class SigupViewModel extends ViewModel {
     }
 
     public String getEmail() {
+        if(email.equals("")){
+            return "a?";
+        }
         return email;
     }
 
