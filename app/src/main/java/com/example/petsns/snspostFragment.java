@@ -90,30 +90,13 @@ public class snspostFragment extends Fragment {
             }
         });
 
-        ImageButton tag_select = view.findViewById(R.id.tag_btn);
-        tag_select.setOnClickListener(new View.OnClickListener() {
+        ImageButton tag_post = view.findViewById(R.id.tag_btn);
+        tag_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = requireContext();
-                Dialog dialog=new Dialog(context);
-                dialog.setContentView(R.layout.fragment_tag_post);
-
-                Button btnClose = dialog.findViewById(R.id.cancel_btn);
-
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 700; // 幅を変更
-                params.height = 1200; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
             }
         });
+
     }
 }

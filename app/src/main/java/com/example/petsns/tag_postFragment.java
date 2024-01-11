@@ -72,6 +72,13 @@ public class tag_postFragment extends Fragment {
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Button select_tag = view.findViewById(R.id.cancel_btn);
+        select_tag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+            }
+        });
 
     };
 }
