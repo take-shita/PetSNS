@@ -39,7 +39,7 @@
         android:id="@+id/bt01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#0773C8"
+        android:backgroundTint="#2196F3"
         android:text="次へ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
