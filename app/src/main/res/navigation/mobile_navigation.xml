@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_tag_search"
         android:name="com.example.petsns.tag_searchFragment"
-        android:label="タグ検索（類選択）"
+        android:label="タグ検索"
         tools:layout="@layout/fragment_tag_search">
         <action
             android:id="@+id/action_navigation_tag_search_to_navigation_snstop"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/navigation_tag_post"
         android:name="com.example.petsns.tag_postFragment"
-        android:label="タグを選択"
+        android:label="タグ選択"
         tools:layout="@layout/fragment_tag_post" >
         <action
             android:id="@+id/action_navigation_tag_post_to_navigation_snspost"
@@ -160,124 +160,124 @@
         android:label="散歩"
         tools:layout="@layout/fragment_route" >
         <action
-            android:id="@+id/action_navigation_route_to_navigation_route2"
-            app:destination="@id/navigation_route2" />
+            android:id="@+id/action_navigation_route_to_navigation_routepopup"
+            app:destination="@id/navigation_routepopup" />
         <action
-            android:id="@+id/action_navigation_route_to_navigation_route4"
-            app:destination="@id/navigation_route4" />
+            android:id="@+id/action_navigation_route_to_navigation_routepopup2"
+            app:destination="@id/navigation_routepopup2" />
         <action
-            android:id="@+id/action_navigation_route_to_navigation_route7"
-            app:destination="@id/navigation_route7" />
+            android:id="@+id/action_navigation_route_to_navigation_routestart"
+            app:destination="@id/navigation_routestart" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_route2"
-        android:name="com.example.petsns.ui.route.route2Fragment"
+        android:id="@+id/navigation_routepopup"
+        android:name="com.example.petsns.ui.route.routepopupFragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route2" >
+        tools:layout="@layout/fragment_routepopup" >
         <action
-            android:id="@+id/action_navigation_route2_to_navigation_route"
+            android:id="@+id/action_navigation_routepopup_to_navigation_route"
             app:destination="@id/navigation_route" />
         <action
-            android:id="@+id/action_navigation_route2_to_navigation_route3"
-            app:destination="@id/navigation_route3" />
+            android:id="@+id/action_navigation_routepopup_to_navigation_routetime"
+            app:destination="@id/navigation_routetime" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_route3"
-        android:name="com.example.petsns.ui.route.route3Fragment"
+        android:id="@+id/navigation_routetime"
+        android:name="com.example.petsns.ui.route.routetimeFragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route3" >
+        tools:layout="@layout/fragment_routetime" >
 
         <action
-            android:id="@+id/action_navigation_route3_to_navigation_route2"
-            app:destination="@id/navigation_route2" />
+            android:id="@+id/action_navigation_routetime_to_navigation_routepopup"
+            app:destination="@id/navigation_routepopup" />
         <action
-            android:id="@+id/action_navigation_route3_to_navigation_route4"
-            app:destination="@id/navigation_route4" />
+            android:id="@+id/action_navigation_routetime_to_navigation_routepopup2"
+            app:destination="@id/navigation_routepopup2" />
         <action
-            android:id="@+id/action_navigation_route3_to_navigation_route7"
-            app:destination="@id/navigation_route7" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/navigation_route4"
-        android:name="com.example.petsns.ui.route.route4Fragment"
-        android:label="散歩"
-        tools:layout="@layout/fragment_route4" >
-        <action
-            android:id="@+id/action_navigation_route4_to_navigation_route5"
-            app:destination="@id/navigation_route5" />
-        <action
-            android:id="@+id/action_navigation_route4_to_navigation_route6"
-            app:destination="@id/navigation_route6" />
+            android:id="@+id/action_navigation_routetime_to_navigation_routestart"
+            app:destination="@id/navigation_routestart" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/navigation_route5"
-        android:name="com.example.petsns.ui.route.route5Fragment"
+        android:id="@+id/navigation_routepopup2"
+        android:name="com.example.petsns.ui.route.routepopup2Fragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route5" >
+        tools:layout="@layout/fragment_routepopup2" >
         <action
-            android:id="@+id/action_navigation_route5_to_navigation_route"
+            android:id="@+id/action_navigation_routepopup2_to_navigation_routeplace"
+            app:destination="@id/navigation_routeplace" />
+        <action
+            android:id="@+id/action_navigation_routepopup2_to_navigation_routefavorite"
+            app:destination="@id/navigation_routefavorite" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_routeplace"
+        android:name="com.example.petsns.ui.route.routeplaceFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_routeplace" >
+        <action
+            android:id="@+id/action_navigation_routeplace_to_navigation_route"
             app:destination="@id/navigation_route" />
         <action
-            android:id="@+id/action_navigation_route5_to_navigation_route10"
-            app:destination="@id/navigation_route10" />
+            android:id="@+id/action_navigation_routeplace_to_navigation_routepark"
+            app:destination="@id/navigation_routepark" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_route6"
-        android:name="com.example.petsns.ui.route.route6Fragment"
+        android:id="@+id/navigation_routefavorite"
+        android:name="com.example.petsns.ui.route.routefavoriteFragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route6" >
+        tools:layout="@layout/fragment_routefavorite" >
 
         <action
-            android:id="@+id/action_navigation_route6_to_navigation_route"
-            app:destination="@id/navigation_route" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/navigation_route7"
-        android:name="com.example.petsns.ui.route.route7Fragment"
-        android:label="散歩"
-        tools:layout="@layout/fragment_route7" >
-        <action
-            android:id="@+id/action_navigation_route7_to_navigation_route8"
-            app:destination="@id/navigation_route8" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_route8"
-        android:name="com.example.petsns.ui.route.route8Fragment"
-        android:label="散歩"
-        tools:layout="@layout/fragment_route8" >
-        <action
-            android:id="@+id/action_navigation_route8_to_navigation_route9"
-            app:destination="@id/navigation_route9" />
-        <action
-            android:id="@+id/action_navigation_route8_to_navigation_route7"
-            app:destination="@id/navigation_route7" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_route9"
-        android:name="com.example.petsns.ui.route.route9Fragment"
-        android:label="散歩"
-        tools:layout="@layout/fragment_route9" >
-        <action
-            android:id="@+id/action_navigation_route9_to_navigation_route"
+            android:id="@+id/action_navigation_routefavorite_to_navigation_route"
             app:destination="@id/navigation_route" />
     </fragment>
 
+
     <fragment
-        android:id="@+id/navigation_route10"
-        android:name="com.example.petsns.ui.route.route10Fragment"
+        android:id="@+id/navigation_routestart"
+        android:name="com.example.petsns.ui.route.routestartFragment"
         android:label="散歩"
-        tools:layout="@layout/fragment_route10" >
+        tools:layout="@layout/fragment_routestart" >
+        <action
+            android:id="@+id/action_navigation_routestart_to_navigation_routestart"
+            app:destination="@id/navigation_routestart" />
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_routestart"-->
+<!--        android:name="com.example.petsns.ui.route.routestopFragment"-->
+<!--        android:label="散歩"-->
+<!--        tools:layout="@layout/fragment_routestop" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_routestart_to_navigation_routeend"-->
+<!--            app:destination="@id/navigation_routeend" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_routestart_to_navigation_routestart"-->
+<!--            app:destination="@id/navigation_routestart" />-->
+<!--    </fragment>-->
+
+    <fragment
+        android:id="@+id/navigation_routeend"
+        android:name="com.example.petsns.ui.route.routeendFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_routeend" >
+        <action
+            android:id="@+id/action_navigation_routeend_to_navigation_route"
+            app:destination="@id/navigation_route" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_routepark"
+        android:name="com.example.petsns.ui.route.routeparkFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_routepark" >
     </fragment>
 
 

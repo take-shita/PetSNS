@@ -36,10 +36,10 @@ public class Signup extends AppCompatActivity {
         }
 
 
-        Button btnNext=findViewById(R.id.btnNext);
-        EditText textID=findViewById(R.id.textID);
-        EditText textPass=findViewById(R.id.textPass);
-        EditText textMail=findViewById(R.id.textMail);
+        Button btnNext=findViewById(R.id.button6);
+        EditText textID=findViewById(R.id.editTextText2);
+        EditText textPass=findViewById(R.id.editTextTextPassword);
+        EditText textMail=findViewById(R.id.editTextTextEmailAddress2);
 //        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
 
 

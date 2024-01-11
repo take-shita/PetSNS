@@ -14,32 +14,44 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route6Fragment extends Fragment {
+public class routepopup2Fragment extends Fragment {
 
-    private Route6ViewModel mViewModel;
+    private Routepopup2ViewModel mViewModel;
 
-    public static route6Fragment newInstance() {
-        return new route6Fragment();
+    public static routepopup2Fragment newInstance() {
+        return new routepopup2Fragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route6, container, false);
+        return inflater.inflate(R.layout.fragment_routepopup2, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt = view.findViewById(R.id.start1);
+        Button bt = view.findViewById(R.id.place);
         bt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route6_to_navigation_route);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_route5);
             }
         });
+
+        Button btn = view.findViewById(R.id.favorite);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_route6);
+            }
+        });
+
     }
 }
