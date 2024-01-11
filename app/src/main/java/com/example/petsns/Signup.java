@@ -17,12 +17,24 @@ import android.content.Intent;
 
 import androidx.lifecycle.ViewModelProvider;
 public class Signup extends AppCompatActivity {
-    MyApplication myApplication = (MyApplication) getApplication();
-    private SigupViewModel viewModel = myApplication.getSharedViewModel();
+    private SigupViewModel viewModel;
+    String mail;
+    String id;
+    String pass;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_signup);
+
+        MyApplication myApplication = (MyApplication) getApplication();
+
+        // MyApplicationの初期化が行われていることを確認する
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedViewModel();
+        } else {
+            // エラーハンドリング
+        }
+
 
         Button btnNext=findViewById(R.id.btnNext);
         EditText textID=findViewById(R.id.textID);
@@ -30,12 +42,13 @@ public class Signup extends AppCompatActivity {
         EditText textMail=findViewById(R.id.textMail);
 //        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
 
-        String id=textID.getText().toString();
-        String pass=textPass.getText().toString();
-        String mail=textMail.getText().toString();
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mail=textMail.getText().toString();
+                id=textID.getText().toString();
+                pass=textPass.getText().toString();
                 viewModel.setUserName(id);
                 viewModel.setEmail(mail);
                 viewModel.setPassword(pass);
