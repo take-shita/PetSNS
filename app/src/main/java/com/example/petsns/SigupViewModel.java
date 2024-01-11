@@ -3,9 +3,9 @@ package com.example.petsns;
 import androidx.lifecycle.ViewModel;
 
 public class SigupViewModel extends ViewModel {
-    private String userName;
-    private String email;
-    private String password;
+    private String userName="sample";
+    private String email="sample";
+    private String password="sample";
 
     // ゲッターとセッター
     public String getUserName() {

@@ -17,8 +17,8 @@ import android.content.Intent;
 
 import androidx.lifecycle.ViewModelProvider;
 public class Signup extends AppCompatActivity {
-    private SigupViewModel viewModel;
-
+    MyApplication myApplication = (MyApplication) getApplication();
+    private SigupViewModel viewModel = myApplication.getSharedViewModel();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -28,7 +28,7 @@ public class Signup extends AppCompatActivity {
         EditText textID=findViewById(R.id.textID);
         EditText textPass=findViewById(R.id.textPass);
         EditText textMail=findViewById(R.id.textMail);
-        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
+//        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
 
         String id=textID.getText().toString();
         String pass=textPass.getText().toString();

@@ -19,31 +19,41 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.content.Intent;
+import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Signup3 extends AppCompatActivity{
-    private SigupViewModel viewModel;
     private FirebaseFirestore db;
+    MyApplication myApplication = (MyApplication) getApplication();
+    private SigupViewModel viewModel = myApplication.getSharedViewModel();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup3);
 
         db = FirebaseFirestore.getInstance();
         Button btnFinish=findViewById(R.id.btnFinish);
-        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
+        TextView text=findViewById(R.id.textsample);
+
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                text.setText(viewModel.getEmail());
                 if(false){
 
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(viewModel.getEmail(), viewModel.getPassword())
                             .addOnCompleteListener(task -> {
+
+                                text.setText("kyaaaaaaaaaa");
+
                                 if (task.isSuccessful()) {
                                     // ユーザー作成成功
                                     FirebaseUser user = task.getResult().getUser();
@@ -55,8 +65,8 @@ public class Signup3 extends AppCompatActivity{
                                     DocumentReference documentRef = db.collection("users").document(uid);
                                     // アカウント情報のデータ
                                     Map<String, Object> accountData = new HashMap<>();
-                                    accountData.put("account_name", "example_user");
-                                    accountData.put("password", "password123");
+                                    accountData.put("mail",viewModel.getEmail());
+                                    accountData.put("password", viewModel.getPassword());
                                     documentRef.set(accountData)
                                             .addOnSuccessListener(aVoid -> {
 
@@ -69,6 +79,7 @@ public class Signup3 extends AppCompatActivity{
 
                                 } else {
                                     // ユーザー作成失敗
+                                    text.setText("nuaaaaaaaaaaaaaaaaa");
                                 }
                             });
 
