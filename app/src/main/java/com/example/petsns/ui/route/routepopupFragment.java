@@ -1,12 +1,10 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -16,44 +14,50 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route4Fragment extends Fragment {
+public class routepopupFragment extends DialogFragment {
 
-    private Route4ViewModel mViewModel;
+    private RoutepopupViewModel mViewModel;
 
-    public static route4Fragment newInstance() {
-        return new route4Fragment();
+    public static routepopupFragment newInstance() {
+        return new routepopupFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route4, container, false);
+        return inflater.inflate(R.layout.fragment_routepopup, container, false);
     }
 
+
+//    画面遷移--------------------------------------------------------------------------------
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt = view.findViewById(R.id.place);
+        Button bt= view.findViewById(R.id.distance1);
         bt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route4_to_navigation_route5);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup_to_navigation_route);
             }
         });
 
-        Button btn = view.findViewById(R.id.favorite);
+
+        Button btn= view.findViewById(R.id.time);
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route4_to_navigation_route6);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route2_to_navigation_route3);
             }
         });
 
     }
+
+
+//------------------------------------------------------------------------------------------------------------------
 }

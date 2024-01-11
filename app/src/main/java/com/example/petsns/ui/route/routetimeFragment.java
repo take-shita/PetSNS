@@ -1,10 +1,7 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,7 +17,7 @@ import android.widget.Button;
 import com.example.petsns.R;
 
 
-public class route3Fragment extends Fragment {
+public class routetimeFragment extends Fragment {
 
     private TextView timerTextView;
     private Button startButton;
@@ -28,21 +25,21 @@ public class route3Fragment extends Fragment {
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis = 60000; // 初期値は 1 分（60,000 ミリ秒）
 
-    public route3Fragment() {
+    public routetimeFragment() {
         // Required empty public constructor
     }
 
-    private Route3ViewModel mViewModel;
+    private RoutetimeViewModel mViewModel;
 
-    public static route3Fragment newInstance() {
-        return new route3Fragment();
+    public static routetimeFragment newInstance() {
+        return new routetimeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_route3, container, false);
+        View view = inflater.inflate(R.layout.fragment_routetime, container, false);
 
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
@@ -106,7 +103,7 @@ public class route3Fragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route2);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routepopup);
             }
         });
 
@@ -114,14 +111,14 @@ public class route3Fragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route4);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routepopup2);
             }
         });
         Button bt = view.findViewById(R.id.start1);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route3_to_navigation_route7);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route7);
             }
         });
     }

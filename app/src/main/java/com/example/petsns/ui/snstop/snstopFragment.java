@@ -52,6 +52,14 @@ public class snstopFragment extends Fragment {
             }
         });
 
+        ImageButton search_btn = view.findViewById(R.id.search_tag);
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_tag_search);
+            }
+        });
+
 
         ImageButton post = view.findViewById(R.id.post);
         post.setOnClickListener(new View.OnClickListener() {
@@ -62,32 +70,32 @@ public class snstopFragment extends Fragment {
         });
 
 
-        ImageButton tag_select = view.findViewById(R.id.search_tag);
-        tag_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = requireContext();
-                Dialog dialog=new Dialog(context);
-                dialog.setContentView(R.layout.fragment_tag_post);
-
-                Button btnClose = dialog.findViewById(R.id.cancel_btn);
-
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 700; // 幅を変更
-                params.height = 1000; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                dialog.show();
-            }
-        });
+//        ImageButton tag_select = view.findViewById(R.id.search_tag);
+//        tag_select.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Context context = requireContext();
+//                Dialog dialog=new Dialog(context);
+//                dialog.setContentView(R.layout.fragment_tag_post);
+//
+//                Button btnClose = dialog.findViewById(R.id.cancel_btn);
+//
+//                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+//                params.width = 700; // 幅を変更
+//                params.height = 1000; // 高さを変更
+//                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//
+//                btnClose.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//
+//                dialog.show();
+//            }
+//        });
 
     }
 }
