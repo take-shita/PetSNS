@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_tag_search"
         android:name="com.example.petsns.tag_searchFragment"
-        android:label="タグ検索（類選択）"
+        android:label="タグ検索"
         tools:layout="@layout/fragment_tag_search">
         <action
             android:id="@+id/action_navigation_tag_search_to_navigation_snstop"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/navigation_tag_post"
         android:name="com.example.petsns.tag_postFragment"
-        android:label="タグを選択"
+        android:label="タグ選択"
         tools:layout="@layout/fragment_tag_post" >
         <action
             android:id="@+id/action_navigation_tag_post_to_navigation_snspost"
