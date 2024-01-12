@@ -14,10 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.petsns.R;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.text.InputFilter;
 
 public class pass1Fragment extends Fragment {
 
     private Pass1ViewModel mViewModel;
+
+    private TextView errorTextView; // クラスのメンバ変数として定義
+
 
     public static pass1Fragment newInstance() {
         return new pass1Fragment();
@@ -41,15 +47,37 @@ public class pass1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切な ID を指定する
         Button bt01 = view.findViewById(R.id.bt01);
-
+        errorTextView = view.findViewById(R.id.errorTextView); // TextView の初期化
+        
         bt01.setOnClickListener(new View.OnClickListener() {
 
+//            EditText passwordEditText = view.findViewById(R.id.passwordEditText);
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
+                String password = passwordEditText.getText().toString();
+
+
+
+                if (password.isEmpty()) {
+                    // パスワードが未入力の場合、エラーメッセージを表示
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("パスワードを入力してください");
+
+//                    文字指定
+                } else if(password.length() < 8 ) {
+
+                    passwordEditText.setVisibility(View.VISIBLE);
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("パスワードは8文字以上で入力してください");
+                    // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
+                }else {errorTextView.setVisibility(View.GONE);
+                    Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
+                }
             }
         });
+
         Button bt02 = view.findViewById(R.id.bt02);
 
         bt02.setOnClickListener(new View.OnClickListener() {

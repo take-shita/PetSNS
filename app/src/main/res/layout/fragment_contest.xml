@@ -87,7 +87,7 @@
 
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/txtTest"
         android:layout_width="229dp"
         android:layout_height="49dp"
         android:layout_marginStart="164dp"

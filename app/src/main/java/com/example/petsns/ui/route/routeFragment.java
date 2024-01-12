@@ -19,10 +19,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-
 import com.example.petsns.R;
 import com.example.petsns.ui.dashboard.DashboardFragment;
 
+import com.google.android.material.button.MaterialButton;
 public class routeFragment extends DashboardFragment {
 
 
@@ -52,7 +52,7 @@ public class routeFragment extends DashboardFragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route4);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup2);
             }
         });
 
@@ -63,48 +63,97 @@ public class routeFragment extends DashboardFragment {
             @Override
             public void onClick(View v) {
 
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route7);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
             }
         });
 
-        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
-        ro.setOnClickListener(new View.OnClickListener() {
+        Button bt1 = view.findViewById(R.id.set);
+        bt1.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Context context = requireContext();
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.fragment_route2);
 
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 811; // 幅を変更
-                params.height = 900; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-                Button a = dialog.findViewById(R.id.distance1);
-                Button b = dialog.findViewById(R.id.time);
-
-                a.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
             }
         });
 
+
+
+//        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
+//        ro.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Context context = requireContext();
+//                Dialog dialog = new Dialog(context);
+//                dialog.setContentView(R.layout.fragment_route2);
+//
+//                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+//                params.width = 811; // 幅を変更
+//                params.height = 900; // 高さを変更
+//                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//
+//                Button a = dialog.findViewById(R.id.distance1);
+//                Button b = dialog.findViewById(R.id.time);
+//
+//                a.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+////                dialog.show();
+//                b.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Navigation.findNavController(view).navigate(R.id.action_navigation_route2_to_navigation_route3);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.show();
+//            }
+//        });
+//
+//
+//        Button ru = view.findViewById(R.id.route1);//投稿削除確認ポップアップ画面
+//        ru.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Context context = requireContext();
+//                Dialog dialog = new Dialog(context);
+//                dialog.setContentView(R.layout.fragment_route4);
+//
+//                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+//                params.width = 811; // 幅を変更
+//                params.height = 900; // 高さを変更
+//                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//
+//                Button c = dialog.findViewById(R.id.place);
+//                Button d = dialog.findViewById(R.id.favorite);
+//
+//                c.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+////                dialog.show();
+//                d.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Navigation.findNavController(view).navigate(R.id.action_navigation_route4_to_navigation_route6);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.show();
+//            }
+//        });
 
 
 
     }
+
+
 
 
 //    -----------------------------------------------------------------------------------------------------------

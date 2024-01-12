@@ -1,7 +1,5 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,34 +14,32 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route9Fragment extends Fragment {
+public class routefavoriteFragment extends Fragment {
 
-    private Route9ViewModel mViewModel;
+    private RoutefavoriteViewModel mViewModel;
 
-    public static route9Fragment newInstance() {
-        return new route9Fragment();
+    public static routefavoriteFragment newInstance() {
+        return new routefavoriteFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route9, container, false);
+        return inflater.inflate(R.layout.fragment_routefavorite, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt = view.findViewById(R.id.back);
+        Button bt = view.findViewById(R.id.start1);
         bt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route9_to_navigation_route);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routefavorite_to_navigation_route);
             }
         });
-
     }
-
 }

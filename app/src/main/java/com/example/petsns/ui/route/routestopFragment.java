@@ -1,7 +1,5 @@
 package com.example.petsns.ui.route;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,18 +14,18 @@ import android.widget.Button;
 
 import com.example.petsns.R;
 
-public class route8Fragment extends Fragment {
+public class routestopFragment extends Fragment {
 
-    private Route8ViewModel mViewModel;
+    private RoutestopViewModel mViewModel;
 
-    public static route8Fragment newInstance() {
-        return new route8Fragment();
+    public static routestopFragment newInstance() {
+        return new routestopFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route8, container, false);
+        return inflater.inflate(R.layout.fragment_routestop, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class route8Fragment extends Fragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route8_to_navigation_route9);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routestop_to_navigation_routeend);
             }
         });
 
@@ -51,7 +49,7 @@ public class route8Fragment extends Fragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route8_to_navigation_route7);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routestop_to_navigation_routestart);
             }
         });
 
