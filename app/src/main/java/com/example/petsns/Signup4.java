@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.petsns.ui.setting.TagViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class Signup4 extends AppCompatActivity{
     private FirebaseFirestore db;
     private SigupViewModel viewModel;
+    private TagViewModel tagViewModel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,46 +47,8 @@ public class Signup4 extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                text.setText(viewModel.getEmail());
-                if(true){
-
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(viewModel.getEmail(), viewModel.getPassword())
-                            .addOnCompleteListener(task -> {
-
-//                                text.setText("kyaaaaaaaaaa");
-
-                                if (task.isSuccessful()) {
-                                    // ユーザー作成成功
-                                    FirebaseUser user = task.getResult().getUser();
-                                    String uid = user.getUid();//id取得
 
 
-
-
-                                    DocumentReference documentRef = db.collection("users").document(uid);
-                                    // アカウント情報のデータ
-                                    Map<String, Object> accountData = new HashMap<>();
-                                    accountData.put("id",viewModel.getUserName());
-                                    accountData.put("mail",viewModel.getEmail());
-                                    accountData.put("password", viewModel.getPassword());
-                                    documentRef.set(accountData)
-                                            .addOnSuccessListener(aVoid -> {
-
-                                            })
-                                            .addOnFailureListener(e -> {
-
-                                            });
-
-
-
-                                } else {
-                                    // ユーザー作成失敗
-                                    text.setText("nuaaaaaaaaaaaaaaaaa");
-                                }
-                            });
-
-
-                }
             }
         });
     }

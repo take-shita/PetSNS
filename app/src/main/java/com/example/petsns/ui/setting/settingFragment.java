@@ -2,6 +2,7 @@ package com.example.petsns.ui.setting;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.example.petsns.R;
 import android.content.Context;
+import com.example.petsns.LoginActivity;
+import com.example.petsns.MainActivity;
+import com.example.petsns.R;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class settingFragment extends Fragment {
 
     private SettingViewModel mViewModel;
@@ -95,8 +101,8 @@ public class settingFragment extends Fragment {
                 }
 
         });
-        Button bt5 = view.findViewById(R.id.bt5);
-        bt5.setOnClickListener(new View.OnClickListener() {
+        Button btnLogOut = view.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public  void onClick(View v) {
@@ -113,7 +119,19 @@ public class settingFragment extends Fragment {
                 params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                Button btnYes = dialog.findViewById(R.id.btnyes);
                 Button btnClose = dialog.findViewById(R.id.btnno);
+
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseAuth.getInstance().signOut();
+                        Context context = v.getContext();
+
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 

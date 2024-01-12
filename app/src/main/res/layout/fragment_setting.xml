@@ -81,7 +81,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintVertical_bias="0.373" />
 
     <Button
-        android:id="@+id/bt5"
+        android:id="@+id/btnLogOut"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:text="ログアウト"

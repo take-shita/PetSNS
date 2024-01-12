@@ -134,7 +134,7 @@ public class TagLikeFragment extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        viewModel.setArrayMommalian(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                        viewModel.setArrayLikeMom(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked(),chkCh.isChecked(),
                                 chkFl.isChecked(),chkMg.isChecked(),chkFx.isChecked(),chkSq.isChecked());
 
