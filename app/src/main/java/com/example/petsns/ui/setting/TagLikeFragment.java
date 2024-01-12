@@ -26,6 +26,7 @@ import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TagLikeFragment#newInstance} factory method to
@@ -99,6 +100,18 @@ public class TagLikeFragment extends Fragment {
                 params.width = 800; // 幅を変更
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                CheckBox chkMg;
+                CheckBox chkFx;
+                CheckBox chkDg;
+                CheckBox chkCt;
+                CheckBox chkRb;
+                CheckBox chkOt;
+                CheckBox chkCh;
+                CheckBox chkFl;
+                CheckBox chkHg;
+                CheckBox chkHm;
+                CheckBox chkSq;
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
 

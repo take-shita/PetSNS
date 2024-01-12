@@ -23,6 +23,12 @@ public class LoginActivity  extends AppCompatActivity{
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // ログイン済み
+            setContentView(R.layout.activity_login);
+
+//            Context context = v.getContext();
+//
+//            Intent intent = new Intent(context, MainActivity.class);
+//            startActivity(intent);
 
         } else {
             // 未ログイン
