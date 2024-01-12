@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.route.routeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="時間"
-        android:textSize="50dp"
-        tools:layout_editor_absoluteX="-48dp"
-        tools:layout_editor_absoluteY="0dp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="時間"-->
+<!--        android:textSize="50dp"-->
+<!--        tools:layout_editor_absoluteX="-48dp"-->
+<!--        tools:layout_editor_absoluteY="0dp" />-->
 
     <Button
         android:id="@+id/time1"
@@ -33,9 +33,7 @@
         android:layout_height="63dp"
         android:layout_marginStart="216dp"
         android:layout_marginTop="472dp"
-        android:backgroundTint="#F2A955"
         android:text="@string/START"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
