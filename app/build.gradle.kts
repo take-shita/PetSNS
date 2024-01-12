@@ -70,8 +70,16 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
 
     implementation ("com.google.firebase:firebase-firestore:24.10.0")
+
 //    ルート検索の実験のために追記
     implementation ("com.google.android.gms:play-services-maps:17.0.1")
     implementation ("com.google.android.gms:play-services-places:17.0.0")
 //    ルート検索の実験のために追記
+
+//    implementation ("com.google.android.gms:play-services-maps:17.0.1") ルート検索の実験のために追記
+
+//    recycleviewの追記
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+
 }
