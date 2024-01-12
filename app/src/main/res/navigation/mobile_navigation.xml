@@ -246,22 +246,22 @@
         android:label="散歩"
         tools:layout="@layout/fragment_routestart" >
         <action
-            android:id="@+id/action_navigation_routestart_to_navigation_routestart"
+            android:id="@+id/action_navigation_routestart_to_navigation_routestop"
             app:destination="@id/navigation_routestart" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_routestart"-->
-<!--        android:name="com.example.petsns.ui.route.routestopFragment"-->
-<!--        android:label="散歩"-->
-<!--        tools:layout="@layout/fragment_routestop" >-->
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_routestart_to_navigation_routeend"-->
-<!--            app:destination="@id/navigation_routeend" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_routestart_to_navigation_routestart"-->
-<!--            app:destination="@id/navigation_routestart" />-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/navigation_routestop"
+        android:name="com.example.petsns.ui.route.routestopFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_routestop" >
+        <action
+            android:id="@+id/action_navigation_routestop_to_navigation_routeend"
+            app:destination="@id/navigation_routeend" />
+        <action
+            android:id="@+id/action_navigation_routestop_to_navigation_routestart"
+            app:destination="@id/navigation_routestart" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_routeend"

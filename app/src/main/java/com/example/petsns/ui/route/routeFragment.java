@@ -63,7 +63,7 @@ public class routeFragment extends DashboardFragment {
             @Override
             public void onClick(View v) {
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route7);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
             }
         });
 

@@ -38,7 +38,7 @@ public class routepopup2Fragment extends Fragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_route5);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routeplace);
             }
         });
 
@@ -49,7 +49,7 @@ public class routepopup2Fragment extends Fragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_route6);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routefavorite);
             }
         });
 
