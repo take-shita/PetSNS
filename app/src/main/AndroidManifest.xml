@@ -48,8 +48,10 @@
             android:name=".Signup2"
             android:exported="false"
             android:label="@string/app_name"></activity>
+        <activity android:name=".Signup3"
+            android:exported="false"></activity>
         <activity
-            android:name=".Signup3"
+            android:name=".Signup4"
             android:exported="false"
             android:label="@string/app_name"></activity>
     </application>
