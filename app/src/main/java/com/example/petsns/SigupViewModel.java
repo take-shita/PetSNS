@@ -13,6 +13,7 @@ public class SigupViewModel extends ViewModel {
     }
 
     public void setUserName(String userName) {
+
         this.userName = userName;
     }
 

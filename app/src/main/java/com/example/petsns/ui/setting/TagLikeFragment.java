@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +46,7 @@ public class TagLikeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private TagViewModel viewModel;
     public TagLikeFragment() {
         // Required empty public constructor
     }
@@ -73,6 +76,16 @@ public class TagLikeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+
+// MyApplicationの初期化が行われていることを確認する
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedTagViewModel();
+        } else {
+            // エラーハンドリング
+        }
+        
     }
 
     @Override
@@ -101,24 +114,30 @@ public class TagLikeFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-                CheckBox chkMg;
-                CheckBox chkFx;
-                CheckBox chkDg;
-                CheckBox chkCt;
-                CheckBox chkRb;
-                CheckBox chkOt;
-                CheckBox chkCh;
-                CheckBox chkFl;
-                CheckBox chkHg;
-                CheckBox chkHm;
-                CheckBox chkSq;
+                CheckBox chkMg=view.findViewById(R.id.chkMg);
+                CheckBox chkFx=view.findViewById(R.id.chkFx);
+                CheckBox chkDg=view.findViewById(R.id.chkDg);
+                CheckBox chkCt=view.findViewById(R.id.chkCt);
+                CheckBox chkRb=view.findViewById(R.id.chkRb);
+                CheckBox chkOt=view.findViewById(R.id.chkOt);
+                CheckBox chkCh=view.findViewById(R.id.chkCh);
+                CheckBox chkFl=view.findViewById(R.id.chkFl);
+                CheckBox chkHg=view.findViewById(R.id.chkHg);
+                CheckBox chkHm=view.findViewById(R.id.chkHm);
+                CheckBox chkSq=view.findViewById(R.id.chkSq);
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayMommalian(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked(),chkCh.isChecked(),
+                                chkFl.isChecked(),chkMg.isChecked(),chkFx.isChecked(),chkSq.isChecked());
+
+                        dialog.dismiss();
+                    }
                 });
 
                 dialog.show();
