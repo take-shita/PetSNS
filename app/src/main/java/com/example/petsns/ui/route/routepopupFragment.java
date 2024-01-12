@@ -52,7 +52,7 @@ public class routepopupFragment extends DialogFragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route2_to_navigation_route3);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup_to_navigation_routetime);
             }
         });
 
