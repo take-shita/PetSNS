@@ -18,9 +18,9 @@ public class TagViewModel extends ViewModel {
     private boolean[] boolMommalians=new boolean[11];
     private String[] nameMommalians={"ネコ","イヌ","ウサギ","ハリネズミ","ハムスター","カワウソ","チンチラ",
                                     "フェレット","モモンガ","キツネ","リス"};
-    public  void setArrayMommalian(boolean boolMg,boolean boolFx,boolean boolDg,
-                                   boolean boolCt,boolean boolRb,boolean boolOt,boolean boolCh,
-                                   boolean boolFl,boolean boolHg,boolean boolHm,boolean boolSq){
+    public  void setArrayMommalian(boolean boolCt,boolean boolDg,boolean boolRb,
+                                   boolean boolHg,boolean boolHm,boolean boolOt,boolean boolCh,
+                                   boolean boolFl,boolean boolMg,boolean boolFx,boolean boolSq){
         boolMommalians[0]=boolCt;
         boolMommalians[1]=boolDg;
         boolMommalians[2]=boolRb;
@@ -34,8 +34,20 @@ public class TagViewModel extends ViewModel {
         boolMommalians[10]=boolSq;
     }
 
-    public boolean[] getMommalian(){
-        return boolMommalians;
+    public String getMommalian(){
+        String chkMommalians="";
+        for(int i=0;i<11;i++){
+            if(boolMommalians[i]){
+                if(chkMommalians.equals("")){
+                    chkMommalians=nameMommalians[i];
+                }else {
+                    chkMommalians+=(" "+nameMommalians[i]);
+                }
+
+
+            }
+        }
+        return chkMommalians;
     }
 
 

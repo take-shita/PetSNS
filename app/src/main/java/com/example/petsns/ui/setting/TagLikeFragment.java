@@ -114,17 +114,19 @@ public class TagLikeFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-                CheckBox chkMg=view.findViewById(R.id.chkMg);
-                CheckBox chkFx=view.findViewById(R.id.chkFx);
-                CheckBox chkDg=view.findViewById(R.id.chkDg);
-                CheckBox chkCt=view.findViewById(R.id.chkCt);
-                CheckBox chkRb=view.findViewById(R.id.chkRb);
-                CheckBox chkOt=view.findViewById(R.id.chkOt);
-                CheckBox chkCh=view.findViewById(R.id.chkCh);
-                CheckBox chkFl=view.findViewById(R.id.chkFl);
-                CheckBox chkHg=view.findViewById(R.id.chkHg);
-                CheckBox chkHm=view.findViewById(R.id.chkHm);
-                CheckBox chkSq=view.findViewById(R.id.chkSq);
+                CheckBox chkCt=dialog.findViewById(R.id.chkCt);
+                CheckBox chkDg=dialog.findViewById(R.id.chkDg);
+                CheckBox chkRb=dialog.findViewById(R.id.chkRb);
+                CheckBox chkHg=dialog.findViewById(R.id.chkHg);
+                CheckBox chkHm=dialog.findViewById(R.id.chkHm);
+                CheckBox chkOt=dialog.findViewById(R.id.chkOt);
+                CheckBox chkCh=dialog.findViewById(R.id.chkCh);
+                CheckBox chkFl=dialog.findViewById(R.id.chkFl);
+                CheckBox chkMg=dialog.findViewById(R.id.chkMg);
+                CheckBox chkFx=dialog.findViewById(R.id.chkFx);
+                CheckBox chkSq=dialog.findViewById(R.id.chkSq);
+
+
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
