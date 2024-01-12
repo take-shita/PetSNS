@@ -13,13 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.example.petsns.R;
-
+import android.widget.EditText;
+import android.widget.TextView;
 public class pass2Fragment extends Fragment {
 
     private Pass2ViewModel mViewModel;
 
+    private TextView errorTextView; // クラスのメンバ変数として定義
     public static pass2Fragment newInstance() {
         return new pass2Fragment();
     }
@@ -40,12 +41,24 @@ public class pass2Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切なIDを指定する
         Button bt5 = view.findViewById(R.id.bt5);
+        errorTextView = view.findViewById(R.id.errorTextView); // TextViewの初期化
 
         bt5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
+                String password = passwordEditText.getText().toString();
+
+                if (password.isEmpty()) {
+                    // パスワードが未入力の場合、エラーメッセージを表示
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("パスワードを入力してください");
+                } else {
+                    // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
+                    errorTextView.setVisibility(View.GONE);
+                    Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
+                }
             }
         });
         Button btncan = view.findViewById(R.id.btncan);

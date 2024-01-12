@@ -4,24 +4,25 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
-import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-
 import com.example.petsns.R;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class pass1Fragment extends Fragment {
 
     private Pass1ViewModel mViewModel;
+
+    private TextView errorTextView; // クラスのメンバ変数として定義
+
 
     public static pass1Fragment newInstance() {
         return new pass1Fragment();
@@ -45,30 +46,27 @@ public class pass1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切なIDを指定する
         Button bt01 = view.findViewById(R.id.bt01);
-        EditText passwordField = view.findViewById(R.id.passwordField);
+        errorTextView = view.findViewById(R.id.errorTextView); // TextViewの初期化
 
         bt01.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                String password = passwordEditText.getText().toString();
 
-                String enteredPassword = passwordField.getText().toString();
-
-                // パスワードが 8 文字以上であることを確認
-                if (TextUtils.isEmpty(enteredPassword) || enteredPassword.length() < 8) {
-                    showToast("パスワードは 8 文字以上で入力してください");
+                if (password.isEmpty()) {
+                    // パスワードが未入力の場合、エラーメッセージを表示
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("パスワードを入力してください");
                 } else {
+                    // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
+                    errorTextView.setVisibility(View.GONE);
                     Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
                 }
             }
-
-            private void showToast(String s) {
-            }
         });
-        
-        
-        
         Button bt02 = view.findViewById(R.id.bt02);
 
         bt02.setOnClickListener(new View.OnClickListener() {
