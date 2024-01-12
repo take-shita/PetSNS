@@ -54,8 +54,13 @@ public class pass2Fragment extends Fragment {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードを入力してください");
-                } else {
+                } else if(password.length() < 8 ) {
+
+                    passwordEditText.setVisibility(View.VISIBLE);
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("パスワードは8文字以上で入力してください");
                     // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
+                } else {
                     errorTextView.setVisibility(View.GONE);
                     Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
                 }

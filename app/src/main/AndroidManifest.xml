@@ -11,9 +11,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/tmtm"
+        android:icon="@drawable/appicon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/tmtm"
+        android:roundIcon="@drawable/appicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetSNS"
         tools:targetApi="31">
