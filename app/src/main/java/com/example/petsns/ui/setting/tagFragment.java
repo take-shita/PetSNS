@@ -12,11 +12,13 @@ import com.google.android.material.tabs.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.petsns.R;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 public class tagFragment extends Fragment {
 
@@ -43,6 +45,16 @@ public class tagFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Button btnback = view.findViewById(R.id.btnback);
+
+        btnback.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
+            }
+        });
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);  // この行を適切なIDに変更してください
 
