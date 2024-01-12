@@ -11,12 +11,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.petsns.ui.setting.TagViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Signup3 extends AppCompatActivity {
     private SigupViewModel viewModel;
     private TagViewModel tagViewModel;
-
+    private FirebaseFirestore db;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup3);
@@ -27,7 +34,7 @@ public class Signup3 extends AppCompatActivity {
         TextView txtName=findViewById(R.id.textName);
         TextView txtMail=findViewById(R.id.textMail);
         TextView txtFv=findViewById(R.id.textFavorite);
-
+        db = FirebaseFirestore.getInstance();
 
         MyApplication myApplication = (MyApplication) getApplication();
 
@@ -42,12 +49,48 @@ public class Signup3 extends AppCompatActivity {
         txtId.setText(viewModel.getUserId());
         txtName.setText(viewModel.getUserName());
         txtMail.setText(viewModel.getEmail());
-        txtFv.setText(tagViewModel.getMommalian());
+        txtFv.setText(tagViewModel.getLikemom());
 
         btnSb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (true) {
 
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(viewModel.getEmail(), viewModel.getPassword())
+                            .addOnCompleteListener(task -> {
+
+
+                                if (task.isSuccessful()) {
+                                    // ユーザー作成成功
+                                    FirebaseUser user = task.getResult().getUser();
+                                    String uid = user.getUid();//id取得
+
+
+                                    DocumentReference documentRef = db.collection("users").document(uid);
+                                    // アカウント情報のデータ
+                                    Map<String, Object> accountData = new HashMap<>();
+                                    accountData.put("id", viewModel.getUserId());
+                                    accountData.put("name", viewModel.getUserName());
+                                    accountData.put("mail", viewModel.getEmail());
+                                    accountData.put("password", viewModel.getPassword());
+                                    accountData.put("like", tagViewModel.getArraylikeMom());
+                                    accountData.put("Dislike", tagViewModel.getArrayDislikeMom());
+                                    accountData.put("contestEntry",false);
+                                    accountData.put("contestPost",false);
+                                    documentRef.set(accountData)
+                                            .addOnSuccessListener(aVoid -> {
+
+                                            })
+                                            .addOnFailureListener(e -> {
+
+                                            });
+
+
+                                } else {
+
+                                }
+                            });
+                }
             }
         });
     }
