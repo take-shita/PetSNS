@@ -16,6 +16,7 @@ import android.widget.Button;
 import com.example.petsns.R;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.text.InputFilter;
 
 public class pass1Fragment extends Fragment {
 
@@ -46,27 +47,37 @@ public class pass1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切なIDを指定する
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切な ID を指定する
         Button bt01 = view.findViewById(R.id.bt01);
-        errorTextView = view.findViewById(R.id.errorTextView); // TextViewの初期化
+        errorTextView = view.findViewById(R.id.errorTextView); // TextView の初期化
 
+        passwordEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
         bt01.setOnClickListener(new View.OnClickListener() {
 
+//            EditText passwordEditText = view.findViewById(R.id.passwordEditText);
             @Override
             public void onClick(View v) {
                 String password = passwordEditText.getText().toString();
+
+
 
                 if (password.isEmpty()) {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードを入力してください");
-                } else {
+
+//                    文字指定
+                } else if(password.length() < 8 ) {
+
+                    passwordEditText.setVisibility(View.VISIBLE);
+
                     // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
-                    errorTextView.setVisibility(View.GONE);
+                }else {errorTextView.setVisibility(View.GONE);
                     Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
                 }
             }
         });
+
         Button bt02 = view.findViewById(R.id.bt02);
 
         bt02.setOnClickListener(new View.OnClickListener() {
