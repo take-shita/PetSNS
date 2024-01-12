@@ -50,8 +50,7 @@ public class pass1Fragment extends Fragment {
         EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切な ID を指定する
         Button bt01 = view.findViewById(R.id.bt01);
         errorTextView = view.findViewById(R.id.errorTextView); // TextView の初期化
-
-        passwordEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
+        
         bt01.setOnClickListener(new View.OnClickListener() {
 
 //            EditText passwordEditText = view.findViewById(R.id.passwordEditText);

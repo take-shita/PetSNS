@@ -83,15 +83,4 @@ public class LoginActivity  extends AppCompatActivity {
 }
 
 
-//                FirebaseAuth.getInstance().createUserWithEmailAndPassword("user@example.com", "password")
-//                        .addOnCompleteListener(task -> {
-//                            if (task.isSuccessful()) {
-//                                // ユーザー作成成功
-//                                FirebaseUser user = task.getResult().getUser();
-//                                // ユーザー情報を利用してUIを更新するなどの処理を行う
-//                            } else {
-//                                // ユーザー作成失敗
-//                            }
-//                        });
-
 
