@@ -28,6 +28,10 @@ import com.example.petsns.MainActivity;
 import com.example.petsns.R;
 import android.content.Context;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,7 +53,7 @@ public class ContestFragment extends Fragment {
     Button btnPost;
     Button btnInfo;
     Button btnEntry;
-
+    TextView txtTest;
 
     public static ContestFragment newInstance() {
         return new ContestFragment();
@@ -173,9 +177,30 @@ public class ContestFragment extends Fragment {
 
 
         btnEntry=view.findViewById(R.id.btnContestEntry);
+        txtTest=view.findViewById(R.id.txtTest);
         btnEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String userId = user.getUid();
+                DocumentReference docRef = db.collection("users").document(userId);
+
+                docRef.update("contestEntry", true)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // 成功時の処理
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // 失敗時の処理
+                            }
+                        });
+
+
                 btnEntry.setEnabled(false);
                 btnPost.setEnabled(true);
                 showPopup();
