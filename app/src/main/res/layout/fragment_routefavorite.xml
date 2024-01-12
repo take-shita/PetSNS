@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.route.routeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="お気に入り"
-        android:textSize="50dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="お気に入り"-->
+<!--        android:textSize="50dp"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="0dp" />-->
 
     <TextView
         android:id="@+id/favorite1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="282dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="168dp"
         android:text="お気に入りを設定してください"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +31,7 @@
         android:layout_height="73dp"
         android:layout_marginStart="209dp"
         android:layout_marginTop="616dp"
-        android:backgroundTint="#F2A955"
         android:text="START画面へ"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

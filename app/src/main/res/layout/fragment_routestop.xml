@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.route.routeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F2A955"
-        android:text="散歩停止"
-        android:textSize="50dp"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="42dp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="散歩停止"-->
+<!--        android:textSize="50dp"-->
+<!--        tools:layout_editor_absoluteX="-16dp"-->
+<!--        tools:layout_editor_absoluteY="42dp" />-->
 
     <Button
         android:id="@+id/end"
