@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.028" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/txtId"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:ems="10"
@@ -35,7 +35,7 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/txtPass"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:ems="10"
@@ -102,7 +102,7 @@
         app:layout_constraintVertical_bias="0.565" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress2"
+        android:id="@+id/txtMail"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:ems="10"
@@ -154,7 +154,7 @@
         app:layout_constraintVertical_bias="0.933" />
 
     <EditText
-        android:id="@+id/editTextText5"
+        android:id="@+id/txtName"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:ems="10"

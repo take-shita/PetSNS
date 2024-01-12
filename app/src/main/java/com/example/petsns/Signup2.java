@@ -1,19 +1,12 @@
 package com.example.petsns;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseAuth;
-import android.widget.EditText;
+
 import android.widget.Button;
 
 import android.content.Intent;

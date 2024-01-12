@@ -21,6 +21,7 @@ public class Signup extends AppCompatActivity {
     String mail;
     String id;
     String pass;
+    String name;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -37,21 +38,25 @@ public class Signup extends AppCompatActivity {
 
 
         Button btnNext=findViewById(R.id.button6);
-        EditText textID=findViewById(R.id.editTextText2);
-        EditText textPass=findViewById(R.id.editTextTextPassword);
-        EditText textMail=findViewById(R.id.editTextTextEmailAddress2);
+        EditText textId=findViewById(R.id.txtId);
+        EditText textName=findViewById(R.id.txtName);
+        EditText textPass=findViewById(R.id.txtPass);
+        EditText textMail=findViewById(R.id.txtMail);
 //        viewModel = new ViewModelProvider(this).get(SigupViewModel.class);
 
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name=textName.getText().toString();
                 mail=textMail.getText().toString();
-                id=textID.getText().toString();
+                id=textId.getText().toString();
                 pass=textPass.getText().toString();
-                viewModel.setUserName(id);
+                viewModel.setUserName(name);
+                viewModel.setUserId(id);
                 viewModel.setEmail(mail);
                 viewModel.setPassword(pass);
+
 
                 Context context = v.getContext();
 
