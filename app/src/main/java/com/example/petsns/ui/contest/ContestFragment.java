@@ -4,8 +4,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,11 +19,13 @@ import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.PopupWindow;
 import android.view.Gravity;
@@ -34,33 +40,40 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import  com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class ContestFragment extends Fragment {
-
+    private FirebaseFirestore db;
     private ContestViewModel mViewModel;
     private TextView popupText;
-
+    private static final int PICK_IMAGE_REQUEST = 1;
     private TextView sampleText;
     Button btnView;
     Button btnPost;
     Button btnInfo;
     Button btnEntry;
     TextView txtTest;
-
+    byte[] imageData;
     public static ContestFragment newInstance() {
         return new ContestFragment();
     }
 
-
-    private FirebaseFirestore db;
 
 
     @Override
@@ -96,8 +109,29 @@ public class ContestFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                db = FirebaseFirestore.getInstance();
 
-                addAccountInfo();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                String userId = user.getUid();
+
+                DocumentReference docRef = db.collection("post").document(userId);
+
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference().child("post");
+
+                Uri imageUri;/* 画像のUriを取得するコード */;
+//                storageRef.child("imageFileName.jpg").putFile(imageUri)
+//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                // アップロードが成功した場合の処理
+//                                // ここでFirestoreにダウンロードURLを保存する処理を呼び出す
+//                                saveImageReferenceToFirestore(taskSnapshot.getMetadata().getReference());
+//                            }
+//                        });
+
             }
         });
 
@@ -182,28 +216,17 @@ public class ContestFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String userId = user.getUid();
-                DocumentReference docRef = db.collection("users").document(userId);
-
-                docRef.update("contestEntry", true)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // 成功時の処理
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // 失敗時の処理
-                            }
-                        });
 
 
-                btnEntry.setEnabled(false);
-                btnPost.setEnabled(true);
-                showPopup();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+
+//
+//                btnEntry.setEnabled(false);
+//                btnPost.setEnabled(true);
+//                showPopup();
             }
         });
 
@@ -223,48 +246,28 @@ public class ContestFragment extends Fragment {
         }, 3000);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+
+            try {
+                // UriからBitmapに変換
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+
+                // Bitmapをバイナリデータに変換
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                imageData = baos.toByteArray();
+                // ここでバイナリデータ(imageData)を使用できます
 
 
-    public void addAccountInfo() {
-
-        CollectionReference collectionRef = db.collection("sample01");
-        collectionRef.orderBy("account_name", Query.Direction.DESCENDING)
-                .limit(1)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-
-                        DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
-
-                        String documentId = documentSnapshot.getId();
-                        int intDocumentID = Integer.parseInt(documentId)+1;
-                        String nextDocumentID=Integer.toString(intDocumentID);
-
-                        DocumentReference documentRef = db.collection("sample01").document(nextDocumentID);
-                        // アカウント情報のデータ
-                        Map<String, Object> accountData = new HashMap<>();
-                        accountData.put("account_name", "example_user");
-                        accountData.put("password", "password123");
-                        documentRef.set(accountData)
-                                .addOnSuccessListener(aVoid -> {
-                                    sampleText.setText(nextDocumentID+"を追加しました");
-                                })
-                                .addOnFailureListener(e -> {
-                                    sampleText.setText("追加失敗");
-                                });
-
-                        // フィールドの取得
-//                        String fieldName = documentSnapshot.getString("account_name");
-
-                        // ここで取得した date を使用できます
-
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // 失敗時の処理
-                    sampleText.setText("一番新しいの参照できません");
-                });
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
