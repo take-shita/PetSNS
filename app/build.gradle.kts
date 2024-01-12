@@ -69,4 +69,7 @@ dependencies {
 
     implementation ("com.google.firebase:firebase-firestore:24.10.0")
 
+//    recycleviewの追記
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
 }

@@ -10,12 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.petsns.R;
+import com.example.petsns.MyAdapter;
+import com.example.petsns.ui.setting.TagDislikeFragment;
+import com.example.petsns.ui.setting.TagLikeFragment;
+import com.google.android.material.tabs.TabLayout;
 
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,8 +37,23 @@ public class snstopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_snstop, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_snstop, container, false);
+
+        // RecyclerViewを取得
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+
+        // レイアウトマネージャーを設定
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // アダプターを設定（自分のアダプタークラスに置き換える必要があります）
+        MyAdapter adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -68,34 +89,5 @@ public class snstopFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_snspost);
             }
         });
-
-
-//        ImageButton tag_select = view.findViewById(R.id.search_tag);
-//        tag_select.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = requireContext();
-//                Dialog dialog=new Dialog(context);
-//                dialog.setContentView(R.layout.fragment_tag_post);
-//
-//                Button btnClose = dialog.findViewById(R.id.cancel_btn);
-//
-//                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-//                params.width = 700; // 幅を変更
-//                params.height = 1000; // 高さを変更
-//                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//
-//                btnClose.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//
-//                dialog.show();
-//            }
-//        });
-
     }
 }
