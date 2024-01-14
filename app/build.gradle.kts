@@ -69,7 +69,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation ("com.google.firebase:firebase-firestore:24.10.0")
-
+//    implementation("com.github.bumptech.glide:glide:4.x.x")
 //    ルート検索の実験のために追記
     implementation ("com.google.android.gms:play-services-maps:17.0.1")
     implementation ("com.google.android.gms:play-services-places:17.0.0")

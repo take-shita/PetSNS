@@ -3,7 +3,7 @@ package com.example.petsns;
 public class TestPost {
     private String id;
     private String sentence;
-    private byte[] 投稿写真;
+    private String imageUrl;
 
     // ゲッター・セッターなど必要な処理を実装
     public String getid(){
@@ -12,4 +12,6 @@ public class TestPost {
     public String getSentence(){
         return sentence;
     }
+
+    public String getImageUrl(){ return imageUrl;}
 }

@@ -50,26 +50,31 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class ContestFragment extends Fragment {
+    private TextView sampleText;
     private FirebaseFirestore db;
     private ContestViewModel mViewModel;
     private TextView popupText;
     private static final int PICK_IMAGE_REQUEST = 1;
-    private TextView sampleText;
     Button btnView;
     Button btnPost;
     Button btnInfo;
     Button btnEntry;
     TextView txtTest;
     byte[] imageData;
+    Uri selectedImageUri;
     public static ContestFragment newInstance() {
         return new ContestFragment();
     }
@@ -106,31 +111,51 @@ public class ContestFragment extends Fragment {
         // ボタンのクリックリスナーを設定
         Button addButton = view.findViewById(R.id.sample);
         sampleText=view.findViewById(R.id.textView38);
+
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db = FirebaseFirestore.getInstance();
+
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 String userId = user.getUid();
 
-                DocumentReference docRef = db.collection("post").document(userId);
-
+//                DocumentReference docRef = db.collection("post").document(userId);
+                CollectionReference postCollection = db.collection("posts");
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference().child("post");
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                String imageFileName = "image_" + timestamp + ".jpg";
 
-                Uri imageUri;/* 画像のUriを取得するコード */;
-//                storageRef.child("imageFileName.jpg").putFile(imageUri)
-//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                // アップロードが成功した場合の処理
-//                                // ここでFirestoreにダウンロードURLを保存する処理を呼び出す
-//                                saveImageReferenceToFirestore(taskSnapshot.getMetadata().getReference());
-//                            }
-//                        });
+                /* 画像のUriを取得するコード */;
+                storageRef.child(imageFileName).putFile(selectedImageUri)
+                        .addOnSuccessListener(taskSnapshot -> {
+
+                            storageRef.child(imageFileName).getDownloadUrl()
+
+                                    .addOnSuccessListener(uri -> {
+
+                                        // Firestoreにドキュメントを作成してURLを保存
+                                        Map<String, Object> data = new HashMap<>();
+                                        data.put("imageUrl", uri.toString());
+
+                                        // Firestoreにドキュメントを作成
+                                        postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    // documentReference.getId() で作成されたドキュメントのIDを取得できます
+                                                })
+                                                .addOnFailureListener(e -> {
+
+                                                });
+                                    })
+
+                                    .addOnFailureListener(e -> {
+                                        // ダウンロードURLの取得が失敗した場合の処理
+                                    });
+                        });
 
             }
         });
@@ -251,7 +276,7 @@ public class ContestFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
+            selectedImageUri = data.getData();
 
             try {
                 // UriからBitmapに変換
@@ -261,7 +286,6 @@ public class ContestFragment extends Fragment {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 imageData = baos.toByteArray();
-                // ここでバイナリデータ(imageData)を使用できます
 
 
             } catch (IOException e) {

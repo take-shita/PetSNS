@@ -1,6 +1,8 @@
 package com.example.petsns;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.example.petsns.TestPost;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostViewHolder> {
 
@@ -41,11 +48,29 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         holder.textUsername.setText(post.getid());
         holder.textPost.setText(post.getSentence());
 
-        // 画像をセット
-        // ここで投稿写真のバイナリデータをImageViewに設定する処理を実装する
-        // 例: holder.imagePost.setImageBitmap(decodeByteArray(post.get投稿写真()));
+        if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
 
-        // 他に必要な処理があればここで実装
+            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
+            try {
+
+                final File localFile = File.createTempFile("images", "jpg");
+                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                    // ローカルファイルから画像を読み込んでImageViewにセット
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    holder.imagePost.setImageBitmap(bitmap);
+
+                }).addOnFailureListener(exception -> {
+                    // 失敗時の処理
+
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // 画像がない場合の処理（任意で実装）
+//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+        }
     }
 
     @Override

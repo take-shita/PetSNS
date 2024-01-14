@@ -39,12 +39,14 @@ public class TestActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
                         List<TestPost> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             TestPost post = document.toObject(TestPost.class);
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
