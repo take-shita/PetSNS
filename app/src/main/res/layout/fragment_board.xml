@@ -6,57 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.board.BoardFragment">
 
-
     <EditText
         android:id="@+id/editTextText2"
         android:layout_width="438dp"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_marginTop="22dp"
+        android:ems="100"
+        android:inputType="textMultiLine"
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="66dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="506dp"
+        android:id="@+id/Answer_btn"
+        android:layout_width="107dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="480dp"
         android:layout_marginTop="15dp"
-        android:text=""
+        android:textSize="16dp"
+        android:text="回答する"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="119dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="420dp"
-        android:layout_marginTop="556dp"
-        android:background="@drawable/round_button_background"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/Q_btn"
+        android:layout_width="123dp"
+        android:layout_height="72dp"
+        android:textSize="20dp"
         android:text="質問する"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintHorizontal_bias="0.872"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:layout_constraintVertical_bias="0.877" />
 
-    <!--    <ImageButton-->
+    <!--    プロフィールアイコン-->
+<!--        <ImageButton-->
 <!--        android:id="@+id/imageButton3"-->
 <!--        android:layout_width="119dp"-->
 <!--        android:layout_height="125dp"-->
@@ -68,7 +57,6 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        tools:ignore="SpeakableTextPresentCheck" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

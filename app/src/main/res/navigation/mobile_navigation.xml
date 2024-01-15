@@ -69,6 +69,27 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
+<!--    掲示板-->
+    <fragment
+        android:id="@+id/navigation_Board_Chat"
+        android:name="com.example.petsns.ui.board.BoardChatFragment"
+        android:label="質問一覧"
+        tools:layout="@layout/fragment_board_chat">
+        <action
+            android:id="@+id/action_navigation_Board_Chat_to_navigation_board"
+            app:destination="@id/navigation_board" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_board"
+        android:name="com.example.petsns.ui.board.BoardFragment"
+        android:label="掲示板"
+        tools:layout="@layout/fragment_board" >
+        <action
+            android:id="@+id/action_navigation_board_to_navigation_Board_Chat"
+            app:destination="@id/navigation_Board_Chat" />
+    </fragment>
 
 <!--    プロフィール画面-->
     <fragment
@@ -99,11 +120,6 @@
 
 
 
-    <fragment
-        android:id="@+id/navigation_board"
-        android:name="com.example.petsns.ui.board.BoardFragment"
-        android:label="掲示板"
-        tools:layout="@layout/fragment_board" />
 
 
 
