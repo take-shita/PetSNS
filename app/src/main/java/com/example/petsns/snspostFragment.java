@@ -18,13 +18,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 public class snspostFragment extends Fragment {
 
     private SnspostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private FirebaseFirestore db;
+    Uri selectedImageUri;
 
     public static snspostFragment newInstance() {
         return new snspostFragment();
@@ -50,7 +68,7 @@ public class snspostFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (getView() != null && requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
+            selectedImageUri = data.getData();
 
             // ここで取得したURIを使用して画像を表示または処理する
             // 例: ImageViewに画像を表示
@@ -72,7 +90,8 @@ public class snspostFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        EditText sentene=view.findViewById(R.id.editTextTextMultiLine);
+        db = FirebaseFirestore.getInstance();
         Button back = view.findViewById(R.id.cancel_btn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +105,50 @@ public class snspostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                String userId = user.getUid();
+
+//                DocumentReference docRef = db.collection("post").document(userId);
+                CollectionReference postCollection = db.collection("posts");
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference().child("post");
+
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                String imageFileName = "image_" + timestamp + ".jpg";
+
+                /* 画像のUriを取得するコード */;
+                storageRef.child(imageFileName).putFile(selectedImageUri)
+                        .addOnSuccessListener(taskSnapshot -> {
+
+                            storageRef.child(imageFileName).getDownloadUrl()
+
+                                    .addOnSuccessListener(uri -> {
+
+                                        // Firestoreにドキュメントを作成してURLを保存
+                                        Map<String, Object> data = new HashMap<>();
+                                        data.put("id",userId);
+                                        data.put("sentence",sentene.getText().toString());
+                                        data.put("imageUrl", uri.toString());
+                                        data.put("timestamp", FieldValue.serverTimestamp());
+                                        // Firestoreにドキュメントを作成
+                                        postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    // documentReference.getId() で作成されたドキュメントのIDを取得できます
+                                                })
+                                                .addOnFailureListener(e -> {
+
+                                                });
+                                    })
+
+                                    .addOnFailureListener(e -> {
+                                        // ダウンロードURLの取得が失敗した場合の処理
+                                    });
+                        });
+
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
