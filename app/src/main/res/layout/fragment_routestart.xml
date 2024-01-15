@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.route.routeFragment">
 
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:text="散歩開始"-->
-    <!--        android:textSize="50dp"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:text="散歩開始"-->
+<!--            android:textSize="50dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     <Button
         android:id="@+id/stop"
