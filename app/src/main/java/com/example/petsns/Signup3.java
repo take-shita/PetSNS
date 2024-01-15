@@ -1,5 +1,7 @@
 package com.example.petsns;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -79,7 +81,10 @@ public class Signup3 extends AppCompatActivity {
                                     accountData.put("contestPost",false);
                                     documentRef.set(accountData)
                                             .addOnSuccessListener(aVoid -> {
+                                                Context context = v.getContext();
 
+                                                Intent intent = new Intent(context, MainActivity.class);
+                                                startActivity(intent);
                                             })
                                             .addOnFailureListener(e -> {
 
