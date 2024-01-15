@@ -25,12 +25,11 @@ public class snstopFragment extends Fragment {
         return new snstopFragment();
     }
 
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-//                             @Nullable Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-//        View view = inflater.inflate(R.layout.fragment_snstop, container, false);
-//
+        return inflater.inflate(R.layout.fragment_snstop, container, false);
 //        // RecyclerViewを取得
 //        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 //
@@ -43,7 +42,7 @@ public class snstopFragment extends Fragment {
 //        recyclerView.setAdapter(adapter);
 //
 //        return view;
-//    }
+    }
 
 
     @Override
