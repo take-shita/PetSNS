@@ -43,23 +43,33 @@ public class passchanFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切なIDを指定する
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切な ID を指定する
+        EditText editTextTextPassword3 = view.findViewById(R.id.editTextTextPassword3);
+        EditText editTextTextPassword4 = view.findViewById(R.id.editTextTextPassword4);
         Button button14 = view.findViewById(R.id.button14);
-        errorTextView = view.findViewById(R.id.errorTextView); // TextViewの初期化
+        errorTextView = view.findViewById(R.id.errorTextView); // TextView の初期化
 
         button14.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 String password = passwordEditText.getText().toString();
+                String pass = editTextTextPassword3.getText().toString();
+                String word = editTextTextPassword4.getText().toString();
 
                 if (password.isEmpty()) {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードを入力してください");
-                } else {
+                } else  if(password.length() < 8 ) {
+
+                    passwordEditText.setVisibility(View.VISIBLE);
                     // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
                     errorTextView.setVisibility(View.GONE);
+                }else  if (pass.length() < 8) {
+
+                }else if (word.length() < 8) {
+                }else {
                     Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
                 }
             }
