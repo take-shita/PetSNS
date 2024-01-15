@@ -18,11 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 public class tag_postFragment extends Fragment {
 
-    private TagPostViewModel mViewModel;
+    private TagPostViewModel viewModel;
 
     private ViewGroup buttonContainer;
     public static tag_postFragment newInstance() {
@@ -34,7 +35,12 @@ public class tag_postFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag_post, container,false);
 //        buttonContainer = view.findViewById(R.id.buttonContainer);
-
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedTagPostViewModel();
+        } else {
+            // エラーハンドリング
+        }
         displayButtons();
 
         return view;
@@ -62,12 +68,6 @@ public class tag_postFragment extends Fragment {
 //        }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(TagPostViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,10 +76,18 @@ public class tag_postFragment extends Fragment {
         select_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
             }
         });
 
+        Button btnDec=view.findViewById(R.id.decision_btn);
+        btnDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+            }
+        });
 
         Button bth = view.findViewById(R.id.bth);
 
@@ -95,12 +103,30 @@ public class tag_postFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                CheckBox chkCt=dialog.findViewById(R.id.chkCt);
+                CheckBox chkDg=dialog.findViewById(R.id.chkDg);
+                CheckBox chkRb=dialog.findViewById(R.id.chkRb);
+                CheckBox chkHg=dialog.findViewById(R.id.chkHg);
+                CheckBox chkHm=dialog.findViewById(R.id.chkHm);
+                CheckBox chkOt=dialog.findViewById(R.id.chkOt);
+                CheckBox chkCh=dialog.findViewById(R.id.chkCh);
+                CheckBox chkFl=dialog.findViewById(R.id.chkFl);
+                CheckBox chkMg=dialog.findViewById(R.id.chkMg);
+                CheckBox chkFx=dialog.findViewById(R.id.chkFx);
+                CheckBox chkSq=dialog.findViewById(R.id.chkSq);
                 Button btnClose = dialog.findViewById(R.id.btnno);
+
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeMom(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked(),chkCh.isChecked(),
+                                chkFl.isChecked(),chkMg.isChecked(),chkFx.isChecked(),chkSq.isChecked());
+
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();

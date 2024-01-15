@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +43,8 @@ public class snspostFragment extends Fragment {
     private SnspostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
+    private TagPostViewModel viewModel;
+
     Uri selectedImageUri;
 
     public static snspostFragment newInstance() {
@@ -90,9 +93,21 @@ public class snspostFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextView txtTag=view.findViewById(R.id.tagText);
         EditText sentene=view.findViewById(R.id.editTextTextMultiLine);
         db = FirebaseFirestore.getInstance();
         Button back = view.findViewById(R.id.cancel_btn);
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedTagPostViewModel();
+        } else {
+            // エラーハンドリング
+        }
+
+        if(viewModel.getLikemom()!=null){
+            txtTag.setText(viewModel.getLikemom());
+        }
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -132,6 +147,7 @@ public class snspostFragment extends Fragment {
                                         data.put("id",userId);
                                         data.put("sentence",sentene.getText().toString());
                                         data.put("imageUrl", uri.toString());
+                                        data.put("tag",viewModel.getArraylikeMom());
                                         data.put("timestamp", FieldValue.serverTimestamp());
                                         // Firestoreにドキュメントを作成
                                         postCollection.document(UUID.randomUUID().toString()).set(data)
