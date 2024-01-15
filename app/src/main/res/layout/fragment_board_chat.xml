@@ -10,42 +10,49 @@
         android:id="@+id/editTextText3"
         android:layout_width="428dp"
         android:layout_height="49dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="text"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.812"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
         android:text="送信"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811" />
 
     <TextView
         android:id="@+id/textView27"
         android:layout_width="430dp"
         android:layout_height="70dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
         android:text="サンプル犬の躾"
         android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
-        android:padding="16dp"
         android:orientation="horizontal"
+        android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="28dp">
 
@@ -62,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
             android:text="通報"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -72,9 +78,14 @@
         android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#ff0000"
         android:text="戻る"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="403dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.908" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
