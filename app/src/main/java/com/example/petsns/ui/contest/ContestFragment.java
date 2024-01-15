@@ -118,44 +118,7 @@ public class ContestFragment extends Fragment {
             public void onClick(View v) {
 
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                String userId = user.getUid();
-
-//                DocumentReference docRef = db.collection("post").document(userId);
-                CollectionReference postCollection = db.collection("posts");
-
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference().child("post");
-                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                String imageFileName = "image_" + timestamp + ".jpg";
-
-                /* 画像のUriを取得するコード */;
-                storageRef.child(imageFileName).putFile(selectedImageUri)
-                        .addOnSuccessListener(taskSnapshot -> {
-
-                            storageRef.child(imageFileName).getDownloadUrl()
-
-                                    .addOnSuccessListener(uri -> {
-
-                                        // Firestoreにドキュメントを作成してURLを保存
-                                        Map<String, Object> data = new HashMap<>();
-                                        data.put("imageUrl", uri.toString());
-
-                                        // Firestoreにドキュメントを作成
-                                        postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                .addOnSuccessListener(documentReference -> {
-                                                    // documentReference.getId() で作成されたドキュメントのIDを取得できます
-                                                })
-                                                .addOnFailureListener(e -> {
-
-                                                });
-                                    })
-
-                                    .addOnFailureListener(e -> {
-                                        // ダウンロードURLの取得が失敗した場合の処理
-                                    });
-                        });
 
             }
         });
@@ -242,16 +205,16 @@ public class ContestFragment extends Fragment {
             public void onClick(View v) {
 
 
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, PICK_IMAGE_REQUEST);
-
-
 //
-//                btnEntry.setEnabled(false);
-//                btnPost.setEnabled(true);
-//                showPopup();
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+
+
+                btnEntry.setEnabled(false);
+                btnPost.setEnabled(true);
+                showPopup();
             }
         });
 
@@ -271,28 +234,6 @@ public class ContestFragment extends Fragment {
         }, 3000);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-
-            try {
-                // UriからBitmapに変換
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
-
-                // Bitmapをバイナリデータに変換
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                imageData = baos.toByteArray();
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
 }
