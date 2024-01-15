@@ -21,6 +21,7 @@ import com.example.petsns.TestPostAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -28,6 +29,9 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class snstopFragment extends Fragment {
 
@@ -53,23 +57,21 @@ public class snstopFragment extends Fragment {
         // Firestoreからデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("posts")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
                         List<TestPost> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             TestPost post = document.toObject(TestPost.class);
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // エラー時の処理
-//                        Log.w(TAG, "Error getting documents.", e);
                     }
                 });
 
