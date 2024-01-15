@@ -24,7 +24,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="現在の登録電話番号は＋81 80 5030 6723です。"
+        android:text="現在の登録電話番号は登録されていません。"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
