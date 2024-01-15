@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,30 +51,30 @@ public class routeFragment extends DashboardFragment {
 
             @Override
             public void onClick(View v) {
-
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup2);
             }
         });
 
 
+
         Button btn = view.findViewById(R.id.start1);
-        btn.setOnClickListener(new View.OnClickListener() {
+        if (btn != null) {
+            btn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
+                }
+            });
+        }
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
-            }
-        });
+
 
         Button bt1 = view.findViewById(R.id.set);
         bt1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
             }
         });

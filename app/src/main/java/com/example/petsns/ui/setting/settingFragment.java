@@ -89,18 +89,21 @@ public class settingFragment extends Fragment {
                 params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) { dialog.dismiss(); }
-                });
 
+                });
                     dialog.show();
                 }
-
         });
+
+
+
         Button btnLogOut = view.findViewById(R.id.btnLogOut);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
 
@@ -125,6 +128,7 @@ public class settingFragment extends Fragment {
                 btnYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+//                        ログアウト
                         FirebaseAuth.getInstance().signOut();
                         Context context = v.getContext();
 
@@ -170,6 +174,7 @@ public class settingFragment extends Fragment {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_tag));
             }
         });
+
         Button bt9 = view.findViewById(R.id.bt9);
 
         bt9.setOnClickListener(new View.OnClickListener() {

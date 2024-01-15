@@ -247,7 +247,7 @@
         tools:layout="@layout/fragment_routestart" >
         <action
             android:id="@+id/action_navigation_routestart_to_navigation_routestop"
-            app:destination="@id/navigation_routestart" />
+            app:destination="@id/navigation_routestop" />
     </fragment>
 
     <fragment
