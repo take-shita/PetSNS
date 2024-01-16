@@ -110,14 +110,15 @@
                     <Space
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
+
                     <ImageButton
                         android:layout_width="240dp"
                         android:layout_height="30dp"
-                        android:scaleType="centerCrop"
-                        android:gravity="left|top"
-                        android:src="@drawable/forotouka"
                         android:background="null"
-                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck" />
+                        android:gravity="left|top"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/forotouka"
+                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
                 <LinearLayout
