@@ -15,10 +15,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import android.widget.Toast;
+import android.widget.EditText;
+
 
 public class emailFragment extends Fragment {
 
     private EmailViewModel mViewModel;
+    private EditText editTextNewEmail;  // EditText を格納する変数
+
 
     public static emailFragment newInstance() {
         return new emailFragment();
@@ -40,12 +49,49 @@ public class emailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // FirebaseAuth インスタンスを取得
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        // 現在のユーザーを取得
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        // EditText を初期化
+        editTextNewEmail = view.findViewById(R.id.editTextTextEmailAddress);
+
+        Button btnChangeEmail = view.findViewById(R.id.button12);
         Button btncan = view.findViewById(R.id.btncan);
 
         btncan.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                // 前の画面に戻る
+                Navigation.findNavController(v).navigateUp();
+            }
+        });
+        btnChangeEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 新しいメールアドレスを入力フォームから取得
+                String newEmail = editTextNewEmail.getText().toString();
+
+                // メールアドレスの変更
+                user.updateEmail(newEmail)
+                        .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    // メールアドレスの変更が成功した場合
+                                    // ここで成功時の処理を追加
+                                    Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // メールアドレスの変更が失敗した場合
+                                    // エラーメッセージなどを取得して表示する
+                                    // task.getException().getMessage() でエラーメッセージを取得できます
+                                    Toast.makeText(requireContext(), "メールアドレスの変更に成功しました", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_email_to_navigation_setting);
             }
         });
