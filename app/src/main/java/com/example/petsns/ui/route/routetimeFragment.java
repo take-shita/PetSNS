@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.petsns.R;
 
-
 public class routetimeFragment extends Fragment {
 
     private TextView timerTextView;
@@ -43,13 +42,15 @@ public class routetimeFragment extends Fragment {
 
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
-//        timerTextView = view.findViewById(R.id.timer1); // Access timer1 directly from the current layout
+//        timerTextView = view.findViewById(R.id.timer1);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startStop();
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routestart);
             }
+
         });
 
         return view;
@@ -123,5 +124,3 @@ public class routetimeFragment extends Fragment {
         });
     }
 }
-
-

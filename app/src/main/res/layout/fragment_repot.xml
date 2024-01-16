@@ -35,17 +35,19 @@
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
-        android:layout_width="254dp"
-        android:layout_height="191dp"
+        android:layout_width="447dp"
+        android:layout_height="202dp"
+        android:background="@drawable/frame_style4"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372"
+        app:layout_constraintVertical_bias="0.371"
+
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button

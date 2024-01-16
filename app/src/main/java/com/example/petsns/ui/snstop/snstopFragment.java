@@ -48,13 +48,15 @@ public class snstopFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_snstop, container, false);
 
+
+//        主要な要素
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         postAdapter = new TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
 
-        // Firestoreからデータを取得して表示
+        // Firestore からデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("posts")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -69,14 +71,24 @@ public class snstopFragment extends Fragment {
                         List<TestPost> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             TestPost post = document.toObject(TestPost.class);
+
+
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);
                     }
+
+
                 });
+
+
+
+//        ここまで
 
         return rootView;
     }
+
+
 
 
     @Override
@@ -89,6 +101,7 @@ public class snstopFragment extends Fragment {
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+//        ボタンのクリックリスナー
         ImageButton prof_bt = view.findViewById(R.id.top_prof);
         prof_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,5 +126,7 @@ public class snstopFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_snspost);
             }
         });
+
+//        ここまで
     }
 }
