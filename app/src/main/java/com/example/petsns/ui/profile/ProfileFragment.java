@@ -51,6 +51,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
+
         ImageButton toukou = view.findViewById(R.id.toukoubtn);
         toukou.setOnClickListener(new View.OnClickListener() {
             @Override
