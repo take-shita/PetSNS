@@ -19,7 +19,11 @@
         <action
             android:id="@+id/action_navigation_snstop_to_navigation_tag_search"
             app:destination="@id/navigation_tag_search" />
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_profile_other"
+            app:destination="@id/navigation_profile_other" />
     </fragment>
+
 
     <fragment
         android:id="@+id/navigation_tag_search"
@@ -98,9 +102,6 @@
         android:label="profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_navigation_profile_to_navigation_snstop"
-            app:destination="@id/navigation_snstop" />
-        <action
             android:id="@+id/action_navigation_profile_to_navigation_snspost"
             app:destination="@id/navigation_snspost" />
 <!--        <action-->
@@ -117,7 +118,17 @@
             android:id="@+id/action_navigation_profile_deletecheck_to_navigation_profile"
             app:destination="@id/navigation_profile_deletecheck" />
     </fragment>
-
+<!--    人のprofile-->
+    <fragment
+        android:id="@+id/navigation_profile_other"
+        android:name="com.example.petsns.ui.profile.profile_otherFragment"
+        android:label="profile_other"
+        tools:layout="@layout/fragment_profile_other" >
+    <action
+        android:id="@+id/action_navigation_profile_other_to_navigation_snspost"
+        app:destination="@id/navigation_snspost" />
+</fragment>
+<!--人のprofile-->
 
 
 
