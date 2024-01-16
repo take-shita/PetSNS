@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModel;
+import android.util.Log;
 
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,23 +21,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class deleteFragment extends Fragment {
+    private FirebaseAuth mAuth;
+
     public class deleteViewModel extends ViewModel {
         // ViewModel の実装を追加する
     }
-    public class YourApplication extends Application {
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            FirebaseApp.initializeApp(this);
-        }
-    }
 
     private deleteViewModel mViewModel;
+
+
+
 
     public static deleteFragment newInstance() {
         return new deleteFragment();
@@ -55,12 +55,13 @@ public class deleteFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // FirebaseAuth インスタンスを取得
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         // btnyes ボタンを取得
         Button btnYes = view.findViewById(R.id.btnyes);
@@ -69,28 +70,30 @@ public class deleteFragment extends Fragment {
 
         // btnyes ボタンにクリックリスナーを設定
         btnYes.setOnClickListener(new View.OnClickListener() {
-
-            TextView sample;
             @Override
             public void onClick(View v) {
-                // ボタンがクリックされた時の処理
-                FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-//                sample=v.findViewById(R.id.textView29);
-//                sample.setText("sakujyo");
-                if (users != null) {
-                    users.delete()
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    // アカウントの削除が成功した場合の処理
-                                    Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // アカウントの削除が失敗した場合の処理
-                                    Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
-                                    if (task.getException() != null) {
-                                        task.getException().printStackTrace();
-                                    }
-                                }
-                            });
+                // 現在ログインしているユーザーを取得
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                if (user != null) {
+                    // Firebase Authenticationからユーザーを削除
+                    user.delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Firebase Authenticationでの削除が成功した場合の処理
+                            // ここでFirestoreのユーザーデータを削除するコードを追加
+                            deleteFirestoreUserData(user.getUid());
+
+                            Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
+                            // ログアウトや画面遷移などの処理が必要であればここで行う
+                        } else {
+                            // Firebase Authenticationでの削除が失敗した場合の処理
+                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                            if (task.getException() != null) {
+                                task.getException().printStackTrace();
+                                Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -104,4 +107,22 @@ public class deleteFragment extends Fragment {
             }
         });
     }
+
+    private void deleteFirestoreUserData(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // ドキュメントの削除が成功した場合の処理
+                    // ここに適切な処理を追加する（例: ユーザーのデータが正常に削除されたときの処理）
+                })
+                .addOnFailureListener(e -> {
+                    // ドキュメントの削除が失敗した場合の処理
+                    Toast.makeText(requireContext(), "ユーザーデータの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                    if (e != null) {
+                        e.printStackTrace();
+                    }
+                });
+    }
 }
+
