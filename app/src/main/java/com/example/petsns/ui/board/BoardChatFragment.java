@@ -6,13 +6,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.petsns.Answer;
+import com.example.petsns.AnswerAdapter;
+import com.example.petsns.Question;
+import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +35,11 @@ import com.example.petsns.R;
  * create an instance of this fragment.
  */
 public class BoardChatFragment extends Fragment {
+
+    private BoardViewModel mViewModel;
+    private FirebaseFirestore firestore;
+    private RecyclerView recyclerView;
+    private com.example.petsns.AnswerAdapter AnswerAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,10 +82,40 @@ public class BoardChatFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_board_chat, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_board_chat, container, false);
+
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        AnswerAdapter = new AnswerAdapter(requireContext());
+        recyclerView.setAdapter(AnswerAdapter);
+
+        // Firestoreからデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("answer")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        List<Answer> ans = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Answer answ = document.toObject(Answer.class);
+                            ans.add(answ);
+                        }
+                        AnswerAdapter.setAnswer(ans);
+                    }
+                });
+
+        return rootView;
+
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

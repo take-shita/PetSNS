@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -56,7 +58,15 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         String collectionPath = "users";
         String documentPath = post.getid();
         DocumentReference docRef = db.collection(collectionPath).document(documentPath);
-
+//        相手プロフィール画面への遷移
+        holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ボタンがクリックされたときの処理
+                // 新しい画面に遷移する
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
+            }
+        });
 // ドキュメントを取得
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -114,12 +124,14 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TextView textUsername;
         TextView textPost;
         ImageView imagePost;
+        ImageButton otherprofilebtn;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
+            otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
         }
     }
 
