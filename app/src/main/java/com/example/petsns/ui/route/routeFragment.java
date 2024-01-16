@@ -3,6 +3,7 @@ package com.example.petsns.ui.route;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -40,10 +41,24 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
+import com.google.maps.errors.ApiException;
+import com.google.maps.internal.PolylineEncoding;
+import com.google.maps.model.DirectionsLeg;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.model.TravelMode;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 public class routeFragment extends DashboardFragment implements OnMapReadyCallback {
 
 
@@ -53,7 +68,107 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private GeoApiContext geoApiContext;
+
+    LatLng currentLatLng;
     TextView txtSmp;
+
+
+
+    private void generateRandomRoute() {
+        try {
+            // 出発地点
+            LatLng origin = currentLatLng;
+            // A地点
+            LatLng pointA = generateNextPoint(origin);
+            // B地点
+            LatLng pointB = generateNextPoint(pointA);
+            // C地点
+            LatLng pointC = generateNextPoint(pointB);
+
+            // 出発地からA地点までのルート
+            drawRoute(origin, pointA,Color.RED);
+            // A地点からB地点までのルート
+            drawRoute(pointA, pointB,Color.BLUE);
+            // B地点からC地点までのルート
+            drawRoute(pointB, pointC, Color.GREEN);
+            // C地点から出発地までのルート
+            drawRoute(pointC, origin,Color.MAGENTA);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private LatLng generateNextPoint(LatLng previousPoint) {
+        Random random = new Random();
+        double distance = 2000 / 4; // ユーザから入力された距離を考慮して調整
+        double angle = random.nextDouble() * 2 * Math.PI; // ランダムな角度
+        double latitudeOffset = distance * Math.cos(angle) / 111.32; // 緯度の変化
+        double longitudeOffset = distance * Math.sin(angle) / (111.32 * Math.cos(previousPoint.latitude)); // 経度の変化
+        return new LatLng(previousPoint.latitude + latitudeOffset, previousPoint.longitude + longitudeOffset);
+    }
+
+    private void drawRoute(LatLng origin, LatLng destination, int color) {
+        try {
+            com.google.maps.model.LatLng originLatLng =
+                    new com.google.maps.model.LatLng(origin.latitude, origin.longitude);
+            com.google.maps.model.LatLng destinationLatLng =
+                    new com.google.maps.model.LatLng(destination.latitude, destination.longitude);
+
+            DirectionsResult result = DirectionsApi.newRequest(geoApiContext)
+                    .origin(originLatLng)
+                    .destination(destinationLatLng)
+                    .mode(TravelMode.WALKING)
+                    .await();
+
+            if (result.routes != null && result.routes.length > 0) {
+                DirectionsRoute route = result.routes[0];
+                DirectionsLeg leg = route.legs[0];
+
+                // PolylineOptionsを構築
+                PolylineOptions polylineOptions = new PolylineOptions()
+                        .addAll(decodePolyline(route.overviewPolyline.getEncodedPath())).color(Color.RED);;
+
+                // マップにポリラインを描画
+                googleMap.addPolyline(polylineOptions);
+
+            }
+
+        } catch (ApiException | InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<LatLng> decodePolyline(String encodedPolyline) {
+        List<LatLng> points = new ArrayList<>();
+        int index = 0, len = encodedPolyline.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encodedPolyline.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encodedPolyline.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng(lat / 1E5, lng / 1E5);
+            points.add(p);
+        }
+        return points;
+    }
 
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
@@ -96,7 +211,7 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     }
 
     private void updateCameraPosition(Location location) {
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
     }
 
@@ -158,11 +273,9 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
 
         Button centerButton = view.findViewById(R.id.centerButton);
         centerButton.setOnClickListener(v -> centerMapOnMyLocation());
-
-//        geoApiContext = new GeoApiContext.Builder()
-//                .apiKey("AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw")
-//                .build();
-
+        geoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw").build();
+        Button generateRouteButton = view.findViewById(R.id.routeButton);
+        generateRouteButton.setOnClickListener(v -> generateRandomRoute());
         return view;
 //        return inflater.inflate(R.layout.fragment_route, container, false);
     }
@@ -171,6 +284,7 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     //    画面遷移---------------------------------------------------------------------------------------------
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        txtSmp=view.findViewById(R.id.textsample);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
