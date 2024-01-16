@@ -72,6 +72,15 @@ public class userchanFragment extends Fragment {
             }
         });
 
+        // 追加：「戻る」ボタンがクリックされたときの処理
+        Button btncan = view.findViewById(R.id.btncan);
+        btncan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ひとつ前の画面に戻る
+                Navigation.findNavController(requireView()).navigateUp();
+            }
+        });
         // ユーザー情報を表示
         displayUserInfo();
     }
@@ -113,25 +122,6 @@ public class userchanFragment extends Fragment {
             FirebaseUser user = mAuth.getCurrentUser();
             String newUsername = editTextNewUsername.getText().toString().trim();
 
-//            if (!newUsername.isEmpty()) {
-//                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                        .setDisplayName(newUsername)
-//                        .build();
-//
-//                user.updateProfile(profileUpdates)
-//                        .addOnCompleteListener(requireActivity(), task -> {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(requireContext(), "ユーザーネームが変更されました", Toast.LENGTH_SHORT).show();
-//
-//                                // 変更成功時に前の画面に戻る
-//
-//                            } else {
-//                                Toast.makeText(requireContext(), "ユーザーネームが変更されませんでした", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//            } else {
-//                Toast.makeText(requireContext(), "Please enter a new username", Toast.LENGTH_SHORT).show();
-//            }
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
