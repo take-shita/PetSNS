@@ -20,7 +20,8 @@
 <!--        ルート検索の実験のために追記-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCyXxKg535DofxXNZcdC6l5aSNCpl-9Cz0" />
+            android:value="AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw" />
+
 <!--        ルート検索の実験のために追記-->
 
         <activity
@@ -57,5 +58,5 @@
 
 
     </application>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
