@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.345" />
 
     <Button
-        android:id="@+id/button16"
+        android:id="@+id/btnChangeUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#2196F3"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.592" />
 
     <TextView
-        android:id="@+id/textView43"
+        android:id="@+id/textViewUsername"
         android:layout_width="291dp"
         android:layout_height="75dp"
         android:text="田實　優斗"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.219" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/editTextNewUsername"
         android:layout_width="290dp"
         android:layout_height="75dp"
         android:ems="10"

@@ -59,13 +59,13 @@ public class deleteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // FirebaseAuth インスタンスを取得
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         // btnyes ボタンを取得
         Button btnYes = view.findViewById(R.id.btnyes);
         // btnno ボタンを取得
         Button btnNo = view.findViewById(R.id.btnno);
-
-        // FirebaseAuth インスタンスを取得
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // btnyes ボタンにクリックリスナーを設定
         btnYes.setOnClickListener(new View.OnClickListener() {
