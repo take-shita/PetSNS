@@ -41,17 +41,6 @@ public class ProfileFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ImageButton topback = view.findViewById(R.id.snstopback);
-        topback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_profile_to_navigation_snstop);
-            }
-        });
-
-
-
         ImageButton toukou = view.findViewById(R.id.toukoubtn);
         toukou.setOnClickListener(new View.OnClickListener() {
             @Override
