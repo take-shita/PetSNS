@@ -51,7 +51,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         TestPost post = posts.get(position);
 
-        // 投稿者IDと投稿文をセット
+        // 投稿者 ID と投稿文をセット
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // コレクションとドキュメントのパスを指定
@@ -64,7 +64,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
             }
         });
 // ドキュメントを取得
@@ -97,7 +97,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
                 final File localFile = File.createTempFile("images", "jpg");
                 storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                    // ローカルファイルから画像を読み込んでImageViewにセット
+                    // ローカルファイルから画像を読み込んで ImageView にセット
                     Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                     holder.imagePost.setImageBitmap(bitmap);
 
