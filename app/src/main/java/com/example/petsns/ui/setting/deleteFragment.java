@@ -2,6 +2,7 @@ package com.example.petsns.ui.setting;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,6 +28,14 @@ public class deleteFragment extends Fragment {
     public class deleteViewModel extends ViewModel {
         // ViewModel の実装を追加する
     }
+    public class YourApplication extends Application {
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            FirebaseApp.initializeApp(this);
+        }
+    }
+
     private deleteViewModel mViewModel;
 
     public static deleteFragment newInstance() {
@@ -65,8 +75,8 @@ public class deleteFragment extends Fragment {
             public void onClick(View v) {
                 // ボタンがクリックされた時の処理
                 FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-                sample=v.findViewById(R.id.textView29);
-                sample.setText("sakujyo");
+//                sample=v.findViewById(R.id.textView29);
+//                sample.setText("sakujyo");
                 if (users != null) {
                     users.delete()
                             .addOnCompleteListener(task -> {
@@ -76,11 +86,11 @@ public class deleteFragment extends Fragment {
                                 } else {
                                     // アカウントの削除が失敗した場合の処理
                                     Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                    if (task.getException() != null) {
+                                        task.getException().printStackTrace();
+                                    }
                                 }
                             });
-                } else {
-                    // 現在のユーザーがnullの場合の処理
-                    Toast.makeText(requireContext(), "ユーザーがログインしていません", Toast.LENGTH_SHORT).show();
                 }
             }
         });
