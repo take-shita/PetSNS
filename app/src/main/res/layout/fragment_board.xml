@@ -6,30 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.board.BoardFragment">
 
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="438dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:ems="100"
-        android:inputType="textMultiLine"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:background="#FFFFFF"
+        android:layout_marginTop="20dp">
 
-    <Button
-        android:id="@+id/Answer_btn"
-        android:layout_width="107dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="480dp"
-        android:layout_marginTop="15dp"
-        android:textSize="16dp"
-        android:text="回答する"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TimelineActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/Q_btn"
@@ -43,20 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.877" />
-
-    <!--    プロフィールアイコン-->
-<!--        <ImageButton-->
-<!--        android:id="@+id/imageButton3"-->
-<!--        android:layout_width="119dp"-->
-<!--        android:layout_height="125dp"-->
-<!--        android:layout_marginStart="188dp"-->
-<!--        android:layout_marginTop="560dp"-->
-<!--        android:background="@drawable/round_button_background"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        android:src="@drawable/cbr250rr"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
