@@ -14,13 +14,26 @@ import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.petsns.MainActivity;
+import com.example.petsns.Question;
+import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
+import com.example.petsns.TestPost;
+import com.example.petsns.TestPostAdapter;
+import com.example.petsns.ui.snstop.SnstopViewModel;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,10 +41,15 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardFragment extends Fragment {
 
     private BoardViewModel mViewModel;
-
+    private FirebaseFirestore firestore;
+    private RecyclerView recyclerView;
+    private QuestionAdapter QuestionAdapter;
     public static BoardFragment newInstance() {
         return new BoardFragment();
     }
@@ -39,7 +57,36 @@ public class BoardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_board, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_board, container, false);
+
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        QuestionAdapter = new QuestionAdapter(requireContext());
+        recyclerView.setAdapter(QuestionAdapter);
+
+        // Firestoreからデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("question")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        List<Question> ques = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Question quess = document.toObject(Question.class);
+                            ques.add(quess);
+                        }
+                        QuestionAdapter.setQuestion(ques);
+                    }
+                });
+
+        return rootView;
     }
 
     @Override
@@ -76,25 +123,5 @@ public class BoardFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        Button prof_bt = view.findViewById(R.id.Answer_btn);
-        prof_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_board_to_navigation_Board_Chat);
-            }
-        });
-
-//        super.onViewCreated(view, savedInstanceState);
-//        Button bt_judge = view.findViewById(R.id.button12);
-//        bt_judge.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Navigation.findNavController(v).navigate(R.id.action_navigation_board_to_navigation_sample);
-//
-//            }
-//
-//        });
     }
 }
