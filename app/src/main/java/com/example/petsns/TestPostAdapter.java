@@ -64,7 +64,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
             }
         });
 // ドキュメントを取得
