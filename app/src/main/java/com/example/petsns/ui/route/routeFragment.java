@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 
@@ -44,6 +45,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.internal.PolylineEncoding;
@@ -59,83 +61,203 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 public class routeFragment extends DashboardFragment implements OnMapReadyCallback {
 
+    private GoogleMap googleMap;
+    private GeoApiContext geoApiContext;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationCallback locationCallback;
 
     private RouteViewModel mViewModel;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private GoogleMap googleMap;
-    private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback locationCallback;
-    private GeoApiContext geoApiContext;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
+
 
     LatLng currentLatLng;
     TextView txtSmp;
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_samplemap, container, false);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+        geoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw").build();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                if (locationResult.getLastLocation() != null) {
+                    currentLatLng = new LatLng(locationResult.getLastLocation().getLatitude(),
+                            locationResult.getLastLocation().getLongitude());
+
+                }
+            }
+        };
 
 
-    private void generateRandomRoute() {
-        try {
-            // 出発地点
-            LatLng origin = currentLatLng;
-            // A地点
-            LatLng pointA = generateNextPoint(origin);
-            // B地点
-            LatLng pointB = generateNextPoint(pointA);
-            // C地点
-            LatLng pointC = generateNextPoint(pointB);
+        Button centerButton = view.findViewById(R.id.centerButton);
+//        centerButton.setOnClickListener(v -> centerMapOnMyLocation());
 
-            // 出発地からA地点までのルート
-            drawRoute(origin, pointA,Color.RED);
-            // A地点からB地点までのルート
-            drawRoute(pointA, pointB,Color.BLUE);
-            // B地点からC地点までのルート
-            drawRoute(pointB, pointC, Color.GREEN);
-            // C地点から出発地までのルート
-            drawRoute(pointC, origin,Color.MAGENTA);
+        Button generateRouteButton = view.findViewById(R.id.routeButton);
+        generateRouteButton.setOnClickListener(v -> {
+            // 権限の確認とリクエスト
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            checkLocationPermission();
+            generateRouteAsync();
+//            generateRandomRoute();
+        });
+        return view;
+//        return inflater.inflate(R.layout.fragment_route, container, false);
+    }
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        // 位置情報権限の確認とリクエスト
+        checkLocationPermission();
+        getCurrentLocationAndMoveMap();
+    }
+
+    private LocationRequest createLocationRequest() {
+        return new LocationRequest()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(5000);
+    }
+    private void checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // 権限が許可されていない場合、ユーザーにリクエストする
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // 権限が許可されている場合、位置情報を取得するための処理を開始
+            startLocationUpdates();
         }
     }
 
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // ユーザーが権限を許可した場合、位置情報を取得するための処理を開始
+                startLocationUpdates();
+            } else {
+                // ユーザーが権限を拒否した場合、適切にハンドリングする
+                // 例: ユーザーに権限が必要である旨のメッセージを表示
+            }
+        }
+    }
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // 位置情報の取得処理を実装
+            // ...
+            fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(), locationCallback, null);
+        }
+    }
+    private void generateRouteAsync() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            // バックグラウンドで非同期にルートを生成する処理
+            generateRandomRoute();
+            Log.d("RouteDebug", "Route generation complete");
+        });
+    }
+    private void generateRandomRoute() {
+        if (googleMap != null && currentLatLng != null) {
+            try {
+                LatLng origin = currentLatLng;
+                LatLng pointA = generateNextPoint(origin);
+                LatLng pointB = generateNextPoint(pointA);
+                LatLng pointC = generateNextPoint(pointB);
+
+                Log.d("RouteDebug", "Origin: " + origin.toString());
+                Log.d("RouteDebug", "PointA: " + pointA.toString());
+                Log.d("RouteDebug", "PointB: " + pointB.toString());
+                Log.d("RouteDebug", "PointC: " + pointC.toString());
+
+                drawRoute(origin, pointA);
+                drawRoute(pointA, pointB);
+                drawRoute(pointB, pointC);
+                drawRoute(pointC, origin);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private LatLng generateNextPoint(LatLng previousPoint) {
         Random random = new Random();
-        double distance = 2000 / 4; // ユーザから入力された距離を考慮して調整
+        double distance = 200 / 4; // ユーザから入力された距離を考慮して調整
         double angle = random.nextDouble() * 2 * Math.PI; // ランダムな角度
         double latitudeOffset = distance * Math.cos(angle) / 111.32; // 緯度の変化
         double longitudeOffset = distance * Math.sin(angle) / (111.32 * Math.cos(previousPoint.latitude)); // 経度の変化
         return new LatLng(previousPoint.latitude + latitudeOffset, previousPoint.longitude + longitudeOffset);
     }
 
-    private void drawRoute(LatLng origin, LatLng destination, int color) {
+    private void drawRoute(LatLng origin, LatLng destination) {
+//        try {
+//            DirectionsResult result = DirectionsApi.newRequest(geoApiContext)
+//                    .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
+//                    .destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude))
+//                    .mode(TravelMode.WALKING)
+//                    .await();
+//
+//            if (result.routes != null && result.routes.length > 0) {
+//                List<LatLng> decodedPath = decodePolyline(result.routes[0].overviewPolyline.getEncodedPath());
+//
+//                // ポリラインの色を設定
+//                PolylineOptions polylineOptions = new PolylineOptions()
+//                        .addAll(decodedPath)
+//                        .color(Color.BLUE);
+//
+//                googleMap.addPolyline(polylineOptions);
+//            }
+//
+//        } catch (ApiException | InterruptedException | IOException e) {
+//            e.printStackTrace();
+//        }
+        DirectionsApiRequest directionsApiRequest = DirectionsApi.newRequest(geoApiContext)
+                .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
+                .destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude))
+                .mode(TravelMode.WALKING);
+
+        Log.d("DirectionsAPI", "Request: " + directionsApiRequest.toString());
+
+
         try {
-            com.google.maps.model.LatLng originLatLng =
-                    new com.google.maps.model.LatLng(origin.latitude, origin.longitude);
-            com.google.maps.model.LatLng destinationLatLng =
-                    new com.google.maps.model.LatLng(destination.latitude, destination.longitude);
+            DirectionsResult result = directionsApiRequest.await();
 
-            DirectionsResult result = DirectionsApi.newRequest(geoApiContext)
-                    .origin(originLatLng)
-                    .destination(destinationLatLng)
-                    .mode(TravelMode.WALKING)
-                    .await();
-
-            if (result.routes != null && result.routes.length > 0) {
-                DirectionsRoute route = result.routes[0];
-                DirectionsLeg leg = route.legs[0];
-
-                // PolylineOptionsを構築
-                PolylineOptions polylineOptions = new PolylineOptions()
-                        .addAll(decodePolyline(route.overviewPolyline.getEncodedPath())).color(Color.RED);;
-
-                // マップにポリラインを描画
-                googleMap.addPolyline(polylineOptions);
-
+            // エラーメッセージの取得
+            if (result.geocodedWaypoints != null && result.geocodedWaypoints.length > 0) {
+                String errorMessage = result.geocodedWaypoints[0].partialMatch ? "Partial match" : "";
+                Log.e("DirectionsAPI", "Error response: " + errorMessage);
+            } else {
+                // ルートがある場合の処理
+//                Log.d("DirectionsAPI", "Status: " + result.status);
             }
 
         } catch (ApiException | InterruptedException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private LatLng getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // ここで現在地の取得を行う
+            // 例: FusedLocationProviderClientを使用して最後の既知の位置を取得する
+            // 参考: https://developer.android.com/training/location/retrieve-current
+            return new LatLng(35.6895, 139.6917); // 仮の値
+        } else {
+            return new LatLng(0, 0);
         }
     }
 
@@ -169,139 +291,41 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
         }
         return points;
     }
+    private void getCurrentLocationAndMoveMap() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // 位置情報の取得処理を実装
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(requireActivity(), location -> {
+                        if (location != null) {
+                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-
-        // パーミッションが許可されているか確認
-        if (hasLocationPermission()) {
-            enableMyLocation();
-        } else {
-            // パーミッションが許可されていない場合はリクエスト
-            requestLocationPermission();
+                            // 現在地を中心にマップを移動
+                            moveMapToCurrentLocation();
+                        }
+                    });
         }
     }
-    private boolean hasLocationPermission() {
-        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestLocationPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-    }
-
-    private void enableMyLocation() {
-        try {
-            // 位置情報の更新をリクエスト
-            LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(5000); // 更新の間隔（ミリ秒）
-            locationRequest.setFastestInterval(1000); // 最短の更新間隔（ミリ秒）
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-
-            // 最後に知られている位置情報を取得
-            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                if (location != null) {
-                    updateCameraPosition(location);
-                }
-            });
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            // SecurityExceptionが発生した場合の対処を行う
+    private void moveMapToCurrentLocation() {
+        if (googleMap != null && currentLatLng != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
     }
-
-    private void updateCameraPosition(Location location) {
-        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-    }
-
-    private void centerMapOnMyLocation() {
-        try {
-            if (hasLocationPermission()) {
-                fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                    if (location != null) {
-                        updateCameraPosition(location);
-                    }
-                });
-            } else {
-                // パーミッションが許可されていない場合はリクエスト
-                requestLocationPermission();
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            // SecurityExceptionが発生した場合の対処を行う
-        }
-        // ボタンを押したときに現在地を中心にして地図を更新
-
-    }
-
-    // パーミッションのリクエスト結果をハンドル
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // パーミッションが許可された場合の処理
-                enableMyLocation();
-            } else {
-                // パーミッションが拒否された場合の処理
-                // 必要に応じてユーザーにメッセージを表示して説明するなどの対応を行う
-            }
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // アプリが非表示になるときに位置情報の更新を停止
-        if (fusedLocationClient != null && locationCallback != null) {
-            fusedLocationClient.removeLocationUpdates(locationCallback);
-        }
-    }
 
 
 
 
-    public static routeFragment newInstance() {
-        return new routeFragment();
-    }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_samplemap, container, false);
-
-        Button centerButton = view.findViewById(R.id.centerButton);
-        centerButton.setOnClickListener(v -> centerMapOnMyLocation());
-        geoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw").build();
-        Button generateRouteButton = view.findViewById(R.id.routeButton);
-        generateRouteButton.setOnClickListener(v -> generateRandomRoute());
-        return view;
-//        return inflater.inflate(R.layout.fragment_route, container, false);
-    }
 
 
     //    画面遷移---------------------------------------------------------------------------------------------
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         txtSmp=view.findViewById(R.id.textsample);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult != null) {
-                    Location location = locationResult.getLastLocation();
-                    if (location != null) {
-                        // 位置情報が更新されたときに通知を受け取りますが、ここでは何もしません
-                    }
-                }
-            }
-        };
 
 //        Button btn1 = view.findViewById(R.id.route1);
 //        btn1.setOnClickListener(new View.OnClickListener() {
