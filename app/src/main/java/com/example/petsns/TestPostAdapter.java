@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.util.List;
 
 import com.example.petsns.TestPost;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -45,7 +50,34 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TestPost post = posts.get(position);
 
         // 投稿者IDと投稿文をセット
-        holder.textUsername.setText(post.getid());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+// コレクションとドキュメントのパスを指定
+        String collectionPath = "users";
+        String documentPath = post.getid();
+        DocumentReference docRef = db.collection(collectionPath).document(documentPath);
+
+// ドキュメントを取得
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // フィールド名を指定して文字列を取得
+                        String name = document.getString("name");
+                        holder.textUsername.setText(name);
+                        // fieldValue を使って何かを行う
+                    } else {
+                        // ドキュメントが存在しない場合の処理
+                    }
+                } else {
+                    // エラーが発生した場合の処理
+                }
+            }
+        });
+
+
         holder.textPost.setText(post.getSentence());
 
         if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {

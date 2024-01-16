@@ -2,11 +2,16 @@ package com.example.petsns.ui.route;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,14 +25,127 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import android.Manifest;
+import android.widget.TextView;
+
 import com.example.petsns.R;
 import com.example.petsns.ui.dashboard.DashboardFragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
-public class routeFragment extends DashboardFragment {
+import com.google.maps.GeoApiContext;
+
+public class routeFragment extends DashboardFragment implements OnMapReadyCallback {
 
 
     private RouteViewModel mViewModel;
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private GoogleMap googleMap;
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
+    private GeoApiContext geoApiContext;
+    TextView txtSmp;
+
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+        // パーミッションが許可されているか確認
+        if (hasLocationPermission()) {
+            enableMyLocation();
+        } else {
+            // パーミッションが許可されていない場合はリクエスト
+            requestLocationPermission();
+        }
+    }
+    private boolean hasLocationPermission() {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+    }
+
+    private void enableMyLocation() {
+        try {
+            // 位置情報の更新をリクエスト
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(5000); // 更新の間隔（ミリ秒）
+            locationRequest.setFastestInterval(1000); // 最短の更新間隔（ミリ秒）
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+
+            // 最後に知られている位置情報を取得
+            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    updateCameraPosition(location);
+                }
+            });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            // SecurityExceptionが発生した場合の対処を行う
+        }
+    }
+
+    private void updateCameraPosition(Location location) {
+        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+    }
+
+    private void centerMapOnMyLocation() {
+        try {
+            if (hasLocationPermission()) {
+                fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                    if (location != null) {
+                        updateCameraPosition(location);
+                    }
+                });
+            } else {
+                // パーミッションが許可されていない場合はリクエスト
+                requestLocationPermission();
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            // SecurityExceptionが発生した場合の対処を行う
+        }
+        // ボタンを押したときに現在地を中心にして地図を更新
+
+    }
+
+    // パーミッションのリクエスト結果をハンドル
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // パーミッションが許可された場合の処理
+                enableMyLocation();
+            } else {
+                // パーミッションが拒否された場合の処理
+                // 必要に応じてユーザーにメッセージを表示して説明するなどの対応を行う
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // アプリが非表示になるときに位置情報の更新を停止
+        if (fusedLocationClient != null && locationCallback != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
+    }
+
+
+
 
     public static routeFragment newInstance() {
         return new routeFragment();
@@ -36,50 +154,77 @@ public class routeFragment extends DashboardFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_route, container, false);
+        View view = inflater.inflate(R.layout.fragment_samplemap, container, false);
+
+        Button centerButton = view.findViewById(R.id.centerButton);
+        centerButton.setOnClickListener(v -> centerMapOnMyLocation());
+
+//        geoApiContext = new GeoApiContext.Builder()
+//                .apiKey("AIzaSyB7PVa9P1isPm5kkSEDlXuaVXepW7v17Fw")
+//                .build();
+
+        return view;
+//        return inflater.inflate(R.layout.fragment_route, container, false);
     }
 
 
     //    画面遷移---------------------------------------------------------------------------------------------
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-        Button btn1 = view.findViewById(R.id.route1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup2);
-            }
-        });
-
-
-
-        Button btn = view.findViewById(R.id.start1);
-        if (btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
-                }
-            });
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
         }
 
-
-
-        Button bt1 = view.findViewById(R.id.set);
-        bt1.setOnClickListener(new View.OnClickListener() {
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        locationCallback = new LocationCallback() {
             @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult != null) {
+                    Location location = locationResult.getLastLocation();
+                    if (location != null) {
+                        // 位置情報が更新されたときに通知を受け取りますが、ここでは何もしません
+                    }
+                }
             }
-        });
+        };
+
+//        Button btn1 = view.findViewById(R.id.route1);
+//        btn1.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup2);
+//            }
+//        });
+//
+//
+//
+//        Button btn = view.findViewById(R.id.start1);
+//        if (btn != null) {
+//            btn.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
+//                }
+//            });
+//        }
+//
+//
+//
+//        Button bt1 = view.findViewById(R.id.set);
+//        bt1.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
+//            }
+//        });
 
 
+
+        //ここまで
 
 //        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
 //        ro.setOnClickListener(new View.OnClickListener() {
