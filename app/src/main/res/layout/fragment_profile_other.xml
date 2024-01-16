@@ -114,10 +114,6 @@
                     <ImageButton
                         android:layout_width="240dp"
                         android:layout_height="30dp"
-                        android:background="null"
-                        android:gravity="left|top"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/forotouka"
                         android:background="@android:color/transparent"
                         android:gravity="left|top"
                         android:scaleType="centerCrop"
