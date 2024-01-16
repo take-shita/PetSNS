@@ -111,18 +111,28 @@
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
 
-<!--                    <ImageButton-->
-<!--                        android:layout_width="240dp"-->
-<!--                        android:layout_height="30dp"-->
-<!--                        android:background="null"-->
-<!--                        android:gravity="left|top"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@drawable/forotouka"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:gravity="left|top"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@drawable/follow_button_selector"-->
-<!--                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
+<!--<<<<<<< HEAD-->
+<!--&lt;!&ndash;                    <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="240dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:background="null"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:gravity="left|top"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleType="centerCrop"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:src="@drawable/forotouka"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:background="@android:color/transparent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:gravity="left|top"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleType="centerCrop"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:src="@drawable/follow_button_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />&ndash;&gt;-->
+<!--=======-->
+                    <ImageButton
+                        android:layout_width="240dp"
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="left|top"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/follow_button_selector"
+                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
                 <LinearLayout

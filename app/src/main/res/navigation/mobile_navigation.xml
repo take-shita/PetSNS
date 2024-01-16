@@ -19,7 +19,11 @@
         <action
             android:id="@+id/action_navigation_snstop_to_navigation_tag_search"
             app:destination="@id/navigation_tag_search" />
+        <action
+            android:id="@+id/action_navigation_snstop_to_navigation_profile_other"/>
+<!--            app:destination="@id/navigation_profile_other" />-->
     </fragment>
+
 
     <fragment
         android:id="@+id/navigation_tag_search"
