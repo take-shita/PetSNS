@@ -73,12 +73,9 @@ dependencies {
 //    ルート検索の実験のために追記
     implementation ("com.google.android.gms:play-services-maps:17.0.1")
     implementation ("com.google.android.gms:play-services-places:17.0.0")
-//    ルート検索の実験のために追記
-
-//    implementation ("com.google.android.gms:play-services-maps:17.0.1") ルート検索の実験のために追記
-
+    implementation ("com.google.android.gms:play-services-location:18.0.0")
 //    recycleviewの追記
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
-
+    implementation ("com.google.maps:google-maps-services:0.15.0")
 
 }
