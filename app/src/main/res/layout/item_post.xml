@@ -44,9 +44,8 @@
                 android:id="@+id/hartbtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/harttouka"
+                android:src="@drawable/button_selector"
+                android:scaleType="fitCenter"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
