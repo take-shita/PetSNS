@@ -16,7 +16,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/iconbutton"
+                android:id="@+id/otherprofilebtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@null"
