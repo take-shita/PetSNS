@@ -40,12 +40,15 @@
                 android:text="17h"
                 android:textSize="24dp"/>
 
-            <ImageButton
+            <ToggleButton
                 android:id="@+id/hartbtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/button_selector"
+                android:background="@drawable/button_selector"
+                android:textOn=""
+                android:textOff=""
                 android:scaleType="fitCenter"
+                android:button="@null"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
