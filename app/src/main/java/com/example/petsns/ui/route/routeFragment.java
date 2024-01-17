@@ -91,6 +91,8 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     LatLng intermediatePoint2;
     LatLng intermediatePoint3;
     LatLng intermediatePoint4;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -123,6 +125,7 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             // 権限の確認とリクエスト
 
             checkLocationPermission();
+            googleMap.clear();
             generateRoute();
         });
         return view;
@@ -130,10 +133,13 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     }
     private void generateRoute() {
         if (currentLatLng != null) {
-            LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, 500, 0/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
+            Random random = new Random();
+            // 0から360の範囲でランダムな数値を取得
+            int randomAngle = random.nextInt(361);
+            LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, 500,  random.nextInt(361)/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
 
-            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 500, 270/* 新しい方向 */);
-            LatLng intermediatePoint3 = calculateDestinationLatLng(intermediatePoint2, 500, 180/* 新しい方向 */);
+            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 500,  random.nextInt(361)/* 新しい方向 */);
+            LatLng intermediatePoint3 = calculateDestinationLatLng(intermediatePoint2, 500,  random.nextInt(361)/* 新しい方向 */);
             LatLng intermediatePoint4 = currentLatLng;
 
             // Directions APIを非同期で呼び出し、ルートを取得
@@ -178,7 +184,6 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
                         .await();
 
 
-                // 2つのルートを結合して全体のルートを得る
                 DirectionsResult completeRoute = concatenateRoutes(route1, route2, route3, route4);
 
 
@@ -257,10 +262,15 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
                         .title("Intermediate Point 1");
                 googleMap.addMarker(intermediateMarkerOptions);
 //
-                MarkerOptions destinationMarkerOptions = new MarkerOptions()
+                MarkerOptions intermediateMarkerOptions2 = new MarkerOptions()
                         .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
                         .title("Intermediate Point 2");
-                googleMap.addMarker(destinationMarkerOptions);
+                googleMap.addMarker(intermediateMarkerOptions2);
+
+                MarkerOptions intermediateMarkerOptions3 = new MarkerOptions()
+                        .position(new LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
+                        .title("Intermediate Point 3");
+                googleMap.addMarker(intermediateMarkerOptions3);
 
 
                 DirectionsRoute finalRoute = directionsResult.routes[0]; // 最初のルートを取得
