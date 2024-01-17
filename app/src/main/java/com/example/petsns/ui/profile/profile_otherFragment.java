@@ -3,6 +3,8 @@ package com.example.petsns.ui.profile;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,6 +50,35 @@ public class profile_otherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_profile_other_to_navigation_snspost);
+            }
+        });
+        ImageButton report = view.findViewById(R.id.reportbtn);//投稿通報確認ポップアップ画面
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
+                ImageButton hai = dialog.findViewById(R.id.haibtn);
+                ImageButton iie = dialog.findViewById(R.id.iiebtn);
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 372; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                hai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                iie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
     }
