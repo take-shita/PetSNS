@@ -5,6 +5,8 @@ public class TestPost {
     private String sentence;
     private String imageUrl;
 
+    private String icon;
+
     // ゲッター・セッターなど必要な処理を実装
     public String getid(){
         return id;
@@ -14,4 +16,9 @@ public class TestPost {
     }
 
     public String getImageUrl(){ return imageUrl;}
+
+    public String getIcon(){ return icon;}
+
+    public void setIcon(String icon){this.icon=icon;}
+
 }

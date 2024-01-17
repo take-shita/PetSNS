@@ -77,15 +77,25 @@ public class iconFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnhe = view.findViewById(R.id.btnhe);
+        Button btncan = view.findViewById(R.id.btncan);
 
+        btncan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate((R.id.action_navigation_icon_to_navigation_setting));
+            }
+        });
+
+        Button btnhe = view.findViewById(R.id.btnhe);
         btnhe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_icon_to_navigation_setting);
                 // 選択された画像がある場合のみ処理を実行
                 if (selectedImageUri != null) {
                     // Firebase Storage へのアップロード処理
                     uploadImageToFirebaseStorage(selectedImageUri);
+
                 }
             }
         });
@@ -107,13 +117,18 @@ public class iconFragment extends Fragment {
             storageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();
-                            // Firebase Firestore にダウンロードURLを保存するメソッド
-                            saveImageDownloadUrlToFirestore(downloadUrl);
-                        });
+                                    String downloadUrl = uri.toString();
+                                    // Firebase Firestore にダウンロードURLを保存するメソッド
+                                    saveImageDownloadUrlToFirestore(downloadUrl);
 
-                        // 画像変更成功の場合、前の画面に戻る
-                        Navigation.findNavController(getView()).navigateUp();
+                                    // 画像変更成功の場合、前の画面に戻る
+                                    Navigation.findNavController(getView()).navigateUp();
+                                })
+                                .addOnFailureListener(exception -> {
+                                    // アップロードが失敗した場合の処理
+                                    exception.printStackTrace();
+                                    Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
+                                });
                     })
                     .addOnFailureListener(exception -> {
                         // アップロードが失敗した場合の処理
@@ -122,6 +137,7 @@ public class iconFragment extends Fragment {
                     });
         }
     }
+
 
     // Firebase Firestore へダウンロードURLを保存するメソッド
     private void saveImageDownloadUrlToFirestore(String downloadUrl) {
