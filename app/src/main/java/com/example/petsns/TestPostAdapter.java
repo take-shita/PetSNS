@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -113,6 +116,17 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             // 画像がない場合の処理（任意で実装）
 //            holder.imagePost.setImageResource(R.drawable.placeholder_image);
         }
+
+        holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                }else {
+                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+                }
+            }
+        });
     }
 
     @Override
@@ -126,8 +140,11 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         ImageView imagePost;
         ImageButton otherprofilebtn;
 
+        ToggleButton hartbtn;
+
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
+            hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
