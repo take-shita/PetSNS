@@ -15,7 +15,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ToggleButton;
 
 import com.example.petsns.R;
 
@@ -30,8 +32,19 @@ public class profile_otherFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile_other, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile_other, container, false);
+
+        // 初回表示時にボタンの状態に合わせて背景を設定
+        ToggleButton followbtn = rootView.findViewById(R.id.followbtn);
+        if (followbtn.isChecked()) {
+            followbtn.setBackgroundResource(R.drawable.forotyuutouka);
+        } else {
+            followbtn.setBackgroundResource(R.drawable.forotouka);
+        }
+
+        return rootView;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -79,6 +92,18 @@ public class profile_otherFragment extends Fragment {
                     }
                 });
                 dialog.show();
+            }
+        });
+        ToggleButton followbtn = view.findViewById(R.id.followbtn);
+
+        followbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    followbtn.setBackgroundResource(R.drawable.forotyuutouka);
+                }else {
+                    followbtn.setBackgroundResource(R.drawable.forotouka);
+                }
             }
         });
     }
