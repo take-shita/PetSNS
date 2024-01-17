@@ -71,7 +71,7 @@ public class iconFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (getView() != null && requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
+            selectedImageUri = data.getData();
 
             ImageView imageView = getView().findViewById(R.id.imageView);
             imageView.setImageURI(selectedImageUri);
