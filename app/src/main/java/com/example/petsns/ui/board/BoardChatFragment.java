@@ -13,17 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.petsns.Answer;
 import com.example.petsns.AnswerAdapter;
 import com.example.petsns.Question;
 import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -49,7 +53,8 @@ public class BoardChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private String documentID;
+    private TextView txtSmp;
     public BoardChatFragment() {
         // Required empty public constructor
     }
@@ -93,6 +98,7 @@ public class BoardChatFragment extends Fragment {
         AnswerAdapter = new AnswerAdapter(requireContext());
         recyclerView.setAdapter(AnswerAdapter);
 
+
         // Firestoreからデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("answer")
@@ -108,7 +114,10 @@ public class BoardChatFragment extends Fragment {
                         List<Answer> ans = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Answer answ = document.toObject(Answer.class);
-                            ans.add(answ);
+                            if(answ.getQues_id().equals(documentID)){
+                                ans.add(answ);
+                            }
+
                         }
                         AnswerAdapter.setAnswer(ans);
                     }
@@ -121,6 +130,18 @@ public class BoardChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         Button question = view.findViewById(R.id.back_btn);
+        txtSmp=view.findViewById(R.id.textView27);
+        Bundle args = getArguments();
+        if (args != null) {
+            documentID = args.getString("key");
+            if(documentID!=null){
+                txtSmp.setText(documentID);
+            }else {
+                txtSmp.setText("!!!!!!!!!!");
+            }
+            // データを使用して何かを行う
+        }
+
         question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

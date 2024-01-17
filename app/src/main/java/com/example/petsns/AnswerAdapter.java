@@ -48,6 +48,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         // 回答内容
         holder.answer_content.setText(answ.getAnswer_content());
 
+
 //        通報ボタン
         holder.Report_btn.setOnClickListener(new View.OnClickListener() {
             @Override

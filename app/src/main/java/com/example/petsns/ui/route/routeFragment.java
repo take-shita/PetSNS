@@ -42,6 +42,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.maps.DirectionsApi;
@@ -59,10 +64,13 @@ import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import static com.example.petsns.LocationUtils.calculateDestinationLatLng;
+
 public class routeFragment extends DashboardFragment implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
@@ -73,7 +81,8 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
     private RouteViewModel mViewModel;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
-
+    private List<LatLng> routePoints; // ルートの座標リストを保持するリスト
+    private Polyline routePolyline;
 
     LatLng currentLatLng;
     TextView txtSmp;
@@ -110,12 +119,121 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             // 権限の確認とリクエスト
 
             checkLocationPermission();
-            generateRouteAsync();
-//            generateRandomRoute();
+            generateRoute();
         });
         return view;
 //        return inflater.inflate(R.layout.fragment_route, container, false);
     }
+    private void generateRoute() {
+        if (currentLatLng != null) {
+            LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, 500, 0/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
+
+            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 500, 90/* 新しい方向 */);
+
+            // Directions APIを非同期で呼び出し、ルートを取得
+                    new FetchDirectionsTask().execute(currentLatLng, intermediatePoint1,intermediatePoint2);
+        }
+    }
+
+    private class FetchDirectionsTask extends AsyncTask<LatLng, Void, DirectionsResult> {
+        @Override
+        protected DirectionsResult doInBackground(LatLng... params) {
+            LatLng origin = params[0];
+            LatLng intermediatePoint1 = params[1];
+            LatLng intermediatePoint2 = params[2];
+
+            try {
+                // 現在地から中継地点1までのルート
+                DirectionsResult route1 = DirectionsApi.newRequest(geoApiContext)
+                        .mode(TravelMode.WALKING)
+                        .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
+                        .destination(new com.google.maps.model.LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
+                        .await();
+
+                // 中継地点1から中継地点2までのルート
+                DirectionsResult route2 = DirectionsApi.newRequest(geoApiContext)
+                        .mode(TravelMode.WALKING)
+                        .origin(new com.google.maps.model.LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
+                        .destination(new com.google.maps.model.LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
+                        .await();
+
+                // 2つのルートを結合して全体のルートを得る
+                DirectionsResult completeRoute = concatenateRoutes(route1, route2);
+
+                MarkerOptions intermediateMarkerOptions = new MarkerOptions()
+                        .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
+                        .title("Intermediate Point 1");
+                googleMap.addMarker(intermediateMarkerOptions);
+
+                MarkerOptions destinationMarkerOptions = new MarkerOptions()
+                        .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
+                        .title("Intermediate Point 2");
+                googleMap.addMarker(destinationMarkerOptions);
+
+
+                return completeRoute;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        private DirectionsResult concatenateRoutes(DirectionsResult route1, DirectionsResult route2) {
+            if (route1 != null && route1.routes.length > 0 && route2 != null && route2.routes.length > 0) {
+                // 2つのルートを結合して新しい DirectionsResult を作成
+                DirectionsResult concatenatedRoute = new DirectionsResult();
+                concatenatedRoute.routes = Arrays.copyOf(route1.routes, route1.routes.length + route2.routes.length);
+                System.arraycopy(route2.routes, 0, concatenatedRoute.routes, route1.routes.length, route2.routes.length);
+                return concatenatedRoute;
+            } else {
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(DirectionsResult directionsResult) {
+            if (directionsResult != null && directionsResult.routes.length > 0) {
+                // ルートを描画
+                routePoints = decodePolyline(directionsResult.routes[0].overviewPolyline.getEncodedPath());
+                if (routePolyline != null) {
+                    routePolyline.remove();
+                }
+
+                PolylineOptions polylineOptions = new PolylineOptions()
+                        .addAll(routePoints)
+                        .color(Color.BLUE)
+                        .width(8);
+                routePolyline = googleMap.addPolyline(polylineOptions);
+
+                // ルート全体が表示されるようにカメラを調整
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (LatLng point : routePoints) {
+                    builder.include(point);
+                }
+                LatLngBounds bounds = builder.build();
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+
+                if (!routePoints.isEmpty()) {
+                    LatLng startLatLng = routePoints.get(0); // ルートの最初の座標を開始地点とする
+                    addStartMarker(startLatLng);
+                }
+
+
+            }
+        }
+    }
+
+    private void addStartMarker(LatLng startLatLng) {
+        MarkerOptions startMarkerOptions = new MarkerOptions()
+                .position(startLatLng)  // 開始地点の座標
+                .title("Start Point");  // マーカーのタイトル
+
+        Marker startMarker = googleMap.addMarker(startMarkerOptions);
+        startMarker.showInfoWindow();  // マーカーの情報ウィンドウを表示
+    }
+
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         // 位置情報権限の確認とリクエスト
@@ -133,7 +251,6 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             // 権限が許可されていない場合、ユーザーにリクエストする
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         } else {
-            // 権限が許可されている場合、位置情報を取得するための処理を開始
             startLocationUpdates();
         }
     }
@@ -160,106 +277,9 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(), locationCallback, null);
         }
     }
-    private void generateRouteAsync() {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            // バックグラウンドで非同期にルートを生成する処理
-            generateRandomRoute();
-            Log.d("RouteDebug", "Route generation complete");
-        });
-    }
-    private void generateRandomRoute() {
-        if (googleMap != null && currentLatLng != null) {
-            try {
-                LatLng origin = currentLatLng;
-                LatLng pointA = generateNextPoint(origin);
-                LatLng pointB = generateNextPoint(pointA);
-                LatLng pointC = generateNextPoint(pointB);
-
-                Log.d("RouteDebug", "Origin: " + origin.toString());
-                Log.d("RouteDebug", "PointA: " + pointA.toString());
-                Log.d("RouteDebug", "PointB: " + pointB.toString());
-                Log.d("RouteDebug", "PointC: " + pointC.toString());
-
-                drawRoute(origin, pointA);
-                drawRoute(pointA, pointB);
-                drawRoute(pointB, pointC);
-                drawRoute(pointC, origin);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private LatLng generateNextPoint(LatLng previousPoint) {
-        Random random = new Random();
-        double distance = 200 / 4; // ユーザから入力された距離を考慮して調整
-        double angle = random.nextDouble() * 2 * Math.PI; // ランダムな角度
-        double latitudeOffset = distance * Math.cos(angle) / 111.32; // 緯度の変化
-        double longitudeOffset = distance * Math.sin(angle) / (111.32 * Math.cos(previousPoint.latitude)); // 経度の変化
-        return new LatLng(previousPoint.latitude + latitudeOffset, previousPoint.longitude + longitudeOffset);
-    }
-
-    private void drawRoute(LatLng origin, LatLng destination) {
-//        try {
-//            DirectionsResult result = DirectionsApi.newRequest(geoApiContext)
-//                    .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
-//                    .destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude))
-//                    .mode(TravelMode.WALKING)
-//                    .await();
-//
-//            if (result.routes != null && result.routes.length > 0) {
-//                List<LatLng> decodedPath = decodePolyline(result.routes[0].overviewPolyline.getEncodedPath());
-//
-//                // ポリラインの色を設定
-//                PolylineOptions polylineOptions = new PolylineOptions()
-//                        .addAll(decodedPath)
-//                        .color(Color.BLUE);
-//
-//                googleMap.addPolyline(polylineOptions);
-//            }
-//
-//        } catch (ApiException | InterruptedException | IOException e) {
-//            e.printStackTrace();
-//        }
-        DirectionsApiRequest directionsApiRequest = DirectionsApi.newRequest(geoApiContext)
-                .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
-                .destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude))
-                .mode(TravelMode.WALKING);
-
-        Log.d("DirectionsAPI", "Request: " + directionsApiRequest.toString());
 
 
-        try {
-            DirectionsResult result = directionsApiRequest.await();
 
-            // エラーメッセージの取得
-            if (result.geocodedWaypoints != null && result.geocodedWaypoints.length > 0) {
-                String errorMessage = result.geocodedWaypoints[0].partialMatch ? "Partial match" : "";
-                Log.e("DirectionsAPI", "Error response: " + errorMessage);
-            } else {
-                // ルートがある場合の処理
-//                Log.d("DirectionsAPI", "Status: " + result.status);
-            }
-
-        } catch (ApiException | InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private LatLng getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(requireContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // ここで現在地の取得を行う
-            // 例: FusedLocationProviderClientを使用して最後の既知の位置を取得する
-            // 参考: https://developer.android.com/training/location/retrieve-current
-            return new LatLng(35.6895, 139.6917); // 仮の値
-        } else {
-            return new LatLng(0, 0);
-        }
-    }
 
     private List<LatLng> decodePolyline(String encodedPolyline) {
         List<LatLng> points = new ArrayList<>();
@@ -313,14 +333,12 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
     }
+
+
+
+
+
     @Override
-
-
-
-
-
-
-
     //    画面遷移---------------------------------------------------------------------------------------------
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
