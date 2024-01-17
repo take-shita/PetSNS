@@ -19,7 +19,8 @@
                 android:id="@+id/otherprofilebtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@null"
+                android:backgroundTint="@null"
+                android:background="@drawable/circle_background"
                 android:scaleType="fitXY"
                 android:src="@drawable/cbr250rr"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -61,8 +62,8 @@
 
             <ImageButton
                 android:id="@+id/sakujobtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="33dp"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/sakujotouka"

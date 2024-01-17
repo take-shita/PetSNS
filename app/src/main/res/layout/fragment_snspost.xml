@@ -13,21 +13,21 @@
 
         <Button
             android:id="@+id/cancel_btn"
-            android:layout_width="240dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="160dp"
             android:text="キャンセル"
-            android:textSize="30dp"/>
+            android:textSize="15dp"/>
 
         <Button
             android:id="@+id/post_btn"
-            android:layout_width="240dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="40dp"
             android:text="投稿"
-            android:textSize="30dp"/>
+            android:textSize="15dp"/>
 
     </LinearLayout>
 
@@ -52,7 +52,7 @@
                 android:hint="ここに投稿内容を入力"
                 android:inputType="textMultiLine"
                 android:minHeight="150dp"
-                android:textSize="25dp"
+                android:textSize="15dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -68,26 +68,14 @@
 
             <ImageButton
                 android:id="@+id/selectImageBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="425dp"
                 android:layout_marginTop="-45dp"
                 android:background="@null"
                 android:elevation="0dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/picture"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <ImageButton
-                android:id="@+id/tag_btn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="520dp"
-                android:layout_marginTop="-80dp"
-                android:background="@null"
-                android:elevation="0dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/tag"
                 tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -99,6 +87,18 @@
                 android:adjustViewBounds="true"
                 android:elevation="0dp"
                 android:scaleType="fitStart" />
+
+            <ImageButton
+                android:id="@+id/tag_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="520dp"
+                android:layout_marginTop="-238dp"
+                android:background="@null"
+                android:elevation="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/tag"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
     </ScrollView>
