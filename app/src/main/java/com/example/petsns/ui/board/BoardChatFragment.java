@@ -22,6 +22,8 @@ import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -29,6 +31,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +58,8 @@ public class BoardChatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private String documentID;
-    private TextView txtSmp;
+    private TextView txttitle;
+    private  TextView txtcon;
     public BoardChatFragment() {
         // Required empty public constructor
     }
@@ -130,14 +135,41 @@ public class BoardChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         Button question = view.findViewById(R.id.back_btn);
-        txtSmp=view.findViewById(R.id.textView27);
+        txttitle=view.findViewById(R.id.textView27);
+        txtcon=view.findViewById(R.id.ques_content_textview);
         Bundle args = getArguments();
         if (args != null) {
             documentID = args.getString("key");
-            if(documentID!=null){
-                txtSmp.setText(documentID);
+            if(documentID!=null) {
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                firestore.collection("question")  // コレクション名
+                        .document(documentID)      // ドキュメントID
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        // ドキュメントが存在する場合
+                                        // 指定したフィールドの値を取得
+                                        String  fieldValue1 = document.getString("ques_title");
+                                        String  fieldValue2 = document.getString("ques_content");
+                                        txttitle.setText(fieldValue1);
+                                        txtcon.setText(fieldValue2);
+
+                                        // ここで fieldValue を使って必要な処理を行います
+                                    } else {
+                                        // ドキュメントが存在しない場合
+                                    }
+                                } else {
+                                    // クエリの実行中にエラーが発生した場合
+                                }
+                            }
+                        });
             }else {
-                txtSmp.setText("!!!!!!!!!!");
+                txttitle.setText("!!!!!!!!!!");
             }
             // データを使用して何かを行う
         }
