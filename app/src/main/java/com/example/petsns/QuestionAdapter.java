@@ -3,6 +3,7 @@ package com.example.petsns;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +54,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する
-                Navigation.findNavController(v).navigate(R.id.action_navigation_board_to_navigation_Board_Chat);
+                Bundle bundle = new Bundle();
+                bundle.putString("key", quess.getDocumentID());
+                Navigation.findNavController(v).navigate(R.id.action_navigation_board_to_navigation_Board_Chat, bundle);
             }
         });
-
     }
 
     @Override
@@ -71,6 +73,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             super(itemView);
             ques_title = itemView.findViewById(R.id.ques_title);
             answer_btn=  itemView.findViewById(R.id.Answer_btn);
+
         }
     }
 
