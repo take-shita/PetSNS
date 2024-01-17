@@ -70,6 +70,7 @@ import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import static com.example.petsns.LocationUtils.calculateDestinationLatLng;
+import com.google.maps.model.DirectionsLeg;
 
 public class routeFragment extends DashboardFragment implements OnMapReadyCallback {
 
@@ -86,7 +87,10 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
 
     LatLng currentLatLng;
     TextView txtSmp;
-
+    LatLng intermediatePoint1;
+    LatLng intermediatePoint2;
+    LatLng intermediatePoint3;
+    LatLng intermediatePoint4;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -128,10 +132,12 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
         if (currentLatLng != null) {
             LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, 500, 0/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
 
-            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 500, 90/* 新しい方向 */);
+            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 500, 270/* 新しい方向 */);
+            LatLng intermediatePoint3 = calculateDestinationLatLng(intermediatePoint2, 500, 180/* 新しい方向 */);
+            LatLng intermediatePoint4 = currentLatLng;
 
             // Directions APIを非同期で呼び出し、ルートを取得
-                    new FetchDirectionsTask().execute(currentLatLng, intermediatePoint1,intermediatePoint2);
+                    new FetchDirectionsTask().execute(currentLatLng, intermediatePoint1,intermediatePoint2, intermediatePoint3, intermediatePoint4);
         }
     }
 
@@ -139,8 +145,10 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
         @Override
         protected DirectionsResult doInBackground(LatLng... params) {
             LatLng origin = params[0];
-            LatLng intermediatePoint1 = params[1];
-            LatLng intermediatePoint2 = params[2];
+            intermediatePoint1 = params[1];
+            intermediatePoint2 = params[2];
+            intermediatePoint3 = params[3];
+            intermediatePoint4 = params[4];
 
             try {
                 // 現在地から中継地点1までのルート
@@ -157,18 +165,23 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
                         .destination(new com.google.maps.model.LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
                         .await();
 
+                DirectionsResult route3 = DirectionsApi.newRequest(geoApiContext)
+                        .mode(TravelMode.WALKING)
+                        .origin(new com.google.maps.model.LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
+                        .destination(new com.google.maps.model.LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
+                        .await();
+
+                DirectionsResult route4 = DirectionsApi.newRequest(geoApiContext)
+                        .mode(TravelMode.WALKING)
+                        .origin(new com.google.maps.model.LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
+                        .destination(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
+                        .await();
+
+
                 // 2つのルートを結合して全体のルートを得る
-                DirectionsResult completeRoute = concatenateRoutes(route1, route2);
+                DirectionsResult completeRoute = concatenateRoutes(route1, route2, route3, route4);
 
-                MarkerOptions intermediateMarkerOptions = new MarkerOptions()
-                        .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
-                        .title("Intermediate Point 1");
-                googleMap.addMarker(intermediateMarkerOptions);
 
-                MarkerOptions destinationMarkerOptions = new MarkerOptions()
-                        .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
-                        .title("Intermediate Point 2");
-                googleMap.addMarker(destinationMarkerOptions);
 
 
                 return completeRoute;
@@ -179,12 +192,29 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
             }
         }
 
-        private DirectionsResult concatenateRoutes(DirectionsResult route1, DirectionsResult route2) {
-            if (route1 != null && route1.routes.length > 0 && route2 != null && route2.routes.length > 0) {
-                // 2つのルートを結合して新しい DirectionsResult を作成
+        private DirectionsResult concatenateRoutes(DirectionsResult... routes) {
+            if (routes != null && routes.length > 0) {
+                // 各ルートの総数を計算
+                int totalRoutesLength = 0;
+                for (DirectionsResult route : routes) {
+                    if (route != null && route.routes != null) {
+                        totalRoutesLength += route.routes.length;
+                    }
+                }
+
+                // すべてのルートを結合して新しい DirectionsResult を作成
                 DirectionsResult concatenatedRoute = new DirectionsResult();
-                concatenatedRoute.routes = Arrays.copyOf(route1.routes, route1.routes.length + route2.routes.length);
-                System.arraycopy(route2.routes, 0, concatenatedRoute.routes, route1.routes.length, route2.routes.length);
+                concatenatedRoute.routes = new DirectionsRoute[totalRoutesLength];
+
+                int currentIdx = 0;
+                for (DirectionsResult route : routes) {
+                    if (route != null && route.routes != null) {
+                        System.arraycopy(route.routes, 0, concatenatedRoute.routes, currentIdx, route.routes.length);
+                        currentIdx += route.routes.length;
+                    }
+                }
+
+
                 return concatenatedRoute;
             } else {
                 return null;
@@ -195,8 +225,11 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
         @Override
         protected void onPostExecute(DirectionsResult directionsResult) {
             if (directionsResult != null && directionsResult.routes.length > 0) {
+                routePoints = new ArrayList<>();
                 // ルートを描画
-                routePoints = decodePolyline(directionsResult.routes[0].overviewPolyline.getEncodedPath());
+                for (DirectionsRoute route : directionsResult.routes) {
+                    routePoints.addAll(decodePolyline(route.overviewPolyline.getEncodedPath()));
+                }
                 if (routePolyline != null) {
                     routePolyline.remove();
                 }
@@ -219,7 +252,30 @@ public class routeFragment extends DashboardFragment implements OnMapReadyCallba
                     LatLng startLatLng = routePoints.get(0); // ルートの最初の座標を開始地点とする
                     addStartMarker(startLatLng);
                 }
+                MarkerOptions intermediateMarkerOptions = new MarkerOptions()
+                        .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
+                        .title("Intermediate Point 1");
+                googleMap.addMarker(intermediateMarkerOptions);
+//
+                MarkerOptions destinationMarkerOptions = new MarkerOptions()
+                        .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
+                        .title("Intermediate Point 2");
+                googleMap.addMarker(destinationMarkerOptions);
 
+
+                DirectionsRoute finalRoute = directionsResult.routes[0]; // 最初のルートを取得
+
+                if (finalRoute.legs != null && finalRoute.legs.length > 0) {
+                    // 最終的なルートの総距離を取得（メートル単位）
+                    int totalDistanceInMeters = 0;
+
+                    for (DirectionsLeg leg : finalRoute.legs) {
+                        totalDistanceInMeters += leg.distance.inMeters;
+                    }
+
+                    // totalDistanceInMeters に最終的なルートの総距離が格納されます
+                    txtSmp.setText(Integer.toString(totalDistanceInMeters));
+                }
 
             }
         }
