@@ -22,8 +22,9 @@
 
             <ImageButton
                 android:id="@+id/toukoubtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/toukoutouka"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds"
@@ -169,13 +170,16 @@
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
-                        <ImageButton
+                        <ToggleButton
                             android:id="@+id/hartbtn"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:background="@android:color/transparent"                            android:scaleType="fitXY"
-                            android:src="@drawable/harttouka"
-                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+                            android:background="@drawable/button_selector"
+                            android:textOn=""
+                            android:textOff=""
+                            android:scaleType="fitCenter"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
 
                         <TextView
                             android:layout_width="90dp"
@@ -260,13 +264,16 @@
                             android:text="17h"
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage" />
-                        <ImageButton
+                        <ToggleButton
+                            android:id="@+id/hartbt"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/harttouka"
-                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                            android:background="@android:color/transparent"/>
+                            android:background="@drawable/button_selector"
+                            android:textOn=""
+                            android:textOff=""
+                            android:scaleType="fitCenter"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
                         <TextView
                             android:layout_width="90dp"
                             android:layout_height="60dp"

@@ -1,4 +1,5 @@
 package com.example.petsns;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -41,6 +43,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         return new AnswerViewHolder(view);
     }
 
+
+
+
+
     @Override
     public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position) {
         Answer answ = ans.get(position);
@@ -50,12 +56,34 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
 
 //        通報ボタン
-        holder.Report_btn.setOnClickListener(new View.OnClickListener() {
+        holder.report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する  後で書き換える
-                Navigation.findNavController(v).navigate(R.id.action_navigation_board_to_navigation_Board_Chat);
+                Context context = v.getContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_answer_report);
+                ImageButton hai = dialog.findViewById(R.id.haibtn);
+                ImageButton iie = dialog.findViewById(R.id.iiebtn);
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 372; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                hai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                iie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -68,13 +96,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
     public class AnswerViewHolder extends RecyclerView.ViewHolder {
         TextView answer_content;
-        Button Report_btn;
+        Button report_btn;
         public AnswerViewHolder(@NonNull View itemView) {
             super(itemView);
             answer_content = itemView.findViewById(R.id.answer_content);
-            Report_btn=  itemView.findViewById(R.id.Report_btn);
+            report_btn=  itemView.findViewById(R.id.report_btn);
         }
     }
+
+
 
     // 画像データのバイナリをデコードするメソッドが必要な場合、以下のように実装できます
     /*
