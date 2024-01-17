@@ -21,8 +21,9 @@
                 android:layout_height="80dp" />
             <ImageButton
                 android:id="@+id/toukoubtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/toukoutouka"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds"
@@ -200,8 +201,9 @@
                             tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
                         <ImageButton
                             android:id="@+id/sakujobtn"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="16dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sakujotouka"
                             tools:ignore="ContentDescription,SpeakableTextPresentCheck"
@@ -240,6 +242,7 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/harinezumi"
                             tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
@@ -291,8 +294,9 @@
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage" />
                         <ImageButton
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="16dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sakujotouka"
                             tools:ignore="ContentDescription,SpeakableTextPresentCheck"
