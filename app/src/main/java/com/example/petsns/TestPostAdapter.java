@@ -176,6 +176,19 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 }
             }
         });
+
+
+//        holder.hartbt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//                    holder.hartbt.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+//                }else {
+//                    holder.hartbt.setBackgroundResource(R.drawable.rounded_button_normal_image);
+//                }
+//            }
+//        });
+
     }
 
     @Override
@@ -191,8 +204,12 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
         ToggleButton hartbtn;
 
+        ToggleButton hartbt;
+
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            hartbt=itemView.findViewById(R.id.hartbt);
             hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
