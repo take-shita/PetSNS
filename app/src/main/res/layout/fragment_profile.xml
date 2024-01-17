@@ -181,14 +181,15 @@
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
-                        <ImageButton
+                        <ToggleButton
                             android:id="@+id/hartbtn"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:background="@null"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/harttouka"
-                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+                            android:background="@drawable/button_selector"
+                            android:textOn=""
+                            android:textOff=""
+                            android:scaleType="fitCenter"
+                            tools:ignore="SpeakableTextPresentCheck" />
 
                         <TextView
                             android:layout_width="90dp"
@@ -273,13 +274,15 @@
                             android:text="17h"
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage" />
-                        <ImageButton
+                        <ToggleButton
+                            android:id="@+id/hartbt"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/harttouka"
-                            tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                            android:background="@null"/>
+                            android:background="@drawable/button_selector"
+                            android:textOn=""
+                            android:textOff=""
+                            android:scaleType="fitCenter"
+                            tools:ignore="SpeakableTextPresentCheck" />
                         <TextView
                             android:layout_width="90dp"
                             android:layout_height="60dp"

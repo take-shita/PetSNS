@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ import com.example.petsns.R;
 import com.example.petsns.TestPost;
 import com.example.petsns.TestPostAdapter;
 import com.example.petsns.ui.snstop.SnstopViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -85,6 +89,25 @@ public class BoardFragment extends Fragment {
                         QuestionAdapter.setQuestion(ques);
                     }
                 });
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection("question");
+
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        // ドキュメントIDを取得
+                        String documentId = document.getId();
+                        // ここでdocumentIdを使用できます
+                        Log.d("Firestore", "Document ID: " + documentId);
+                    }
+                } else {
+                    Log.e("Firestore", "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
         return rootView;
     }

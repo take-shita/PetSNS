@@ -14,7 +14,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ToggleButton;
 
 import com.example.petsns.R;
 
@@ -75,6 +77,18 @@ public class ProfileFragment extends Fragment {
                     }
                 });
                 dialog.show();
+            }
+        });
+
+        ToggleButton hartbtn = view.findViewById(R.id.hartbtn);
+        hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                }else {
+                    hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+                }
             }
         });
     }
