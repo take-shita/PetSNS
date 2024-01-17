@@ -15,11 +15,17 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.petsns.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class iconFragment extends Fragment {
 
@@ -27,10 +33,12 @@ public class iconFragment extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
+    private Uri selectedImageUri;
 
     public static iconFragment newInstance() {
         return new iconFragment();
     }
+
 
     @Nullable
     @Override
@@ -69,14 +77,70 @@ public class iconFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btncan = view.findViewById(R.id.btncan);
+        Button btnhe = view.findViewById(R.id.btnhe);
 
-        btncan.setOnClickListener(new View.OnClickListener() {
-
+        btnhe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_icon_to_navigation_setting);
+                // 選択された画像がある場合のみ処理を実行
+                if (selectedImageUri != null) {
+                    // Firebase Storage へのアップロード処理
+                    uploadImageToFirebaseStorage(selectedImageUri);
+                }
             }
         });
+
+        // ... 他の処理を追加
+    }
+
+    // Firebase Storage へ画像をアップロードするメソッド
+    private void uploadImageToFirebaseStorage(Uri imageUri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String storagePath = "images/";
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            StorageReference storageRef = storage.getReference().child(storagePath + userId + ".jpg");
+
+            storageRef.putFile(imageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String downloadUrl = uri.toString();
+                            // Firebase Firestore にダウンロードURLを保存するメソッド
+                            saveImageDownloadUrlToFirestore(downloadUrl);
+                        });
+
+                        // 画像変更成功の場合、前の画面に戻る
+                        Navigation.findNavController(getView()).navigateUp();
+                    })
+                    .addOnFailureListener(exception -> {
+                        // アップロードが失敗した場合の処理
+                        exception.printStackTrace();
+                        Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }
+
+    // Firebase Firestore へダウンロードURLを保存するメソッド
+    private void saveImageDownloadUrlToFirestore(String downloadUrl) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DocumentReference userDocRef = db.collection("users").document(userId);
+
+            // ダウンロードURLを Firestore に保存
+            userDocRef.update("profileImageUrl", downloadUrl)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(requireContext(), "画像の更新が完了しました", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(requireContext(), "画像の更新に失敗しました", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    });
+        }
     }
 }

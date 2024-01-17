@@ -17,20 +17,9 @@
             android:orientation="horizontal"
             android:background="@color/white">
             <Space
-                android:layout_width="30dp"
+                android:layout_width="491dp"
                 android:layout_height="80dp" />
-            <ImageButton
-                android:id="@+id/snstopback"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/yajirusitouka"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                android:background="@android:color/transparent"/>
-            <Space
-                android:layout_width="381dp"
-                android:layout_height="80dp"
-                tools:ignore="VisualLintBounds" />
+
             <ImageButton
                 android:id="@+id/toukoubtn"
                 android:layout_width="80dp"
@@ -105,7 +94,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="ExtraText">
 
                     <Space
                         android:layout_width="30dp"
@@ -128,6 +118,11 @@
                     <ImageButton
                         android:layout_width="240dp"
                         android:layout_height="30dp"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:background="null"
+                        android:gravity="left|top"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/forotouka"
                         android:background="@android:color/transparent"
                         android:gravity="left|top"
                         android:scaleType="centerCrop"
