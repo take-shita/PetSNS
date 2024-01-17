@@ -17,20 +17,9 @@
             android:orientation="horizontal"
             android:background="@color/white">
             <Space
-                android:layout_width="30dp"
+                android:layout_width="491dp"
                 android:layout_height="80dp" />
-            <ImageButton
-                android:id="@+id/snstopback"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/yajirusitouka"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                android:background="@android:color/transparent"/>
-            <Space
-                android:layout_width="381dp"
-                android:layout_height="80dp"
-                tools:ignore="VisualLintBounds" />
+
             <ImageButton
                 android:id="@+id/toukoubtn"
                 android:layout_width="80dp"
@@ -112,19 +101,34 @@
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
 
+<!--<<<<<<< HEAD-->
+<!--&lt;!&ndash;                    <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="240dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:background="null"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:gravity="left|top"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleType="centerCrop"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:src="@drawable/forotouka"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:background="@android:color/transparent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:gravity="left|top"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleType="centerCrop"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:src="@drawable/follow_button_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />&ndash;&gt;-->
+<!--=======-->
                     <ImageButton
                         android:layout_width="240dp"
                         android:layout_height="30dp"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-                        android:background="null"
-                        android:gravity="left|top"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/forotouka"
-                        android:background="@android:color/transparent"
-                        android:gravity="left|top"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/follow_button_selector"
-                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+<!--                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"-->
+<!--                        android:background="null"-->
+<!--                        android:gravity="left|top"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/forotouka"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        android:gravity="left|top"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/follow_button_selector"-->
+<!--                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
 
                 </LinearLayout>
                 <LinearLayout
@@ -202,11 +206,11 @@
                             android:textSize="24dp"
                             tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
                         <ImageButton
-                            android:id="@+id/sakujobtn"
+                            android:id="@+id/reportbtn"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/sakujotouka"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/report_touka"
                             tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                             android:background="@android:color/transparent"/>
                     </LinearLayout>

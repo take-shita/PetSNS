@@ -48,7 +48,6 @@
                 android:textOn=""
                 android:textOff=""
                 android:scaleType="fitCenter"
-                android:button="@null"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView

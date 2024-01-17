@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +22,8 @@ import java.util.List;
 
 import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,7 +56,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         TestPost post = posts.get(position);
 
-        // 投稿者IDと投稿文をセット
+        // 投稿者 ID と投稿文をセット
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // コレクションとドキュメントのパスを指定
@@ -97,7 +102,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
                 final File localFile = File.createTempFile("images", "jpg");
                 storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                    // ローカルファイルから画像を読み込んでImageViewにセット
+                    // ローカルファイルから画像を読み込んで ImageView にセット
                     Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                     holder.imagePost.setImageBitmap(bitmap);
 
@@ -113,6 +118,64 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             // 画像がない場合の処理（任意で実装）
 //            holder.imagePost.setImageResource(R.drawable.placeholder_image);
         }
+
+        db.collection("users") // コレクション名
+                .document(post.getid()) // ドキュメント名
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // ドキュメントが存在する場合、フィールドの値を取得
+                             post.setIcon(documentSnapshot.getString("icon"));
+                            if (post.getIcon() != null && !post.getIcon().isEmpty()) {
+
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
+                                try {
+
+                                    final File localFile = File.createTempFile("images", "jpg");
+                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                        // ローカルファイルから画像を読み込んで ImageView にセット
+                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                        holder.otherprofilebtn.setImageBitmap(bitmap);
+
+                                    }).addOnFailureListener(exception -> {
+                                        // 失敗時の処理
+
+                                    });
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                // 画像がない場合の処理（任意で実装）
+//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+
+                            }
+                            // 取得した値を利用する処理をここに追加
+                        } else {
+                            // ドキュメントが存在しない場合の処理
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // エラーが発生した場合の処理
+                    }
+                });
+
+
+        holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                }else {
+                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+                }
+            }
+        });
     }
 
     @Override
@@ -126,8 +189,11 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         ImageView imagePost;
         ImageButton otherprofilebtn;
 
+        ToggleButton hartbtn;
+
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
+            hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
