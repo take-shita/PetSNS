@@ -17,20 +17,9 @@
             android:orientation="horizontal"
             android:background="@color/white">
             <Space
-                android:layout_width="30dp"
+                android:layout_width="491dp"
                 android:layout_height="80dp" />
-            <ImageButton
-                android:id="@+id/snstopback"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/yajirusitouka"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                android:background="@android:color/transparent"/>
-            <Space
-                android:layout_width="381dp"
-                android:layout_height="80dp"
-                tools:ignore="VisualLintBounds" />
+
             <ImageButton
                 android:id="@+id/toukoubtn"
                 android:layout_width="80dp"
