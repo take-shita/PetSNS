@@ -64,7 +64,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@null"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/sakujotouka"
                 tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
