@@ -45,7 +45,7 @@
         android:id="@+id/textView27"
         android:layout_width="430dp"
         android:layout_height="70dp"
-        android:text="サンプル犬の躾"
+        android:text=""
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,9 +57,11 @@
 
 
         <TextView
+            android:id="@+id/ques_content_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="　猫を飼い始めて数か月たつが、何故か自分にだけまるで懐かない。嫁や子供にはめちゃくちゃ懐いているのに。"
+            android:padding="15dp"
+            android:text=""
             android:textSize="25dp"
             android:layout_marginBottom="5dp"/>
 

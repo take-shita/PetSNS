@@ -88,7 +88,7 @@
     <fragment
         android:id="@+id/navigation_board"
         android:name="com.example.petsns.ui.board.BoardFragment"
-        android:label="掲示板"
+        android:label="質問広場"
         tools:layout="@layout/fragment_board" >
         <action
             android:id="@+id/action_navigation_board_to_navigation_Board_Chat"
