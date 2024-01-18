@@ -25,7 +25,7 @@ public class routestartFragment extends Fragment {
             public void onClick(View v) {
 
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routestart_to_navigation_routestop);
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_routestart_to_navigation_routestop);
             }
         });
 

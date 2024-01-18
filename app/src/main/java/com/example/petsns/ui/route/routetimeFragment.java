@@ -1,5 +1,7 @@
 package com.example.petsns.ui.route;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.EditText;
@@ -100,11 +102,39 @@ public class routetimeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btn = view.findViewById(R.id.time1);
+        Button btn = view.findViewById(R.id.setButton);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routepopup);
+
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_routepopup);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 400; // 幅を変更
+                params.height = 300; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+                Button a = dialog.findViewById(R.id.distance1);
+                Button b = dialog.findViewById(R.id.time);
+
+                a.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_routepopup_to_navigation_route);
+                        dialog.dismiss();
+                    }
+                });
+//                dialog.show();
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 

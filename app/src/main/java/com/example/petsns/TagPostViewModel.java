@@ -11,6 +11,20 @@ public class TagPostViewModel extends ViewModel {
     private boolean[] boolLkeMom={false,false,false,false,false,false,false,false,false,false,false};
     private String[] nameMommalians={"ネコ","イヌ","ウサギ","ハリネズミ","ハムスター","カワウソ","チンチラ",
             "フェレット","モモンガ","キツネ","リス"};
+    private boolean[] boolLkeRip={false,false,false,false,false,false};
+    private String[] nameReptiles={"ヘビ","トカゲ","カメ","ワニ","ヤモリ","カメレオン"};
+
+    private boolean[] boolLkeIns={false,false,false,false,false,false};
+    private String[] nameInsect={"カブトムシ","クワガタ","カマキリ","セミ","クモ","バッタ"};
+
+    private boolean[] boolLkeBis={false,false};
+    private String[] nameBisexual={"カエル","イモリ"};
+
+    private boolean[] boolLkeBir={false,false,false,false,false,false,false,false};
+    private String[] nameBird={"オウム","インコ","スズメ","カナリア","フクロウ","ブンチョウ","ニワトリ","アヒル"};
+
+    private boolean[] boolLkeAqua={false,false,false,false};
+    private String[] nameAquatic={"ザリガニ","メガカ","キンギョ","クラゲ"};
 
     public  void setArrayLikeMom(boolean boolCt,boolean boolDg,boolean boolRb,
                                  boolean boolHg,boolean boolHm,boolean boolOt,boolean boolCh,
@@ -27,6 +41,8 @@ public class TagPostViewModel extends ViewModel {
         boolLkeMom[9]=boolFx;
         boolLkeMom[10]=boolSq;
     }
+
+
     public String getLikemom(){
         String chkMommalians="";
         for(int i=0;i<11;i++){
@@ -49,4 +65,5 @@ public class TagPostViewModel extends ViewModel {
                 .collect(Collectors.toList());
         return  booleanList;
     }
+
 }

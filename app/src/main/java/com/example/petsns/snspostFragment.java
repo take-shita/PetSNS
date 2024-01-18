@@ -164,7 +164,6 @@ public class snspostFragment extends Fragment {
                                     });
                         });
 
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });

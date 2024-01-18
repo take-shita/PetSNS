@@ -141,19 +141,19 @@ public class routeFragment extends DashboardFragment{
 
 
 
-        Button bt1 = view.findViewById(R.id.set);
-        bt1.setOnClickListener(new View.OnClickListener() {
+//        Button bt1 = view.findViewById(R.id.setButton);
+//        bt1.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
+//            }
+//        });
 
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
-            }
-        });
 
 
-
-        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
-        ro.setOnClickListener(new View.OnClickListener() {
+        Button changeButton = view.findViewById(R.id.setButton);//投稿削除確認ポップアップ画面
+        changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = requireContext();
@@ -161,8 +161,8 @@ public class routeFragment extends DashboardFragment{
                 dialog.setContentView(R.layout.fragment_routepopup);
 
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 811; // 幅を変更
-                params.height = 900; // 高さを変更
+                params.width = 400; // 幅を変更
+                params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
                 Button a = dialog.findViewById(R.id.distance1);
