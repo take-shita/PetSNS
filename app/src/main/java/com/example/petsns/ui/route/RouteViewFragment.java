@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.route;
 
 import static com.example.petsns.LocationUtils.calculateDestinationLatLng;
 
@@ -14,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.petsns.ui.route.RouteViewModel;
+import com.example.petsns.MyApplication;
+import com.example.petsns.R;
+import com.example.petsns.RouteViewViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -49,7 +52,7 @@ import java.util.Random;
 
 public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
 
-    private RouteViewViewModel mViewModel;
+    private RouteViewModel viewModel;
 
     private GoogleMap googleMap;
     private GeoApiContext geoApiContext;
@@ -67,6 +70,8 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     LatLng intermediatePoint2;
     LatLng intermediatePoint3;
     LatLng intermediatePoint4;
+    int totalDistance;
+    int distance;
     public static RouteViewFragment newInstance() {
         return new RouteViewFragment();
     }
@@ -75,6 +80,12 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_view, container, false);
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedRouteViewModel();
+        } else {
+            // エラーハンドリング
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -95,13 +106,19 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
         };
 
 
-        Button centerButton = view.findViewById(R.id.centerButton);
-//        centerButton.setOnClickListener(v -> centerMapOnMyLocation());
+        Button backButton = view.findViewById(R.id.backButton);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_view_to_navigation_route);
+                }
+            });
 
         Button generateRouteButton = view.findViewById(R.id.routeButton);
         generateRouteButton.setOnClickListener(v -> {
             // 権限の確認とリクエスト
-
+            totalDistance=viewModel.getDistance();
+            distance=totalDistance/6;
             checkLocationPermission();
             googleMap.clear();
             generateRoute();
@@ -114,10 +131,10 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
             Random random = new Random();
             // 0から360の範囲でランダムな数値を取得
             int randomAngle = random.nextInt(361);
-            LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, 1000,  random.nextInt(361)/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
+            LatLng intermediatePoint1 = calculateDestinationLatLng(currentLatLng, distance,  random.nextInt(361)/*指定した方向*/);// 500m先の座標を計算（適切な方法で実装する必要があります）
 
-            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, 1000,  random.nextInt(361)/* 新しい方向 */);
-            LatLng intermediatePoint3 = calculateDestinationLatLng(intermediatePoint2, 1000,  random.nextInt(361)/* 新しい方向 */);
+            LatLng intermediatePoint2 = calculateDestinationLatLng(intermediatePoint1, distance,  random.nextInt(361)/* 新しい方向 */);
+            LatLng intermediatePoint3 = calculateDestinationLatLng(intermediatePoint2, distance,  random.nextInt(361)/* 新しい方向 */);
             LatLng intermediatePoint4 = currentLatLng;
 
             // Directions APIを非同期で呼び出し、ルートを取得
@@ -224,7 +241,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                     // totalDistanceInMeters に最終的なルートの総距離が格納されます
                     txtSmp.setText(Integer.toString(totalDistanceInMeters));
 
-                    if(5500<=totalDistanceInMeters &&totalDistanceInMeters<=6500){
+                    if(totalDistance-500<=totalDistanceInMeters &&totalDistanceInMeters<=totalDistance+500){
 
                         routePoints = new ArrayList<>();
                         // ルートを描画
@@ -397,7 +414,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(RouteViewViewModel.class);
+//        mViewModel = new ViewModelProvider(this).get(RouteViewViewModel.class);
         // TODO: Use the ViewModel
     }
 
