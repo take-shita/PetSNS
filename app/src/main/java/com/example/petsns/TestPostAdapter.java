@@ -201,10 +201,9 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TextView textPost;
         ImageView imagePost;
         ImageButton otherprofilebtn;
-
         ToggleButton hartbtn;
-
         ToggleButton hartbt;
+        TextView timestamp;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -215,6 +214,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
             otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
+
         }
     }
 

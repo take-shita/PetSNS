@@ -43,20 +43,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/set"
+        android:id="@+id/setButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="352dp"
         android:layout_marginTop="576dp"
         android:background="@drawable/frame_style"
-        android:text="@string/距離を設定"
+        android:text="距離"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/text2"
+        android:id="@+id/textDistance"
         android:layout_width="458dp"
         android:layout_height="46dp"
         android:layout_marginStart="71dp"

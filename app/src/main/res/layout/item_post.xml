@@ -4,51 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/otherprofilebtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:backgroundTint="@null"
-                android:background="@drawable/circle_background"
-                android:scaleType="fitXY"
-                android:src="@drawable/cbr250rr"
-                tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:layout_row="0"
+                android:layout_rowSpan="2"
+                android:layout_column="2"
+                app:cardCornerRadius="60dp">
+
+                <ImageButton
+                    android:id="@+id/otherprofilebtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cbr250rr"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/textUsername"
                 android:layout_width="210dp"
                 android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
                 android:gravity="left|center"
                 android:text="投稿者ID"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/posttime"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="17h"
-                android:textSize="24dp"/>
+                android:text="投稿時間"
+                android:textSize="24dp" />
 
             <ToggleButton
                 android:id="@+id/hartbtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/button_selector"
-                android:textOn=""
-                android:textOff=""
                 android:scaleType="fitCenter"
+                android:textOff=""
+                android:textOn=""
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView

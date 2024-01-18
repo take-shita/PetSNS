@@ -7,7 +7,7 @@
     tools:context=".QuestionFragment">
 
     <EditText
-        android:id="@+id/editTextText6"
+        android:id="@+id/ques_title"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.077" />
 
     <EditText
-        android:id="@+id/textView"
+        android:id="@+id/ques_content"
         android:layout_width="450dp"
         android:layout_height="380dp"
         android:hint="質問の詳細を入れてください"

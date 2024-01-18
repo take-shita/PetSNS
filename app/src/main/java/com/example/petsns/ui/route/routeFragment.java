@@ -25,11 +25,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.Manifest;
 import android.widget.TextView;
 
+import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.ui.dashboard.DashboardFragment;
 
@@ -75,7 +77,7 @@ import com.google.maps.model.DirectionsLeg;
 public class routeFragment extends DashboardFragment{
 
 
-    private RouteViewModel mViewModel;
+    private RouteViewModel viewModel;
     TextView txtSmp;
 
 
@@ -84,6 +86,12 @@ public class routeFragment extends DashboardFragment{
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route, container, false);
 
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedRouteViewModel();
+        } else {
+            // エラーハンドリング
+        }
 
         return view;
 //        return inflater.inflate(R.layout.fragment_route, container, false);
@@ -111,34 +119,41 @@ public class routeFragment extends DashboardFragment{
         });
 
 
-
+        EditText txtDis=view.findViewById(R.id.textDistance);
         Button btn = view.findViewById(R.id.start1);
         if (btn != null) {
             btn.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    
-//                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routestart);
+
+//                    txtDis.setText("3000");
+                    try {
+                        viewModel.setDistance(Integer.parseInt(txtDis.getText().toString()));
+                        Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_route_view);
+                    }catch (Exception e){
+
+                    }
+
                 }
             });
         }
 
 
 
-        Button bt1 = view.findViewById(R.id.set);
-        bt1.setOnClickListener(new View.OnClickListener() {
+//        Button bt1 = view.findViewById(R.id.setButton);
+//        bt1.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
+//            }
+//        });
 
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_route_to_navigation_routepopup);
-            }
-        });
 
 
-
-        Button ro = view.findViewById(R.id.set);//投稿削除確認ポップアップ画面
-        ro.setOnClickListener(new View.OnClickListener() {
+        Button changeButton = view.findViewById(R.id.setButton);//投稿削除確認ポップアップ画面
+        changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = requireContext();
@@ -146,8 +161,8 @@ public class routeFragment extends DashboardFragment{
                 dialog.setContentView(R.layout.fragment_routepopup);
 
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 811; // 幅を変更
-                params.height = 900; // 高さを変更
+                params.width = 400; // 幅を変更
+                params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
                 Button a = dialog.findViewById(R.id.distance1);
