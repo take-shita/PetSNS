@@ -136,8 +136,7 @@ public class BoardFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        EditText ques_tit = view.findViewById(R.id.ques_title);
-        EditText ques_con = view.findViewById(R.id.ques_content);
+
 
 
         Button Question = view.findViewById(R.id.Q_btn);
@@ -149,6 +148,9 @@ public class BoardFragment extends Fragment {
                 Context context = requireContext();
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.fragment_question);
+
+                EditText ques_tit = dialog.findViewById(R.id.ques_title);
+                EditText ques_con = dialog.findViewById(R.id.ques_content);
 
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
                 params.width = 800; // 幅を変更
