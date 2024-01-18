@@ -31,22 +31,34 @@ import com.example.petsns.TestPostAdapter;
 import com.example.petsns.ui.snstop.SnstopViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 public class BoardFragment extends Fragment {
 
@@ -54,6 +66,7 @@ public class BoardFragment extends Fragment {
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private QuestionAdapter QuestionAdapter;
+    private FirebaseFirestore db;
     public static BoardFragment newInstance() {
         return new BoardFragment();
     }
@@ -84,6 +97,7 @@ public class BoardFragment extends Fragment {
                         List<Question> ques = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Question quess = document.toObject(Question.class);
+                            quess.setDocumentId(document.getId());
                             ques.add(quess);
                         }
                         QuestionAdapter.setQuestion(ques);
@@ -121,8 +135,13 @@ public class BoardFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        EditText ques_title= getView().findViewById(R.id.ques_title);
+        EditText ques_con=getView().findViewById(R.id.ques_content);
+
+
         Button Question = view.findViewById(R.id.Q_btn);
 
+        db = FirebaseFirestore.getInstance();
         Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +162,31 @@ public class BoardFragment extends Fragment {
                     public void onClick(View v) { dialog.dismiss(); }
                 });
 
+                Button question = dialog.findViewById(R.id.question_btn);
+                question.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        String userId = user.getUid();
+
+                        CollectionReference postCollection = db.collection("question");
+
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("user_id",userId);
+                        data.put("timestamp", FieldValue.serverTimestamp());
+                        data.put("ques_content",ques_con.getText().toString());
+                        data.put("ques_title",ques_title.getText().toString());
+
+                        postCollection.document(UUID.randomUUID().toString()).set(data)
+                                .addOnSuccessListener(documentReference -> {
+                                })
+                                .addOnFailureListener(e -> {
+                                });
+                    }
+                });
                 dialog.show();
             }
         });
