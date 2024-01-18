@@ -22,6 +22,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_row="0"
                 android:layout_rowSpan="2"
                 android:layout_column="2"
@@ -93,19 +94,21 @@
                 android:id="@+id/textPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:gravity="left|center"
                 android:text="投稿文"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
 
             <TextView
                 android:id="@+id/tagText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:gravity="left|center"
                 android:text="#ハリネズミ"
                 android:textColor="#2385DB"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
             <TextView
                 android:layout_width="match_parent"
