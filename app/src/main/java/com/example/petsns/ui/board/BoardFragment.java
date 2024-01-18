@@ -136,8 +136,8 @@ public class BoardFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        EditText ques_title= getView().findViewById(R.id.ques_title);
-        EditText ques_con=getView().findViewById(R.id.ques_content);
+        EditText ques_tit = view.findViewById(R.id.ques_title);
+        EditText ques_con = view.findViewById(R.id.ques_content);
 
 
         Button Question = view.findViewById(R.id.Q_btn);
@@ -179,7 +179,7 @@ public class BoardFragment extends Fragment {
                         data.put("user_id",userId);
                         data.put("timestamp", FieldValue.serverTimestamp());
                         data.put("ques_content",ques_con.getText().toString());
-                        data.put("ques_title",ques_title.getText().toString());
+                        data.put("ques_title",ques_tit.getText().toString());
 
                         postCollection.document(UUID.randomUUID().toString()).set(data)
                                 .addOnSuccessListener(documentReference -> {
