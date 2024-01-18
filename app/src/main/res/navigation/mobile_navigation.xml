@@ -193,8 +193,11 @@
             android:id="@+id/action_navigation_route_to_navigation_routepopup2"
             app:destination="@id/navigation_routepopup2" />
         <action
-            android:id="@+id/action_navigation_route_to_navigation_routestart"
-            app:destination="@id/navigation_routestart" />
+            android:id="@+id/action_navigation_route_to_navigation_route_view"
+            app:destination="@id/navigation_route_view" />
+        <action
+            android:id="@+id/action_navigation_routepopup_to_navigation_routetime"
+            app:destination="@id/navigation_routetime" />
     </fragment>
 
     <fragment
@@ -205,9 +208,6 @@
         <action
             android:id="@+id/action_navigation_routepopup_to_navigation_route"
             app:destination="@id/navigation_route" />
-        <action
-            android:id="@+id/action_navigation_routepopup_to_navigation_routetime"
-            app:destination="@id/navigation_routetime" />
     </fragment>
 
     <fragment
@@ -223,8 +223,11 @@
             android:id="@+id/action_navigation_routetime_to_navigation_routepopup2"
             app:destination="@id/navigation_routepopup2" />
         <action
-            android:id="@+id/action_navigation_routetime_to_navigation_routestart"
-            app:destination="@id/navigation_routestart" />
+            android:id="@+id/action_navigation_routetime_to_navigation_route_view"
+            app:destination="@id/navigation_route_view" />
+        <action
+            android:id="@+id/action_navigation_routepopup_to_navigation_route"
+            app:destination="@id/navigation_route" />
     </fragment>
 
 
@@ -276,7 +279,16 @@
             android:id="@+id/action_navigation_routestart_to_navigation_routestop"
             app:destination="@id/navigation_routestop" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_route_view"
+        android:name="com.example.petsns.ui.route.RouteViewFragment"
+        android:label="散歩"
+        tools:layout="@layout/fragment_route_view">
+        <action
+        android:id="@+id/action_navigation_route_view_to_navigation_route"
+        app:destination="@id/navigation_route" />
 
+    </fragment>
     <fragment
         android:id="@+id/navigation_routestop"
         android:name="com.example.petsns.ui.route.routestopFragment"
@@ -286,8 +298,8 @@
             android:id="@+id/action_navigation_routestop_to_navigation_routeend"
             app:destination="@id/navigation_routeend" />
         <action
-            android:id="@+id/action_navigation_routestop_to_navigation_routestart"
-            app:destination="@id/navigation_routestart" />
+            android:id="@+id/action_navigation_routestop_to_navigation_route_view"
+            app:destination="@id/navigation_route_view" />
     </fragment>
 
     <fragment

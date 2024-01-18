@@ -48,7 +48,7 @@ public class routetimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startStop();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routestart);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
             }
 
         });
@@ -119,7 +119,7 @@ public class routetimeFragment extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routestart);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
             }
         });
     }
