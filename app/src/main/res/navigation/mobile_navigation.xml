@@ -160,6 +160,7 @@
             android:id="@+id/action_navigation_contest_view_to_navigation_contest"
             app:destination="@id/navigation_contest" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_contest_info"
         android:name="com.example.petsns.ui.contest.ContestInfoFragment"
@@ -169,6 +170,7 @@
             android:id="@+id/action_navigation_contest_info_to_navigation_contest"
             app:destination="@id/navigation_contest" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_contest_post"
         android:name="com.example.petsns.ui.contest.ContestPostFragment"
@@ -178,6 +180,8 @@
             android:id="@+id/action_navigation_contest_post_to_navigation_contest"
             app:destination="@id/navigation_contest" />
     </fragment>
+
+
 
 
 
@@ -198,6 +202,9 @@
         <action
             android:id="@+id/action_navigation_routepopup_to_navigation_routetime"
             app:destination="@id/navigation_routetime" />
+        <action
+            android:id="@+id/action_navigation_routepopup_to_navigation_route"
+            app:destination="@id/navigation_route" />
     </fragment>
 
     <fragment
@@ -205,9 +212,7 @@
         android:name="com.example.petsns.ui.route.routepopupFragment"
         android:label="散歩"
         tools:layout="@layout/fragment_routepopup" >
-        <action
-            android:id="@+id/action_navigation_routepopup_to_navigation_route"
-            app:destination="@id/navigation_route" />
+
     </fragment>
 
     <fragment
@@ -225,6 +230,9 @@
         <action
             android:id="@+id/action_navigation_routetime_to_navigation_route_view"
             app:destination="@id/navigation_route_view" />
+        <action
+            android:id="@+id/action_navigation_routepopup_to_navigation_routetime"
+            app:destination="@id/navigation_routetime" />
         <action
             android:id="@+id/action_navigation_routepopup_to_navigation_route"
             app:destination="@id/navigation_route" />
@@ -269,16 +277,6 @@
             app:destination="@id/navigation_route" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/navigation_routestart"
-        android:name="com.example.petsns.ui.route.routestartFragment"
-        android:label="散歩"
-        tools:layout="@layout/fragment_routestart" >
-        <action
-            android:id="@+id/action_navigation_routestart_to_navigation_routestop"
-            app:destination="@id/navigation_routestop" />
-    </fragment>
     <fragment
         android:id="@+id/navigation_route_view"
         android:name="com.example.petsns.ui.route.RouteViewFragment"

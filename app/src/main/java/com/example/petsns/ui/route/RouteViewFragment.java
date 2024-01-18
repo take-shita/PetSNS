@@ -409,6 +409,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         txtSmp = view.findViewById(R.id.textsample);
+
     }
 
     @Override

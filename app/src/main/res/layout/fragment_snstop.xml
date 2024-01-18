@@ -12,6 +12,15 @@
         android:layout_height="80dp"
         android:background="#FFFFFF">
 
+    <androidx.cardview.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:layout_column="2"
+            app:cardCornerRadius="60dp">
+
         <ImageButton
             android:id="@+id/top_prof"
             android:layout_width="80dp"
@@ -21,11 +30,13 @@
             android:src="@drawable/cbr250rr"
             tools:ignore="SpeakableTextPresentCheck" />
 
+    </androidx.cardview.widget.CardView>
+
         <ImageButton
             android:id="@+id/search_tag"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="420dp"
+            android:layout_marginLeft="438dp"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/search"
