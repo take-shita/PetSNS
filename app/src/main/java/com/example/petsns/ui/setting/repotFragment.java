@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.petsns.R;
+import com.example.petsns.ui.setting.RepotViewModel;
 
 public class repotFragment extends Fragment {
 
@@ -40,12 +42,30 @@ public class repotFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button btncan = view.findViewById(R.id.btncan);
-
         btncan.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                // 前の画面に戻る
                 Navigation.findNavController(v).navigate(R.id.action_navigation_repot_to_navigation_setting);
+            }
+        });
+
+        Button btnsend = view.findViewById(R.id.btnsend);
+        EditText editText = view.findViewById(R.id.editTextTextMultiLine);
+
+        btnsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // EditTextから文書を取得
+                String subject = "報告の件名";  // 任意の件名を設定
+                String message = editText.getText().toString();
+
+                // Firebase Firestoreに報告を送信
+                mViewModel.sendReportToFirestore(subject, message, getContext());
+
+                Navigation.findNavController(getView()).navigateUp();
+                // 送信後の処理をここに追加（例えば、Toastメッセージを表示するなど）
+
             }
         });
     }
