@@ -17,5 +17,8 @@ public class Question {
     public Timestamp timestamp(){ return timestamp; }
     public String getUser_id(){ return user_id; }
     public String getDocumentID(){ return documentId; }
-    public void setDocumentId(String documentId){ this.documentId=documentId; }
+
+    public void sampleDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 }

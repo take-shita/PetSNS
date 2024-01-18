@@ -97,7 +97,8 @@ public class BoardFragment extends Fragment {
                         List<Question> ques = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Question quess = document.toObject(Question.class);
-                            quess.setDocumentId(document.getId());
+                            quess.sampleDocumentId(document.getId());
+
                             ques.add(quess);
                         }
                         QuestionAdapter.setQuestion(ques);
