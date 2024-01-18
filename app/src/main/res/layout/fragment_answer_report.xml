@@ -82,7 +82,7 @@
                 android:gravity="center"
                 android:layout_columnSpan="5"
                 android:text="回答者を通報しますか？"
-                android:textSize="32dp"
+                android:textSize="29dp"
                 tools:ignore="HardcodedText,SpUsage" />
             <Space
                 android:layout_width="30dp"
