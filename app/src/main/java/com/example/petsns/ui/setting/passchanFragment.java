@@ -19,6 +19,16 @@ import com.example.petsns.R;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 public class passchanFragment extends Fragment {
 
     private PasschanViewModel mViewModel;
@@ -52,6 +62,7 @@ public class passchanFragment extends Fragment {
         errorTextView = view.findViewById(R.id.errorTextView);
 
         button14.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String pass = editTextTextPassword3.getText().toString();
@@ -73,7 +84,25 @@ public class passchanFragment extends Fragment {
                 } else {
                     // パスワードが一致していれば、エラーメッセージを非表示にして次の画面に遷移
                     errorTextView.setVisibility(View.GONE);
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
+                    // FirebaseUserを取得
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // Firebaseのユーザーを再認証
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+                    user.reauthenticate(credential)
+                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // パスワードの再認証が成功した場合、次の画面に遷移
+                                        Navigation.findNavController(v).navigate(R.id.action_navigation_passchan_to_navigation_setting);
+                                    } else {
+                                        // パスワードの再認証が失敗した場合、エラーメッセージを表示
+                                        errorTextView.setVisibility(View.VISIBLE);
+                                        errorTextView.setText("パスワードが正しくありません");
+                                    }
+                                }
+                            });
                 }
             }
         });

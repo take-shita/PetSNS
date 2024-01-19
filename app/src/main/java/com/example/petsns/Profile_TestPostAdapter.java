@@ -1,5 +1,6 @@
 package com.example.petsns;
 
+import com.example.petsns.Profile_TestPost;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,10 +33,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import com.google.firebase.Timestamp;
+
+
+
+
+
+
 
 public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPostAdapter.PostViewHolder> {
 
-    private List<TestPost> posts;
+    private List<Profile_TestPost> posts;
     private Context context;
 
     @Override
@@ -47,7 +58,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         this.context = context;
     }
 
-    public void setPosts(List<TestPost> posts) {
+    public void setPosts(List<com.example.petsns.Profile_TestPost> posts) {
         this.posts = posts;
         notifyDataSetChanged();
     }
@@ -65,16 +76,31 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             notifyItemRemoved(position);
         }
     }
-
+    private String formattimestamp(Timestamp timestamp) {
+        // ここで適切なフォーマットに変換する処理を実装
+        // 例: SimpleDateFormatを使用して文字列に変換する
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date(timestamp.getSeconds() * 1000));
+    }
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        TestPost post = posts.get(position);
+        Profile_TestPost post = posts.get(position);
 
         // 投稿者 ID と投稿文をセット
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // FirebaseAuthからユーザーを取得
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+
+        // 投稿時間を取得
+        Timestamp timestamp = post.gettimestamp();
+
+        // 取得した投稿時間を適切なフォーマットに変換
+        String formattedTime = formattimestamp(timestamp);
+
+        // posttime TextView にセット
+        holder.posttime.setText(formattedTime);
+
         if (user != null) {
             // ユーザーがログインしている場合
             // UIDを取得
@@ -99,6 +125,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 String documentPath = uid;
                 DocumentReference docRef = db.collection(collectionPath).document(documentPath);
 
+                // ドキュメントを取得
                 // ドキュメントを取得
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -238,13 +265,14 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 });
             }
         }
+
         public class PostViewHolder extends RecyclerView.ViewHolder {
             TextView textUsername;
             TextView textPost;
             ImageView imagePost;
             ImageView profileicon;
             ToggleButton hartbtn;
-            TextView timestamp;
+            TextView posttime;
 
             public PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -253,6 +281,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 textPost = itemView.findViewById(R.id.textPost);
                 imagePost = itemView.findViewById(R.id.imagePost);
                 profileicon = itemView.findViewById(R.id.profileicon);
+                posttime = itemView.findViewById(R.id.posttime);
 
             }
         }

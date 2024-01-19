@@ -75,8 +75,18 @@ public class Signup3 extends AppCompatActivity {
                                     accountData.put("name", viewModel.getUserName());
                                     accountData.put("mail", viewModel.getEmail());
                                     accountData.put("password", viewModel.getPassword());
-                                    accountData.put("like", tagViewModel.getArraylikeMom());
-                                    accountData.put("Dislike", tagViewModel.getArrayDislikeMom());
+                                    accountData.put("likeMom", tagViewModel.getArraylikeMom());
+                                    accountData.put("likeBir", tagViewModel.getArraylikeBir());
+                                    accountData.put("likeRip", tagViewModel.getArraylikeRip());
+                                    accountData.put("likeBis", tagViewModel.getArraylikeBis());
+                                    accountData.put("likeAqua", tagViewModel.getArraylikeAqua());
+                                    accountData.put("likeIns", tagViewModel.getArraylikeIns());
+                                    accountData.put("DisMom", tagViewModel.getArrayDislikeMom());
+                                    accountData.put("DisBir", tagViewModel.getArrayDislikeBir());
+                                    accountData.put("DisRip", tagViewModel.getArrayDislikeRip());
+                                    accountData.put("DisBis", tagViewModel.getArrayDislikeBis());
+                                    accountData.put("DisAqua", tagViewModel.getArrayDislikeAqua());
+                                    accountData.put("DisIns", tagViewModel.getArrayDislikeIns());
                                     accountData.put("contestEntry",false);
                                     accountData.put("contestPost",false);
                                     documentRef.set(accountData)

@@ -1,5 +1,5 @@
 package com.example.petsns;
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
 public class Profile_TestPost {
     private String id;
     private String sentence;
@@ -7,11 +7,12 @@ public class Profile_TestPost {
     private String icon;
     private Timestamp timestamp;
 
-    public Profile_TestPost(String id,String sentence,String imageUrl,String icon){
+    public Profile_TestPost(String id, String sentence, String imageUrl, String icon, Timestamp timestamp){
         this.id = id;
         this.sentence = sentence;
         this.imageUrl = imageUrl;
         this.icon = icon;
+        this.timestamp = timestamp;
     }
 
     // ゲッター・セッターなど必要な処理を実装
@@ -24,6 +25,6 @@ public class Profile_TestPost {
     public String getImageUrl(){ return imageUrl;}
     public String getIcon(){ return icon;}
     public void setIcon(String icon){this.icon=icon;}
-    public Timestamp timestamp(){ return  timestamp;}
+    public Timestamp gettimestamp(){ return  timestamp;}
 }
 

@@ -116,7 +116,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="left|center"
                 android:text="#ハリネズミ"
-                android:textColor="#2385DB"
+                android:textColor="#063763"
                 android:textSize="18dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
             <TextView
