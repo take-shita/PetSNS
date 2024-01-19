@@ -14,6 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.text.InputFilter;
@@ -58,22 +65,37 @@ public class pass1Fragment extends Fragment {
             public void onClick(View v) {
                 String password = passwordEditText.getText().toString();
 
-
-
                 if (password.isEmpty()) {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードを入力してください");
-
-//                    文字指定
-                } else if(password.length() < 8 ) {
-
-                    passwordEditText.setVisibility(View.VISIBLE);
+                } else if (password.length() < 8) {
+                    // パスワードが8文字未満の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードは8文字以上で入力してください");
-                    // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
-                }else {errorTextView.setVisibility(View.GONE);
-                    Navigation.findNavController(v).navigate((R.id.action_navigation_pass1_to_navigation_phone));
+                } else {
+                    // パスワードが入力されており、8文字以上である場合
+                    errorTextView.setVisibility(View.GONE);
+
+                    // FirebaseUserを取得
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // Firebaseのユーザーを再認証
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+                    user.reauthenticate(credential)
+                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // パスワードの再認証が成功した場合、次の画面に遷移
+                                        Navigation.findNavController(v).navigate(R.id.action_navigation_pass1_to_navigation_phone);
+                                    } else {
+                                        // パスワードの再認証が失敗した場合、エラーメッセージを表示
+                                        errorTextView.setVisibility(View.VISIBLE);
+                                        errorTextView.setText("パスワードが正しくありません");
+                                    }
+                                }
+                            });
                 }
             }
         });
