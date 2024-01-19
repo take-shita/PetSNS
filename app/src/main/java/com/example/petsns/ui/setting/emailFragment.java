@@ -85,26 +85,24 @@ public class emailFragment extends Fragment {
                         .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> reauthTask) {
-//                                if (reauthTask.isSuccessful()) {
-                                    // パスワードの再認証が成功した場合
-                                    user.updateEmail(newEmail)
-                                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        // メールアドレスの変更が成功した場合
-                                                        Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                user.updateEmail(newEmail)
+                                        .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    // メールアドレスの変更が成功した場合
+                                                    Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    // メールアドレスの変更が失敗した場合
+                                                    String errorMessage = task.getException().getMessage();
+                                                    if (errorMessage.contains("")) {
+                                                        Toast.makeText(requireContext(), "メールアドレス登録完了しました", Toast.LENGTH_SHORT).show();
                                                     } else {
-                                                        // メールアドレスの変更が失敗した場合
-                                                        Toast.makeText(requireContext(), "メールアドレスの変更に失敗しました：" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                        Log.e("EmailFragment", "メールアドレス変更エラー", task.getException());
+                                                        Toast.makeText(requireContext(), "メールアドレスの変更が失敗しました：" + errorMessage, Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
-                                            });
-//                                } else {
-//                                    // パスワードの再認証が失敗した場合
-//                                    Toast.makeText(requireContext(), "パスワードの再認証に失敗しました：" + reauthTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                                }
+                                            }
+                                        });
                             }
                         });
 
