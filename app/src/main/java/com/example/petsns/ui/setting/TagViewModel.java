@@ -256,7 +256,7 @@ public class TagViewModel extends ViewModel {
         boolLkeBis[0]=boolFr;
         boolLkeBis[1]=boolNw;
     }
-    public  void setArrayDisLikeMom(boolean boolFr,boolean boolNw){
+    public  void setArrayDisLikeBis(boolean boolFr,boolean boolNw){
         boolDisLkeBis[0]=boolFr;
         boolDisLkeBis[1]=boolNw;
     }
@@ -310,7 +310,7 @@ public class TagViewModel extends ViewModel {
         boolLkeAqua[2]=boolGf;
         boolLkeAqua[3]=boolJr;
     }
-    public  void setArrayDisLikeMom(boolean boolCr,boolean boolMd,boolean boolGf,
+    public  void setArrayDisLikeAqua(boolean boolCr,boolean boolMd,boolean boolGf,
                                     boolean boolJr){
         boolDisLkeAqua[0]=boolCr;
         boolDisLkeAqua[1]=boolMd;
@@ -356,7 +356,7 @@ public class TagViewModel extends ViewModel {
     }
     public List<Boolean> getArrayDislikeAqua(){
         List<Boolean> booleanList = IntStream.range(0, boolDisLkeAqua.length)
-                .mapToObj(i -> boolDisLkeMom[i])
+                .mapToObj(i -> boolDisLkeAqua[i])
                 .collect(Collectors.toList());
         return  booleanList;
     }
@@ -423,4 +423,95 @@ public class TagViewModel extends ViewModel {
                 .collect(Collectors.toList());
         return  booleanList;
     }
+
+
+    public void tagCancel(){
+        boolLkeMom[0]=false;
+        boolLkeMom[1]=false;
+        boolLkeMom[2]=false;
+        boolLkeMom[3]=false;
+        boolLkeMom[4]=false;
+        boolLkeMom[5]=false;
+        boolLkeMom[6]=false;
+        boolLkeMom[7]=false;
+        boolLkeMom[8]=false;
+        boolLkeMom[9]=false;
+        boolLkeMom[10]=false;
+
+        boolLkeBir[0]=false;
+        boolLkeBir[1]=false;
+        boolLkeBir[2]=false;
+        boolLkeBir[3]=false;
+        boolLkeBir[4]=false;
+        boolLkeBir[5]=false;
+        boolLkeBir[6]=false;
+        boolLkeBir[7]=false;
+
+        boolLkeRip[0]=false;
+        boolLkeRip[1]=false;
+        boolLkeRip[2]=false;
+        boolLkeRip[3]=false;
+        boolLkeRip[4]=false;
+        boolLkeRip[5]=false;
+
+        boolLkeBis[0]=false;
+        boolLkeBis[1]=false;
+
+        boolLkeAqua[0]=false;
+        boolLkeAqua[1]=false;
+        boolLkeAqua[2]=false;
+        boolLkeAqua[3]=false;
+
+        boolLkeIns[0]=false;
+        boolLkeIns[1]=false;
+        boolLkeIns[2]=false;
+        boolLkeIns[3]=false;
+        boolLkeIns[4]=false;
+        boolLkeIns[5]=false;
+
+
+        boolDisLkeMom[0]=false;
+        boolDisLkeMom[1]=false;
+        boolDisLkeMom[2]=false;
+        boolDisLkeMom[3]=false;
+        boolDisLkeMom[4]=false;
+        boolDisLkeMom[5]=false;
+        boolDisLkeMom[6]=false;
+        boolDisLkeMom[7]=false;
+        boolDisLkeMom[8]=false;
+        boolDisLkeMom[9]=false;
+        boolDisLkeMom[10]=false;
+
+        boolDisLkeBir[0]=false;
+        boolDisLkeBir[1]=false;
+        boolDisLkeBir[2]=false;
+        boolDisLkeBir[3]=false;
+        boolDisLkeBir[4]=false;
+        boolDisLkeBir[5]=false;
+        boolDisLkeBir[6]=false;
+        boolDisLkeBir[7]=false;
+
+        boolDisLkeRip[0]=false;
+        boolDisLkeRip[1]=false;
+        boolDisLkeRip[2]=false;
+        boolDisLkeRip[3]=false;
+        boolDisLkeRip[4]=false;
+        boolDisLkeRip[5]=false;
+
+        boolDisLkeBis[0]=false;
+        boolDisLkeBis[1]=false;
+
+        boolDisLkeAqua[0]=false;
+        boolDisLkeAqua[1]=false;
+        boolDisLkeAqua[2]=false;
+        boolDisLkeAqua[3]=false;
+
+        boolDisLkeIns[0]=false;
+        boolDisLkeIns[1]=false;
+        boolDisLkeIns[2]=false;
+        boolDisLkeIns[3]=false;
+        boolDisLkeIns[4]=false;
+        boolDisLkeIns[5]=false;
+    }
+
 }
