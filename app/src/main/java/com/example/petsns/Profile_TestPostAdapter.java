@@ -82,9 +82,14 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
 
             // 投稿者がログインユーザーでない場合、非表示にする
             if (!uid.equals(post.getid())) {
-                // UI スレッド以外で非同期にリストを変更
-                holder.itemView.post(() -> removeItem(position));
+                holder.itemView.setVisibility(View.GONE);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 return; // 非表示の場合はここでメソッドを終了
+            } else {
+                holder.itemView.setVisibility(View.VISIBLE);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
             holder.textPost.setText(post.getSentence());
