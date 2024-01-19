@@ -38,7 +38,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
@@ -77,15 +77,16 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/picture"
                 tools:ignore="SpeakableTextPresentCheck" />
+
             <ImageButton
                 android:id="@+id/tag_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="500dp"
-                android:layout_marginTop="-45dp"
+                android:layout_marginTop="-43dp"
                 android:background="@null"
                 android:elevation="0dp"
-                android:scaleType="fitXY"
+                android:scaleType="fitStart"
                 android:src="@drawable/tag"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -97,8 +98,6 @@
                 android:adjustViewBounds="true"
                 android:elevation="0dp"
                 android:scaleType="fitStart" />
-
-
 
         </LinearLayout>
     </ScrollView>
