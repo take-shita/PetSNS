@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.petsns.R;
 
 public class phoneFragment extends Fragment {
@@ -67,7 +69,24 @@ public class phoneFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Button btnTw = view.findViewById(R.id.btnTw);
         Button btncan = view.findViewById(R.id.btncan);
+
+        btnTw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 電話番号が11桁かどうかを確認
+                String phoneNumber = phoneNumberEditText.getText().toString().trim();
+                if (phoneNumber.length() == 11) {
+                    // 11桁の場合は設定画面に戻る
+                    Toast.makeText(requireContext(), "電話番号の登録完了しました", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_setting);
+                } else {
+                    // 11桁でない場合は適切な処理を行う（エラーメッセージ表示など）
+                    // ここでは何もしない例としています
+                }
+            }
+        });
 
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
