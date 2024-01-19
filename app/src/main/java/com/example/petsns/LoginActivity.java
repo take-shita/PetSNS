@@ -35,7 +35,8 @@ public class LoginActivity  extends AppCompatActivity {
             EditText textPass = findViewById(R.id.loginPass);
             Button btnLogin = findViewById(R.id.btnLogin);
             Button btnSignUp = findViewById(R.id.btnSignUp);
-            Button btnGo = findViewById(R.id.go);
+//            バックドア
+//            Button btnGo = findViewById(R.id.go);
             btnSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,15 +46,16 @@ public class LoginActivity  extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            btnGo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
-                }
-            });
+//            バックドア
+//            btnGo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Context context = v.getContext();
+//
+//                    Intent intent = new Intent(context, MainActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

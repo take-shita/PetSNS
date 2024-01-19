@@ -155,7 +155,7 @@ public class snspostFragment extends Fragment {
                                         data.put("tagBis",viewModel.getArraylikeBis());
                                         data.put("tagAqua",viewModel.getArraylikeAqua());
                                         data.put("tagIns",viewModel.getArraylikeIns());
-
+                                        data.put("likeCount",0);
                                         data.put("timestamp", FieldValue.serverTimestamp());
                                         // Firestoreにドキュメントを作成
                                         postCollection.document(UUID.randomUUID().toString()).set(data)
