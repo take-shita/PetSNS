@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -27,7 +28,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -38,7 +41,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +69,7 @@ public class BoardChatFragment extends Fragment {
     private String documentID;
     private TextView txttitle;
     private  TextView txtcon;
+    private FirebaseFirestore db;
     public BoardChatFragment() {
         // Required empty public constructor
     }
@@ -106,6 +113,7 @@ public class BoardChatFragment extends Fragment {
         AnswerAdapter = new AnswerAdapter(requireContext());
         recyclerView.setAdapter(AnswerAdapter);
 
+        db = FirebaseFirestore.getInstance();
 
         // Firestoreからデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
@@ -174,6 +182,33 @@ public class BoardChatFragment extends Fragment {
             }else {
                 txttitle.setText("!!!!!!!!!!");
             }
+
+
+            EditText ans_con = view.findViewById(R.id.editTextText3);
+
+            Button answer = view.findViewById(R.id.send_btn);
+            answer.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    String userId = user.getUid();
+
+                    CollectionReference postCollection = db.collection("answer");
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("user_id", userId);
+                    data.put("timestamp", FieldValue.serverTimestamp());
+                    data.put("ques_id",documentID);
+                    data.put("answer_content", ans_con.getText().toString());
+                    postCollection.document(UUID.randomUUID().toString()).set(data)
+                            .addOnSuccessListener(documentReference -> {
+                            })
+                            .addOnFailureListener(e -> {
+                            });
+                }
+            });
             // データを使用して何かを行う
         }
 
