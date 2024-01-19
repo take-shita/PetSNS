@@ -36,7 +36,6 @@
         android:id="@+id/bt1"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:background="#FFFFFF"
         android:text="電話番号追加・変更"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

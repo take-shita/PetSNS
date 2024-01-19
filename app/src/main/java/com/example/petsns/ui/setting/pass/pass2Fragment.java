@@ -14,6 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.widget.EditText;
 import android.widget.TextView;
 public class pass2Fragment extends Fragment {
@@ -41,9 +48,9 @@ public class pass2Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切なIDを指定する
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText);
         Button bt5 = view.findViewById(R.id.bt5);
-        errorTextView = view.findViewById(R.id.errorTextView); // TextViewの初期化
+        errorTextView = view.findViewById(R.id.errorTextView);
 
         bt5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,26 +61,44 @@ public class pass2Fragment extends Fragment {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードを入力してください");
-                } else if(password.length() < 8 ) {
-
-                    passwordEditText.setVisibility(View.VISIBLE);
+                } else if (password.length() < 8) {
+                    // パスワードが8文字未満の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("パスワードは8文字以上で入力してください");
-                    // パスワードが入力されていれば、エラーメッセージを非表示にして次の画面に遷移
                 } else {
+                    // パスワードが入力されており、8文字以上である場合
                     errorTextView.setVisibility(View.GONE);
-                    Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_email));
+
+                    // FirebaseUserを取得
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // Firebaseのユーザーを再認証
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+                    user.reauthenticate(credential)
+                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // パスワードの再認証が成功した場合、次の画面に遷移
+                                        Navigation.findNavController(v).navigate(R.id.action_navigation_pass2_to_navigation_email);
+                                    } else {
+                                        // パスワードの再認証が失敗した場合、エラーメッセージを表示
+                                        errorTextView.setVisibility(View.VISIBLE);
+                                        errorTextView.setText("パスワードが正しくありません");
+                                    }
+                                }
+                            });
                 }
             }
         });
+
         Button btncan = view.findViewById(R.id.btncan);
 
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate((R.id.action_navigation_pass2_to_navigation_setting));
+                Navigation.findNavController(v).navigate(R.id.action_navigation_pass2_to_navigation_setting);
             }
         });
     }
-
 }

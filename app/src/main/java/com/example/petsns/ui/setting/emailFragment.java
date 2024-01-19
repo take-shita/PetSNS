@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.Button;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.widget.Toast;
@@ -74,21 +77,34 @@ public class emailFragment extends Fragment {
                 // 新しいメールアドレスを入力フォームから取得
                 String newEmail = editTextNewEmail.getText().toString();
 
+                String password = "ユーザーの現在のパスワード";
+                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+
                 // メールアドレスの変更
-                user.updateEmail(newEmail)
+                user.reauthenticate(credential)
                         .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    // メールアドレスの変更が成功した場合
-                                    // ここで成功時の処理を追加
-                                    Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // メールアドレスの変更が失敗した場合
-                                    // エラーメッセージなどを取得して表示する
-                                    // task.getException().getMessage() でエラーメッセージを取得できます
-                                    Toast.makeText(requireContext(), "メールアドレスの変更に成功しました", Toast.LENGTH_SHORT).show();
-                                }
+                            public void onComplete(@NonNull Task<Void> reauthTask) {
+//                                if (reauthTask.isSuccessful()) {
+                                    // パスワードの再認証が成功した場合
+                                    user.updateEmail(newEmail)
+                                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // メールアドレスの変更が成功した場合
+                                                        Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        // メールアドレスの変更が失敗した場合
+                                                        Toast.makeText(requireContext(), "メールアドレスの変更に失敗しました：" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        Log.e("EmailFragment", "メールアドレス変更エラー", task.getException());
+                                                    }
+                                                }
+                                            });
+//                                } else {
+//                                    // パスワードの再認証が失敗した場合
+//                                    Toast.makeText(requireContext(), "パスワードの再認証に失敗しました：" + reauthTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
                             }
                         });
 
