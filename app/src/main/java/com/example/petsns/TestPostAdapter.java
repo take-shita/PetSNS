@@ -18,13 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -175,9 +179,59 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+
+                    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                    if(user!=null){
+
+                        DocumentReference docRef=db.collection("posts").document(post.getid());
+
+                        Map<String,Object> updates=new HashMap<>();
+                        updates.put("likeCount",post.getLikeCount()+1);
+
+                        docRef.update(updates)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                                            }
+                                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                    }
                 }else {
-                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+
+                    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                    if(user!=null){
+
+                        DocumentReference docRef=db.collection("post").document(post.getid());
+
+                        Map<String,Object> updates=new HashMap<>();
+                        updates.put("likeCount",post.getLikeCount()-1);
+
+                        docRef.update(updates)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);;
+                                            }
+                                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                    }
                 }
             }
         });

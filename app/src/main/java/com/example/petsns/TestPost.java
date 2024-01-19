@@ -66,6 +66,7 @@ public class TestPost {
     public void setLikeCount(int likeCount){
         this.likeCount=likeCount;
     }
+    public int getLikeCount(){return likeCount;}
     public void setTagMom(List<Boolean> tagMom) {
         this.tagMom = tagMom;
     }
@@ -87,7 +88,7 @@ public class TestPost {
 
 
     public String  tagConversion(){
-            String tagName="";
+            String tagName="#";
             if(tagMom!=null){
                 for(int i=0;i<tagMom.size();i++){
                     if(tagMom.get(i)){
@@ -98,6 +99,7 @@ public class TestPost {
                         }
                     }
                 }
+
             }else{
                 tagName="aaa";
             }
