@@ -23,7 +23,7 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-
+                android:id="@+id/textUsername"
                 android:layout_width="210dp"
                 android:layout_height="60dp"
                 android:gravity="left|center"
@@ -73,6 +73,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
@@ -94,6 +95,7 @@
                 android:background="#CCCCCC"/>
 
             <ImageView
+                android:id="@+id/imagePost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"

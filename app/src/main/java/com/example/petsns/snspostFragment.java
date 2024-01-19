@@ -103,15 +103,16 @@ public class snspostFragment extends Fragment {
         } else {
             // エラーハンドリング
         }
-
-        if(viewModel.getLikemom()!=null){
-            txtTag.setText(viewModel.getLikemom());
+        if(viewModel.getTagNameAll()!=null){
+            txtTag.setText(viewModel.getTagNameAll());
         }
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
+                viewModel.tagCancel();
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
@@ -147,7 +148,14 @@ public class snspostFragment extends Fragment {
                                         data.put("id",userId);
                                         data.put("sentence",sentene.getText().toString());
                                         data.put("imageUrl", uri.toString());
-                                        data.put("tag",viewModel.getArraylikeMom());
+
+                                        data.put("tagMom",viewModel.getArraylikeMom());
+                                        data.put("tagBir",viewModel.getArraylikeBir());
+                                        data.put("tagRip",viewModel.getArraylikeRip());
+                                        data.put("tagBis",viewModel.getArraylikeBis());
+                                        data.put("tagAqua",viewModel.getArraylikeAqua());
+                                        data.put("tagIns",viewModel.getArraylikeIns());
+
                                         data.put("timestamp", FieldValue.serverTimestamp());
                                         // Firestoreにドキュメントを作成
                                         postCollection.document(UUID.randomUUID().toString()).set(data)
