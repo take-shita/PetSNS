@@ -82,12 +82,15 @@ public class deleteFragment extends Fragment {
                             // Firebase Authenticationでの削除が成功した場合の処理
                             // ここでFirestoreのユーザーデータを削除するコードを追加
                             deleteFirestoreUserData(user.getUid());
+                            Log.d("FirebaseAuth", "User account deleted successfully!");
 
                             Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
                             // ログアウトや画面遷移などの処理が必要であればここで行う
+                            Navigation.findNavController(getView()).navigateUp();
                         } else {
                             // Firebase Authenticationでの削除が失敗した場合の処理
-                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                            Log.w("FirebaseAuth", "Error deleting user account", task.getException());
+//                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
                             if (task.getException() != null) {
                                 task.getException().printStackTrace();
                                 Log.e("DeleteFragment", "Error during account deletion", task.getException());
@@ -113,10 +116,14 @@ public class deleteFragment extends Fragment {
         db.collection("users").document(userId)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
+                    Log.d("Firestore", "DocumentSnapshot successfully deleted!");
+                    // 他の処理を追加する
                     // ドキュメントの削除が成功した場合の処理
                     // ここに適切な処理を追加する（例: ユーザーのデータが正常に削除されたときの処理）
                 })
                 .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Error deleting document", e);
+                    // エラー時の処理を追加する
                     // ドキュメントの削除が失敗した場合の処理
                     Toast.makeText(requireContext(), "ユーザーデータの削除に失敗しました", Toast.LENGTH_SHORT).show();
                     if (e != null) {
