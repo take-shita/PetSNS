@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.102" />
 
     <CheckBox
-        android:id="@+id/checkBox23"
+        android:id="@+id/chkFr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="カエル"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.418" />
 
     <CheckBox
-        android:id="@+id/checkBox24"
+        android:id="@+id/chkNw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="イモリ"
