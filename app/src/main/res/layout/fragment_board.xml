@@ -30,9 +30,9 @@
 
     <Button
         android:id="@+id/Q_btn"
-        android:layout_width="123dp"
-        android:layout_height="72dp"
-        android:textSize="20dp"
+        android:layout_width="100dp"
+        android:layout_height="67dp"
+        android:textSize="15dp"
         android:text="質問する"
         android:textStyle="bold"
         android:backgroundTint="#7FBFFF"
