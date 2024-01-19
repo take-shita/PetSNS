@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,6 +42,7 @@ public class snstopFragment extends Fragment {
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private TestPostAdapter postAdapter;
+    private static final String TAG = "YourClassName";
     public static snstopFragment newInstance() {
         return new snstopFragment();
     }
@@ -69,8 +73,28 @@ public class snstopFragment extends Fragment {
                         }
 
                         List<TestPost> posts = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            TestPost post = document.toObject(TestPost.class);
+                            Map<String, Object> data = document.getData();
+                            Log.d(TAG, "Data from Firestore: " + data.toString());
+
+                            TestPost post = new TestPost();
+                            post.setId((String) data.get("id"));
+                            post.setSentence((String) data.get("sentence"));
+                            post.setImageUrl((String) data.get("imageUrl"));
+                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                            post.setTagMom(tagMom);
+                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                            post.setTagMom(tagBir);
+                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                            post.setTagMom(tagRip);
+                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                            post.setTagMom(tagBis);
+                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                            post.setTagMom(tagAqua);
+                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                            post.setTagMom(tagIns);
+//                            TestPost post = document.toObject(TestPost.class);
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);

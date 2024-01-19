@@ -148,7 +148,6 @@ public class snspostFragment extends Fragment {
                                         data.put("id",userId);
                                         data.put("sentence",sentene.getText().toString());
                                         data.put("imageUrl", uri.toString());
-
                                         data.put("tagMom",viewModel.getArraylikeMom());
                                         data.put("tagBir",viewModel.getArraylikeBir());
                                         data.put("tagRip",viewModel.getArraylikeRip());
