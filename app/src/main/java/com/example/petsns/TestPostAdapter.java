@@ -54,6 +54,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+
         TestPost post = posts.get(position);
 
         // 投稿者 ID と投稿文をセット
@@ -63,7 +64,9 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         String collectionPath = "users";
         String documentPath = post.getid();
         DocumentReference docRef = db.collection(collectionPath).document(documentPath);
-//        相手プロフィール画面への遷移
+
+
+        //        相手プロフィール画面への遷移
         holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +97,9 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
 
         holder.textPost.setText(post.getSentence());
+//        post.tagConversion();
 
+        holder.tagText.setText(post.tagConversion());
         if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
@@ -204,7 +209,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         ToggleButton hartbtn;
         ToggleButton hartbt;
         TextView timestamp;
-
+        TextView tagText;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -214,7 +219,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
             otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
-
+            tagText=itemView.findViewById(R.id.tagText);
         }
     }
 
