@@ -71,8 +71,6 @@ public class snstopFragment extends Fragment {
                         List<TestPost> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             TestPost post = document.toObject(TestPost.class);
-
-
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);

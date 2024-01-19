@@ -19,7 +19,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/cbr250rr"
+                android:src="@drawable/loadingtouka"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -32,6 +32,7 @@
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
 
             <TextView
+                android:id="@+id/posttime"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:gravity="center"
@@ -77,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
-                android:text="かわいいねぇ"
+                android:text="投稿文"
                 android:textSize="24dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
 
@@ -85,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
-                android:text="#ハリネズミ"
+                android:text="####"
                 android:textColor="#2385DB"
                 android:textSize="24dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
@@ -96,11 +97,11 @@
 
             <ImageView
                 android:id="@+id/imagePost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/harinezumi"
+                android:scaleType="fitCenter"
+                android:src="@drawable/loadingtouka"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <TextView
@@ -110,3 +111,4 @@
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
+
