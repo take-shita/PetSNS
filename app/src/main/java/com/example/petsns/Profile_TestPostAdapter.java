@@ -59,6 +59,13 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         return new PostViewHolder(view);
     }
 
+    public void removeItem(int position) {
+        if (position >= 0 && position < posts.size()) {
+            posts.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         TestPost post = posts.get(position);
@@ -73,8 +80,14 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             // UIDを取得
             String uid = user.getUid();
 
-            if (uid.equals(post.getid())) {
-                holder.textPost.setText(post.getSentence());
+            // 投稿者がログインユーザーでない場合、非表示にする
+            if (!uid.equals(post.getid())) {
+                // UI スレッド以外で非同期にリストを変更
+                holder.itemView.post(() -> removeItem(position));
+                return; // 非表示の場合はここでメソッドを終了
+            }
+
+            holder.textPost.setText(post.getSentence());
 
                 // コレクションとドキュメントのパスを指定
                 String collectionPath = "users";
@@ -220,7 +233,6 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 });
             }
         }
-    }
         public class PostViewHolder extends RecyclerView.ViewHolder {
             TextView textUsername;
             TextView textPost;
