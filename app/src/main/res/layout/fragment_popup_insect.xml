@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.06" />
 
     <CheckBox
-        android:id="@+id/checkBox16"
+        android:id="@+id/chkBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="カブトムシ"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.218" />
 
     <CheckBox
-        android:id="@+id/checkBox17"
+        android:id="@+id/chkSt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="クワガタ"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.218" />
 
     <CheckBox
-        android:id="@+id/checkBox18"
+        android:id="@+id/chkMt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="カマキリ"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.383" />
 
     <CheckBox
-        android:id="@+id/checkBox19"
+        android:id="@+id/chkCc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="セミ"
@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.848" />
 
     <CheckBox
-        android:id="@+id/checkBox20"
+        android:id="@+id/chkSp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="クモ"
@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.549" />
 
     <CheckBox
-        android:id="@+id/checkBox22"
+        android:id="@+id/chkLc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="バッタ"

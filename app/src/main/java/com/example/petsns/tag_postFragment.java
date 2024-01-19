@@ -146,12 +146,25 @@ public class tag_postFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                CheckBox chkCt=dialog.findViewById(R.id.chkPrt);
+                CheckBox chkDg=dialog.findViewById(R.id.chkPrk);
+                CheckBox chkRb=dialog.findViewById(R.id.chkSp);
+                CheckBox chkHg=dialog.findViewById(R.id.chkCn);
+                CheckBox chkHm=dialog.findViewById(R.id.chkOw);
+                CheckBox chkOt=dialog.findViewById(R.id.chkBc);
+                CheckBox chkCh=dialog.findViewById(R.id.chkCh);
+                CheckBox chkFl=dialog.findViewById(R.id.chkDc);
+
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeBir(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked(),chkCh.isChecked(),
+                                chkFl.isChecked());
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();
@@ -170,13 +183,22 @@ public class tag_postFragment extends Fragment {
                 params.width = 800; // 幅を変更
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                CheckBox chkCt=dialog.findViewById(R.id.chkBt);
+                CheckBox chkDg=dialog.findViewById(R.id.chkSt);
+                CheckBox chkRb=dialog.findViewById(R.id.chkMt);
+                CheckBox chkHg=dialog.findViewById(R.id.chkCc);
+                CheckBox chkHm=dialog.findViewById(R.id.chkSp);
+                CheckBox chkOt=dialog.findViewById(R.id.chkLc);
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeIns(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();
@@ -196,12 +218,17 @@ public class tag_postFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                CheckBox chkCt=dialog.findViewById(R.id.chkFr);
+                CheckBox chkDg=dialog.findViewById(R.id.chkNw);
+
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeBis(chkCt.isChecked(),chkDg.isChecked());
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();
@@ -221,12 +248,20 @@ public class tag_postFragment extends Fragment {
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                CheckBox chkCt=dialog.findViewById(R.id.chkCr);
+                CheckBox chkDg=dialog.findViewById(R.id.chkMd);
+                CheckBox chkRb=dialog.findViewById(R.id.chkGf);
+                CheckBox chkHg=dialog.findViewById(R.id.chkJr);
+
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeAqua(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked());
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();
@@ -248,10 +283,20 @@ public class tag_postFragment extends Fragment {
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
+                CheckBox chkCt=dialog.findViewById(R.id.chkSn);
+                CheckBox chkDg=dialog.findViewById(R.id.chkLz);
+                CheckBox chkRb=dialog.findViewById(R.id.chkTt);
+                CheckBox chkHg=dialog.findViewById(R.id.chkAl);
+                CheckBox chkHm=dialog.findViewById(R.id.chkGc);
+                CheckBox chkOt=dialog.findViewById(R.id.chkCm);
+
                 btnClose.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) { dialog.dismiss(); }
+                    public void onClick(View v) {
+                        viewModel.setArrayLikeRip(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                                chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
+                        dialog.dismiss(); }
                 });
 
                 dialog.show();

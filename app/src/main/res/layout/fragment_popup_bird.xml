@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.096" />
 
     <CheckBox
-        android:id="@+id/checkBox12"
+        android:id="@+id/chkPrt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="オウム"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.178" />
 
     <CheckBox
-        android:id="@+id/checkBox13"
+        android:id="@+id/chkSp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="スズメ"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.361" />
 
     <CheckBox
-        android:id="@+id/checkBox14"
+        android:id="@+id/chkOw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="フクロウ"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.538" />
 
     <CheckBox
-        android:id="@+id/checkBox15"
+        android:id="@+id/chkCh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ニワトリ"
@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.844" />
 
     <CheckBox
-        android:id="@+id/checkBox19"
+        android:id="@+id/chkDc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="アヒル"
@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.708" />
 
     <CheckBox
-        android:id="@+id/checkBox18"
+        android:id="@+id/chkBc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ブンチョウ"
@@ -106,7 +106,7 @@
         app:layout_constraintVertical_bias="0.539" />
 
     <CheckBox
-        android:id="@+id/checkBox16"
+        android:id="@+id/chkPrk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="インコ"
@@ -118,7 +118,7 @@
         app:layout_constraintVertical_bias="0.179" />
 
     <CheckBox
-        android:id="@+id/checkBox17"
+        android:id="@+id/chkCn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="カナリア"

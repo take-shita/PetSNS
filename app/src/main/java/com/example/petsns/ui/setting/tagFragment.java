@@ -46,16 +46,6 @@ public class tagFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnback = view.findViewById(R.id.btnback);
-
-        btnback.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
-            }
-        });
-
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);  // この行を適切なIDに変更してください
 
         // タブが選択されたときのリスナー
@@ -84,9 +74,31 @@ public class tagFragment extends Fragment {
                 // 同じタブが再度選択されたときの処理
             }
         });
-
         // 最初のタブを表示
         replaceFragment(new TagLikeFragment());
+
+        Button btnSub =view.findViewById(R.id.btnSub);
+        Button btnback = view.findViewById(R.id.btnback);
+
+        btnSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
+        btnback.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
+            }
+        });
+
+
+
+
     }
 
     private void replaceFragment(Fragment fragment) {
