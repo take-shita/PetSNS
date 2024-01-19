@@ -13,7 +13,7 @@
         android:ems="10"
         android:inputType="text"
         android:hint="質問を入れてください"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="450dp"
         android:layout_height="380dp"
         android:hint="質問の詳細を入れてください"
-        android:textSize="23dp"
+        android:textSize="19dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -35,10 +35,10 @@
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="100dp"
+        android:layout_width="93dp"
         android:layout_height="60dp"
         android:text="戻る"
-        android:textSize="24dp"
+        android:textSize="20dp"
         android:backgroundTint="#ff0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,10 +49,10 @@
 
     <Button
         android:id="@+id/question_btn"
-        android:layout_width="100dp"
+        android:layout_width="93dp"
         android:layout_height="60dp"
         android:text="質問"
-        android:textSize="24dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.744"

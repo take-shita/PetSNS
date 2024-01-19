@@ -86,7 +86,7 @@ public class ContestFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contest, container, false);
 
-        // Firestoreの参照を取得
+        // Firestore の参照を取得
 
 
 
@@ -199,7 +199,7 @@ public class ContestFragment extends Fragment {
 
 
         btnEntry=view.findViewById(R.id.btnContestEntry);
-        txtTest=view.findViewById(R.id.txtTest);
+//        txtTest=view.findViewById(R.id.txtTest);
         btnEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,7 +225,7 @@ public class ContestFragment extends Fragment {
         // ポップアップ表示
         popupText.setVisibility(View.VISIBLE);
 
-        // 3秒後にポップアップを非表示にする
+        // 3 秒後にポップアップを非表示にする
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {

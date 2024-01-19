@@ -55,8 +55,8 @@
         android:id="@+id/imageView2"
         android:layout_width="273dp"
         android:layout_height="238dp"
-        android:layout_marginTop="132dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/contest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,15 +86,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/txtTest"
-        android:layout_width="588dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:text="TextView"
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--&lt;!&ndash;        android:id="@+id/txtTest"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="588dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="125dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginStart="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="TextView"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="34sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
