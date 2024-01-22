@@ -22,6 +22,7 @@
                 android:src="@drawable/loadingtouka"
                 tools:ignore="ContentDescription" />
 
+
             <TextView
                 android:id="@+id/textUsername"
                 android:layout_width="210dp"
@@ -30,8 +31,6 @@
                 android:text="田實　優斗"
                 android:textSize="24dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
-
-
 
             <ToggleButton
                 android:id="@+id/hartbtn"

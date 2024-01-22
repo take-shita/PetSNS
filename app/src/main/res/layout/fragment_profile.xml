@@ -31,7 +31,7 @@
                 android:background="@null"/>
 
             <TextView
-
+                android:id="@+id/profile_textUsername"
                 android:layout_width="421dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
