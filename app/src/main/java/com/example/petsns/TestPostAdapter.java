@@ -121,7 +121,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 // 新しい画面に遷移する  後で書き換える
                 Context context = v.getContext();
                 Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.fragment_answer_report);
+                dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
                 ImageButton hai = dialog.findViewById(R.id.haibtn);
                 ImageButton iie = dialog.findViewById(R.id.iiebtn);
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
