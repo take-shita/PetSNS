@@ -125,7 +125,7 @@ public class iconFragment extends Fragment {
                             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("icon"));
                             try {
 
-                                final File localFile = File.createTempFile("images", "jpg");
+                                final File localFile = File.createTempFile("images", "png");
                                 storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
                                     // ローカルファイルから画像を読み込んで ImageView にセット
                                     Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
@@ -159,7 +159,7 @@ public class iconFragment extends Fragment {
 
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            StorageReference storageRef = storage.getReference().child(storagePath + userId + ".jpg");
+            StorageReference storageRef = storage.getReference().child(storagePath + userId + ".png");
 
             storageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {

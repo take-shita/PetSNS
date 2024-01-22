@@ -40,7 +40,7 @@
         android:id="@+id/imageView"
         android:layout_width="121dp"
         android:layout_height="126dp"
-        android:src="@drawable/cbr250rr"
+        android:src="@drawable/loadingtouka"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.089"
