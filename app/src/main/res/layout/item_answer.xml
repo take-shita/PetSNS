@@ -24,8 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="#FF0000"
-            android:text="通報"/>
+            android:backgroundTint="#e83929"
+            android:text="通報"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView

@@ -66,7 +66,7 @@
         android:id="@+id/button14"
         android:layout_width="99dp"
         android:layout_height="60dp"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="#FF9999"
         android:text="完了"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

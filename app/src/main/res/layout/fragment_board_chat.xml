@@ -103,10 +103,13 @@
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#ff0000"
+        android:layout_width="88dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="-15dp"
+        android:background="@drawable/frame_style"
         android:text="戻る"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.027"
