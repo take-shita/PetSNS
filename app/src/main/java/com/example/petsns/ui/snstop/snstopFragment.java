@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.petsns.MyApplication;
 import com.example.petsns.R;
+import com.example.petsns.TagSearchViewModel;
 import com.example.petsns.TestPost;
 import com.example.petsns.TestPostAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +46,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class snstopFragment extends Fragment {
 
+    private TagSearchViewModel viewModel;
     private SnstopViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
@@ -72,6 +75,12 @@ public class snstopFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_snstop, container, false);
 
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedTagSearchViewModel();
+        } else {
+            // エラーハンドリング
+        }
 
 //        主要な要素
         recyclerView = rootView.findViewById(R.id.recyclerView);
@@ -133,6 +142,7 @@ public class snstopFragment extends Fragment {
         //        ここまで
     }
     private void fetchDataFromFirestore() {
+
 
 
         // Firestore からデータを取得して表示
@@ -252,30 +262,99 @@ public class snstopFragment extends Fragment {
 
 
                                     if (check) {
-                                        if (!like) {
-                                            random = Math.random();
-                                        }
-                                        if (like || random < 0.5) {
+
+                                        if(viewModel.getCheck()) {
+
+                                            for (int i = 0; i < tagMom.size(); i++) {
+                                                if (tagMom.get(i)) {
+                                                    if (viewModel.getArraylikeMom().get(i)) {
+                                                        like=true;
+                                                    }
+                                                }
+                                            }
+                                            for (int i = 0; i < tagBir.size(); i++) {
+                                                if (tagBir.get(i)) {
+                                                    if (viewModel.getArraylikeBir().get(i)) {
+                                                        like = true;
+                                                    }
+                                                }
+                                            }
+                                            for (int i = 0; i < tagRip.size(); i++) {
+                                                if (tagRip.get(i)) {
+                                                    if (viewModel.getArraylikeRip().get(i)) {
+                                                        like = true;
+                                                    }
+                                                }
+                                            }
+                                            for (int i = 0; i < tagBis.size(); i++) {
+                                                if (tagBis.get(i)) {
+                                                    if (viewModel.getArraylikeBis().get(i)) {
+                                                        like = true;
+                                                    }
+                                                }
+                                            }
+                                            for (int i = 0; i < tagAqua.size(); i++) {
+                                                if (tagAqua.get(i)) {
+                                                    if (viewModel.getArraylikeAqua().get(i)) {
+                                                        like = true;
+                                                    }
+                                                }
+                                            }
+                                            for (int i = 0; i < tagIns.size(); i++) {
+                                                if (tagIns.get(i)) {
+                                                    if (viewModel.getArraylikeIns().get(i)) {
+                                                        like = true;
+                                                    }
+                                                }
+                                            }
+                                            if(like){
+                                                post.setId((String) data.get("id"));
+                                                post.setSentence((String) data.get("sentence"));
+                                                post.setImageUrl((String) data.get("imageUrl"));
+                                                post.setDocumentId(documentId);
+                                                post.setLikeCount(likeCountDouble.intValue());
+                                                post.setTagMom(tagMom);
+
+                                                post.setTagBir(tagBir);
+
+                                                post.setTagRip(tagRip);
+
+                                                post.setTagBis(tagBis);
+
+                                                post.setTagAqua(tagAqua);
+
+                                                post.setTagIns(tagIns);
+
+                                                posts.add(post);
+                                            }else{
+
+                                            }
+                                        }else {
+                                            if (!like) {
+                                                random = Math.random();
+                                            }
+                                                if (like || random < 1) {
 
 
-                                            post.setId((String) data.get("id"));
-                                            post.setSentence((String) data.get("sentence"));
-                                            post.setImageUrl((String) data.get("imageUrl"));
-                                            post.setDocumentId(documentId);
-                                            post.setLikeCount(likeCountDouble.intValue());
-                                            post.setTagMom(tagMom);
+                                                    post.setId((String) data.get("id"));
+                                                    post.setSentence((String) data.get("sentence"));
+                                                    post.setImageUrl((String) data.get("imageUrl"));
+                                                    post.setDocumentId(documentId);
+                                                    post.setLikeCount(likeCountDouble.intValue());
+                                                    post.setTagMom(tagMom);
 
-                                            post.setTagBir(tagBir);
+                                                    post.setTagBir(tagBir);
 
-                                            post.setTagRip(tagRip);
+                                                    post.setTagRip(tagRip);
 
-                                            post.setTagBis(tagBis);
+                                                    post.setTagBis(tagBis);
 
-                                            post.setTagAqua(tagAqua);
+                                                    post.setTagAqua(tagAqua);
 
-                                            post.setTagIns(tagIns);
+                                                    post.setTagIns(tagIns);
 
-                                            posts.add(post);
+                                                    posts.add(post);
+                                            }
                                         }
                                     }
                                 }

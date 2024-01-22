@@ -11,12 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import android.widget.EditText;
 import android.widget.Button;
 
 import android.content.Intent;
 
 public class LoginActivity  extends AppCompatActivity {
+    String id;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -59,9 +64,38 @@ public class LoginActivity  extends AppCompatActivity {
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String id = textID.getText().toString();
+                    id = textID.getText().toString();
                     String pass = textPass.getText().toString();
 
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    CollectionReference usersCollection = db.collection("users");
+
+                    String targetFieldValue = id; // 検索対象のフィールド値
+
+                    usersCollection.whereEqualTo("id", targetFieldValue)
+                            .get()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        // sample フィールドが targetFieldValue と一致するドキュメントを取得
+                                        String mail = document.getString("mail");
+                                        // template フィールドの値を取得
+                                        if (mail != null) {
+                                            // template フィールドが存在する場合の処理
+                                            id = textID.getText().toString();;
+                                        } else {
+                                            // template フィールドが存在しない場合の処理
+                                            System.out.println("Document has no template field");
+                                        }
+                                    }
+                                } else {
+                                    // ドキュメントの取得が失敗した場合の処理
+                                    Exception exception = task.getException();
+                                    if (exception != null) {
+                                        exception.printStackTrace();
+                                    }
+                                }
+                            });
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(id, pass)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -75,7 +109,7 @@ public class LoginActivity  extends AppCompatActivity {
                                     startActivity(intent);
                                 } else {
                                     // ログイン失敗
-                                    textID.setText("a?");
+                                    textID.setText(id+"?");
                                 }
                             });
                 }
