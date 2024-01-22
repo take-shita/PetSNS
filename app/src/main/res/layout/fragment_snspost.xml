@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".snspostFragment">
 
     <LinearLayout
@@ -17,8 +18,11 @@
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="160dp"
+            android:background="@drawable/frame_style4"
             android:text="キャンセル"
-            android:textSize="15dp"/>
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            />
 
         <Button
             android:id="@+id/post_btn"
@@ -27,7 +31,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginLeft="40dp"
             android:text="投稿"
-            android:textSize="15dp"/>
+            android:textSize="15dp"
+            android:background="@drawable/frame_style4"/>
 
     </LinearLayout>
 
