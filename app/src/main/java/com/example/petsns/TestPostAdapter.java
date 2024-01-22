@@ -109,8 +109,12 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                                 new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void unused) {
-                                                        int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
-                                                        holder.likeCount.setText(String.valueOf(likeCountPlus));
+                                                        if(!holder.likeCount.getText().equals("")){
+                                                            int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
+                                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+                                                        }else{
+                                                            holder.likeCount.setText("1");
+                                                        }
 
                                                     }
                                                 })
