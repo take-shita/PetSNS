@@ -77,7 +77,7 @@
         android:id="@+id/textViewUsername"
         android:layout_width="291dp"
         android:layout_height="75dp"
-        android:text="田實　優斗"
+        android:src="@drawable/loadingtouka"
         android:textSize="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

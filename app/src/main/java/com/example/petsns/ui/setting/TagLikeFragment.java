@@ -158,6 +158,7 @@ public class TagLikeFragment extends Fragment {
                 params.width = 800; // 幅を変更
                 params.height = 600; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
                 CheckBox chkCt=dialog.findViewById(R.id.chkPrt);
                 CheckBox chkDg=dialog.findViewById(R.id.chkPrk);
                 CheckBox chkRb=dialog.findViewById(R.id.chkSp);
