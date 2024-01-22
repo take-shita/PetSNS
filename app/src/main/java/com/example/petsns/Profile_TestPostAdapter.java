@@ -76,12 +76,14 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             notifyItemRemoved(position);
         }
     }
+
     private String formattimestamp(Timestamp timestamp) {
         // ここで適切なフォーマットに変換する処理を実装
         // 例: SimpleDateFormatを使用して文字列に変換する
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date(timestamp.getSeconds() * 1000));
     }
+
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Profile_TestPost post = posts.get(position);
@@ -120,138 +122,86 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
 
             holder.textPost.setText(post.getSentence());
 
-                // コレクションとドキュメントのパスを指定
-                String collectionPath = "users";
-                String documentPath = uid;
-                DocumentReference docRef = db.collection(collectionPath).document(documentPath);
+            // コレクションとドキュメントのパスを指定
+            String collectionPath = "users";
+            String documentPath = uid;
+            DocumentReference docRef = db.collection(collectionPath).document(documentPath);
 
-                // ドキュメントを取得
-                // ドキュメントを取得
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                // フィールド名を指定して文字列を取得
-                                String name = document.getString("name");
-                                String iconUrl = document.getString("icon");
-                                // ログインユーザーの情報を表示
-                                holder.textUsername.setText(name);
+            // ドキュメントを取得
+            // ドキュメントを取得
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // フィールド名を指定して文字列を取得
+                            String name = document.getString("name");
+                            String iconUrl = document.getString("icon");
+                            // ログインユーザーの情報を表示
+                            holder.textUsername.setText(name);
 
 //                        アイコンの表示
-                                if (iconUrl != null && !iconUrl.isEmpty()) {
-                                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                                    try {
-                                        final File localFile = File.createTempFile("images", "jpg");
-                                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                            // ローカルファイルから画像を読み込んで ImageView にセット
-                                            if (holder.profileicon != null) {
-                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                holder.profileicon.setImageBitmap(bitmap);
-                                            } else {
-                                                // holder.imagePostがnullの場合の処理（ログなど）
-                                            }
-                                        }).addOnFailureListener(exception -> {
-                                            // 失敗時の処理
-                                        });
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+                            if (iconUrl != null && !iconUrl.isEmpty()) {
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                                try {
+                                    final File localFile = File.createTempFile("images", "jpg");
+                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                        // ローカルファイルから画像を読み込んで ImageView にセット
+                                        if (holder.profileicon != null) {
+                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                            holder.profileicon.setImageBitmap(bitmap);
+                                        } else {
+                                            // holder.imagePostがnullの場合の処理（ログなど）
+                                        }
+                                    }).addOnFailureListener(exception -> {
+                                        // 失敗時の処理
+                                    });
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                                // fieldValue を使って何かを行う
                             } else {
-                                // ドキュメントが存在しない場合の処理
-                            }
-                        } else {
-                            // エラーが発生した場合の処理
-                        }
-                    }
-                });
-
-
-                holder.textPost.setText(post.getSentence());
-
-
-                if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
-
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
-                    try {
-
-                        final File localFile = File.createTempFile("images", "jpg");
-                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                            // ローカルファイルから画像を読み込んで ImageView にセット
-                            if (holder.imagePost != null) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                holder.imagePost.setImageBitmap(bitmap);
-                            } else {
-                                // holder.imagePostがnullの場合の処理（ログなど）
-                            }
-                        }).addOnFailureListener(exception -> {
-                            // 失敗時の処理
-
-                        });
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // 画像がない場合の処理（任意で実装）
+                                // 画像がない場合の処理（任意で実装）
 //            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+                            }
+                            // fieldValue を使って何かを行う
+                        } else {
+                            // ドキュメントが存在しない場合の処理
+                        }
+                    } else {
+                        // エラーが発生した場合の処理
+                    }
                 }
+            });
 
-//        db.collection("users") // コレクション名
-//                .document(post.getid()) // ドキュメント名
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                        if (documentSnapshot.exists()) {
-//                            // ドキュメントが存在する場合、フィールドの値を取得
-//                            post.setIcon(documentSnapshot.getString("icon"));
-//                            if (post.getIcon() != null && !post.getIcon().isEmpty()) {
-//
-//                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
-//                                try {
-//
-//                                    final File localFile = File.createTempFile("images", "jpg");
-//                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-//                                        // ローカルファイルから画像を読み込んで ImageView にセット
-//                                        if (holder.profileicon != null) {
-//                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-//                                            holder.profileicon.setImageBitmap(bitmap);
-//                                        } else {
-//                                            // holder.profileiconがnullの場合の処理（ログなど）
-//                                        }
-//                                    }).addOnFailureListener(exception -> {
-//                                        // 失敗時の処理
-//
-//                                    });
-//
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            } else {
-//                                // 画像がない場合の処理（任意で実装）
-////            holder.imagePost.setImageResource(R.drawable.placeholder_image);
-//
-//                            }
-//                            // 取得した値を利用する処理をここに追加
-//                        } else {
-//                            // ドキュメントが存在しない場合の処理
-//                        }
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // エラーが発生した場合の処理
-//                    }
-//                });
 
+            holder.textPost.setText(post.getSentence());
+
+
+            if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
+
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
+                try {
+
+                    final File localFile = File.createTempFile("images", "jpg");
+                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                        // ローカルファイルから画像を読み込んで ImageView にセット
+                        if (holder.imagePost != null) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            holder.imagePost.setImageBitmap(bitmap);
+                        } else {
+                            // holder.imagePostがnullの場合の処理（ログなど）
+                        }
+                    }).addOnFailureListener(exception -> {
+                        // 失敗時の処理
+
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // 画像がない場合の処理（任意で実装）
 
                 holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -265,6 +215,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 });
             }
         }
+    }
 
         public class PostViewHolder extends RecyclerView.ViewHolder {
             TextView textUsername;

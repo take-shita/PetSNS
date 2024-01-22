@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.petsns.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -132,6 +133,7 @@ public class tagFragment extends Fragment {
                                     new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
+                                            Toast.makeText(requireContext(), "タグの登録完了しました", Toast.LENGTH_SHORT).show();
                                             Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
                                         }
                                     })
