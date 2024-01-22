@@ -2,6 +2,7 @@ package com.example.petsns;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -92,7 +93,9 @@ public class LoginActivity  extends AppCompatActivity {
                                     // ドキュメントの取得が失敗した場合の処理
                                     Exception exception = task.getException();
                                     if (exception != null) {
-                                        exception.printStackTrace();
+
+                                        Log.e("aaaa", "データの取得に失敗しました", exception);
+
                                     }
                                 }
                             });

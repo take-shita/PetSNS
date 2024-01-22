@@ -178,6 +178,7 @@ public class snstopFragment extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     boolean check = true;
                                     boolean like = false;
+                                    boolean tagSearch=false;
                                     double random = 0;
                                     Map<String, Object> data = document.getData();
                                     String documentId = document.getId();
@@ -268,46 +269,46 @@ public class snstopFragment extends Fragment {
                                             for (int i = 0; i < tagMom.size(); i++) {
                                                 if (tagMom.get(i)) {
                                                     if (viewModel.getArraylikeMom().get(i)) {
-                                                        like=true;
+                                                        tagSearch=true;
                                                     }
                                                 }
                                             }
                                             for (int i = 0; i < tagBir.size(); i++) {
                                                 if (tagBir.get(i)) {
                                                     if (viewModel.getArraylikeBir().get(i)) {
-                                                        like = true;
+                                                        tagSearch = true;
                                                     }
                                                 }
                                             }
                                             for (int i = 0; i < tagRip.size(); i++) {
                                                 if (tagRip.get(i)) {
                                                     if (viewModel.getArraylikeRip().get(i)) {
-                                                        like = true;
+                                                        tagSearch = true;
                                                     }
                                                 }
                                             }
                                             for (int i = 0; i < tagBis.size(); i++) {
                                                 if (tagBis.get(i)) {
                                                     if (viewModel.getArraylikeBis().get(i)) {
-                                                        like = true;
+                                                        tagSearch = true;
                                                     }
                                                 }
                                             }
                                             for (int i = 0; i < tagAqua.size(); i++) {
                                                 if (tagAqua.get(i)) {
                                                     if (viewModel.getArraylikeAqua().get(i)) {
-                                                        like = true;
+                                                        tagSearch = true;
                                                     }
                                                 }
                                             }
                                             for (int i = 0; i < tagIns.size(); i++) {
                                                 if (tagIns.get(i)) {
                                                     if (viewModel.getArraylikeIns().get(i)) {
-                                                        like = true;
+                                                        tagSearch = true;
                                                     }
                                                 }
                                             }
-                                            if(like){
+                                            if(tagSearch){
                                                 post.setId((String) data.get("id"));
                                                 post.setSentence((String) data.get("sentence"));
                                                 post.setImageUrl((String) data.get("imageUrl"));
