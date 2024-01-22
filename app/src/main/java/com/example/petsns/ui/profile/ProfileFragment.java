@@ -21,11 +21,10 @@ import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
 import com.example.petsns.R;
-import com.example.petsns.TestPost;
-import com.example.petsns.TestPostAdapter;
+import com.example.petsns.Profile_TestPost;
+import com.example.petsns.Profile_TestPostAdapter;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.petsns.Profile_TestPostAdapter;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -68,11 +67,9 @@ public class ProfileFragment extends Fragment {
                             return;
                         }
 
-                        List<TestPost> posts = new ArrayList<>();
+                        List<Profile_TestPost> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            TestPost post = document.toObject(TestPost.class);
-
-
+                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);

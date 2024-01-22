@@ -18,13 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -100,84 +104,134 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 //        post.tagConversion();
 
         holder.tagText.setText(post.tagConversion());
-        if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
-
-            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
-            try {
-
-                final File localFile = File.createTempFile("images", "jpg");
-                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                    // ローカルファイルから画像を読み込んで ImageView にセット
-                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                    holder.imagePost.setImageBitmap(bitmap);
-
-                }).addOnFailureListener(exception -> {
-                    // 失敗時の処理
-
-                });
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
-        }
-
-        db.collection("users") // コレクション名
-                .document(post.getid()) // ドキュメント名
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // ドキュメントが存在する場合、フィールドの値を取得
-                             post.setIcon(documentSnapshot.getString("icon"));
-                            if (post.getIcon() != null && !post.getIcon().isEmpty()) {
-
-                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
-                                try {
-
-                                    final File localFile = File.createTempFile("images", "jpg");
-                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                        // ローカルファイルから画像を読み込んで ImageView にセット
-                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                        holder.otherprofilebtn.setImageBitmap(bitmap);
-
-                                    }).addOnFailureListener(exception -> {
-                                        // 失敗時の処理
-
-                                    });
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
-
-                            }
-                            // 取得した値を利用する処理をここに追加
-                        } else {
-                            // ドキュメントが存在しない場合の処理
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // エラーが発生した場合の処理
-                    }
-                });
+//        if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
+//
+//            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
+//            try {
+//
+//                final File localFile = File.createTempFile("images", "jpg");
+//                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+//                    // ローカルファイルから画像を読み込んで ImageView にセット
+//                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                    holder.imagePost.setImageBitmap(bitmap);
+//
+//                }).addOnFailureListener(exception -> {
+//                    // 失敗時の処理
+//
+//                });
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            // 画像がない場合の処理（任意で実装）
+////            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+//        }
+//
+//        db.collection("users") // コレクション名
+//                .document(post.getid()) // ドキュメント名
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        if (documentSnapshot.exists()) {
+//                            // ドキュメントが存在する場合、フィールドの値を取得
+//                             post.setIcon(documentSnapshot.getString("icon"));
+//                            if (post.getIcon() != null && !post.getIcon().isEmpty()) {
+//
+//                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
+//                                try {
+//
+//                                    final File localFile = File.createTempFile("images", "jpg");
+//                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+//                                        // ローカルファイルから画像を読み込んで ImageView にセット
+//                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                        holder.otherprofilebtn.setImageBitmap(bitmap);
+//
+//                                    }).addOnFailureListener(exception -> {
+//                                        // 失敗時の処理
+//
+//                                    });
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            } else {
+//                                // 画像がない場合の処理（任意で実装）
+////            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+//
+//                            }
+//                            // 取得した値を利用する処理をここに追加
+//                        } else {
+//                            // ドキュメントが存在しない場合の処理
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // エラーが発生した場合の処理
+//                    }
+//                });
 
 
         holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+
+                    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                    if(user!=null){
+
+                        DocumentReference docRef=db.collection("posts").document(post.getid());
+
+                        Map<String,Object> updates=new HashMap<>();
+                        updates.put("likeCount",post.getLikeCount()+1);
+
+                        docRef.update(updates)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                                            }
+                                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                    }
                 }else {
-                    holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+
+                    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                    if(user!=null){
+
+                        DocumentReference docRef=db.collection("post").document(post.getid());
+
+                        Map<String,Object> updates=new HashMap<>();
+                        updates.put("likeCount",post.getLikeCount()-1);
+
+                        docRef.update(updates)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);;
+                                            }
+                                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                    }
                 }
             }
         });
