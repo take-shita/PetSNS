@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.example.petsns.R;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -95,6 +96,7 @@ public class passchanFragment extends Fragment {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         // パスワードの再認証が成功した場合、次の画面に遷移
+                                        Toast.makeText(requireContext(), "パスワードの変更完了しました", Toast.LENGTH_SHORT).show();
                                         Navigation.findNavController(v).navigate(R.id.action_navigation_passchan_to_navigation_setting);
                                     } else {
                                         // パスワードの再認証が失敗した場合、エラーメッセージを表示
