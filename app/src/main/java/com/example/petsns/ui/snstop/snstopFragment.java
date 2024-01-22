@@ -131,7 +131,7 @@ public class snstopFragment extends Fragment {
                                     List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                     Number likeCountDouble = ((Number)data.get("likeCount"));
                                     for(int i=0;i<tagMom.size();i++){
-                                        if(tagMom.get(i)){
+                                        if(tagMom.get(i) && LikeMom != null && LikeMom.size() > i){
                                             if(LikeMom.get(i)){
                                                 like=true;
                                             }
@@ -142,7 +142,7 @@ public class snstopFragment extends Fragment {
                                         }
                                     }
                                     for(int i=0;i<tagBir.size();i++){
-                                        if(tagBir.get(i)){
+                                        if(tagBir.get(i) && LikeBir != null && LikeBir.size() > i){
                                             if(LikeBir.get(i)){
                                                 like=true;
                                             }
@@ -153,7 +153,7 @@ public class snstopFragment extends Fragment {
                                         }
                                     }
                                     for(int i=0;i<tagRip.size();i++){
-                                        if(tagRip.get(i)){
+                                        if(tagRip.get(i) && LikeRip != null && LikeRip.size() > i){
                                             if(LikeRip.get(i)){
                                                 like=true;
                                             }
@@ -164,7 +164,7 @@ public class snstopFragment extends Fragment {
                                         }
                                     }
                                     for(int i=0;i<tagBis.size();i++){
-                                        if(tagBis.get(i)){
+                                        if(tagBis.get(i) && LikeBis != null && LikeBis.size() > i){
                                             if(LikeBis.get(i)){
                                                 like=true;
                                             }
@@ -175,7 +175,7 @@ public class snstopFragment extends Fragment {
                                         }
                                     }
                                     for(int i=0;i<tagAqua.size();i++){
-                                        if(tagAqua.get(i)){
+                                        if(tagAqua.get(i) && LikeAqua != null && LikeAqua.size() > i){
                                             if(LikeAqua.get(i)){
                                                 like=true;
                                             }
@@ -186,7 +186,7 @@ public class snstopFragment extends Fragment {
                                         }
                                     }
                                     for(int i=0;i<tagIns.size();i++){
-                                        if(tagIns.get(i)){
+                                        if(tagIns.get(i) && LikeIns != null && LikeIns.size() > i){
                                             if(LikeIns.get(i)){
                                                 like=true;
                                             }
