@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     private Context context;
     private List<QueryDocumentSnapshot> data;
     public TestPostAdapter(Context context) {
-        this.data = data;
+        this.data =new ArrayList<>();
         this.context = context;
     }
 
@@ -61,90 +62,99 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
-        TestPost post = posts.get(position);
+        int adapterPosition = holder.getAdapterPosition();
 
-//        if (post != null && posts!=null) {
-//            try{
-//                QueryDocumentSnapshot document = data.get(position);
-//                String documentId = document.getId();
-//
-//                holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        if(isChecked){
-//
-//                            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-//                            FirebaseFirestore db=FirebaseFirestore.getInstance();
-//                            if(user!=null){
-//
-//                                DocumentReference docRef=db.collection("posts").document(documentId);
-//
-//                                Map<String,Object> updates=new HashMap<>();
-//                                updates.put("likeCount",post.getLikeCount()+1);
-//
-//                                docRef.update(updates)
-//                                        .addOnSuccessListener(
-//                                                new OnSuccessListener<Void>() {
-//                                                    @Override
-//                                                    public void onSuccess(Void unused) {
-//                                                        holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
-//                                                    }
-//                                                })
-//                                        .addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//
-//                                            }
-//                                        });
-//
-//                            }
-//                        }else {
-//
-//                            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-//                            FirebaseFirestore db=FirebaseFirestore.getInstance();
-//                            if(user!=null){
-//
-//                                DocumentReference docRef=db.collection("post").document(post.getid());
-//
-//                                Map<String,Object> updates=new HashMap<>();
-//                                updates.put("likeCount",post.getLikeCount()-1);
-//
-//                                docRef.update(updates)
-//                                        .addOnSuccessListener(
-//                                                new OnSuccessListener<Void>() {
-//                                                    @Override
-//                                                    public void onSuccess(Void unused) {
-//                                                        holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);;
-//                                                    }
-//                                                })
-//                                        .addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//
-//                                            }
-//                                        });
-//
-//                            }
-//                        }
-//                    }
-//                });
-//            }catch (Exception e){
-//
-//            }
+        TestPost post = posts.get(adapterPosition);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String documentId=post.getDocumentId();
+
+        db.collection("posts") // コレクション名
+                .document(documentId) // ドキュメント名
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // ドキュメントが存在する場合、フィールドの値を取得
+                            if(!documentSnapshot.get("likeCount").toString().equals("0")){
+                                holder.likeCount.setText(documentSnapshot.get("likeCount").toString());
+                            }
+                            // 取得した値を利用する処理をここに追加
+                        } else {
+                            // ドキュメントが存在しない場合の処理
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // エラーが発生した場合の処理
+                    }
+                });
+
 
         holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+
+                    DocumentReference docRef=db.collection("posts").document(documentId);
+
+                                Map<String,Object> updates=new HashMap<>();
+                                updates.put("likeCount",post.getLikeCount()+1);
+
+                                docRef.update(updates)
+                                        .addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        if(!holder.likeCount.getText().equals("")){
+                                                            int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
+                                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+                                                        }else{
+                                                            holder.likeCount.setText("1");
+                                                        }
+
+                                                    }
+                                                })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
                 }else {
+
                     holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+                    DocumentReference docRef=db.collection("posts").document(documentId);
+
+                    Map<String,Object> updates=new HashMap<>();
+                    updates.put("likeCount",post.getLikeCount()-1);
+
+                    docRef.update(updates)
+                            .addOnSuccessListener(
+                                    new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
+                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+
+                                        }
+                                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
                 }
             }
         });
+//
 
-        // 投稿者 ID と投稿文をセット
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
 
 // コレクションとドキュメントのパスを指定
         String collectionPath = "users";

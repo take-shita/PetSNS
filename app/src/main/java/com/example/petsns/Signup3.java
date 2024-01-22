@@ -71,6 +71,7 @@ public class Signup3 extends AppCompatActivity {
                                     DocumentReference documentRef = db.collection("users").document(uid);
                                     // アカウント情報のデータ
                                     Map<String, Object> accountData = new HashMap<>();
+                                    accountData.put("icon","https://firebasestorage.googleapis.com/v0/b/sample-eaf65.appspot.com/o/icon%2Fdefault_icon.png?alt=media&token=b500b036-ed2f-4d2a-837e-efe91c107d53");
                                     accountData.put("id", viewModel.getUserId());
                                     accountData.put("name", viewModel.getUserName());
                                     accountData.put("mail", viewModel.getEmail());

@@ -18,7 +18,7 @@ public class TestPost {
     private String imageUrl;
     private String icon;
     private Timestamp timestamp;
-
+    private String documentId;
 
     private int likeCount;
 
@@ -33,6 +33,10 @@ public class TestPost {
     public TestPost() {
         // 必要に応じて初期化の処理を追加
     }
+    public void setDocumentId(String documentId){
+        this.documentId=documentId;
+    }
+    public String getDocumentId(){return documentId;}
 
     // ゲッター・セッターなど必要な処理を実装
     public void setId(String id){

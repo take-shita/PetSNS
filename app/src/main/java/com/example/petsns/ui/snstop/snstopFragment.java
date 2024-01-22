@@ -81,165 +81,7 @@ public class snstopFragment extends Fragment {
         recyclerView.setAdapter(postAdapter);
 
         // Firestore からデータを取得して表示
-        firestore = FirebaseFirestore.getInstance();
-        firestore.collection("posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-//                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-
-                        List<TestPost> posts = new ArrayList<>();
-                        db = FirebaseFirestore.getInstance();
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userId = user.getUid();
-                        DocumentReference docRef = db.collection("users").document(userId);
-
-                        docRef.get().addOnSuccessListener(documentSnapshot -> {
-                            if (documentSnapshot.exists()) {
-                                LikeMom = (List<Boolean>) documentSnapshot.get("likeMom");
-                                LikeRip = (List<Boolean>) documentSnapshot.get("likeRip");
-                                LikeBir = (List<Boolean>) documentSnapshot.get("likeBir");
-                                LikeBis = (List<Boolean>) documentSnapshot.get("likeBis");
-                                LikeAqua = (List<Boolean>) documentSnapshot.get("likeAqua");
-                                LikeIns = (List<Boolean>) documentSnapshot.get("likeIns");
-
-                                DisMom = (List<Boolean>) documentSnapshot.get("DisMom");
-                                DisRip = (List<Boolean>) documentSnapshot.get("DisRip");
-                                DisBir = (List<Boolean>) documentSnapshot.get("DisBir");
-                                DisBis = (List<Boolean>) documentSnapshot.get("DisBis");
-                                DisAqua = (List<Boolean>) documentSnapshot.get("DisAqua");
-                                DisIns = (List<Boolean>) documentSnapshot.get("DisIns");
-                                // fieldValueを使用して何かを行う
-                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                    boolean check=true;
-                                    boolean like=false;
-                                    double random=0;
-                                    Map<String, Object> data = document.getData();
-                                    Log.d(TAG, "Data from Firestore: " + data.toString());
-
-                                    TestPost post = new TestPost();
-
-                                    List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
-                                    List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
-                                    List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
-                                    List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
-                                    List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
-                                    List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
-                                    Number likeCountDouble = ((Number)data.get("likeCount"));
-                                    for(int i=0;i<tagMom.size();i++){
-                                        if(tagMom.get(i) && LikeMom != null && LikeMom.size() > i){
-                                            if(LikeMom.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisMom.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    for(int i=0;i<tagBir.size();i++){
-                                        if(tagBir.get(i) && LikeBir != null && LikeBir.size() > i){
-                                            if(LikeBir.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisBir.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    for(int i=0;i<tagRip.size();i++){
-                                        if(tagRip.get(i) && LikeRip != null && LikeRip.size() > i){
-                                            if(LikeRip.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisRip.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    for(int i=0;i<tagBis.size();i++){
-                                        if(tagBis.get(i) && LikeBis != null && LikeBis.size() > i){
-                                            if(LikeBis.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisBis.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    for(int i=0;i<tagAqua.size();i++){
-                                        if(tagAqua.get(i) && LikeAqua != null && LikeAqua.size() > i){
-                                            if(LikeAqua.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisAqua.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    for(int i=0;i<tagIns.size();i++){
-                                        if(tagIns.get(i) && LikeIns != null && LikeIns.size() > i){
-                                            if(LikeIns.get(i)){
-                                                like=true;
-                                            }
-                                            if(DisIns.get(i)){
-                                                check=false;
-                                                break;
-                                            }
-                                        }
-                                    }
-
-
-                                    if(check){
-                                        if(!like){
-                                            random = Math.random();
-                                        }
-                                        if(like || random<0.5) {
-
-
-                                            post.setId((String) data.get("id"));
-                                            post.setSentence((String) data.get("sentence"));
-                                            post.setImageUrl((String) data.get("imageUrl"));
-
-                                            post.setLikeCount(likeCountDouble.intValue());
-                                            post.setTagMom(tagMom);
-
-                                            post.setTagBir(tagBir);
-
-                                            post.setTagRip(tagRip);
-
-                                            post.setTagBis(tagBis);
-
-                                            post.setTagAqua(tagAqua);
-
-                                            post.setTagIns(tagIns);
-//                            TestPost post = document.toObject(TestPost.class);
-                                            posts.add(post);
-                                        }
-                                    }
-
-                                }
-                                postAdapter.setPosts(posts);
-
-                            } else {
-                                // ドキュメントが存在しない場合の処理
-                            }
-                        });
-
-
-                    }
-
-
-                });
-
+        fetchDataFromFirestore();
 
 
 //        ここまで
@@ -286,6 +128,171 @@ public class snstopFragment extends Fragment {
             }
         });
 
-//        ここまで
+
+
+        //        ここまで
     }
+    private void fetchDataFromFirestore() {
+
+
+        // Firestore からデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("posts")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<TestPost> posts = new ArrayList<>();
+
+                        db = FirebaseFirestore.getInstance();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userId = user.getUid();
+                        DocumentReference docRef = db.collection("users").document(userId);
+
+                        docRef.get().addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                LikeMom = (List<Boolean>) documentSnapshot.get("likeMom");
+                                LikeRip = (List<Boolean>) documentSnapshot.get("likeRip");
+                                LikeBir = (List<Boolean>) documentSnapshot.get("likeBir");
+                                LikeBis = (List<Boolean>) documentSnapshot.get("likeBis");
+                                LikeAqua = (List<Boolean>) documentSnapshot.get("likeAqua");
+                                LikeIns = (List<Boolean>) documentSnapshot.get("likeIns");
+
+                                DisMom = (List<Boolean>) documentSnapshot.get("DisMom");
+                                DisRip = (List<Boolean>) documentSnapshot.get("DisRip");
+                                DisBir = (List<Boolean>) documentSnapshot.get("DisBir");
+                                DisBis = (List<Boolean>) documentSnapshot.get("DisBis");
+                                DisAqua = (List<Boolean>) documentSnapshot.get("DisAqua");
+                                DisIns = (List<Boolean>) documentSnapshot.get("DisIns");
+                                // fieldValueを使用して何かを行う
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    boolean check = true;
+                                    boolean like = false;
+                                    double random = 0;
+                                    Map<String, Object> data = document.getData();
+                                    String documentId = document.getId();
+                                    Log.d(TAG, "Data from Firestore: " + data.toString());
+
+
+                                    TestPost post = document.toObject(TestPost.class);
+
+                                    List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                                    List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                                    List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                                    List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                                    List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                                    List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                                    Number likeCountDouble = ((Number) data.get("likeCount"));
+                                    for (int i = 0; i < tagMom.size(); i++) {
+                                        if (tagMom.get(i)) {
+                                            if (LikeMom.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisMom.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < tagBir.size(); i++) {
+                                        if (tagBir.get(i)) {
+                                            if (LikeBir.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisBir.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < tagRip.size(); i++) {
+                                        if (tagRip.get(i)) {
+                                            if (LikeRip.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisRip.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < tagBis.size(); i++) {
+                                        if (tagBis.get(i)) {
+                                            if (LikeBis.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisBis.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < tagAqua.size(); i++) {
+                                        if (tagAqua.get(i)) {
+                                            if (LikeAqua.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisAqua.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < tagIns.size(); i++) {
+                                        if (tagIns.get(i)) {
+                                            if (LikeIns.get(i)) {
+                                                like = true;
+                                            }
+                                            if (DisIns.get(i)) {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+
+                                    if (check) {
+                                        if (!like) {
+                                            random = Math.random();
+                                        }
+                                        if (like || random < 0.5) {
+
+
+                                            post.setId((String) data.get("id"));
+                                            post.setSentence((String) data.get("sentence"));
+                                            post.setImageUrl((String) data.get("imageUrl"));
+                                            post.setDocumentId(documentId);
+                                            post.setLikeCount(likeCountDouble.intValue());
+                                            post.setTagMom(tagMom);
+
+                                            post.setTagBir(tagBir);
+
+                                            post.setTagRip(tagRip);
+
+                                            post.setTagBis(tagBis);
+
+                                            post.setTagAqua(tagAqua);
+
+                                            post.setTagIns(tagIns);
+
+                                            posts.add(post);
+                                        }
+                                    }
+                                }
+                                postAdapter.setPosts(posts);
+                            } else {
+
+                            }
+                        });
+                    }
+                });
+    }
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                        if (e != null) {
+////                            Log.w(TAG, "Listen failed.", e);
+//                            return;
+//                        }
+
 }
