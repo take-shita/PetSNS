@@ -85,14 +85,13 @@
                 tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
             <ImageButton
-                android:id="@+id/sakujobtn"
-                android:layout_width="33dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="41dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/sakujotouka"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:id="@+id/reportbtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/report_touka"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck"
+                android:background="@android:color/transparent"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
