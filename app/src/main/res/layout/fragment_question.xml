@@ -35,11 +35,13 @@
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="93dp"
-        android:layout_height="60dp"
+        android:layout_width="88dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="-15dp"
+        android:background="@drawable/frame_style"
         android:text="戻る"
-        android:textSize="20dp"
-        android:backgroundTint="#ff0000"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.283"
@@ -49,7 +51,7 @@
 
     <Button
         android:id="@+id/question_btn"
-        android:layout_width="93dp"
+        android:layout_width="88dp"
         android:layout_height="60dp"
         android:text="質問"
         android:textSize="20dp"
