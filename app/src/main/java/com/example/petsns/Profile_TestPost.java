@@ -7,6 +7,9 @@ public class Profile_TestPost {
     private String icon;
     private Timestamp timestamp;
 
+    public Profile_TestPost() {
+    }
+
     public Profile_TestPost(String id, String sentence, String imageUrl, String icon, Timestamp timestamp){
         this.id = id;
         this.sentence = sentence;
