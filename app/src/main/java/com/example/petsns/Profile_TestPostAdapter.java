@@ -1,12 +1,15 @@
 package com.example.petsns;
 
 import com.example.petsns.Profile_TestPost;
+
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,6 +54,23 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
 
     private List<Profile_TestPost> posts;
     private Context context;
+    private FirebaseFirestore db;
+    FirebaseFirestore db1 = FirebaseFirestore.getInstance();
+
+
+    private void deleteFirestoreData(String documentId) {
+        // 削除するドキュメントの参照を取得
+        db1.collection("posts").document(documentId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // 削除成功時の処理
+                    // 例: ユーザーに通知など
+                })
+                .addOnFailureListener(e -> {
+                    // 削除失敗時の処理
+                    // 例: エラーメッセージを表示
+                });
+    }
 
     @Override
     public int getItemCount() {
@@ -104,6 +124,43 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
 
         // 取得した投稿時間を適切なフォーマットに変換
         String formattedTime = formattimestamp(timestamp);
+
+
+
+
+
+        holder.delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ボタンがクリックされたときの処理
+                // 新しい画面に遷移する  後で書き換える
+                Context context = v.getContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_profile_deletecheck);
+                ImageButton hai = dialog.findViewById(R.id.haibtn);
+                ImageButton iie = dialog.findViewById(R.id.iiebtn);
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 372; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                hai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteFirestoreData(documentId);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                iie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
 
         // posttime TextView にセット
         holder.posttime.setText(formattedTime);
@@ -301,6 +358,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             TextView posttime;
             TextView tagText;
             TextView likeCount;
+            ImageButton delete_btn;
 
             public PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -312,6 +370,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 posttime = itemView.findViewById(R.id.posttime);
                 tagText=itemView.findViewById(R.id.tagText);
                 likeCount=itemView.findViewById(R.id.iinecount);
+                delete_btn=itemView.findViewById(R.id.delete_btn);
 
             }
         }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.petsns.MyApplication;
+import com.example.petsns.Profile_TestPostAdapter;
 import com.example.petsns.R;
 import com.example.petsns.TagSearchViewModel;
 import com.example.petsns.TestPost;
@@ -142,8 +143,6 @@ public class snstopFragment extends Fragment {
         //        ここまで
     }
     private void fetchDataFromFirestore() {
-
-
 
         // Firestore からデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
@@ -322,6 +321,7 @@ public class snstopFragment extends Fragment {
                                             if (!DisAqua.isEmpty() && DisAqua.size() > i && DisAqua.get(i)) {
 //エラー直すために勝手に追加
 //                                                エラー直すために勝手にコメントアウト
+//                                            if (DisAqua.get(i)) {
 //                                            if (DisAqua.get(i)) {
 //                                                エラー直すために勝手にコメントアウト
                                                         check = false;

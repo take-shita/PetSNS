@@ -61,67 +61,72 @@ public class ProfileFragment extends Fragment {
         postAdapter = new Profile_TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
 
-        // Firestore からデータを取得して表示
-        firestore = FirebaseFirestore.getInstance();
-        firestore.collection("posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<Profile_TestPost> posts = new ArrayList<>();
+        fetchDataFromFirestore();
+
+        return rootView;
+    }
+
+        public void fetchDataFromFirestore() {
+            // Firestore からデータを取得して表示
+            firestore = FirebaseFirestore.getInstance();
+            firestore.collection("posts")
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            List<Profile_TestPost> posts = new ArrayList<>();
 
 
-                        db = FirebaseFirestore.getInstance();
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userId = user.getUid();
-                        DocumentReference docRef = db.collection("users").document(userId);
+                            db = FirebaseFirestore.getInstance();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String userId = user.getUid();
+                            DocumentReference docRef = db.collection("users").document(userId);
 
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
 
-                            Map<String, Object> data = document.getData();
-                            String documentId = document.getId();
+                                Map<String, Object> data = document.getData();
+                                String documentId = document.getId();
 
-                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
-                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
-                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
-                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
-                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
-                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
-                            Number likeCountDouble = ((Number) data.get("likeCount"));
+                                List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                                List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                                List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                                List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                                List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                                List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                                Number likeCountDouble = ((Number) data.get("likeCount"));
 
-                            post.setId((String) data.get("id"));
-                            post.setSentence((String) data.get("sentence"));
-                            post.setImageUrl((String) data.get("imageUrl"));
-                            post.setDocumentId(documentId);
-                            post.setLikeCount(likeCountDouble.intValue());
-                            post.setTagMom(tagMom);
+                                post.setId((String) data.get("id"));
+                                post.setSentence((String) data.get("sentence"));
+                                post.setImageUrl((String) data.get("imageUrl"));
+                                post.setDocumentId(documentId);
+                                post.setLikeCount(likeCountDouble.intValue());
+                                post.setTagMom(tagMom);
 
-                            post.setTagBir(tagBir);
+                                post.setTagBir(tagBir);
 
-                            post.setTagRip(tagRip);
+                                post.setTagRip(tagRip);
 
-                            post.setTagBis(tagBis);
+                                post.setTagBis(tagBis);
 
-                            post.setTagAqua(tagAqua);
+                                post.setTagAqua(tagAqua);
 
-                            post.setTagIns(tagIns);
+                                post.setTagIns(tagIns);
 
-                            posts.add(post);
+                                posts.add(post);
+                            }
+                            postAdapter.setPosts(posts);
                         }
-                        postAdapter.setPosts(posts);
-                    }
 
 
-                });
+                    });
+        }
 
 
 
 //        ここまで
 
-        return rootView;
-    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
