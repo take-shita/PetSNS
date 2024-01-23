@@ -72,6 +72,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     LatLng intermediatePoint4;
     int totalDistance;
     int distance;
+    Button generateRouteButton;
     public static RouteViewFragment newInstance() {
         return new RouteViewFragment();
     }
@@ -114,9 +115,10 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                 }
             });
 
-        Button generateRouteButton = view.findViewById(R.id.routeButton);
+        generateRouteButton = view.findViewById(R.id.routeButton);
         generateRouteButton.setOnClickListener(v -> {
             // 権限の確認とリクエスト
+//            txtSmp.setText(String.valueOf(viewModel.getDistance()));
             totalDistance=viewModel.getDistance();
             distance=totalDistance/6;
             checkLocationPermission();
@@ -239,10 +241,11 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                     }
 
                     // totalDistanceInMeters に最終的なルートの総距離が格納されます
-                    txtSmp.setText(Integer.toString(totalDistanceInMeters));
+
 
                     if(totalDistance-500<=totalDistanceInMeters &&totalDistanceInMeters<=totalDistance+500){
-
+                        generateRouteButton.setText("ルートを再検索");
+                        txtSmp.setText(Integer.toString(totalDistanceInMeters)+"m");
                         routePoints = new ArrayList<>();
                         // ルートを描画
                         for (DirectionsRoute route : directionsResult.routes) {

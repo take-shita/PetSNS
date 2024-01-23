@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 
 public class routetimeFragment extends Fragment {
@@ -25,13 +30,21 @@ public class routetimeFragment extends Fragment {
     private EditText timerText;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis = 60000; // 初期値は 1 分（60,000 ミリ秒）
+    private String beforeText;
+    private String afterText;
+    int rootMinute=3000;
+    String hourString;
+    int hourInt;
+
+    String minuteString;
+    int minuteInt;
 
     public routetimeFragment() {
         // Required empty public constructor
     }
 
     private RoutetimeViewModel mViewModel;
-
+    private RouteViewModel viewModel;
     public static routetimeFragment newInstance() {
         return new routetimeFragment();
     }
@@ -41,55 +54,93 @@ public class routetimeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_routetime, container, false);
-
+        MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+        if (myApplication != null) {
+            viewModel = myApplication.getSharedRouteViewModel();
+        } else {
+            // エラーハンドリング
+        }
         timerText = view.findViewById(R.id.timer);
         startButton = view.findViewById(R.id.start1);
-//        timerTextView = view.findViewById(R.id.timer1);
+
+        timerText.setGravity(Gravity.END);
+
+        timerText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String afterText=timerText.getText().toString();
+                if(afterText.length()==3){
+                    timerText.setText(afterText.charAt(0)+":"+afterText.charAt(1)+afterText.charAt(2));
+                    timerText.setSelection(timerText.length());
+                }
+                    if (afterText.length() == 5) {
+                        timerText.setText(" "+String.valueOf(afterText.charAt(0)) + String.valueOf(afterText.charAt(2)) + ":" + String.valueOf(afterText.charAt(3)) + String.valueOf(afterText.charAt(4)));
+                        timerText.setSelection(timerText.length());
+                    }
+
+            }
+        });
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startStop();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
-            }
+                String timerTextString=timerText.getText().toString();
+                if(timerTextString.length()==5){
+                    hourString=String.valueOf(timerTextString.charAt(0))+String.valueOf(timerTextString.charAt(1));
+                    minuteString=String.valueOf(timerTextString.charAt(3))+String.valueOf(timerTextString.charAt(4));
 
+                    hourInt=Integer.parseInt(hourString);
+                    minuteInt=Integer.parseInt(minuteString);
+
+                    minuteConversion(hourInt,minuteInt);
+                    viewModel.setDistance(rootMinute);
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
+                }else if(timerTextString.length()==4){
+                    hourString=String.valueOf(timerTextString.charAt(0));
+                    minuteString=String.valueOf(timerTextString.charAt(2))+String.valueOf(timerTextString.charAt(3));
+
+                    hourInt=Integer.parseInt(hourString);
+                    minuteInt=Integer.parseInt(minuteString);
+                    minuteConversion(hourInt,minuteInt);
+                    viewModel.setDistance(rootMinute);
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
+                }else if(timerTextString.length()==2){
+                    minuteString= timerTextString;
+
+                    hourInt=0;
+                    minuteInt=Integer.parseInt(minuteString);
+
+                    minuteConversion(hourInt,minuteInt);
+                    viewModel.setDistance(rootMinute);
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
+                }else if(timerTextString.length()==1){
+                    minuteString= timerTextString;
+
+                    hourInt=0;
+                    minuteInt=Integer.parseInt(minuteString);
+                    minuteConversion(hourInt,minuteInt);
+                    viewModel.setDistance(rootMinute);
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
+                }
+
+            }
         });
 
         return view;
     }
-
-    private void startStop() {
-        if (countDownTimer == null) {
-            // タイマーが動作していない場合、タイマーを開始
-            String timeString = timerText.getText().toString();
-            long timeInMillis = Long.parseLong(timeString) * 1000;
-            countDownTimer = new CountDownTimer(timeInMillis, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    timeLeftInMillis = millisUntilFinished;
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateCountdownText();
-                        }
-                    });
-                }
-
-                @Override
-                public void onFinish() {
-                    // タイマーが終了したときの処理
-                    countDownTimer = null;
-                }
-            }.start();
-
-            startButton.setText("Stop");
-
-        } else {
-            // タイマーが動作している場合、タイマーを停止
-            countDownTimer.cancel();
-            countDownTimer = null;
-            startButton.setText("Start");
-        }
+    public void minuteConversion(int hour,int minute){
+        this.rootMinute=(hour*60+minute)*80;
     }
 
     private void updateCountdownText() {
@@ -143,13 +194,6 @@ public class routetimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routepopup2);
-            }
-        });
-        Button bt = view.findViewById(R.id.start1);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_route_view);
             }
         });
     }
