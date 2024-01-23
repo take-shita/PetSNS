@@ -343,7 +343,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         ImageView imagePost;
         ImageButton otherprofilebtn;
         ToggleButton hartbtn;
-        ToggleButton hartbt;
         TextView timestamp;
         TextView tagText;
         TextView likeCount;
@@ -352,7 +351,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            hartbt=itemView.findViewById(R.id.hartbt);
             hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);

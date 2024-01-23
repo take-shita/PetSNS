@@ -23,6 +23,7 @@ import android.widget.ToggleButton;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
+import com.example.petsns.TestPost;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -64,13 +65,10 @@ public class ProfileFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("posts")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-//                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Profile_TestPost> posts = new ArrayList<>();
 
 
                         db = FirebaseFirestore.getInstance();
@@ -78,9 +76,8 @@ public class ProfileFragment extends Fragment {
                         String userId = user.getUid();
                         DocumentReference docRef = db.collection("users").document(userId);
 
-                        List<Profile_TestPost> posts = new ArrayList<>();
 
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
                             Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
 
                             Map<String, Object> data = document.getData();

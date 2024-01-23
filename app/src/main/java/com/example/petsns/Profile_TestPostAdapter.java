@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.petsns.TestPost;
@@ -36,6 +37,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Map;
+
 import com.google.firebase.Timestamp;
 
 
@@ -88,6 +91,8 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Profile_TestPost post = posts.get(position);
 
+        String documentId=post.getDocumentId();
+
         // 投稿者 ID と投稿文をセット
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // FirebaseAuthからユーザーを取得
@@ -103,6 +108,23 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         // posttime TextView にセット
         holder.posttime.setText(formattedTime);
 
+        db.collection("posts") // コレクション名
+                .document(documentId) // ドキュメント名
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // ドキュメントが存在する場合、フィールドの値を取得
+                            if(!documentSnapshot.get("likeCount").toString().equals("0")){
+                                holder.likeCount.setText(documentSnapshot.get("likeCount").toString());
+                            }
+                            // 取得した値を利用する処理をここに追加
+                        } else {
+                            // ドキュメントが存在しない場合の処理
+                        }
+                    }
+                });
 
         if (user != null) {
             // ユーザーがログインしている場合
@@ -205,18 +227,68 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 }
             } else {
                 // 画像がない場合の処理（任意で実装）
+            }
 
                 holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
+
+                        if(isChecked){
                             holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
-                        } else {
+
+                            DocumentReference docRef=db.collection("posts").document(documentId);
+
+                            Map<String,Object> updates=new HashMap<>();
+                            updates.put("likeCount",post.getLikeCount()+1);
+
+                            docRef.update(updates)
+                                    .addOnSuccessListener(
+                                            new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    if(!holder.likeCount.getText().equals("")){
+                                                        int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
+                                                        holder.likeCount.setText(String.valueOf(likeCountPlus));
+                                                    }else{
+                                                        holder.likeCount.setText("1");
+                                                    }
+
+                                                }
+                                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
+                        }else {
+
                             holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
+                            DocumentReference docRef=db.collection("posts").document(documentId);
+
+                            Map<String,Object> updates=new HashMap<>();
+                            updates.put("likeCount",post.getLikeCount()-1);
+
+                            docRef.update(updates)
+                                    .addOnSuccessListener(
+                                            new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
+                                                    holder.likeCount.setText(String.valueOf(likeCountPlus));
+
+                                                }
+                                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
                         }
                     }
                 });
-            }
+
         }
     }
 
@@ -228,6 +300,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             ToggleButton hartbtn;
             TextView posttime;
             TextView tagText;
+            TextView likeCount;
 
             public PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -238,6 +311,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 profileicon = itemView.findViewById(R.id.profileicon);
                 posttime = itemView.findViewById(R.id.posttime);
                 tagText=itemView.findViewById(R.id.tagText);
+                likeCount=itemView.findViewById(R.id.iinecount);
 
             }
         }
