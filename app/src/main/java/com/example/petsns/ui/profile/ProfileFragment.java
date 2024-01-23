@@ -23,6 +23,9 @@ import android.widget.ToggleButton;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -32,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class ProfileFragment extends Fragment {
@@ -40,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private Profile_TestPostAdapter postAdapter;
+    private FirebaseFirestore db;
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
@@ -67,9 +72,45 @@ public class ProfileFragment extends Fragment {
                             return;
                         }
 
+
+                        db = FirebaseFirestore.getInstance();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userId = user.getUid();
+                        DocumentReference docRef = db.collection("users").document(userId);
+
                         List<Profile_TestPost> posts = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+
+                            Map<String, Object> data = document.getData();
+                            String documentId = document.getId();
+
+                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                            Number likeCountDouble = ((Number) data.get("likeCount"));
+
+                            post.setId((String) data.get("id"));
+                            post.setSentence((String) data.get("sentence"));
+                            post.setImageUrl((String) data.get("imageUrl"));
+                            post.setDocumentId(documentId);
+                            post.setLikeCount(likeCountDouble.intValue());
+                            post.setTagMom(tagMom);
+
+                            post.setTagBir(tagBir);
+
+                            post.setTagRip(tagRip);
+
+                            post.setTagBis(tagBis);
+
+                            post.setTagAqua(tagAqua);
+
+                            post.setTagIns(tagIns);
+
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);
