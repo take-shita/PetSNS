@@ -138,7 +138,7 @@
                         android:layout_column="1"
                         android:layout_marginTop="-13dp"
                         android:gravity="left|center"
-                        android:text="followpeople"
+                        android:text="follow"
                         android:textSize="20dp"
                         tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck" />
                 </LinearLayout>
