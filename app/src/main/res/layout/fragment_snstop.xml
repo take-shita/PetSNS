@@ -24,11 +24,11 @@
 
         <ImageButton
             android:id="@+id/top_prof"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@null"
             android:scaleType="fitXY"
-            android:src="@drawable/cbr250rr"
+            android:src="@drawable/loadingtouka"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.cardview.widget.CardView>
