@@ -1,5 +1,6 @@
 package com.example.petsns;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,9 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.example.petsns.TestPost;
@@ -28,6 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -52,6 +57,13 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         notifyDataSetChanged();
     }
 
+    private String formattimestamp(Timestamp timestamp) {
+        // ここで適切なフォーマットに変換する処理を実装
+        // 例: SimpleDateFormatを使用して文字列に変換する
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date(timestamp.getSeconds() * 1000));
+    }
+
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,6 +79,14 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TestPost post = posts.get(adapterPosition);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String documentId=post.getDocumentId();
+
+        // 投稿時間を取得
+        Timestamp timestamp = post.gettimestamp();
+
+        // 取得した投稿時間を適切なフォーマットに変換
+        String formattedTime = formattimestamp(timestamp);
+
+        holder.posttime.setText(formattedTime);
 
         db.collection("posts") // コレクション名
                 .document(documentId) // ドキュメント名
@@ -91,6 +111,39 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                         // エラーが発生した場合の処理
                     }
                 });
+
+
+
+        holder.report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ボタンがクリックされたときの処理
+                // 新しい画面に遷移する  後で書き換える
+                Context context = v.getContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
+                ImageButton hai = dialog.findViewById(R.id.haibtn);
+                ImageButton iie = dialog.findViewById(R.id.iiebtn);
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 372; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                hai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                iie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
 
         holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -289,6 +342,8 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TextView timestamp;
         TextView tagText;
         TextView likeCount;
+        TextView posttime;
+        ImageButton report_btn;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -300,6 +355,10 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
             tagText=itemView.findViewById(R.id.tagText);
             likeCount=itemView.findViewById(R.id.iinecount);
+            posttime = itemView.findViewById(R.id.posttime);
+
+            report_btn = itemView.findViewById(R.id.report_btn);
+
         }
     }
 

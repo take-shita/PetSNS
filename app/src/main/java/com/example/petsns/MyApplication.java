@@ -13,6 +13,7 @@ public class MyApplication extends Application {
     private  TagViewModel tagviewmodel;
     private RouteViewModel routeViewModel;
     private TagPostViewModel tagPostViewModel;
+    private TagSearchViewModel tagSearchViewModel;
 
     @Override
     public void onCreate() {
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
         tagviewmodel =new ViewModelProvider.AndroidViewModelFactory(this).create(TagViewModel.class);
         tagPostViewModel =new ViewModelProvider.AndroidViewModelFactory(this).create(TagPostViewModel.class);
         routeViewModel=new ViewModelProvider.AndroidViewModelFactory(this).create(RouteViewModel.class);
+        tagSearchViewModel=new ViewModelProvider.AndroidViewModelFactory(this).create(TagSearchViewModel.class);
     }
 
     public SigupViewModel getSharedViewModel() {
@@ -39,5 +41,7 @@ public class MyApplication extends Application {
     public RouteViewModel getSharedRouteViewModel(){
         return routeViewModel;
     }
+
+    public TagSearchViewModel getSharedTagSearchViewModel(){return tagSearchViewModel;}
 
 }
