@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,12 +34,17 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 
 
 
@@ -49,9 +56,13 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private Profile_TestPostAdapter postAdapter;
+    private PostViewHolder holder;
+
+
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
+
     private List<Profile_TestPost> posts;
     private Context context;
 
@@ -65,6 +76,8 @@ public class ProfileFragment extends Fragment {
 
         postAdapter = new Profile_TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
+        // PostViewHolder を初期化
+        holder = new PostViewHolder(rootView);
 
         TextView profileUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
         // Firebase Authenticationからユーザー情報を取得
@@ -88,42 +101,82 @@ public class ProfileFragment extends Fragment {
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                 Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
                                 posts.add(post);
+
+
                             }
                             postAdapter.setPosts(posts);
                         }
 
 
                     });
+            firestore = FirebaseFirestore.getInstance();
+            firestore.collection("users")
+                    .document(userId)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                // ユーザーのドキュメントが存在する場合、名前を取得して表示
+                                // ユーザーのドキュメントが存在する場合、アイコンの URL を取得して表示
+                                String iconUrl = documentSnapshot.getString("icon");
+//                            アイコンの表示
+                                if (iconUrl != null && !iconUrl.isEmpty()) {
+                                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                                    try {
+                                        final File localFile = File.createTempFile("images", "jpg");
+                                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                            // ローカルファイルから画像を読み込んで ImageView にセット
+                                            if (holder.profileicon != null) {
+                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                holder.profileicon.setImageBitmap(bitmap);
+                                            } else {
+                                                // holder.imagePostがnullの場合の処理（ログなど）
+                                            }
+                                        }).addOnFailureListener(exception -> {
+                                            // 失敗時の処理
+                                        });
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    // 画像がない場合の処理（任意で実装）
+//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+                                }
+                                String username = documentSnapshot.getString("name");
+                                String userID = documentSnapshot.getString("id");
+                                // profile_textUsernameのTextViewを取得
+                                TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
+                                // profile_nameのTextViewを取得
+                                TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
 
+                                // 取得したIDと名前をそれぞれのTextViewにセット
+                                profileTextUsernameTextView.setText(userID);
+                                profileNameTextView.setText(username);
+                            } else {
+                                // ユーザーのドキュメントが存在しない場合の処理
+                                // 例えば、デフォルトの名前とIDを設定するなど
+                                // profile_textUsernameのTextViewを取得
+                                TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
+                                // profile_nameのTextViewを取得
+                                TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
 
-
-
-        firestore.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // ユーザーのドキュメントが存在する場合、名前を取得して表示
-                            String username = documentSnapshot.getString("name");
-                            profileUsernameTextView.setText(username);
-                        } else {
-                            // ユーザーのドキュメントが存在しない場合の処理
-                            // 例えば、デフォルトの名前を設定するなど
-                            profileUsernameTextView.setText("デフォルトユーザー");
+                                // デフォルトのIDと名前をセット
+                                profileTextUsernameTextView.setText("デフォルトID");
+                                profileNameTextView.setText("デフォルトユーザー");
+                            }
                         }
-                    }
-                });
-    } else {
-    }
+                    });
+        } else {
+            // ...
+        }
 
-
-
-        // ... その他のコード
+        // ... (省略されたコード)
 
         return rootView;
     }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -140,27 +193,32 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_profile_to_navigation_snspost);
             }
         });
+
     }
 
-        public class PostViewHolder extends RecyclerView.ViewHolder {
-            TextView textUsername;
-            TextView textPost;
-            ImageView imagePost;
-            ImageView profileicon;
-            ToggleButton hartbtn;
-            TextView posttime;
+    public class PostViewHolder extends RecyclerView.ViewHolder {
+        TextView textUsername;
+        TextView profile_name;
+        TextView textPost;
+        ImageView imagePost;
 
-            public PostViewHolder(@NonNull View itemView) {
-                super(itemView);
-                hartbtn = itemView.findViewById(R.id.hartbtn);
-                textUsername = itemView.findViewById(R.id.textUsername);
-                textPost = itemView.findViewById(R.id.textPost);
-                imagePost = itemView.findViewById(R.id.imagePost);
-                profileicon = itemView.findViewById(R.id.profileicon);
-                posttime = itemView.findViewById(R.id.posttime);
+        ImageView profileicon;
+        ToggleButton hartbtn;
+        TextView posttime;
 
-            }
+        public PostViewHolder(@NonNull View itemView) {
+            super(itemView);
+            profile_name = itemView.findViewById(R.id.profile_name);
+            hartbtn = itemView.findViewById(R.id.hartbtn);
+            textUsername = itemView.findViewById(R.id.textUsername);
+            textPost = itemView.findViewById(R.id.textPost);
+            imagePost = itemView.findViewById(R.id.imagePost);
+            profileicon = itemView.findViewById(R.id.profileicon);
+            posttime = itemView.findViewById(R.id.posttime);
+
         }
+    }
+}
 
 //        ImageButton sakujo = view.findViewById(R.id.sakujobtn);//投稿削除確認ポップアップ画面
 //        sakujo.setOnClickListener(new View.OnClickListener() {
@@ -191,5 +249,5 @@ public class ProfileFragment extends Fragment {
 //                dialog.show();
 //            }
 //        });
-    }
+
 

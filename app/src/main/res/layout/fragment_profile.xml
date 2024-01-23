@@ -66,14 +66,14 @@
 
 
                     <TextView
-                        android:id="@+id/textUsername"
+                        android:id="@+id/profile_name"
                         android:layout_width="421dp"
                         android:layout_height="90dp"
                         android:layout_row="0"
                         android:layout_column="1"
                         android:layout_marginTop="-45dp"
                         android:gravity="left|bottom"
-                        android:text="田實　優斗"
+                        android:text="ユーザーネーム"
                         android:textSize="27dp"
                         tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
 
@@ -86,13 +86,14 @@
                         app:cardCornerRadius="60dp">
 
                         <ImageView
+                            android:id="@+id/profileicon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_row="0"
                             android:layout_rowSpan="2"
                             android:layout_column="2"
                             android:scaleType="fitXY"
-                            android:src="@drawable/cbr250rr"
+                            android:src="@drawable/loadingtouka"
                             tools:ignore="ContentDescription" />
 
                     </androidx.cardview.widget.CardView>
