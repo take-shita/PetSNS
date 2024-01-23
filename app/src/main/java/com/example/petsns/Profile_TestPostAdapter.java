@@ -179,6 +179,8 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
 
             holder.textPost.setText(post.getSentence());
 
+            holder.tagText.setText(post.tagConversion());
+
 
             if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
 
@@ -226,6 +228,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
             ImageView profileicon;
             ToggleButton hartbtn;
             TextView posttime;
+            TextView tagText;
 
             public PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -235,6 +238,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 imagePost = itemView.findViewById(R.id.imagePost);
                 profileicon = itemView.findViewById(R.id.profileicon);
                 posttime = itemView.findViewById(R.id.posttime);
+                tagText=itemView.findViewById(R.id.tagText);
 
             }
         }

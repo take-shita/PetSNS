@@ -76,8 +76,7 @@ public class ProfileFragment extends Fragment {
 
         postAdapter = new Profile_TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
-        // PostViewHolder を初期化
-        holder = new PostViewHolder(rootView);
+
 
         TextView profileUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
         // Firebase Authenticationからユーザー情報を取得
@@ -110,7 +109,7 @@ public class ProfileFragment extends Fragment {
 
                     });
             firestore = FirebaseFirestore.getInstance();
-            firestore.collection("users")
+            firestore.getInstance().collection("users")
                     .document(userId)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -120,56 +119,40 @@ public class ProfileFragment extends Fragment {
                                 // ユーザーのドキュメントが存在する場合、名前を取得して表示
                                 // ユーザーのドキュメントが存在する場合、アイコンの URL を取得して表示
                                 String iconUrl = documentSnapshot.getString("icon");
-//                            アイコンの表示
-                                if (iconUrl != null && !iconUrl.isEmpty()) {
-                                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                                    try {
-                                        final File localFile = File.createTempFile("images", "jpg");
-                                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                            // ローカルファイルから画像を読み込んで ImageView にセット
-                                            if (holder.profileicon != null) {
-                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                holder.profileicon.setImageBitmap(bitmap);
-                                            } else {
-                                                // holder.imagePostがnullの場合の処理（ログなど）
-                                            }
-                                        }).addOnFailureListener(exception -> {
-                                            // 失敗時の処理
-                                        });
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
+                                // ローカルファイルへのダウンロード処理
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                                try {
+                                    final File localFile = File.createTempFile("images", "jpg");
+                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                        // PostViewHolder を作成して設定
+                                        holder = new PostViewHolder(rootView);
+                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                        holder.profileicon.setImageBitmap(bitmap);
+                                    }).addOnFailureListener(exception -> {
+                                        // 失敗時の処理
+                                    });
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                                String username = documentSnapshot.getString("name");
-                                String userID = documentSnapshot.getString("id");
-                                // profile_textUsernameのTextViewを取得
-                                TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
-                                // profile_nameのTextViewを取得
-                                TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
-
-                                // 取得したIDと名前をそれぞれのTextViewにセット
-                                profileTextUsernameTextView.setText(userID);
-                                profileNameTextView.setText(username);
                             } else {
-                                // ユーザーのドキュメントが存在しない場合の処理
-                                // 例えば、デフォルトの名前とIDを設定するなど
-                                // profile_textUsernameのTextViewを取得
-                                TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
-                                // profile_nameのTextViewを取得
-                                TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
-
-                                // デフォルトのIDと名前をセット
-                                profileTextUsernameTextView.setText("デフォルトID");
-                                profileNameTextView.setText("デフォルトユーザー");
+                                // 画像がない場合の処理（任意で実装）
+                                // holder.imagePost.setImageResource(R.drawable.placeholder_image);
                             }
+                            String username = documentSnapshot.getString("name");
+                            String userID = documentSnapshot.getString("id");
+                            // profile_textUsernameのTextViewを取得
+                            TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
+                            // profile_nameのTextViewを取得
+                            TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
+
+                            // 取得したIDと名前をそれぞれのTextViewにセット
+                            profileTextUsernameTextView.setText(userID);
+                            profileNameTextView.setText(username);
                         }
                     });
-        } else {
-            // ...
         }
+
+
 
         // ... (省略されたコード)
 
@@ -196,6 +179,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
+
     public class PostViewHolder extends RecyclerView.ViewHolder {
         TextView textUsername;
         TextView profile_name;
@@ -215,10 +199,11 @@ public class ProfileFragment extends Fragment {
             imagePost = itemView.findViewById(R.id.imagePost);
             profileicon = itemView.findViewById(R.id.profileicon);
             posttime = itemView.findViewById(R.id.posttime);
-
         }
     }
 }
+
+
 
 //        ImageButton sakujo = view.findViewById(R.id.sakujobtn);//投稿削除確認ポップアップ画面
 //        sakujo.setOnClickListener(new View.OnClickListener() {
