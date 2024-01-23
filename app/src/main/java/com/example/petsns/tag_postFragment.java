@@ -24,7 +24,7 @@ import android.widget.ImageButton;
 public class tag_postFragment extends Fragment {
 
     private TagPostViewModel viewModel;
-
+    private Boolean value;
     private ViewGroup buttonContainer;
     public static tag_postFragment newInstance() {
         return new tag_postFragment();
@@ -40,6 +40,12 @@ public class tag_postFragment extends Fragment {
             viewModel = myApplication.getSharedTagPostViewModel();
         } else {
             // エラーハンドリング
+        }
+        Bundle args = getArguments();
+        if (args != null) {
+            value = args.getBoolean("key");
+            // データを使用して何かを行う
+            // 例: TextViewにセットするなど
         }
         displayButtons();
 
@@ -76,8 +82,13 @@ public class tag_postFragment extends Fragment {
         select_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.tagCancel();
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+                if(value){
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_contest_post);
+                }else {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+                }
             }
         });
 
@@ -85,7 +96,12 @@ public class tag_postFragment extends Fragment {
         btnDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+                if(value){
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_contest_post);
+                }else {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
+                }
+
             }
         });
 

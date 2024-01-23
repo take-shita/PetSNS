@@ -148,25 +148,7 @@ public class ContestFragment extends Fragment {
             public void onClick(View v) {
 //                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
 //                btnPost.setEnabled(false);
-                Context context = requireContext();
-                Dialog dialog=new Dialog(context);
-                dialog.setContentView(R.layout.fragment_contest_post);
-
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 700; // 幅を変更
-                params.height = 1200; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
-                Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
-
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
             }
         });
 

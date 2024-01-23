@@ -179,6 +179,8 @@ public class snspostFragment extends Fragment {
         tag_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("key", false);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
             }
         });
