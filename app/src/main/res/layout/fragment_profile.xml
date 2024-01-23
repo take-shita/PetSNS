@@ -37,7 +37,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="-320dp"
                 android:gravity="left|center"
-                android:text="yuto_1234"
+                android:text="userid"
                 android:textSize="22dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
         </LinearLayout>
@@ -73,7 +73,7 @@
                         android:layout_column="1"
                         android:layout_marginTop="-45dp"
                         android:gravity="left|bottom"
-                        android:text="ユーザーネーム"
+                        android:text="username"
                         android:textSize="27dp"
                         tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
 
@@ -120,7 +120,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/pentatouka"
+                        android:src="@drawable/loadingtouka"
                         tools:ignore="ContentDescription" />
 
                     <ImageView
@@ -128,7 +128,7 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="-15dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ramunetouka"
+                        android:src="@drawable/loadingtouka"
                         tools:ignore="ContentDescription,RtlHardcoded" />
 
                     <TextView
@@ -138,7 +138,7 @@
                         android:layout_column="1"
                         android:layout_marginTop="-13dp"
                         android:gravity="left|center"
-                        android:text="フォロー42人"
+                        android:text="followpeople"
                         android:textSize="20dp"
                         tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck" />
                 </LinearLayout>
