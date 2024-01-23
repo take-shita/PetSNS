@@ -2,7 +2,7 @@ package com.example.petsns;
 
 import com.example.petsns.ui.setting.TagViewModel;
 
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
 import java.util.List;
 
 public class TestPost {
@@ -33,6 +33,9 @@ public class TestPost {
     public TestPost() {
         // 必要に応じて初期化の処理を追加
     }
+
+    public Timestamp gettimestamp(){return timestamp;}
+
     public void setDocumentId(String documentId){
         this.documentId=documentId;
     }

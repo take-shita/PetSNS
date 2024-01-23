@@ -161,19 +161,36 @@ public class snstopFragment extends Fragment {
 
                         docRef.get().addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
-                                LikeMom = (List<Boolean>) documentSnapshot.get("likeMom");
-                                LikeRip = (List<Boolean>) documentSnapshot.get("likeRip");
-                                LikeBir = (List<Boolean>) documentSnapshot.get("likeBir");
-                                LikeBis = (List<Boolean>) documentSnapshot.get("likeBis");
-                                LikeAqua = (List<Boolean>) documentSnapshot.get("likeAqua");
-                                LikeIns = (List<Boolean>) documentSnapshot.get("likeIns");
+//                                エラー直すために勝手に追加
+                                LikeMom = getListFromDocument(documentSnapshot, "likeMom");
+                                LikeRip = getListFromDocument(documentSnapshot, "likeRip");
+                                LikeBir = getListFromDocument(documentSnapshot, "LikeBir");
+                                LikeBis = getListFromDocument(documentSnapshot, "LikeBis");
+                                LikeAqua = getListFromDocument(documentSnapshot, "LikeAqua");
+                                LikeIns = getListFromDocument(documentSnapshot, "LikeIns");
 
-                                DisMom = (List<Boolean>) documentSnapshot.get("DisMom");
-                                DisRip = (List<Boolean>) documentSnapshot.get("DisRip");
-                                DisBir = (List<Boolean>) documentSnapshot.get("DisBir");
-                                DisBis = (List<Boolean>) documentSnapshot.get("DisBis");
-                                DisAqua = (List<Boolean>) documentSnapshot.get("DisAqua");
-                                DisIns = (List<Boolean>) documentSnapshot.get("DisIns");
+                                DisMom = getListFromDocument(documentSnapshot, "DisMom");
+                                DisRip = getListFromDocument(documentSnapshot, "DisRip");
+                                DisBir = getListFromDocument(documentSnapshot, "DisBir");
+                                DisBis = getListFromDocument(documentSnapshot, "DisBis");
+                                DisAqua = getListFromDocument(documentSnapshot, "DisAqua");
+                                DisIns = getListFromDocument(documentSnapshot, "DisIns");
+//                                エラー直すために勝手に追加
+//                                エラー直すために勝手にコメントアウト
+//                                LikeMom = (List<Boolean>) documentSnapshot.get("likeMom");
+//                                LikeRip = (List<Boolean>) documentSnapshot.get("likeRip");
+//                                LikeBir = (List<Boolean>) documentSnapshot.get("likeBir");
+//                                LikeBis = (List<Boolean>) documentSnapshot.get("likeBis");
+//                                LikeAqua = (List<Boolean>) documentSnapshot.get("likeAqua");
+//                                LikeIns = (List<Boolean>) documentSnapshot.get("likeIns");
+//
+//                                DisMom = (List<Boolean>) documentSnapshot.get("DisMom");
+//                                DisRip = (List<Boolean>) documentSnapshot.get("DisRip");
+//                                DisBir = (List<Boolean>) documentSnapshot.get("DisBir");
+//                                DisBis = (List<Boolean>) documentSnapshot.get("DisBis");
+//                                DisAqua = (List<Boolean>) documentSnapshot.get("DisAqua");
+//                                DisIns = (List<Boolean>) documentSnapshot.get("DisIns");
+//                                エラー直すために勝手にコメントアウト
                                 // fieldValueを使用して何かを行う
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     boolean check = true;
@@ -194,67 +211,142 @@ public class snstopFragment extends Fragment {
                                     List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                     List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                     Number likeCountDouble = ((Number) data.get("likeCount"));
+                                    //                                    エラー直すために勝手に追加
+                                    List<Boolean> likeMomList = getListFromDocument(documentSnapshot, "likeMom");
+                                    List<Boolean> likeBirList = getListFromDocument(documentSnapshot, "likeBir");
+                                    List<Boolean> likeRipList = getListFromDocument(documentSnapshot, "likeRip");
+                                    List<Boolean> likeBisList = getListFromDocument(documentSnapshot, "likeBis");
+                                    List<Boolean> likeAquaList = getListFromDocument(documentSnapshot, "likeAqua");
+                                    List<Boolean> likeInsList = getListFromDocument(documentSnapshot, "likeIns");
+//                                    エラー直すために勝手に追加
                                     for (int i = 0; i < tagMom.size(); i++) {
-                                        if (tagMom.get(i)) {
-                                            if (LikeMom.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagMom.size() > i && tagMom.get(i)) {
+                                            if (!likeMomList.isEmpty() && likeMomList.size() > i && likeMomList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                            エラー直すために勝手にコメントアウト
+//                                                if (tagMom.get(i)) {
+//                                            if (LikeMom.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisMom.get(i)) {
-                                                check = false;
+                                            //エラー直すために勝手に追加
+                                            if (!DisMom.isEmpty() && DisMom.size() > i && DisMom.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                                if (DisMom.get(i)) {
+//                                                check = false;
+//                                                エラー直すために勝手にコメントアウト
                                                 break;
                                             }
                                         }
                                     }
                                     for (int i = 0; i < tagBir.size(); i++) {
-                                        if (tagBir.get(i)) {
-                                            if (LikeBir.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagBir.size() > i && tagBir.get(i)) {
+                                            if (!likeBirList.isEmpty() && likeBirList.size() > i && likeBirList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                        エラー直すために勝手にコメントアウト
+//                                        if (tagBir.get(i)) {
+//                                            if (LikeBir.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisBir.get(i)) {
+                                            //エラー直すために勝手に追加
+                                            if (!DisBir.isEmpty() && DisBir.size() > i && DisBir.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                            if (DisBir.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 check = false;
                                                 break;
                                             }
                                         }
                                     }
                                     for (int i = 0; i < tagRip.size(); i++) {
-                                        if (tagRip.get(i)) {
-                                            if (LikeRip.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagRip.size() > i && tagRip.get(i)) {
+                                            if (!likeRipList.isEmpty() && likeRipList.size() > i && likeRipList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                        エラー直すために勝手にコメントアウト
+//                                        if (tagRip.get(i)) {
+//                                            if (LikeRip.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisRip.get(i)) {
+                                            //エラー直すために勝手に追加
+                                            if (!DisRip.isEmpty() && DisRip.size() > i && DisRip.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                            if (DisRip.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 check = false;
                                                 break;
                                             }
                                         }
                                     }
                                     for (int i = 0; i < tagBis.size(); i++) {
-                                        if (tagBis.get(i)) {
-                                            if (LikeBis.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagBis.size() > i && tagBis.get(i)) {
+                                            if (!likeBisList.isEmpty() && likeBisList.size() > i && likeBisList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                        エラー直すために勝手にコメントアウト
+//                                        if (tagBis.get(i)) {
+//                                            if (LikeBis.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisBis.get(i)) {
+                                            //エラー直すために勝手に追加
+                                            if (!DisBis.isEmpty() && DisBis.size() > i && DisBis.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                            if (DisBis.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 check = false;
                                                 break;
                                             }
                                         }
                                     }
                                     for (int i = 0; i < tagAqua.size(); i++) {
-                                        if (tagAqua.get(i)) {
-                                            if (LikeAqua.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagAqua.size() > i && tagAqua.get(i)) {
+                                            if (!likeAquaList.isEmpty() && likeAquaList.size() > i && likeAquaList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                        if (tagAqua.get(i)) {
+//                                            if (LikeAqua.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisAqua.get(i)) {
-                                                check = false;
+                                            //エラー直すために勝手に追加
+                                            if (!DisAqua.isEmpty() && DisAqua.size() > i && DisAqua.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                            if (DisAqua.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
+                                                        check = false;
+
                                                 break;
                                             }
                                         }
                                     }
                                     for (int i = 0; i < tagIns.size(); i++) {
-                                        if (tagIns.get(i)) {
-                                            if (LikeIns.get(i)) {
+                                        //エラー直すために勝手に追加
+                                        if (tagIns.size() > i && tagIns.get(i)) {
+                                            if (!likeInsList.isEmpty() && likeInsList.size() > i && likeInsList.get(i) != null) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                        if (tagIns.get(i)) {
+//                                            if (LikeIns.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 like = true;
                                             }
-                                            if (DisIns.get(i)) {
+                                            //エラー直すために勝手に追加
+                                            if (!DisIns.isEmpty() && DisIns.size() > i && DisIns.get(i)) {
+//エラー直すために勝手に追加
+//                                                エラー直すために勝手にコメントアウト
+//                                            if (DisIns.get(i)) {
+//                                                エラー直すために勝手にコメントアウト
                                                 check = false;
                                                 break;
                                             }
@@ -364,9 +456,17 @@ public class snstopFragment extends Fragment {
 
                             }
                         });
+
                     }
                 });
     }
+    //                        エラー直すために勝手に追加
+    private List<Boolean> getListFromDocument(DocumentSnapshot documentSnapshot, String fieldName) {
+        List<Boolean> list = (List<Boolean>) documentSnapshot.get(fieldName);
+        return list != null ? list : new ArrayList<>();
+    }
+    //                        エラー直すために勝手に追加
+
 //                .addSnapshotListener(new EventListener<QuerySnapshot>() {
 //                    @Override
 //                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
