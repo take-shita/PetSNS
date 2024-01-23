@@ -60,6 +60,7 @@
                     android:id="@+id/hartbtn"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:layout_marginLeft="80dp"
                     android:background="@drawable/button_selector"
                     android:scaleType="fitCenter"
                     android:textOff=""
@@ -67,15 +68,6 @@
                     android:saveEnabled="true"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/iinecount"
-                    android:layout_width="190dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="left|center"
-                    android:text=""
-                    android:textSize="24dp"
-                    tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
                 <ImageButton
                     android:id="@+id/report_btn"
@@ -83,6 +75,7 @@
                     android:layout_height="60dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/report_touka"
+                    android:layout_marginLeft="80dp"
                     tools:ignore="ContentDescription,SpeakableTextPresentCheck"
                     android:background="@android:color/transparent"/>
             </LinearLayout>

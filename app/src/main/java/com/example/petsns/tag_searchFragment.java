@@ -24,7 +24,7 @@ public class tag_searchFragment extends Fragment {
     }
 
     private TagSearchViewModel viewModel;
-
+    private Boolean value;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -36,7 +36,12 @@ public class tag_searchFragment extends Fragment {
         } else {
             // エラーハンドリング
         }
-
+        Bundle args = getArguments();
+        if (args != null) {
+            value = args.getBoolean("key");
+            // データを使用して何かを行う
+            // 例: TextViewにセットするなど
+        }
         return inflater.inflate(R.layout.fragment_tag_search, container, false);
     }
 
@@ -54,7 +59,11 @@ public class tag_searchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 viewModel.trueCheck();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_snstop);
+                if(value){
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_contest_view);
+                }else {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_snstop);
+                }
             }
         });
 
@@ -63,7 +72,11 @@ public class tag_searchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 viewModel.falseCheck();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_snstop);
+                if(value){
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_contest_view);
+                }else {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_tag_search_to_navigation_snstop);
+                }
             }
         });
 

@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_navigation_tag_search_to_navigation_snstop"
             app:destination="@id/navigation_snstop" />
+        <action
+            android:id="@+id/action_navigation_tag_search_to_navigation_contest_view"
+            app:destination="@+id/navigation_contest_view"/>
     </fragment>
 
     <fragment
@@ -163,6 +166,9 @@
         <action
             android:id="@+id/action_navigation_contest_view_to_navigation_contest"
             app:destination="@id/navigation_contest" />
+        <action
+            android:id="@+id/action_navigation_contest_view_to_navigation_tag_search"
+            app:destination="@+id/navigation_tag_search"/>
     </fragment>
 
     <fragment

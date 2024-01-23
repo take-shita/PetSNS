@@ -60,16 +60,17 @@
                 android:id="@+id/hartbtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
                 android:background="@drawable/button_selector"
+                android:saveEnabled="true"
                 android:scaleType="fitCenter"
                 android:textOff=""
                 android:textOn=""
-                android:saveEnabled="true"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/iinecount"
-                android:layout_width="190dp"
+                android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="left|center"
