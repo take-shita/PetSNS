@@ -64,6 +64,7 @@
                 android:scaleType="fitCenter"
                 android:textOff=""
                 android:textOn=""
+                android:saveEnabled="true"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView

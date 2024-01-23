@@ -103,6 +103,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         // posttime TextView にセット
         holder.posttime.setText(formattedTime);
 
+
         if (user != null) {
             // ユーザーがログインしている場合
             // UIDを取得
