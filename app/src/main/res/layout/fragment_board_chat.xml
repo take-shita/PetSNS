@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/textView27"
-        android:layout_width="430dp"
+        android:layout_width="602dp"
         android:layout_height="70dp"
         android:text=""
         android:textSize="40sp"
