@@ -18,8 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.petsns.R;
@@ -37,17 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Map;
-=======
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-
-
->>>>>>> 687beb04ea915a5af2248720b7d208381baca73d
 
 
 public class ProfileFragment extends Fragment {
@@ -60,8 +48,6 @@ public class ProfileFragment extends Fragment {
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
-    private List<Profile_TestPost> posts;
-    private Context context;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,54 +60,17 @@ public class ProfileFragment extends Fragment {
         postAdapter = new Profile_TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
 
-        TextView profileUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
-        // Firebase Authenticationからユーザー情報を取得
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            // ユーザーがログインしている場合、そのユーザーのIDを取得
-            String userId = currentUser.getUid();
-
-            // Firestore からデータを取得して表示
-            firestore = FirebaseFirestore.getInstance();
-            firestore.collection("posts")
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                return;
-                            }
-
-                            List<Profile_TestPost> posts = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
-                                posts.add(post);
-                            }
-                            postAdapter.setPosts(posts);
-                        }
-
-
-                    });
-
-
-
-
-        firestore.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        // Firestore からデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("posts")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // ユーザーのドキュメントが存在する場合、名前を取得して表示
-                            String username = documentSnapshot.getString("name");
-                            profileUsernameTextView.setText(username);
-                        } else {
-                            // ユーザーのドキュメントが存在しない場合の処理
-                            // 例えば、デフォルトの名前を設定するなど
-                            profileUsernameTextView.setText("デフォルトユーザー");
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+                            return;
                         }
-<<<<<<< HEAD
 
 
                         db = FirebaseFirestore.getInstance();
@@ -165,16 +114,14 @@ public class ProfileFragment extends Fragment {
                             posts.add(post);
                         }
                         postAdapter.setPosts(posts);
-=======
->>>>>>> 687beb04ea915a5af2248720b7d208381baca73d
                     }
+
+
                 });
-    } else {
-    }
 
 
 
-        // ... その他のコード
+//        ここまで
 
         return rootView;
     }
@@ -194,28 +141,6 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_profile_to_navigation_snspost);
             }
         });
-    }
-
-        public class PostViewHolder extends RecyclerView.ViewHolder {
-            TextView textUsername;
-            TextView textPost;
-            ImageView imagePost;
-            ImageView profileicon;
-            ToggleButton hartbtn;
-            TextView posttime;
-
-            public PostViewHolder(@NonNull View itemView) {
-                super(itemView);
-                hartbtn = itemView.findViewById(R.id.hartbtn);
-                textUsername = itemView.findViewById(R.id.textUsername);
-                textPost = itemView.findViewById(R.id.textPost);
-                imagePost = itemView.findViewById(R.id.imagePost);
-                profileicon = itemView.findViewById(R.id.profileicon);
-                posttime = itemView.findViewById(R.id.posttime);
-
-            }
-        }
-
 //        ImageButton sakujo = view.findViewById(R.id.sakujobtn);//投稿削除確認ポップアップ画面
 //        sakujo.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -246,4 +171,4 @@ public class ProfileFragment extends Fragment {
 //            }
 //        });
     }
-
+}
