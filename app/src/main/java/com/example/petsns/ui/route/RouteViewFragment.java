@@ -273,20 +273,20 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                             LatLng startLatLng = routePoints.get(0); // ルートの最初の座標を開始地点とする
                             addStartMarker(startLatLng);
                         }
-                        MarkerOptions intermediateMarkerOptions = new MarkerOptions()
-                                .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
-                                .title("Intermediate Point 1");
-                        googleMap.addMarker(intermediateMarkerOptions);
+//                        MarkerOptions intermediateMarkerOptions = new MarkerOptions()
+//                                .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
+//                                .title("Intermediate Point 1");
+//                        googleMap.addMarker(intermediateMarkerOptions);
+////
+//                        MarkerOptions intermediateMarkerOptions2 = new MarkerOptions()
+//                                .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
+//                                .title("Intermediate Point 2");
+//                        googleMap.addMarker(intermediateMarkerOptions2);
 //
-                        MarkerOptions intermediateMarkerOptions2 = new MarkerOptions()
-                                .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
-                                .title("Intermediate Point 2");
-                        googleMap.addMarker(intermediateMarkerOptions2);
-
-                        MarkerOptions intermediateMarkerOptions3 = new MarkerOptions()
-                                .position(new LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
-                                .title("Intermediate Point 3");
-                        googleMap.addMarker(intermediateMarkerOptions3);
+//                        MarkerOptions intermediateMarkerOptions3 = new MarkerOptions()
+//                                .position(new LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
+//                                .title("Intermediate Point 3");
+//                        googleMap.addMarker(intermediateMarkerOptions3);
                     }else{
                         generateRoute();
                     }
