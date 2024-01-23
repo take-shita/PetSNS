@@ -84,124 +84,69 @@ public class ProfileFragment extends Fragment {
         recyclerView.setAdapter(postAdapter);
 
 
+        fetchDataFromFirestore();
 
-        TextView profileUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
-        // Firebase Authenticationからユーザー情報を取得
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            // ユーザーがログインしている場合、そのユーザーのIDを取得
-            String userId = currentUser.getUid();
+        return rootView;
+    }
+
+        public void fetchDataFromFirestore() {
 
             // Firestore からデータを取得して表示
             firestore = FirebaseFirestore.getInstance();
             firestore.collection("posts")
                     .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                return;
-                            }
-
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
                             List<Profile_TestPost> posts = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+
+                            db = FirebaseFirestore.getInstance();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String userId = user.getUid();
+                            DocumentReference docRef = db.collection("users").document(userId);
+
+
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+
+                                Map<String, Object> data = document.getData();
+                                String documentId = document.getId();
+
+                                List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                                List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                                List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                                List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                                List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                                List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                                Number likeCountDouble = ((Number) data.get("likeCount"));
+
+                                post.setId((String) data.get("id"));
+                                post.setSentence((String) data.get("sentence"));
+                                post.setImageUrl((String) data.get("imageUrl"));
+                                post.setDocumentId(documentId);
+                                post.setLikeCount(likeCountDouble.intValue());
+                                post.setTagMom(tagMom);
+
+                                post.setTagBir(tagBir);
+
+                                post.setTagRip(tagRip);
+
+                                post.setTagBis(tagBis);
+
+                                post.setTagAqua(tagAqua);
+
+                                post.setTagIns(tagIns);
+
+
                                 posts.add(post);
-
-
                             }
                             postAdapter.setPosts(posts);
                         }
 
-        // Firestore からデータを取得して表示
-        firestore = FirebaseFirestore.getInstance();
-        firestore.collection("posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<Profile_TestPost> posts = new ArrayList<>();
 
 
-
-                    });
-            firestore = FirebaseFirestore.getInstance();
-            firestore.getInstance().collection("users")
-                    .document(userId)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                // ユーザーのドキュメントが存在する場合、名前を取得して表示
-                                // ユーザーのドキュメントが存在する場合、アイコンの URL を取得して表示
-                                String iconUrl = documentSnapshot.getString("icon");
-                                // ローカルファイルへのダウンロード処理
-                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                                try {
-                                    final File localFile = File.createTempFile("images", "jpg");
-                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                        // PostViewHolder を作成して設定
-                                        holder = new PostViewHolder(rootView);
-                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                        holder.profileicon.setImageBitmap(bitmap);
-                                    }).addOnFailureListener(exception -> {
-                                        // 失敗時の処理
-                                    });
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                // 画像がない場合の処理（任意で実装）
-                                // holder.imagePost.setImageResource(R.drawable.placeholder_image);
-                            }
-                            String username = documentSnapshot.getString("name");
-                            String userID = documentSnapshot.getString("id");
-                            // profile_textUsernameのTextViewを取得
-                            TextView profileTextUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
-                            // profile_nameのTextViewを取得
-                            TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
-
-
-                            // 取得したIDと名前をそれぞれのTextViewにセット
-                            profileTextUsernameTextView.setText(userID);
-                            profileNameTextView.setText(username);
-
-
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
-
-                            Map<String, Object> data = document.getData();
-                            String documentId = document.getId();
-
-                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
-                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
-                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
-                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
-                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
-                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
-                            Number likeCountDouble = ((Number) data.get("likeCount"));
-
-                            post.setId((String) data.get("id"));
-                            post.setSentence((String) data.get("sentence"));
-                            post.setImageUrl((String) data.get("imageUrl"));
-                            post.setDocumentId(documentId);
-                            post.setLikeCount(likeCountDouble.intValue());
-                            post.setTagMom(tagMom);
-
-                            post.setTagBir(tagBir);
-
-                            post.setTagRip(tagRip);
-
-                            post.setTagBis(tagBis);
-
-                            post.setTagAqua(tagAqua);
-
-                            post.setTagIns(tagIns);
-
-                            posts.add(post);
-
-                        }
                     });
         }
 
@@ -209,8 +154,6 @@ public class ProfileFragment extends Fragment {
 
         // ... (省略されたコード)
 
-        return rootView;
-    }
 
 
     @Override
@@ -255,37 +198,3 @@ public class ProfileFragment extends Fragment {
         }
     }
 }
-
-
-
-//        ImageButton sakujo = view.findViewById(R.id.sakujobtn);//投稿削除確認ポップアップ画面
-//        sakujo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = requireContext();
-//                Dialog dialog = new Dialog(context);
-//                dialog.setContentView(R.layout.fragment_profile_deletecheck);
-//                ImageButton hai = dialog.findViewById(R.id.haibtn);
-//                ImageButton iie = dialog.findViewById(R.id.iiebtn);
-//                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-//                params.width = 811; // 幅を変更
-//                params.height = 372; // 高さを変更
-//                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//                hai.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.show();
-//                iie.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.show();
-//            }
-//        });
-
-
