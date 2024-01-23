@@ -75,18 +75,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/sample"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="664dp"
-        android:text="おためし"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-
-<!--    <TextView-->
+    <!--    <TextView-->
 <!--&lt;!&ndash;        android:id="@+id/txtTest"&ndash;&gt;-->
 <!--&lt;!&ndash;        android:layout_width="588dp"&ndash;&gt;-->
 <!--&lt;!&ndash;        android:layout_height="125dp"&ndash;&gt;-->

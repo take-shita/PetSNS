@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,6 +89,7 @@ public class Signup3 extends AppCompatActivity {
                                     accountData.put("DisBis", tagViewModel.getArrayDislikeBis());
                                     accountData.put("DisAqua", tagViewModel.getArrayDislikeAqua());
                                     accountData.put("DisIns", tagViewModel.getArrayDislikeIns());
+                                    accountData.put("follow",new ArrayList<>());
                                     accountData.put("contestEntry",false);
                                     accountData.put("contestPost",false);
                                     documentRef.set(accountData)

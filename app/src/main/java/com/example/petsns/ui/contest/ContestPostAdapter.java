@@ -96,7 +96,7 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                         if (documentSnapshot.exists()) {
                             // ドキュメントが存在する場合、フィールドの値を取得
                             if(!documentSnapshot.get("likeCount").toString().equals("0")){
-                                holder.likeCount.setText(documentSnapshot.get("likeCount").toString());
+//                                holder.likeCount.setText(documentSnapshot.get("likeCount").toString());
                             }
                             // 取得した値を利用する処理をここに追加
                         } else {
@@ -154,8 +154,15 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                     Map<String,Object> updates=new HashMap<>();
-                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
-                    post.setLikeCount(likeCountPlus);
+                    if(post.getLikeCount()!=0){
+                        int likeCountPlus= post.getLikeCount()+1;
+                        post.setLikeCount(likeCountPlus);
+                    }else {
+                        int likeCountPlus=1;
+                        post.setLikeCount(likeCountPlus);
+                    }
+
+
                     updates.put("likeCount",post.getLikeCount());
 
                     docRef.update(updates)
@@ -165,9 +172,9 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                                         public void onSuccess(Void unused) {
                                             if(!holder.likeCount.getText().equals("")){
 
-                                                holder.likeCount.setText(String.valueOf(likeCountPlus));
+//                                                holder.likeCount.setText(String.valueOf(likeCountPlus));
                                             }else{
-                                                holder.likeCount.setText("1");
+//                                                holder.likeCount.setText("1");
                                             }
 
                                         }
@@ -184,8 +191,15 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                     Map<String,Object> updates=new HashMap<>();
-                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
-                    post.setLikeCount(likeCountPlus);
+                    if( post.getLikeCount()!=0){
+                        int likeCountPlus= post.getLikeCount()-1;
+                        post.setLikeCount(likeCountPlus);
+                    }else {
+
+                    }
+
+
+
                     updates.put("likeCount",post.getLikeCount());
 
                     docRef.update(updates)
@@ -194,7 +208,7 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                                         @Override
                                         public void onSuccess(Void unused) {
 
-                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+//                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
 
                                         }
                                     })
@@ -219,14 +233,14 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
 
 
         //        相手プロフィール画面への遷移
-        holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ボタンがクリックされたときの処理
-                // 新しい画面に遷移する
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
-            }
-        });
+//        holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // ボタンがクリックされたときの処理
+//                // 新しい画面に遷移する
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
+//            }
+//        });
 // ドキュメントを取得
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

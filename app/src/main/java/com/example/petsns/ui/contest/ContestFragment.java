@@ -34,8 +34,10 @@ import com.example.petsns.MainActivity;
 import com.example.petsns.R;
 import android.content.Context;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -73,6 +75,8 @@ public class ContestFragment extends Fragment {
     Button btnInfo;
     Button btnEntry;
     TextView txtTest;
+    Boolean contestEntry;
+    Boolean contestPost;
     byte[] imageData;
     Uri selectedImageUri;
     public static ContestFragment newInstance() {
@@ -85,9 +89,42 @@ public class ContestFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contest, container, false);
-
+        db = FirebaseFirestore.getInstance();
         // Firestore の参照を取得
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                // ドキュメントが存在する場合
+                                Boolean contestEntry = document.getBoolean("contestEntry");
+                                Boolean contestPost=document.getBoolean("contestPost");
 
+                                if(!contestEntry){
+                                    btnEntry.setEnabled(true);
+                                }else {
+                                    btnEntry.setEnabled(false);
+                                }
+                                if(!contestPost&&contestEntry){
+                                    btnPost.setEnabled(true);
+                                }else {
+                                    btnPost.setEnabled(false);
+                                }
+                                // fieldValueには指定したフィールドの値が含まれる
+                            } else {
+                                // ドキュメントが存在しない場合
+                            }
+                        } else {
+                            // 取得に失敗した場合
+                        }
+                    }
+                });
 
 
         return inflater.inflate(R.layout.fragment_contest, container, false);
@@ -109,19 +146,10 @@ public class ContestFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         // ボタンのクリックリスナーを設定
-        Button addButton = view.findViewById(R.id.sample);
+
         sampleText=view.findViewById(R.id.textView38);
 
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-
-            }
-        });
 
 
 
@@ -187,16 +215,34 @@ public class ContestFragment extends Fragment {
             public void onClick(View v) {
 
 
-//
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                startActivityForResult(intent, PICK_IMAGE_REQUEST);
 
 
+                db = FirebaseFirestore.getInstance();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String userId = user.getUid();
 
-                btnEntry.setEnabled(false);
-                btnPost.setEnabled(true);
-                showPopup();
+                DocumentReference docRef=db.collection("users").document(userId);
+
+                Map<String,Object> updates=new HashMap<>();
+                updates.put("contestEntry",true);
+
+                docRef.update(updates)
+                        .addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        btnEntry.setEnabled(false);
+                                        btnPost.setEnabled(true);
+                                        showPopup();
+                                    }
+                                })
+                        .addOnFailureListener(new OnFailureListener() {
+                                                  @Override
+                                                  public void onFailure(@NonNull Exception e) {
+
+                                                  }
+                                              });
+
             }
         });
 

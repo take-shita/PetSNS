@@ -124,7 +124,9 @@ public class snstopFragment extends Fragment {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_tag_search);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("key", false);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_tag_search,bundle);
             }
         });
 
