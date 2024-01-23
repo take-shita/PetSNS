@@ -237,7 +237,7 @@ public class TagPostViewModel extends ViewModel {
 
     public String getTagNameAll(){
 
-        String chkMommalians="";
+        String chkMommalians="#";
 
         for(int i=0;i<11;i++){
             if(boolLkeMom[i]){
