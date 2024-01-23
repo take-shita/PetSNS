@@ -102,7 +102,9 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                                 Map<String,Object> updates=new HashMap<>();
-                                updates.put("likeCount",post.getLikeCount()+1);
+                                int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
+                                post.setLikeCount(likeCountPlus);
+                                updates.put("likeCount",post.getLikeCount());
 
                                 docRef.update(updates)
                                         .addOnSuccessListener(
@@ -110,7 +112,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                                     @Override
                                                     public void onSuccess(Void unused) {
                                                         if(!holder.likeCount.getText().equals("")){
-                                                            int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
+
                                                             holder.likeCount.setText(String.valueOf(likeCountPlus));
                                                         }else{
                                                             holder.likeCount.setText("1");
@@ -130,14 +132,16 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                     Map<String,Object> updates=new HashMap<>();
-                    updates.put("likeCount",post.getLikeCount()-1);
+                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
+                    post.setLikeCount(likeCountPlus);
+                    updates.put("likeCount",post.getLikeCount());
 
                     docRef.update(updates)
                             .addOnSuccessListener(
                                     new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
+
                                             holder.likeCount.setText(String.valueOf(likeCountPlus));
 
                                         }
@@ -196,6 +200,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 //        post.tagConversion();
 
         holder.tagText.setText(post.tagConversion());
+
         if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
