@@ -41,6 +41,9 @@ public class Profile_TestPost {
         this.id=id;
     }
     public int getLikeCount(){ return likeCount; }
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public String getSentence(){
         return sentence;
