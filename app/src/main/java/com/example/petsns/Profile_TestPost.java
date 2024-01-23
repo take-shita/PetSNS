@@ -14,6 +14,7 @@ public class Profile_TestPost {
     private List<Boolean> tagAqua;
     private List<Boolean> tagIns;
     private String id;
+    private String name;
     private String sentence;
     private String imageUrl;
     private String icon;
@@ -24,6 +25,7 @@ public class Profile_TestPost {
     public Profile_TestPost() {
     }
 
+
     // ゲッター・セッターなど必要な処理を実装
     public String getDocumentId(){return documentId;}
     public void setDocumentId(String documentId){
@@ -32,11 +34,17 @@ public class Profile_TestPost {
     public String getid(){
         return id;
     }
+
+    public String getname() { return name;}
+
     public void setId(String id){
         this.id=id;
     }
     public int getLikeCount(){ return likeCount; }
-    public void setLikeCount(int likeCount){ this.likeCount=likeCount; }
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public String getSentence(){
         return sentence;
     }
@@ -44,10 +52,14 @@ public class Profile_TestPost {
         this.sentence=sentence;
     }
     public String getImageUrl(){ return imageUrl;}
+
+
+
     public void setImageUrl(String imageUrl){
         this.imageUrl=imageUrl;
     }
     public String getIcon(){ return icon;}
+
     public void setIcon(String icon){this.icon=icon;}
     public Timestamp gettimestamp(){ return  timestamp;}
     public void setTimestamp(Timestamp timestamp){

@@ -262,7 +262,7 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
         });
 
 
-        holder.textPost.setText(post.getSentence());
+//        holder.textPost.setText(post.getSentence());
 //        post.tagConversion();
 
         holder.tagText.setText(post.tagConversion());

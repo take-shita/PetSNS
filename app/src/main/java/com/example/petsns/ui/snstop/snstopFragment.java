@@ -2,6 +2,8 @@ package com.example.petsns.ui.snstop;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import android.widget.ImageButton;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +48,8 @@ import java.util.Map;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class snstopFragment extends Fragment {
 
@@ -114,6 +120,46 @@ public class snstopFragment extends Fragment {
 
 //        ボタンのクリックリスナー
         ImageButton prof_bt = view.findViewById(R.id.top_prof);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users") // コレクション名
+                .document(userId) // ドキュメント名
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("icon"));
+                            try {
+
+                                final File localFile = File.createTempFile("images", "png");
+                                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                    // ローカルファイルから画像を読み込んで ImageView にセット
+                                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                    prof_bt.setImageBitmap(bitmap);
+
+                                }).addOnFailureListener(exception -> {
+                                    // 失敗時の処理
+
+                                });
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // エラーが発生した場合の処理
+                    }
+                });
+        // ... 他の処理を追加
+
         prof_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

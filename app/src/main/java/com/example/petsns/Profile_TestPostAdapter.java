@@ -72,6 +72,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 });
     }
 
+
     @Override
     public int getItemCount() {
         return posts != null ? posts.size() : 0;
