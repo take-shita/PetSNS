@@ -27,6 +27,12 @@ import android.widget.ToggleButton;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
+
+import com.example.petsns.TestPost;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -78,6 +84,7 @@ public class ProfileFragment extends Fragment {
         recyclerView.setAdapter(postAdapter);
 
 
+
         TextView profileUsernameTextView = rootView.findViewById(R.id.profile_textUsername);
         // Firebase Authenticationからユーザー情報を取得
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -105,6 +112,16 @@ public class ProfileFragment extends Fragment {
                             }
                             postAdapter.setPosts(posts);
                         }
+
+        // Firestore からデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("posts")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Profile_TestPost> posts = new ArrayList<>();
+
 
 
                     });
@@ -145,9 +162,45 @@ public class ProfileFragment extends Fragment {
                             // profile_nameのTextViewを取得
                             TextView profileNameTextView = rootView.findViewById(R.id.profile_name);
 
+
                             // 取得したIDと名前をそれぞれのTextViewにセット
                             profileTextUsernameTextView.setText(userID);
                             profileNameTextView.setText(username);
+
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+
+                            Map<String, Object> data = document.getData();
+                            String documentId = document.getId();
+
+                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                            Number likeCountDouble = ((Number) data.get("likeCount"));
+
+                            post.setId((String) data.get("id"));
+                            post.setSentence((String) data.get("sentence"));
+                            post.setImageUrl((String) data.get("imageUrl"));
+                            post.setDocumentId(documentId);
+                            post.setLikeCount(likeCountDouble.intValue());
+                            post.setTagMom(tagMom);
+
+                            post.setTagBir(tagBir);
+
+                            post.setTagRip(tagRip);
+
+                            post.setTagBis(tagBis);
+
+                            post.setTagAqua(tagAqua);
+
+                            post.setTagIns(tagIns);
+
+                            posts.add(post);
+
                         }
                     });
         }

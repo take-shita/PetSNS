@@ -41,8 +41,7 @@ public class LoginActivity  extends AppCompatActivity {
             EditText textPass = findViewById(R.id.loginPass);
             Button btnLogin = findViewById(R.id.btnLogin);
             Button btnSignUp = findViewById(R.id.btnSignUp);
-//            バックドア
-//            Button btnGo = findViewById(R.id.go);
+
             btnSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,39 +81,36 @@ public class LoginActivity  extends AppCompatActivity {
                                         String mail = document.getString("mail");
                                         // template フィールドの値を取得
                                         if (mail != null) {
-                                            // template フィールドが存在する場合の処理
-                                            id = textID.getText().toString();;
+                                            id = mail;
                                         } else {
                                             // template フィールドが存在しない場合の処理
-                                            System.out.println("Document has no template field");
                                         }
                                     }
                                 } else {
-                                    // ドキュメントの取得が失敗した場合の処理
                                     Exception exception = task.getException();
                                     if (exception != null) {
-
                                         Log.e("aaaa", "データの取得に失敗しました", exception);
-
                                     }
                                 }
-                            });
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(id, pass)
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    // ログイン成功
-                                    FirebaseUser user = task.getResult().getUser();
-                                    String userId = user.getUid();
-                                    // ユーザー情報を利用してUIを更新するなどの処理を行う
-                                    Context context = v.getContext();
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(id, pass)
+                                        .addOnCompleteListener(signInTask  -> {
+                                            if (signInTask .isSuccessful()) {
+                                                // ログイン成功
+                                                FirebaseUser user = signInTask .getResult().getUser();
+                                                String userId = user.getUid();
+                                                // ユーザー情報を利用してUIを更新するなどの処理を行う
+                                                Context context = v.getContext();
 
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    // ログイン失敗
-                                    textID.setText(id+"?");
-                                }
+                                                Intent intent = new Intent(context, MainActivity.class);
+                                                startActivity(intent);
+                                            } else {
+                                                // ログイン失敗
+                                                textID.setText(id);
+                                            }
+                                        });
+
                             });
+
                 }
             });
         }

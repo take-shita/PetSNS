@@ -52,7 +52,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="left|center"
-                android:text="投稿者ID"
+                android:text="user"
                 android:textSize="24dp" />
 
 
