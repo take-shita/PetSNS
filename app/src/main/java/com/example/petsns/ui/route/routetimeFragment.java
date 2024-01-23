@@ -140,7 +140,7 @@ public class routetimeFragment extends Fragment {
         return view;
     }
     public void minuteConversion(int hour,int minute){
-        this.rootMinute=(hour*60+minute)*80;
+        this.rootMinute=(hour*60+minute)*60;
     }
 
     private void updateCountdownText() {

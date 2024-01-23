@@ -24,9 +24,12 @@ import android.widget.TextView;
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.TagPostViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -151,6 +154,26 @@ public class ContestPostFragment extends Fragment {
                                         postCollection.document(UUID.randomUUID().toString()).set(data)
                                                 .addOnSuccessListener(documentReference -> {
                                                     // documentReference.getId() で作成されたドキュメントのIDを取得できます
+
+                                                    DocumentReference docRef=db.collection("users").document(userId);
+
+                                                    Map<String,Object> updates=new HashMap<>();
+                                                    updates.put("contestPost",true);
+
+                                                    docRef.update(updates)
+                                                            .addOnSuccessListener(
+                                                                    new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void unused) {
+                                                                            Navigation.findNavController(v).navigate(R.id.action_navigation_contest_post_to_navigation_contest);
+                                                                        }
+                                                                    })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+
+                                                                }
+                                                            });
                                                 })
                                                 .addOnFailureListener(e -> {
 
@@ -162,7 +185,7 @@ public class ContestPostFragment extends Fragment {
                                     });
                         });
 
-                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_post_to_navigation_contest);
+
             }
         });
 

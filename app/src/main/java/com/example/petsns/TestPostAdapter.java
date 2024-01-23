@@ -155,8 +155,15 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                                 Map<String,Object> updates=new HashMap<>();
-                                int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
-                                post.setLikeCount(likeCountPlus);
+                                if(post.getLikeCount()!=0){
+                                    int likeCountPlus= post.getLikeCount()+1;
+                                    post.setLikeCount(likeCountPlus);
+                                }else {
+                                    int likeCountPlus=1;
+                                    post.setLikeCount(likeCountPlus);
+                                }
+
+
                                 updates.put("likeCount",post.getLikeCount());
 
                                 docRef.update(updates)
@@ -164,11 +171,11 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                                 new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void unused) {
-                                                        if(!holder.likeCount.getText().equals("")){
+                                                        if(post.getLikeCount()!=1){
 
-                                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+                                                            holder.likeCount.setText(String.valueOf(post.getLikeCount()));
                                                         }else{
-                                                            holder.likeCount.setText("1");
+                                                            holder.likeCount.setText("");
                                                         }
 
                                                     }
@@ -185,8 +192,12 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
                     Map<String,Object> updates=new HashMap<>();
-                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
-                    post.setLikeCount(likeCountPlus);
+                    if( post.getLikeCount()!=0){
+                        int likeCountPlus= post.getLikeCount()-1;
+                        post.setLikeCount(likeCountPlus);
+                    }else {
+
+                    }
                     updates.put("likeCount",post.getLikeCount());
 
                     docRef.update(updates)
@@ -194,8 +205,13 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                     new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
+                                            if(post.getLikeCount()!=0){
+                                                holder.likeCount.setText(String.valueOf(post.getLikeCount()));
+                                            }else{
+                                                holder.likeCount.setText(String.valueOf(""));
+                                            }
 
-                                            holder.likeCount.setText(String.valueOf(likeCountPlus));
+
 
                                         }
                                     })
