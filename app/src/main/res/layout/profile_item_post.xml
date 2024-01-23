@@ -28,7 +28,7 @@
                 android:layout_width="210dp"
                 android:layout_height="60dp"
                 android:gravity="left|center"
-                android:text="田實　優斗"
+                android:text="user"
                 android:textSize="24dp"
                 tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
 
@@ -40,14 +40,16 @@
                 android:textOn=""
                 android:textOff=""
                 android:scaleType="fitCenter"
+                android:saveEnabled="true"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
+                android:id="@+id/iinecount"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
                 android:paddingLeft="10dp"
                 android:gravity="left|center"
-                android:text="3"
+                android:text=""
                 android:textSize="24dp"
                 tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
