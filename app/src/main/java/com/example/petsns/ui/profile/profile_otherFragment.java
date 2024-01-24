@@ -164,7 +164,6 @@ public class profile_otherFragment extends Fragment {
             TextView tagText;
             TextView likeCount;
             ImageButton delete_btn;
-
             public PostViewHolder(@NonNull View itemView) {
                 super(itemView);
                 hartbtn = itemView.findViewById(R.id.hartbtn);
