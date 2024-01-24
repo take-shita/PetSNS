@@ -18,6 +18,18 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,27 +40,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import com.example.petsns.TestPost;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostViewHolder> {
-
+public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.PostViewHolder> {
     private List<TestPost> posts;
     private Context context;
     private List<QueryDocumentSnapshot> data;
-    public TestPostAdapter(Context context) {
+    public OtherPostAdapter(Context context) {
         this.data =new ArrayList<>();
         this.context = context;
     }
@@ -67,13 +63,13 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
     @NonNull
     @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OtherPostAdapter.PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
-        return new PostViewHolder(view);
+        return new OtherPostAdapter.PostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OtherPostAdapter.PostViewHolder holder, int position) {
 
         int adapterPosition = holder.getAdapterPosition();
 
@@ -155,38 +151,38 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
-                                Map<String,Object> updates=new HashMap<>();
-                                if(post.getLikeCount()!=0){
-                                    int likeCountPlus= post.getLikeCount()+1;
-                                    post.setLikeCount(likeCountPlus);
-                                }else {
-                                    int likeCountPlus=1;
-                                    post.setLikeCount(likeCountPlus);
-                                }
+                    Map<String,Object> updates=new HashMap<>();
+                    if(post.getLikeCount()!=0){
+                        int likeCountPlus= post.getLikeCount()+1;
+                        post.setLikeCount(likeCountPlus);
+                    }else {
+                        int likeCountPlus=1;
+                        post.setLikeCount(likeCountPlus);
+                    }
 
 
-                                updates.put("likeCount",post.getLikeCount());
+                    updates.put("likeCount",post.getLikeCount());
 
-                                docRef.update(updates)
-                                        .addOnSuccessListener(
-                                                new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        if(post.getLikeCount()!=1){
+                    docRef.update(updates)
+                            .addOnSuccessListener(
+                                    new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            if(post.getLikeCount()!=1){
 
-                                                            holder.likeCount.setText(String.valueOf(post.getLikeCount()));
-                                                        }else{
-                                                            holder.likeCount.setText("");
-                                                        }
-
-                                                    }
-                                                })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-
+                                                holder.likeCount.setText(String.valueOf(post.getLikeCount()));
+                                            }else{
+                                                holder.likeCount.setText("");
                                             }
-                                        });
+
+                                        }
+                                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
                 }else {
 
                     holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
@@ -305,7 +301,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             // ドキュメントが存在する場合、フィールドの値を取得
-                             post.setIcon(documentSnapshot.getString("icon"));
+                            post.setIcon(documentSnapshot.getString("icon"));
                             if (post.getIcon() != null && !post.getIcon().isEmpty()) {
 
                                 StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
@@ -390,4 +386,5 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
     */
+
 }
