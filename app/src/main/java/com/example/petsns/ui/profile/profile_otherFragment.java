@@ -73,7 +73,17 @@ public class profile_otherFragment extends Fragment {
         other_username = view.findViewById(R.id.other_username);
         other_icon = view.findViewById(R.id.other_icon);
         // ユーザーIDを取得
-        String userId = getArguments().getString("userId");
+        String userId = null; // 初期値を設定しておく
+
+
+
+        Bundle args = getArguments();
+        if (args != null) {
+            userId = args.getString("userId");
+            // userId を使った処理を続ける
+        } else {
+            // getArguments() が null の場合のエラー処理やデフォルト値の設定など
+        }
 
         // Firebase からユーザーデータを取得して表示
         loadUserData(userId);
@@ -89,29 +99,34 @@ public class profile_otherFragment extends Fragment {
         return view;
     }
     private void loadUserData(String userId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (userId != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // ユーザーのドキュメント参照
-        DocumentReference userRef = db.collection("users").document(userId);
+            // ユーザーのドキュメント参照
+            DocumentReference userRef = db.collection("users").document(userId);
 
-        // ユーザーデータを取得
-        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    // ドキュメントが存在する場合、ユーザー名とプロフィール画像を表示
-                    String username = documentSnapshot.getString("name");
-                    String profileImageUrl = documentSnapshot.getString("profileImageUrl");
+            // ユーザーデータを取得
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        // ドキュメントが存在する場合、ユーザー名とプロフィール画像を表示
+                        String username = documentSnapshot.getString("name");
+                        String profileImageUrl = documentSnapshot.getString("profileImageUrl");
 
-                    other_username.setText(username);
+                        other_username.setText(username);
 
-                    // プロフィール画像の読み込みなどの処理を追加
-                    // 例: Picasso や Glide を使用して画像を表示
-                    // Picasso.get().load(profileImageUrl).into(profileImageView);
+                        // プロフィール画像の読み込みなどの処理を追加
+                        // 例: Picasso や Glide を使用して画像を表示
+                        // Picasso.get().load(profileImageUrl).into(profileImageView);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+
+        }
     }
+
 
 
 
