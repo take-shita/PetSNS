@@ -96,7 +96,7 @@ public class tag_postFragment extends Fragment {
         btnDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(value){
+                if(value != null && value){
                     Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_contest_post);
                 }else {
                     Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);
