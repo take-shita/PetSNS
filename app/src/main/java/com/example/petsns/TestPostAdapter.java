@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -241,6 +242,8 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する
+                Bundle bundle = new Bundle();
+                bundle.putString("key", post.getDocumentId());
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
             }
         });

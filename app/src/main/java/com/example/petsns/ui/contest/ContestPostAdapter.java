@@ -365,7 +365,7 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            hartbt=itemView.findViewById(R.id.hartbt);
+            hartbt=itemView.findViewById(R.id.hartbtn);
             hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
