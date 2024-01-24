@@ -50,14 +50,29 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import java.io.IOException;
 import androidx.lifecycle.ViewModel;
+import android.util.Log;
+
 
 
 public class profile_otherFragment extends Fragment {
 
     private ProfileOtherViewModel mViewModel;
+    private FirebaseFirestore firestore;
+    private RecyclerView recyclerView;
+
+
     private TextView other_userid;
     private TextView other_username;
     private ImageView other_icon;
+    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
+
+    private View rootView;
+    private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
+    private static final String TAG = "ProfileOtherFragment";
+
+
+
+
 
     public static profile_otherFragment newInstance() {
         return new profile_otherFragment();
@@ -67,6 +82,7 @@ public class profile_otherFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_other, container, false);
+        rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // レイアウト要素を取得
         other_userid = view.findViewById(R.id.other_userid);
@@ -75,8 +91,6 @@ public class profile_otherFragment extends Fragment {
         // ユーザーIDを取得
         String userId = null; // 初期値を設定しておく
 
-
-
         Bundle args = getArguments();
         if (args != null) {
             userId = args.getString("userId");
@@ -84,6 +98,8 @@ public class profile_otherFragment extends Fragment {
         } else {
             // getArguments() が null の場合のエラー処理やデフォルト値の設定など
         }
+// PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
+        postViewHolder = new PostViewHolder(view);
 
         // Firebase からユーザーデータを取得して表示
         loadUserData(userId);
@@ -105,32 +121,41 @@ public class profile_otherFragment extends Fragment {
             // ユーザーのドキュメント参照
             DocumentReference userRef = db.collection("users").document(userId);
 
-            // ユーザーデータを取得
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     if (documentSnapshot.exists()) {
-                        // ドキュメントが存在する場合、ユーザー名とプロフィール画像を表示
+                        // ユーザーのドキュメントが存在する場合の処理
+                        String iconUrl = documentSnapshot.getString("icon");
+                        // ローカルファイルへのダウンロード処理
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                        try {
+                            final File localFile = File.createTempFile("images", "jpg");
+                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                // 成功時の処理
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                postViewHolder.other_icon.setImageBitmap(bitmap);
+                            }).addOnFailureListener(exception -> {
+                                // 失敗時の処理
+                            });
+                        } catch (IOException e) {
+                            // IOExceptionが発生した場合の処理
+                            e.printStackTrace();
+                        }
+
                         String username = documentSnapshot.getString("name");
-                        String profileImageUrl = documentSnapshot.getString("profileImageUrl");
+                        String userID = documentSnapshot.getString("id");
 
+                        // フィールドとして定義されている変数に代入
+                        other_userid.setText(userID);
                         other_username.setText(username);
-
-                        // プロフィール画像の読み込みなどの処理を追加
-                        // 例: Picasso や Glide を使用して画像を表示
-                        // Picasso.get().load(profileImageUrl).into(profileImageView);
+                    } else {
+                        // ユーザーのドキュメントが存在しない場合の処理
                     }
                 }
             });
-        } else {
-
         }
     }
-
-
-
-
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -145,7 +170,7 @@ public class profile_otherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
-        PostViewHolder postViewHolder = new PostViewHolder(view);
+        postViewHolder = new PostViewHolder(view);
 
         ImageButton toukou = view.findViewById(R.id.toukoubtn);
         toukou.setOnClickListener(new View.OnClickListener() {

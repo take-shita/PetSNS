@@ -240,11 +240,10 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ボタンがクリックされたときの処理
-                // 新しい画面に遷移する
+                // ユーザーのプロフィール画面に遷移する
                 Bundle bundle = new Bundle();
-                bundle.putString("key", post.getDocumentId());
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other);
+                bundle.putString("userId", post.getid());
+                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other, bundle);
             }
         });
 // ドキュメントを取得
