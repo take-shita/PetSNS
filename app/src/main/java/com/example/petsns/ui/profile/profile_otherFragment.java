@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.petsns.OtherPostAdapter;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
@@ -59,6 +60,7 @@ public class profile_otherFragment extends Fragment {
     private ProfileOtherViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
+    private FirebaseFirestore db;
 
 
     private TextView other_userid;
@@ -69,6 +71,7 @@ public class profile_otherFragment extends Fragment {
     private View rootView;
     private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
     private static final String TAG = "ProfileOtherFragment";
+    private OtherPostAdapter postAdapter;
 
 
 
@@ -83,26 +86,20 @@ public class profile_otherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_other, container, false);
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        //        主要な要素
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        postAdapter = new OtherPostAdapter(requireContext());
+        recyclerView.setAdapter(postAdapter);
 
-        // レイアウト要素を取得
-        other_userid = view.findViewById(R.id.other_userid);
-        other_username = view.findViewById(R.id.other_username);
-        other_icon = view.findViewById(R.id.other_icon);
+
         // ユーザーIDを取得
-        String userId = null; // 初期値を設定しておく
 
-        Bundle args = getArguments();
-        if (args != null) {
-            userId = args.getString("userId");
-            // userId を使った処理を続ける
-        } else {
-            // getArguments() が null の場合のエラー処理やデフォルト値の設定など
-        }
 // PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
         postViewHolder = new PostViewHolder(view);
 
         // Firebase からユーザーデータを取得して表示
-        loadUserData(userId);
+        fetchDataFromFirestore();
 
         // 初回表示時にボタンの状態に合わせて背景を設定
         ToggleButton followbtn = view.findViewById(R.id.followbtn);
@@ -114,48 +111,98 @@ public class profile_otherFragment extends Fragment {
 
         return view;
     }
-    private void loadUserData(String userId) {
-        if (userId != null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            // ユーザーのドキュメント参照
-            DocumentReference userRef = db.collection("users").document(userId);
+    public void fetchDataFromFirestore() {
+        // Firestore からデータを取得して表示
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("posts")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Profile_TestPost> posts = new ArrayList<>();
 
-            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()) {
-                        // ユーザーのドキュメントが存在する場合の処理
-                        String iconUrl = documentSnapshot.getString("icon");
-                        // ローカルファイルへのダウンロード処理
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                        try {
-                            final File localFile = File.createTempFile("images", "jpg");
-                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                // 成功時の処理
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                postViewHolder.other_icon.setImageBitmap(bitmap);
-                            }).addOnFailureListener(exception -> {
-                                // 失敗時の処理
-                            });
-                        } catch (IOException e) {
-                            // IOExceptionが発生した場合の処理
-                            e.printStackTrace();
+                        db = FirebaseFirestore.getInstance();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userId = user.getUid();
+                        DocumentReference docRef = db.collection("users").document(userId);
+
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+
+                            Map<String, Object> data = document.getData();
+                            String documentId = document.getId();
+
+                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                            Number likeCountDouble = ((Number) data.get("likeCount"));
+
+                            post.setId((String) data.get("id"));
+                            post.setSentence((String) data.get("sentence"));
+                            post.setImageUrl((String) data.get("imageUrl"));
+                            post.setDocumentId(documentId);
+                            post.setLikeCount(likeCountDouble.intValue());
+                            post.setTagMom(tagMom);
+
+                            post.setTagBir(tagBir);
+
+                            post.setTagRip(tagRip);
+
+                            post.setTagBis(tagBis);
+
+                            post.setTagAqua(tagAqua);
+
+                            post.setTagIns(tagIns);
+
+                            posts.add(post);
                         }
+                        postAdapter.setPosts(posts);
 
-                        String username = documentSnapshot.getString("name");
-                        String userID = documentSnapshot.getString("id");
+                        // データ取得後にユーザー情報を表示する処理を追加
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    // ユーザーのドキュメントが存在する場合の処理
+                                    String iconUrl = documentSnapshot.getString("icon");
+                                    // ローカルファイルへのダウンロード処理
+                                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                                    try {
+                                        final File localFile = File.createTempFile("images", "jpg");
+                                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                            // 成功時の処理
+                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                            postViewHolder.other_icon.setImageBitmap(bitmap);
+                                        }).addOnFailureListener(exception -> {
+                                            // 失敗時の処理
+                                        });
+                                    } catch (IOException e) {
+                                        // IOExceptionが発生した場合の処理
+                                        e.printStackTrace();
+                                    }
 
-                        // フィールドとして定義されている変数に代入
-                        other_userid.setText(userID);
-                        other_username.setText(username);
-                    } else {
-                        // ユーザーのドキュメントが存在しない場合の処理
+                                    String username = documentSnapshot.getString("name");
+                                    String userID = documentSnapshot.getString("id");
+
+                                    // フィールドとして定義されている変数に代入
+                                    other_userid.setText(userID);
+                                    other_username.setText(username);
+                                } else {
+                                    // ユーザーのドキュメントが存在しない場合の処理
+                                }
+                            }
+                        });
                     }
-                }
-            });
-        }
+
+
+                });
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
