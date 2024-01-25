@@ -258,18 +258,11 @@ public class snstopFragment extends Fragment {
                                     List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                     List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                     Number likeCountDouble = ((Number) data.get("likeCount"));
-                                    //                                    エラー直すために勝手に追加
-                                    List<Boolean> likeMomList = getListFromDocument(documentSnapshot, "likeMom");
-                                    List<Boolean> likeBirList = getListFromDocument(documentSnapshot, "likeBir");
-                                    List<Boolean> likeRipList = getListFromDocument(documentSnapshot, "likeRip");
-                                    List<Boolean> likeBisList = getListFromDocument(documentSnapshot, "likeBis");
-                                    List<Boolean> likeAquaList = getListFromDocument(documentSnapshot, "likeAqua");
-                                    List<Boolean> likeInsList = getListFromDocument(documentSnapshot, "likeIns");
 //                                    エラー直すために勝手に追加
                                     for (int i = 0; i < tagMom.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagMom.size() > i && tagMom.get(i)) {
-                                            if (!likeMomList.isEmpty() && likeMomList.size() > i && likeMomList.get(i) != null) {
+                                            if (!LikeMom.isEmpty() && LikeMom.size() > i && LikeMom.get(i) != null) {
 //エラー直すために勝手に追加
 //                                            エラー直すために勝手にコメントアウト
 //                                                if (tagMom.get(i)) {
@@ -282,7 +275,7 @@ public class snstopFragment extends Fragment {
 //エラー直すために勝手に追加
 //                                                エラー直すために勝手にコメントアウト
 //                                                if (DisMom.get(i)) {
-//                                                check = false;
+                                                check = false;
 //                                                エラー直すために勝手にコメントアウト
                                                 break;
                                             }
@@ -291,7 +284,7 @@ public class snstopFragment extends Fragment {
                                     for (int i = 0; i < tagBir.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagBir.size() > i && tagBir.get(i)) {
-                                            if (!likeBirList.isEmpty() && likeBirList.size() > i && likeBirList.get(i) != null) {
+                                            if (!LikeBir.isEmpty() && LikeBir.size() > i && LikeBir.get(i) != null) {
 //エラー直すために勝手に追加
 //                                        エラー直すために勝手にコメントアウト
 //                                        if (tagBir.get(i)) {
@@ -313,7 +306,7 @@ public class snstopFragment extends Fragment {
                                     for (int i = 0; i < tagRip.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagRip.size() > i && tagRip.get(i)) {
-                                            if (!likeRipList.isEmpty() && likeRipList.size() > i && likeRipList.get(i) != null) {
+                                            if (!LikeRip.isEmpty() && LikeRip.size() > i && LikeRip.get(i) != null) {
 //エラー直すために勝手に追加
 //                                        エラー直すために勝手にコメントアウト
 //                                        if (tagRip.get(i)) {
@@ -335,7 +328,7 @@ public class snstopFragment extends Fragment {
                                     for (int i = 0; i < tagBis.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagBis.size() > i && tagBis.get(i)) {
-                                            if (!likeBisList.isEmpty() && likeBisList.size() > i && likeBisList.get(i) != null) {
+                                            if (!LikeBis.isEmpty() && LikeBis.size() > i && LikeBis.get(i) != null) {
 //エラー直すために勝手に追加
 //                                        エラー直すために勝手にコメントアウト
 //                                        if (tagBis.get(i)) {
@@ -357,7 +350,7 @@ public class snstopFragment extends Fragment {
                                     for (int i = 0; i < tagAqua.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagAqua.size() > i && tagAqua.get(i)) {
-                                            if (!likeAquaList.isEmpty() && likeAquaList.size() > i && likeAquaList.get(i) != null) {
+                                            if (!LikeAqua.isEmpty() && LikeAqua.size() > i && LikeAqua.get(i) != null) {
 //エラー直すために勝手に追加
 //                                                エラー直すために勝手にコメントアウト
 //                                        if (tagAqua.get(i)) {
@@ -381,7 +374,7 @@ public class snstopFragment extends Fragment {
                                     for (int i = 0; i < tagIns.size(); i++) {
                                         //エラー直すために勝手に追加
                                         if (tagIns.size() > i && tagIns.get(i)) {
-                                            if (!likeInsList.isEmpty() && likeInsList.size() > i && likeInsList.get(i) != null) {
+                                            if (!LikeIns.isEmpty() && LikeIns.size() > i && LikeIns.get(i) != null) {
 //エラー直すために勝手に追加
 //                                                エラー直すために勝手にコメントアウト
 //                                        if (tagIns.get(i)) {

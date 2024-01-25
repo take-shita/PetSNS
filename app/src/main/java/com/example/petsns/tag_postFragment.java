@@ -84,7 +84,7 @@ public class tag_postFragment extends Fragment {
             public void onClick(View v) {
                 viewModel.tagCancel();
 
-                if(value){
+                if(value != null && value){
                     Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_contest_post);
                 }else {
                     Navigation.findNavController(v).navigate(R.id.action_navigation_tag_post_to_navigation_snspost);

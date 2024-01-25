@@ -85,7 +85,7 @@
         android:layout_width="110dp"
         android:layout_height="50dp"
         android:background="@drawable/frame_style"
-        android:text="キャンセル"
+        android:text="戻る"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
