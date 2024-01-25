@@ -90,7 +90,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.other_item_post, parent, false);
         return new PostViewHolder(view);
     }
 
