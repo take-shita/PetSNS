@@ -77,7 +77,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
         int adapterPosition = holder.getAdapterPosition();
 
-        TestPost post = posts.get(adapterPosition);
+        TestPost post = posts.get(position);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String documentId=post.getDocumentId();
 
