@@ -190,7 +190,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
             String uid = user.getUid();
 
             // 投稿者がログインユーザーでない場合、非表示にする
-            if (!uid.equals(post.getid())) {
+            if (uid.equals(post.getid())) {
                 holder.itemView.setVisibility(View.GONE);
                 holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 return; // 非表示の場合はここでメソッドを終了
@@ -206,7 +206,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
             // コレクションとドキュメントのパスを指定
             String collectionPath = "users";
             String documentPath = uid;
-            DocumentReference docRef = db.collection(collectionPath).document(documentPath);
+            DocumentReference docRef = db.collection(collectionPath).document(post.getid());
 
             // ドキュメントを取得
             // ドキュメントを取得
