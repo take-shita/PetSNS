@@ -279,7 +279,7 @@ public class TagDislikeFragment extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        viewModel.setArrayLikeRip(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
+                        viewModel.setArrayDisLikeRip(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
                         dialog.dismiss(); }
                 });
