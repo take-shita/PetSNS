@@ -138,23 +138,4 @@
         </LinearLayout>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-<!--    <TextView-->
-<!--        android:id="@+id/textUsername"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="投稿者ID"/>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textPost"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="投稿文" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imagePost"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="500dp"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        android:src="@drawable/ic_launcher_foreground" />-->
-
 </LinearLayout>
