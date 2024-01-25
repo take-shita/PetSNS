@@ -61,7 +61,7 @@ public class profile_otherFragment extends Fragment {
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
-
+    private String value="jLkwv27fPnMp1aZBURr7wbThtd32";
 
     private TextView other_userid;
     private TextView other_username;
@@ -91,6 +91,14 @@ public class profile_otherFragment extends Fragment {
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_profile_other, container, false);
             //         RecyclerViewをインスタンス化
+            Bundle args = getArguments();
+
+            if (args != null) {
+                value = args.getString("userId");
+                // データを使用して何かを行う
+                // 例: TextViewにセットするなど
+            }
+
             recyclerView = view.findViewById(R.id.recyclerView);
             // LinearLayoutManagerを設定
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -99,6 +107,8 @@ public class profile_otherFragment extends Fragment {
             // RecyclerViewにAdapterをセット
             recyclerView.setAdapter(postAdapter);
             // Firestoreからデータを取得
+
+
             fetchDataFromFirestore();
             //        主要な要素
             // ユーザーIDとユーザー名のTextViewを初期化
@@ -118,6 +128,8 @@ public class profile_otherFragment extends Fragment {
                 followbtn.setBackgroundResource(R.drawable.forotouka);
             }
 
+
+
             return view;
         }
 
@@ -130,11 +142,10 @@ public class profile_otherFragment extends Fragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             List<Profile_TestPost> posts = new ArrayList<>();
-
                             db = FirebaseFirestore.getInstance();
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String userId = user.getUid();
-                            DocumentReference docRef = db.collection("users").document(userId);
+                            DocumentReference docRef = db.collection("users").document(value);
 
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
@@ -150,25 +161,29 @@ public class profile_otherFragment extends Fragment {
                                 List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                 List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                 Number likeCountDouble = ((Number) data.get("likeCount"));
+                                if(((String) data.get("id")).equals(value)){
+                                    post.setId((String) data.get("id"));
+                                    post.setSentence((String) data.get("sentence"));
+                                    post.setImageUrl((String) data.get("imageUrl"));
+                                    post.setDocumentId(documentId);
+                                    post.setLikeCount(likeCountDouble.intValue());
+                                    post.setTagMom(tagMom);
 
-                                post.setId((String) data.get("id"));
-                                post.setSentence((String) data.get("sentence"));
-                                post.setImageUrl((String) data.get("imageUrl"));
-                                post.setDocumentId(documentId);
-                                post.setLikeCount(likeCountDouble.intValue());
-                                post.setTagMom(tagMom);
+                                    post.setTagBir(tagBir);
 
-                                post.setTagBir(tagBir);
+                                    post.setTagRip(tagRip);
 
-                                post.setTagRip(tagRip);
+                                    post.setTagBis(tagBis);
 
-                                post.setTagBis(tagBis);
+                                    post.setTagAqua(tagAqua);
 
-                                post.setTagAqua(tagAqua);
+                                    post.setTagIns(tagIns);
 
-                                post.setTagIns(tagIns);
+                                    posts.add(post);
+                                }else {
 
-                                posts.add(post);
+                                }
+
                             }
                             postAdapter.setPosts(posts);
 
