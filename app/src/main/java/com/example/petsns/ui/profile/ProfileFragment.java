@@ -448,3 +448,48 @@ public class ProfileFragment extends Fragment {
 //        }
 //    }
 //}
+
+
+
+//    private void loadUserData(String userId) {
+//        if (userId != null) {
+//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//            // ユーザーのドキュメント参照
+//            DocumentReference userRef = db.collection("users").document(userId);
+//
+//            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                @Override
+//                public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                    if (documentSnapshot.exists()) {
+//                        // ユーザーのドキュメントが存在する場合の処理
+//                        String iconUrl = documentSnapshot.getString("icon");
+//                        // ローカルファイルへのダウンロード処理
+//                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+//                        try {
+//                            final File localFile = File.createTempFile("images", "jpg");
+//                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+//                                // 成功時の処理
+//                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                postViewHolder.other_icon.setImageBitmap(bitmap);
+//                            }).addOnFailureListener(exception -> {
+//                                // 失敗時の処理
+//                            });
+//                        } catch (IOException e) {
+//                            // IOExceptionが発生した場合の処理
+//                            e.printStackTrace();
+//                        }
+//
+//                        String username = documentSnapshot.getString("name");
+//                        String userID = documentSnapshot.getString("id");
+//
+//                        // フィールドとして定義されている変数に代入
+//                        other_userid.setText(userID);
+//                        other_username.setText(username);
+//                    } else {
+//                        // ユーザーのドキュメントが存在しない場合の処理
+//                    }
+//                }
+//            });
+//        }
+//    }

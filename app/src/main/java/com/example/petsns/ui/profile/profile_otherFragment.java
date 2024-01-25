@@ -1,6 +1,5 @@
 package com.example.petsns.ui.profile;
 
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
@@ -11,40 +10,158 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.petsns.R;
+import com.example.petsns.Profile_TestPost;
+import com.example.petsns.Profile_TestPostAdapter;
+import com.example.petsns.TestPost;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.FirebaseStorage;
+import java.io.File;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.io.IOException;
+import androidx.lifecycle.ViewModel;
+import android.util.Log;
+
+
 
 public class profile_otherFragment extends Fragment {
 
     private ProfileOtherViewModel mViewModel;
+    private FirebaseFirestore firestore;
+    private RecyclerView recyclerView;
+
+
+    private TextView other_userid;
+    private TextView other_username;
+    private ImageView other_icon;
+    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
+
+    private View rootView;
+    private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
+    private static final String TAG = "ProfileOtherFragment";
+
+
+
+
 
     public static profile_otherFragment newInstance() {
         return new profile_otherFragment();
     }
 
+    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_profile_other, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile_other, container, false);
+        rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        //        主要な要素
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+        // レイアウト要素を取得
+        other_userid = view.findViewById(R.id.other_userid);
+        other_username = view.findViewById(R.id.other_username);
+        other_icon = view.findViewById(R.id.other_icon);
+        // ユーザーIDを取得
+        String userId = null; // 初期値を設定しておく
+
+        Bundle args = getArguments();
+        if (args != null) {
+            userId = args.getString("userId");
+            // userId を使った処理を続ける
+        } else {
+            // getArguments() が null の場合のエラー処理やデフォルト値の設定など
+        }
+// PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
+        postViewHolder = new PostViewHolder(view);
+
+        // Firebase からユーザーデータを取得して表示
+        loadUserData(userId);
 
         // 初回表示時にボタンの状態に合わせて背景を設定
-        ToggleButton followbtn = rootView.findViewById(R.id.followbtn);
+        ToggleButton followbtn = view.findViewById(R.id.followbtn);
         if (followbtn.isChecked()) {
             followbtn.setBackgroundResource(R.drawable.forotyuutouka);
         } else {
             followbtn.setBackgroundResource(R.drawable.forotouka);
         }
 
-        return rootView;
+        return view;
     }
 
+    
+    private void loadUserData(String userId) {
+        if (userId != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            // ユーザーのドキュメント参照
+            DocumentReference userRef = db.collection("users").document(userId);
+
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        // ユーザーのドキュメントが存在する場合の処理
+                        String iconUrl = documentSnapshot.getString("icon");
+                        // ローカルファイルへのダウンロード処理
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                        try {
+                            final File localFile = File.createTempFile("images", "jpg");
+                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                // 成功時の処理
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                postViewHolder.other_icon.setImageBitmap(bitmap);
+                            }).addOnFailureListener(exception -> {
+                                // 失敗時の処理
+                            });
+                        } catch (IOException e) {
+                            // IOExceptionが発生した場合の処理
+                            e.printStackTrace();
+                        }
+
+                        String username = documentSnapshot.getString("name");
+                        String userID = documentSnapshot.getString("id");
+
+                        // フィールドとして定義されている変数に代入
+                        other_userid.setText(userID);
+                        other_username.setText(username);
+                    } else {
+                        // ユーザーのドキュメントが存在しない場合の処理
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -58,6 +175,9 @@ public class profile_otherFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
+        postViewHolder = new PostViewHolder(view);
+
         ImageButton toukou = view.findViewById(R.id.toukoubtn);
         toukou.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,46 +185,44 @@ public class profile_otherFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_profile_other_to_navigation_snspost);
             }
         });
-        ImageButton report = view.findViewById(R.id.reportbtn);//投稿通報確認ポップアップ画面
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = requireContext();
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
-                ImageButton hai = dialog.findViewById(R.id.haibtn);
-                ImageButton iie = dialog.findViewById(R.id.iiebtn);
-                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-                params.width = 811; // 幅を変更
-                params.height = 372; // 高さを変更
-                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-                hai.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-                iie.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
+
         ToggleButton followbtn = view.findViewById(R.id.followbtn);
 
         followbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     followbtn.setBackgroundResource(R.drawable.forotyuutouka);
-                }else {
+                } else {
                     followbtn.setBackgroundResource(R.drawable.forotouka);
                 }
             }
         });
     }
+
+        public class PostViewHolder extends RecyclerView.ViewHolder {
+            TextView other_userid;
+            TextView other_username;
+            ImageView other_icon;
+            ImageView profileicon;
+            ToggleButton hartbtn;
+            TextView posttime;
+            TextView tagText;
+            TextView likeCount;
+            ImageButton delete_btn;
+            public PostViewHolder(@NonNull View itemView) {
+                super(itemView);
+                hartbtn = itemView.findViewById(R.id.hartbtn);
+                other_userid = itemView.findViewById(R.id.other_userid);
+                other_username = itemView.findViewById(R.id.other_username);
+                other_icon = itemView.findViewById(R.id.other_icon);
+                profileicon = itemView.findViewById(R.id.profileicon);
+                posttime = itemView.findViewById(R.id.posttime);
+                tagText=itemView.findViewById(R.id.tagText);
+                likeCount=itemView.findViewById(R.id.iinecount);
+                delete_btn=itemView.findViewById(R.id.delete_btn);
+
+            }
+        }
 }
+

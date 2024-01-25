@@ -66,22 +66,17 @@ public class passchanFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                String pass = editTextTextPassword3.getText().toString();
-                String word = editTextTextPassword4.getText().toString();
-                String password = passwordEditText.getText().toString();
+                String currentPassword = editTextTextPassword3.getText().toString();
+                String newPassword = editTextTextPassword4.getText().toString();
 
-                if (password.isEmpty() || pass.isEmpty() || word.isEmpty()) {
+                if (currentPassword.isEmpty() || newPassword.isEmpty()) {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
-                    errorTextView.setText("全てのパスワードを入力してください");
-                } else if (password.length() < 8 || pass.length() < 8 || word.length() < 8) {
-                    // パスワードが短すぎる場合、エラーメッセージを表示
+                    errorTextView.setText("現在のパスワードと新しいパスワードを入力してください");
+                } else if (newPassword.length() < 8) {
+                    // 新しいパスワードが短すぎる場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
-                    errorTextView.setText("パスワードは 8 文字以上入力してください");
-                } else if (!password.equals(password) || !password.equals(word)) {
-                    // パスワードが一致しない場合、エラーメッセージを表示
-                    errorTextView.setVisibility(View.VISIBLE);
-                    errorTextView.setText("パスワードが一致しません");
+                    errorTextView.setText("新しいパスワードは 8 文字以上入力してください");
                 } else {
                     // パスワードが一致していれば、エラーメッセージを非表示にして次の画面に遷移
                     errorTextView.setVisibility(View.GONE);
@@ -89,25 +84,39 @@ public class passchanFragment extends Fragment {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     // Firebaseのユーザーを再認証
-                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
                     user.reauthenticate(credential)
                             .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        // パスワードの再認証が成功した場合、次の画面に遷移
-                                        Toast.makeText(requireContext(), "パスワードの変更完了しました", Toast.LENGTH_SHORT).show();
-                                        Navigation.findNavController(v).navigate(R.id.action_navigation_passchan_to_navigation_setting);
+                                        // パスワードの再認証が成功した場合、新しいパスワードに更新
+                                        user.updatePassword(newPassword)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> updateTask) {
+                                                        if (updateTask.isSuccessful()) {
+                                                            // パスワードの変更が成功した場合
+                                                            Toast.makeText(requireContext(), "パスワードの変更完了しました", Toast.LENGTH_SHORT).show();
+                                                            Navigation.findNavController(v).navigate(R.id.action_navigation_passchan_to_navigation_setting);
+                                                        } else {
+                                                            // パスワードの変更が失敗した場合
+                                                            errorTextView.setVisibility(View.VISIBLE);
+                                                            errorTextView.setText("新しいパスワードの変更に失敗しました");
+                                                        }
+                                                    }
+                                                });
                                     } else {
                                         // パスワードの再認証が失敗した場合、エラーメッセージを表示
                                         errorTextView.setVisibility(View.VISIBLE);
-                                        errorTextView.setText("パスワードが正しくありません");
+                                        errorTextView.setText("現在のパスワードが正しくありません");
                                     }
                                 }
                             });
                 }
             }
         });
+
 
 
         Button btncan = view.findViewById(R.id.btncan);
