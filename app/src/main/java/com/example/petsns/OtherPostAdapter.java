@@ -90,7 +90,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.profile_item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         return new PostViewHolder(view);
     }
 
@@ -130,14 +130,14 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
 
 
 
-        holder.delete_btn.setOnClickListener(new View.OnClickListener() {
+        holder.report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // ボタンがクリックされたときの処理
                 // 新しい画面に遷移する  後で書き換える
                 Context context = v.getContext();
                 Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.fragment_profile_deletecheck);
+                dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
                 ImageButton hai = dialog.findViewById(R.id.haibtn);
                 ImageButton iie = dialog.findViewById(R.id.iiebtn);
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
@@ -147,7 +147,6 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
                 hai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteFirestoreData(documentId);
                         dialog.dismiss();
                     }
                 });
@@ -359,7 +358,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
         TextView posttime;
         TextView tagText;
         TextView likeCount;
-        ImageButton delete_btn;
+        ImageButton report_btn;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -371,7 +370,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
             posttime = itemView.findViewById(R.id.posttime);
             tagText=itemView.findViewById(R.id.tagText);
             likeCount=itemView.findViewById(R.id.iinecount);
-            delete_btn=itemView.findViewById(R.id.delete_btn);
+            report_btn = itemView.findViewById(R.id.report_btn);
 
         }
     }
