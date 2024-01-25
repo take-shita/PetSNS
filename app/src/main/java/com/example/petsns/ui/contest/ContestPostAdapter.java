@@ -170,12 +170,7 @@ public class ContestPostAdapter  extends RecyclerView.Adapter<ContestPostAdapter
                                     new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            if(!holder.likeCount.getText().equals("")){
 
-//                                                holder.likeCount.setText(String.valueOf(likeCountPlus));
-                                            }else{
-//                                                holder.likeCount.setText("1");
-                                            }
 
                                         }
                                     })
