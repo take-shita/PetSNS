@@ -6,11 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.contest.ContestInfoFragment">
 
+        <TextView
+            android:layout_width="366dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="104dp"
+            android:text="日常風景"
+            android:textSize="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtPost"
+            android:layout_width="410dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="36dp"
+            android:background="#FF9999"
+            android:text=" お題"
+            android:textSize="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/btnContestTopBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="571dp"
+            android:layout_marginTop="680dp"
             android:background="@drawable/frame_style"
             android:text="戻る"
             android:textColor="@color/black"
@@ -20,12 +44,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtEntry"
             android:layout_width="410dp"
             android:layout_height="38dp"
-            android:layout_marginTop="276dp"
+            android:layout_marginTop="192dp"
             android:background="#FF9999"
-            android:text=" エントリー期間"
+            android:text=" 投稿期間"
             android:textSize="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -34,22 +57,23 @@
 
         <TextView
             android:id="@+id/txtEntryDate"
-            android:layout_width="365dp"
-            android:layout_height="134dp"
-            android:layout_marginTop="116dp"
-            android:text="2024/12/20 00:00:00～2024/12/25 23:59:59"
+            android:layout_width="364dp"
+            android:layout_height="87dp"
+            android:layout_marginTop="256dp"
+            android:text="2024/1/10 00:00:00～2024/1/31 23:59:59"
             android:textSize="28dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtPost"
+            android:id="@+id/txtEntry"
             android:layout_width="410dp"
             android:layout_height="38dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="384dp"
             android:background="#FF9999"
-            android:text=" 投稿期間"
+            android:text=" エントリー期間"
             android:textSize="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -60,8 +84,8 @@
             android:id="@+id/txtPostDate"
             android:layout_width="365dp"
             android:layout_height="134dp"
-            android:layout_marginTop="368dp"
-            android:text="2024/12/23 00:00:00～2024/12/25 23:59:59"
+            android:layout_marginTop="476dp"
+            android:text="2024/1/1 00:00:00～2024/1/9 23:59:59"
             android:textSize="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
