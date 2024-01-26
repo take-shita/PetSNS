@@ -27,8 +27,12 @@ import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
 import com.example.petsns.TestPost;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -123,7 +127,52 @@ public class profile_otherFragment extends Fragment {
             // 初回表示時にボタンの状態に合わせて背景を設定
             ToggleButton followbtn = view.findViewById(R.id.followbtn);
             if (followbtn.isChecked()) {
+//                Log.e(TAG, "Error updating document");
                 followbtn.setBackgroundResource(R.drawable.forotyuutouka);
+
+                db = FirebaseFirestore.getInstance();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String userId = user.getUid();
+                CollectionReference collectionRef = db.collection("users");
+                String fieldName = "follow";
+
+                String newString = value;
+
+                DocumentReference documentRef = collectionRef.document(userId);
+
+                documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                List<String> currentList = (List<String>) document.get(fieldName);
+
+                                if (currentList == null) {
+                                    currentList = new ArrayList<>();
+                                }
+                                currentList.add(newString);
+
+                                // 更新されたデータを設定
+                                documentRef.update(fieldName, currentList)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // 更新が成功した場合の処理
+                                                Log.d(TAG, "Document updated successfully!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // 更新が失敗した場合の処理
+                                                Log.e(TAG, "Error updating document", e);
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
             } else {
                 followbtn.setBackgroundResource(R.drawable.forotouka);
             }
