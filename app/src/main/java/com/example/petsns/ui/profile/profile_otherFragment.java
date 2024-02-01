@@ -64,8 +64,15 @@ public class profile_otherFragment extends Fragment {
     private ProfileOtherViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
+
     private FirebaseFirestore db;
-    private String value="jLkwv27fPnMp1aZBURr7wbThtd32";
+    private FirebaseUser user;
+    private String value;
+    private DocumentReference documentRef;
+    private String fieldName = "follow";
+    private CollectionReference collectionRef;
+    private ToggleButton followbtn;
+    private String userId;
 
     private TextView other_userid;
     private TextView other_username;
@@ -76,6 +83,8 @@ public class profile_otherFragment extends Fragment {
     private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
     private static final String TAG = "ProfileOtherFragment";
     private OtherPostAdapter postAdapter;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,53 +135,34 @@ public class profile_otherFragment extends Fragment {
 
             // 初回表示時にボタンの状態に合わせて背景を設定
             ToggleButton followbtn = view.findViewById(R.id.followbtn);
-            if (followbtn.isChecked()) {
-//                Log.e(TAG, "Error updating document");
-                followbtn.setBackgroundResource(R.drawable.forotyuutouka);
 
-                db = FirebaseFirestore.getInstance();
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String userId = user.getUid();
-                CollectionReference collectionRef = db.collection("users");
-                String fieldName = "follow";
+            db = FirebaseFirestore.getInstance();
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            userId = user.getUid();
+            collectionRef = db.collection("users");
+            documentRef = collectionRef.document(userId);
 
-                String newString = value;
+            documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            List<String> currentList = (List<String>) document.get(fieldName);
 
-                DocumentReference documentRef = collectionRef.document(userId);
-
-                documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                List<String> currentList = (List<String>) document.get(fieldName);
-
-                                if (currentList == null) {
-                                    currentList = new ArrayList<>();
+                            if (currentList != null) {
+                                if(currentList.contains(value)){
+                                    followbtn.setChecked(true);
                                 }
-                                currentList.add(newString);
-
-                                // 更新されたデータを設定
-                                documentRef.update(fieldName, currentList)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // 更新が成功した場合の処理
-                                                Log.d(TAG, "Document updated successfully!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // 更新が失敗した場合の処理
-                                                Log.e(TAG, "Error updating document", e);
-                                            }
-                                        });
                             }
                         }
                     }
-                });
+                }
+            });
+
+
+            if (followbtn.isChecked()) {
+                followbtn.setBackgroundResource(R.drawable.forotyuutouka);
             } else {
                 followbtn.setBackgroundResource(R.drawable.forotouka);
             }
@@ -306,13 +296,91 @@ public class profile_otherFragment extends Fragment {
 
             ToggleButton followbtn = view.findViewById(R.id.followbtn);
 
+
+
+//            DocumentReference documentRef = collectionRef.document(userId);
             followbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+
                         followbtn.setBackgroundResource(R.drawable.forotyuutouka);
+
+                        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        List<String> currentList = (List<String>) document.get(fieldName);
+
+                                        if (currentList == null) {
+                                            currentList = new ArrayList<>();
+                                        }
+                                        if(!currentList.contains(value)){
+                                            currentList.add(value);
+                                            documentRef.update(fieldName, currentList)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            // 更新が成功した場合の処理
+                                                            Log.d(TAG, "Document updated successfully!");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // 更新が失敗した場合の処理
+                                                            Log.e(TAG, "Error updating document", e);
+                                                        }
+                                                    });
+
+                                        }
+
+
+                                        // 更新されたデータを設定
+
+                                    }
+                                }
+                            }
+                        });
                     } else {
                         followbtn.setBackgroundResource(R.drawable.forotouka);
+
+                        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        List<String> currentList = (List<String>) document.get(fieldName);
+
+                                        if (currentList == null) {
+                                            currentList = new ArrayList<>();
+                                        }
+
+                                        currentList.remove(value);
+
+                                        // 更新されたデータを設定
+                                        documentRef.update(fieldName, currentList)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // 更新が成功した場合の処理
+                                                        Log.d(TAG, "Document updated successfully!");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // 更新が失敗した場合の処理
+                                                        Log.e(TAG, "Error updating document", e);
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             });
