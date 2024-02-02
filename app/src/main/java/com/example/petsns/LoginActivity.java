@@ -10,9 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -21,8 +25,12 @@ import android.widget.Button;
 
 import android.content.Intent;
 
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 public class LoginActivity  extends AppCompatActivity {
     String id;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -41,6 +49,7 @@ public class LoginActivity  extends AppCompatActivity {
             EditText textPass = findViewById(R.id.loginPass);
             Button btnLogin = findViewById(R.id.btnLogin);
             Button btnSignUp = findViewById(R.id.btnSignUp);
+            Button test = findViewById(R.id.buttonSample);
 
             btnSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,10 +92,10 @@ public class LoginActivity  extends AppCompatActivity {
                                     }
                                 }
                                 FirebaseAuth.getInstance().signInWithEmailAndPassword(id, pass)
-                                        .addOnCompleteListener(signInTask  -> {
-                                            if (signInTask .isSuccessful()) {
+                                        .addOnCompleteListener(signInTask -> {
+                                            if (signInTask.isSuccessful()) {
                                                 // ログイン成功
-                                                FirebaseUser user = signInTask .getResult().getUser();
+                                                FirebaseUser user = signInTask.getResult().getUser();
                                                 String userId = user.getUid();
                                                 // ユーザー情報を利用してUIを更新するなどの処理を行う
                                                 Context context = v.getContext();
@@ -103,6 +112,7 @@ public class LoginActivity  extends AppCompatActivity {
 
                 }
             });
+
         }
     }
 }

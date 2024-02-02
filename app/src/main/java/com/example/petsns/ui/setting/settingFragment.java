@@ -11,20 +11,36 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import android.app.Dialog;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Context;
+import android.widget.Toast;
+
 import com.example.petsns.LoginActivity;
 import com.example.petsns.MainActivity;
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class settingFragment extends Fragment {
 
     private SettingViewModel mViewModel;
+
+    private FirebaseAuth mAuth;
+
+    private Firebase db;
 
     public static settingFragment newInstance() {
         return new settingFragment();
@@ -78,7 +94,6 @@ public class settingFragment extends Fragment {
             public  void onClick(View v) {
                 Context context = requireContext();
                 Dialog dialog= new Dialog(context);
-                dialog.setContentView(R.layout.fragment_delete);
 
                 // レイアウトファイルをインフレート
                 dialog.setContentView(R.layout.fragment_delete);
@@ -90,6 +105,98 @@ public class settingFragment extends Fragment {
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
 
+                // FirebaseAuth インスタンスを取得
+                mAuth = FirebaseAuth.getInstance();
+
+
+                // btnyes ボタンを取得
+                Button btnYes = dialog.findViewById(R.id.btnyes);
+                // btnno ボタンを取得
+                Button btnNo = dialog.findViewById(R.id.btnno);
+
+                // btnyes ボタンにクリックリスナーを設定
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 現在ログインしているユーザーを取得
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                        db.collection("users") // コレクション名
+                                .document(user.getUid()) // ドキュメント名
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+
+                                            String pass = documentSnapshot.getString("password");
+
+                                            if (user != null) {
+                                                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), pass); // ユーザーの実際のパスワードを使用してください
+                                                user.reauthenticate(credential)
+                                                        .addOnCompleteListener(reauthTask -> {
+                                                            if (reauthTask.isSuccessful()) {
+                                                                user.delete().addOnCompleteListener(task -> {
+                                                                    if (task.isSuccessful()) {
+                                                                        // Firebase Authenticationでの削除が成功した場合の処理
+                                                                        // ここでFirestoreのユーザーデータを削除するコードを追加
+                                                                        deleteFirestoreUserData(user.getUid());
+                                                                        Log.d("FirebaseAuth", "User account deleted successfully!");
+
+                                                                        Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
+                                                                        // ログアウトや画面遷移などの処理が必要であればここで行う
+                                                                        Context context = v.getContext();
+
+                                                                        Intent intent = new Intent(context, LoginActivity.class);
+                                                                        startActivity(intent);
+
+                                                                    } else {
+                                                                        // Firebase Authenticationでの削除が失敗した場合の処理
+                                                                        Log.w("FirebaseAuth", "Error deleting user account", task.getException());
+                                                                        //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                                                        if (task.getException() != null) {
+                                                                            task.getException().printStackTrace();
+                                                                            Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                            }
+
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // エラーが発生した場合の処理
+                                    }
+                                });
+
+                    }
+                    private void deleteFirestoreUserData(String userId) {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("users").document(userId)
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("Firestore", "DocumentSnapshot successfully deleted!");
+                                    // 他の処理を追加する
+                                    // ドキュメントの削除が成功した場合の処理
+                                    // ここに適切な処理を追加する（例: ユーザーのデータが正常に削除されたときの処理）
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w("Firestore", "Error deleting document", e);
+                                    // エラー時の処理を追加する
+                                    // ドキュメントの削除が失敗した場合の処理
+                                    Toast.makeText(requireContext(), "ユーザーデータの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                    if (e != null) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                    }
+                });
                 Button btnClose = dialog.findViewById(R.id.btnno);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
