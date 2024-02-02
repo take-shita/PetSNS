@@ -51,16 +51,6 @@ public class LoginActivity  extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-//            バックドア
-//            btnGo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//
-//                    Intent intent = new Intent(context, MainActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

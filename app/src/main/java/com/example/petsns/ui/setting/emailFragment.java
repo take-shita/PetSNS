@@ -24,8 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.widget.Toast;
 import android.widget.EditText;
-
-
+import android.text.TextUtils;
 public class emailFragment extends Fragment {
 
     private EmailViewModel mViewModel;
@@ -76,38 +75,42 @@ public class emailFragment extends Fragment {
             public void onClick(View v) {
                 // 新しいメールアドレスを入力フォームから取得
                 String newEmail = editTextNewEmail.getText().toString();
+                // FirebaseAuth インスタンスを取得
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                // 現在のユーザーを取得
+                FirebaseUser user = mAuth.getCurrentUser();
+                // 新しいメールアドレスが空でないことを確認
+                if (!TextUtils.isEmpty(newEmail)) {
+                    // 現在のメールアドレスと新しいメールアドレスが異なる場合のみ更新
+                    if (!newEmail.equals(user.getEmail())) {
 
-                String password = "ユーザーの現在のパスワード";
-                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
-
-                // メールアドレスの変更
-                user.reauthenticate(credential)
-                        .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> reauthTask) {
-                                user.updateEmail(newEmail)
-                                        .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    // メールアドレスの変更が成功した場合
-                                                    Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    // メールアドレスの変更が失敗した場合
-                                                    String errorMessage = task.getException().getMessage();
-                                                    if (errorMessage.contains("")) {
-                                                        Toast.makeText(requireContext(), "メールアドレス登録完了しました", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(requireContext(), "メールアドレスの変更が失敗しました：" + errorMessage, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                        });
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_email_to_navigation_setting);
+                    // メールアドレスの更新
+                    user.updateEmail(newEmail)
+                            .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // メールアドレスの更新が成功した場合
+                                        Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                        Navigation.findNavController(v).navigate(R.id.action_navigation_email_to_navigation_setting);
+                                    } else {
+                                        // メールアドレスの更新が失敗した場合
+                                        String errorMessage = task.getException().getMessage();
+                                        Toast.makeText(requireContext(), "メールアドレスの変更が失敗しました：" + errorMessage, Toast.LENGTH_SHORT).show();
+                                        Log.d("error",errorMessage);
+                                    }
+                                }
+                            });
+                    } else {
+                        // 現在のメールアドレスと同じ場合はエラーメッセージを表示
+                        Toast.makeText(requireContext(), "新しいメールアドレスが現在のメールアドレスと同じです", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // 新しいメールアドレスが空の場合はエラーメッセージを表示
+                    Toast.makeText(requireContext(), "新しいメールアドレスを入力してください", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 }
+

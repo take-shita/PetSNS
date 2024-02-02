@@ -7,8 +7,6 @@ public class Answer {
     private String ques_id;
     private Timestamp timestamp;
     private String user_id;
-
-    // ゲッター・セッターなど必要な処理を実装
     public String getAnswer_content(){
         return answer_content;
     }
