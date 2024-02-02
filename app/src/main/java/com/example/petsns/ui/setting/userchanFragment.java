@@ -19,11 +19,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class userchanFragment extends Fragment {
 
@@ -33,7 +41,7 @@ public class userchanFragment extends Fragment {
     private TextView textViewUsername;
     private EditText editTextNewUsername;
     private Button btnChangeUsername;
-
+    String userId;
     private View view; // メンバ変数として宣言
 
     public static userchanFragment newInstance() {
@@ -90,30 +98,58 @@ public class userchanFragment extends Fragment {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             if (user != null) {
-                String userId = user.getUid();
-                DocumentReference userDocRef = db.collection("users").document(userId);
+                String userUid = user.getUid();
 
-                userDocRef.get()
-                        .addOnSuccessListener(documentSnapshot -> {
-                            if (documentSnapshot.exists()) {
-                                // ドキュメントが存在する場合
-                                String username = documentSnapshot.getString("name");
-                                if (userId != null && !userId.isEmpty()) {
-                                    textViewUsername.setText("" + username);
-                                } else {
-                                    textViewUsername.setText("Username: (No username set)");
-                                }
 
-                            } else {
-                                // ドキュメントが存在しない場合
-                                Toast.makeText(requireContext(), "ユーザードキュメントが存在しません", Toast.LENGTH_SHORT).show();
+                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                            CollectionReference collectionRefId = db.collection("userId");
+                            collectionRefId.whereEqualTo("uid", userUid)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(Task<QuerySnapshot> task1) {
 
-                            }
-                        })
-                        .addOnFailureListener(e -> {
-                            // 取得失敗時の処理
-                            Toast.makeText(requireContext(), "ドキュメントの取得に失敗しました", Toast.LENGTH_SHORT).show();
+                                            if (task1.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                    // ドキュメントが見つかった場合、IDを取得
+                                                    userId = document1.getId();
+
+                                                    DocumentReference userDocRef = db.collection("users").document(userId);
+
+                                                    userDocRef.get()
+                                                            .addOnSuccessListener(documentSnapshot -> {
+                                                                if (documentSnapshot.exists()) {
+                                                                    // ドキュメントが存在する場合
+                                                                    String username = documentSnapshot.getString("name");
+                                                                    if (userId != null && !userId.isEmpty()) {
+                                                                        textViewUsername.setText("" + username);
+                                                                    } else {
+                                                                        textViewUsername.setText("Username: (No username set)");
+                                                                    }
+
+                                                                } else {
+                                                                    // ドキュメントが存在しない場合
+                                                                    Toast.makeText(requireContext(), "ユーザードキュメントが存在しません", Toast.LENGTH_SHORT).show();
+
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                // 取得失敗時の処理
+                                                                Toast.makeText(requireContext(), "ドキュメントの取得に失敗しました", Toast.LENGTH_SHORT).show();
+                                                            });
+                                                }
+                                            }
+                                        }
+                                    });
                         });
+                try {
+                    future1.get(); // 非同期処理が終わるまでブロック
+
+                } catch (InterruptedException | ExecutionException e) {
+                    // 例外処理
+                }
+
+
 
             }
         }
@@ -128,26 +164,49 @@ public class userchanFragment extends Fragment {
 
 
             if (currentUser != null) {
-                String userId = currentUser.getUid(); // ユーザーのUIDを取得
-
-                // Firestoreの"users"コレクション内のユーザードキュメントにアクセス
-                DocumentReference userDocRef = db.collection("users").document(userId);
-
-                // 新しい名前
+                String userUid = user.getUid();
 
 
-                // ドキュメントの更新
-                userDocRef.update("name", newUsername)
-                        .addOnSuccessListener(aVoid -> {
-                            // 更新成功時の処理
-                            Toast.makeText(requireContext(), "名前が更新されました", Toast.LENGTH_SHORT).show();
-                            displayUserInfo(); // 更新後のユーザー情報を再表示
-                            Navigation.findNavController(getView()).navigateUp();
-                        })
-                        .addOnFailureListener(e -> {
-                            // 更新失敗時の処理
-                            Toast.makeText(requireContext(), "名前の更新に失敗しました", Toast.LENGTH_SHORT).show();
-                        });
+                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                    CollectionReference collectionRefId = db.collection("userId");
+                    collectionRefId.whereEqualTo("uid", userUid)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(Task<QuerySnapshot> task1) {
+
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                            // ドキュメントが見つかった場合、IDを取得
+                                            userId = document1.getId();
+
+                                            // Firestoreの"users"コレクション内のユーザードキュメントにアクセス
+                                            DocumentReference userDocRef = db.collection("users").document(userId);
+
+                                            // 新しい名前
+
+
+                                            // ドキュメントの更新
+                                            userDocRef.update("name", newUsername)
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        // 更新成功時の処理
+                                                        Toast.makeText(requireContext(), "名前が更新されました", Toast.LENGTH_SHORT).show();
+                                                        displayUserInfo(); // 更新後のユーザー情報を再表示
+                                                        Navigation.findNavController(getView()).navigateUp();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        // 更新失敗時の処理
+                                                        Toast.makeText(requireContext(), "名前の更新に失敗しました", Toast.LENGTH_SHORT).show();
+                                                    });
+
+                                        }
+                                    }
+                                }
+                            });
+                });
+
+
+
             } else {
                 // ユーザーがログインしていない場合の処理
                 Toast.makeText(requireContext(), "ユーザーがログインしていません", Toast.LENGTH_SHORT).show();
