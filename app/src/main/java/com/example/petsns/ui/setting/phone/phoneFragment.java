@@ -20,9 +20,22 @@ import android.widget.Toast;
 
 import com.example.petsns.R;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+
+
+
+
 public class phoneFragment extends Fragment {
 
     private PhoneViewModel mViewModel;
+    String phone;
     private EditText phoneNumberEditText;
     private int editTextPhoneMax = 11;
 
@@ -77,22 +90,59 @@ public class phoneFragment extends Fragment {
             public void onClick(View v) {
                 // 電話番号が11桁かどうかを確認
                 String phoneNumber = phoneNumberEditText.getText().toString().trim();
-                if (phoneNumber.length() == 11) {
-                    // 11桁の場合は設定画面に戻る
-                    Toast.makeText(requireContext(), "電話番号の登録完了しました", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_setting);
-                } else {
-                    // 11桁でない場合は適切な処理を行う（エラーメッセージ表示など）
-                    // ここでは何もしない例としています
+                if (phoneNumber.length() != 11) {
+                    // 電話番号が11桁でない場合はエラーを表示
+                    Toast.makeText(requireContext(), "電話番号は11桁で入力してください", Toast.LENGTH_SHORT).show();
+                    return; // エラーが発生したため、以降の処理を中断
                 }
-            }
+                    // Cloud Firestoreから現在の電話番号を取得
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        String userId = user.getUid();
+                        DocumentReference userRef = db.collection("users").document(userId);
+                        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    String currentPhoneNumber = documentSnapshot.getString("phoneNumber");
+                                    if (currentPhoneNumber != null && currentPhoneNumber.equals(phoneNumber)) {
+                                        // 入力された電話番号と現在の電話番号が同じ場合はエラーを表示
+                                        Toast.makeText(requireContext(), "入力された電話番号は既に登録されています", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // 入力された電話番号と現在の電話番号が異なる場合は更新を試みる
+                                        userRef.update("phoneNumber", phoneNumber)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // 11桁の場合は設定画面に戻る
+                                                        Toast.makeText(requireContext(), "電話番号の登録完了しました", Toast.LENGTH_SHORT).show();
+                                                        Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_setting);
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(requireContext(), "電話番号の登録に失敗しました", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
         });
+
 
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_setting);
+                // btncanがクリックされたときの処理
+                Navigation.findNavController(v).navigate(R.id.action_navigation_phone_to_navigation_pass1);
             }
         });
     }
 }
+

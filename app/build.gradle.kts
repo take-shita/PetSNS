@@ -78,5 +78,6 @@ dependencies {
 //    recycleviewの追記
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.google.maps:google-maps-services:0.15.0")
+    implementation ("com.google.firebase:firebase-database:20.0.0")
 
 }
