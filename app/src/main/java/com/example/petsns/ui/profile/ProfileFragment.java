@@ -26,8 +26,11 @@ import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
 import com.example.petsns.TestPost;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,12 +52,7 @@ import java.io.File;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import java.io.IOException;
-
-
-
-
-
-
+import java.util.concurrent.CompletableFuture;
 
 
 public class ProfileFragment extends Fragment {
@@ -67,7 +65,7 @@ public class ProfileFragment extends Fragment {
     private PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
 
     private View rootView;
-
+    private String userId;
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
@@ -102,83 +100,104 @@ public class ProfileFragment extends Fragment {
 
                         db = FirebaseFirestore.getInstance();
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userId = user.getUid();
-                        DocumentReference docRef = db.collection("users").document(userId);
+                        String userUid = user.getUid();
 
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
+                        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                    CollectionReference collectionRefId = db.collection("userId");
+                                    collectionRefId.whereEqualTo("uid", userUid)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(Task<QuerySnapshot> task1) {
 
-                            Map<String, Object> data = document.getData();
-                            String documentId = document.getId();
+                                                    if (task1.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                            // ドキュメントが見つかった場合、IDを取得
+                                                            userId = document1.getId();
+                                                            DocumentReference docRef = db.collection("users").document(userId);
 
-                            List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
-                            List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
-                            List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
-                            List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
-                            List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
-                            List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
-                            Number likeCountDouble = ((Number) data.get("likeCount"));
 
-                            post.setId((String) data.get("id"));
-                            post.setSentence((String) data.get("sentence"));
-                            post.setImageUrl((String) data.get("imageUrl"));
-                            post.setDocumentId(documentId);
-                            post.setLikeCount(likeCountDouble.intValue());
-                            post.setTagMom(tagMom);
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
 
-                            post.setTagBir(tagBir);
+                                                                Map<String, Object> data = document.getData();
+                                                                String documentId = document.getId();
 
-                            post.setTagRip(tagRip);
+                                                                List<Boolean> tagMom = (List<Boolean>) data.get("tagMom");
+                                                                List<Boolean> tagBir = (List<Boolean>) data.get("tagBir");
+                                                                List<Boolean> tagRip = (List<Boolean>) data.get("tagRip");
+                                                                List<Boolean> tagBis = (List<Boolean>) data.get("tagBis");
+                                                                List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
+                                                                List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
+                                                                Number likeCountDouble = ((Number) data.get("likeCount"));
 
-                            post.setTagBis(tagBis);
+                                                                post.setId((String) data.get("id"));
+                                                                post.setSentence((String) data.get("sentence"));
+                                                                post.setImageUrl((String) data.get("imageUrl"));
+                                                                post.setDocumentId(documentId);
+                                                                post.setLikeCount(likeCountDouble.intValue());
+                                                                post.setTagMom(tagMom);
 
-                            post.setTagAqua(tagAqua);
+                                                                post.setTagBir(tagBir);
 
-                            post.setTagIns(tagIns);
+                                                                post.setTagRip(tagRip);
 
-                            posts.add(post);
-                        }
-                        postAdapter.setPosts(posts);
+                                                                post.setTagBis(tagBis);
 
-                        // データ取得後にユーザー情報を表示する処理を追加
-                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if (documentSnapshot.exists()) {
-                                    // ユーザーのドキュメントが存在する場合の処理
-                                    String iconUrl = documentSnapshot.getString("icon");
-                                    // ローカルファイルへのダウンロード処理
-                                    StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                                    try {
-                                        final File localFile = File.createTempFile("images", "jpg");
-                                        storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                            // 成功時の処理
-                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                            holder.profileicon.setImageBitmap(bitmap);
-                                        }).addOnFailureListener(exception -> {
-                                            // 失敗時の処理
-                                        });
-                                    } catch (IOException e) {
-                                        // IOExceptionが発生した場合の処理
-                                        e.printStackTrace();
-                                    }
+                                                                post.setTagAqua(tagAqua);
 
-                                    String username = documentSnapshot.getString("name");
-                                    String userID = documentSnapshot.getString("id");
-                                    // profile_textUsernameのTextViewを取得
-                                    TextView profile_textUsername = rootView.findViewById(R.id.profile_textUsername);
-                                    // profile_nameのTextViewを取得
-                                    TextView profile_name = rootView.findViewById(R.id.profile_name);
+                                                                post.setTagIns(tagIns);
 
-                                    // 取得したIDと名前をそれぞれのTextViewにセット
-                                    profile_textUsername.setText(userID);
-                                    profile_name.setText(username);
-                                } else {
-                                    // ユーザーのドキュメントが存在しない場合の処理
-                                }
-                            }
-                        });
+                                                                posts.add(post);
+                                                            }
+                                                            postAdapter.setPosts(posts);
+
+                                                            // データ取得後にユーザー情報を表示する処理を追加
+                                                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                    if (documentSnapshot.exists()) {
+                                                                        // ユーザーのドキュメントが存在する場合の処理
+                                                                        String iconUrl = documentSnapshot.getString("icon");
+                                                                        // ローカルファイルへのダウンロード処理
+                                                                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
+                                                                        try {
+                                                                            final File localFile = File.createTempFile("images", "jpg");
+                                                                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                                                                // 成功時の処理
+                                                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                                                holder.profileicon.setImageBitmap(bitmap);
+                                                                            }).addOnFailureListener(exception -> {
+                                                                                // 失敗時の処理
+                                                                            });
+                                                                        } catch (IOException e) {
+                                                                            // IOExceptionが発生した場合の処理
+                                                                            e.printStackTrace();
+                                                                        }
+
+                                                                        String username = documentSnapshot.getString("name");
+                                                                        String userID = documentSnapshot.getString("id");
+                                                                        // profile_textUsernameのTextViewを取得
+                                                                        TextView profile_textUsername = rootView.findViewById(R.id.profile_textUsername);
+                                                                        // profile_nameのTextViewを取得
+                                                                        TextView profile_name = rootView.findViewById(R.id.profile_name);
+
+                                                                        // 取得したIDと名前をそれぞれのTextViewにセット
+                                                                        profile_textUsername.setText(userID);
+                                                                        profile_name.setText(username);
+                                                                    } else {
+                                                                        // ユーザーのドキュメントが存在しない場合の処理
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                });
+
                     }
 
 
