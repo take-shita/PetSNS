@@ -13,11 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -27,15 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,7 +38,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostViewHolder> {
-
     private List<TestPost> posts;
     private Context context;
     private List<QueryDocumentSnapshot> data;
@@ -52,26 +45,22 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         this.data =new ArrayList<>();
         this.context = context;
     }
-
     public void setPosts(List<TestPost> posts) {
         this.posts = posts;
         notifyDataSetChanged();
     }
-
     private String formattimestamp(Timestamp timestamp) {
         // ここで適切なフォーマットに変換する処理を実装
         // 例: SimpleDateFormatを使用して文字列に変換する
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date(timestamp.getSeconds() * 1000));
     }
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         return new PostViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
@@ -80,10 +69,8 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TestPost post = posts.get(adapterPosition);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String documentId=post.getDocumentId();
-
         // 投稿時間を取得
         Timestamp timestamp = post.gettimestamp();
-
         // 取得した投稿時間を適切なフォーマットに変換
         String formattedTime = formattimestamp(timestamp);
 
@@ -112,14 +99,9 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                         // エラーが発生した場合の処理
                     }
                 });
-
-
-
         holder.report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ボタンがクリックされたときの処理
-                // 新しい画面に遷移する  後で書き換える
                 Context context = v.getContext();
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.fragment_profile_other_reportcheck);
@@ -132,6 +114,30 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 hai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        DocumentReference docRef = db.collection("users").document(post.getid());
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    Long numberValue = documentSnapshot.getLong("reportCount");
+                                    if (numberValue != null) {
+                                        int intValue = numberValue.intValue() + 1;
+                                        Map<String, Object> updateData = new HashMap<>();
+                                        updateData.put("reportCount", intValue);
+                                        docRef.update(updateData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                            }
+                                        });
+                                    } else {
+                                    }
+                                }
+                            }
+                        });
                         dialog.dismiss();
                     }
                 });
@@ -145,8 +151,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 dialog.show();
             }
         });
-
-
         holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -155,40 +159,30 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
-                                Map<String,Object> updates=new HashMap<>();
-                                if(post.getLikeCount()!=0){
-                                    int likeCountPlus= post.getLikeCount()+1;
-                                    post.setLikeCount(likeCountPlus);
-                                }else {
-                                    int likeCountPlus=1;
-                                    post.setLikeCount(likeCountPlus);
-                                }
-
-
-                                updates.put("likeCount",post.getLikeCount());
-
-                                docRef.update(updates)
-                                        .addOnSuccessListener(
-                                                new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        if(post.getLikeCount()!=1){
-
-                                                            holder.likeCount.setText(String.valueOf(post.getLikeCount()));
-                                                        }else{
-                                                            holder.likeCount.setText("");
-                                                        }
-
-                                                    }
-                                                })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-
-                                            }
-                                        });
-                }else {
-
+                    Map<String,Object> updates=new HashMap<>();
+                    if(post.getLikeCount()!=0){
+                        int likeCountPlus= post.getLikeCount()+1;
+                        post.setLikeCount(likeCountPlus);
+                    }else {
+                        int likeCountPlus=1;
+                        post.setLikeCount(likeCountPlus);
+                    }
+                    updates.put("likeCount",post.getLikeCount());
+                    docRef.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            if(post.getLikeCount()!=1){
+                                holder.likeCount.setText(String.valueOf(post.getLikeCount()));
+                            }else{
+                                holder.likeCount.setText("");
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                        }
+                    });
+                } else {
                     holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
                     DocumentReference docRef=db.collection("posts").document(documentId);
 
@@ -196,46 +190,29 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     if( post.getLikeCount()!=0){
                         int likeCountPlus= post.getLikeCount()-1;
                         post.setLikeCount(likeCountPlus);
-                    }else {
-
-                    }
+                    }else { }
                     updates.put("likeCount",post.getLikeCount());
-
-                    docRef.update(updates)
-                            .addOnSuccessListener(
-                                    new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            if(post.getLikeCount()!=0){
-                                                holder.likeCount.setText(String.valueOf(post.getLikeCount()));
-                                            }else{
-                                                holder.likeCount.setText(String.valueOf(""));
-                                            }
-
-
-
-                                        }
-                                    })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                }
-                            });
+                    docRef.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            if(post.getLikeCount()!=0){
+                                holder.likeCount.setText(String.valueOf(post.getLikeCount()));
+                            }else{
+                                holder.likeCount.setText(String.valueOf(""));
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                        }
+                    });
                 }
             }
         });
-//
-
-
-
-
 // コレクションとドキュメントのパスを指定
         String collectionPath = "users";
         String documentPath = post.getid();
         DocumentReference docRef = db.collection(collectionPath).document(documentPath);
-
-
         //        相手プロフィール画面への遷移
         holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,9 +243,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             }
         });
 
-
         holder.textPost.setText(post.getSentence());
-//        post.tagConversion();
 
         holder.tagText.setText(post.tagConversion());
 
@@ -276,7 +251,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getImageUrl());
             try {
-
                 final File localFile = File.createTempFile("images", "jpg");
                 storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
                     // ローカルファイルから画像を読み込んで ImageView にセット
@@ -285,76 +259,46 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
 
                 }).addOnFailureListener(exception -> {
                     // 失敗時の処理
-
                 });
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
-        }
-
-        db.collection("users") // コレクション名
-                .document(post.getid()) // ドキュメント名
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // ドキュメントが存在する場合、フィールドの値を取得
-                             post.setIcon(documentSnapshot.getString("icon"));
-                            if (post.getIcon() != null && !post.getIcon().isEmpty()) {
-
-                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
-                                try {
-
-                                    final File localFile = File.createTempFile("images", "jpg");
-                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                        // ローカルファイルから画像を読み込んで ImageView にセット
-                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                        holder.otherprofilebtn.setImageBitmap(bitmap);
-
-                                    }).addOnFailureListener(exception -> {
-                                        // 失敗時の処理
-
-                                    });
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                // 画像がない場合の処理（任意で実装）
-//            holder.imagePost.setImageResource(R.drawable.placeholder_image);
-
-                            }
-                            // 取得した値を利用する処理をここに追加
-                        } else {
-                            // ドキュメントが存在しない場合の処理
+            } catch (IOException e) { e.printStackTrace(); }
+        } else { }
+        db.collection("users").document(post.getid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // ドキュメントが存在する場合、フィールドの値を取得
+                    post.setIcon(documentSnapshot.getString("icon"));
+                    if (post.getIcon() != null && !post.getIcon().isEmpty()) {
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(post.getIcon());
+                        try {
+                            final File localFile = File.createTempFile("images", "jpg");
+                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                // ローカルファイルから画像を読み込んで ImageView にセット
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                holder.otherprofilebtn.setImageBitmap(bitmap);
+                            }).addOnFailureListener(exception -> {
+                                // 失敗時の処理
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                    } else {
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // エラーが発生した場合の処理
-                    }
-                });
-
-
-
-
-
-
-
+                    // 取得した値を利用する処理をここに追加
+                } else {
+                    // ドキュメントが存在しない場合の処理
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // エラーが発生した場合の処理
+            }
+        });
     }
-
     @Override
-    public int getItemCount() {
-        return posts != null ? posts.size() : 0;
-    }
-
+    public int getItemCount() { return posts != null ? posts.size() : 0; }
     public class PostViewHolder extends RecyclerView.ViewHolder {
         TextView textUsername;
         TextView textPost;
@@ -368,7 +312,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         ImageButton report_btn;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
-
             hartbtn=itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
@@ -377,16 +320,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
             tagText=itemView.findViewById(R.id.tagText);
             likeCount=itemView.findViewById(R.id.iinecount);
             posttime = itemView.findViewById(R.id.posttime);
-
             report_btn = itemView.findViewById(R.id.report_btn);
-
         }
     }
-
-    // 画像データのバイナリをデコードするメソッドが必要な場合、以下のように実装できます
-    /*
-    private Bitmap decodeByteArray(byte[] byteArray) {
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-    }
-    */
 }
