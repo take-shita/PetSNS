@@ -131,7 +131,7 @@ public class snstopFragment extends Fragment {
 
         String userUid = user.getUid();
 
-        Log.d("sasasasa","aaaaaaaaaaaaaaa");
+
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                     CollectionReference collectionRefId = db.collection("userId");
                     collectionRefId.whereEqualTo("uid", userUid)
@@ -139,52 +139,58 @@ public class snstopFragment extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(Task<QuerySnapshot> task1) {
-
                                     if (task1.isSuccessful()) {
                                         for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                             // ドキュメントが見つかった場合、IDを取得
                                             userId = document1.getId();
-                                            DocumentReference docRef = db.collection("users").document(userId);
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                    if (documentSnapshot.exists()) {
-                                                        // ユーザーのドキュメントが存在する場合の処理
-                                                        String iconUrl = documentSnapshot.getString("icon");
-                                                        // ローカルファイルへのダウンロード処理
-                                                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(iconUrl);
-                                                        try {
-                                                            final File localFile = File.createTempFile("images", "jpg");
-                                                            storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                                                // 成功時の処理
-                                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                                prof_bt.setImageBitmap(bitmap);
-                                                                Log.d("sasaswasa","aaaaaaaaaaaaaaa");
-                                                            }).addOnFailureListener(exception -> {
-                                                                // 失敗時の処理
-                                                                Log.d("aaaa","aaaaaaaaaaaaaaa");
-                                                            });
-                                                        } catch (IOException e) {
-                                                            // IOExceptionが発生した場合の処理
-                                                            e.printStackTrace();
-                                                            Log.d("sasasasa","aaaaaaaaaaaaaaa");
+                                            db.collection("users") // コレクション名
+                                                    .document(userId) // ドキュメント名
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                            if (documentSnapshot.exists()) {
+
+                                                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("icon"));
+                                                                try {
+
+                                                                    final File localFile = File.createTempFile("images", "png");
+                                                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                                                        // ローカルファイルから画像を読み込んで ImageView にセット
+                                                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                                        prof_bt.setImageBitmap(bitmap);
+
+                                                                    }).addOnFailureListener(exception -> {
+                                                                        // 失敗時の処理
+
+                                                                    });
+
+                                                                } catch (IOException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
                                                         }
-                                                    }
-                                                }
-                                            });
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // エラーが発生した場合の処理
+                                                        }
+                                                    });
                                         }
                                     }
                                 }
                             });
                 });
         try {
-            // CompletableFutureの結果を待つ
             future1.get(); // 非同期処理が終わるまでブロック
+
         } catch (InterruptedException | ExecutionException e) {
             // 例外処理
-            e.printStackTrace();
         }
+
 
         // ... 他の処理を追加
 

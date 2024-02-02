@@ -59,6 +59,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class BoardFragment extends Fragment {
 
@@ -67,6 +69,7 @@ public class BoardFragment extends Fragment {
     private RecyclerView recyclerView;
     private QuestionAdapter QuestionAdapter;
     private FirebaseFirestore db;
+    String userId;
     public static BoardFragment newInstance() {
         return new BoardFragment();
     }
@@ -173,21 +176,44 @@ public class BoardFragment extends Fragment {
                         dialog.dismiss();
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                        String userId = user.getUid();
+                        String userUid = user.getUid();
 
-                        CollectionReference postCollection = db.collection("question");
 
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("user_id",userId);
-                        data.put("timestamp", FieldValue.serverTimestamp());
-                        data.put("ques_content",ques_con.getText().toString());
-                        data.put("ques_title",ques_tit.getText().toString());
+                        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                    CollectionReference collectionRefId = db.collection("userId");
+                                    collectionRefId.whereEqualTo("uid", userUid)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(Task<QuerySnapshot> task1) {
+                                                    if (task1.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                            // ドキュメントが見つかった場合、IDを取得
+                                                            userId = document1.getId();
+                                                            CollectionReference postCollection = db.collection("question");
 
-                        postCollection.document(UUID.randomUUID().toString()).set(data)
-                                .addOnSuccessListener(documentReference -> {
-                                })
-                                .addOnFailureListener(e -> {
+                                                            Map<String, Object> data = new HashMap<>();
+                                                            data.put("user_id",userId);
+                                                            data.put("timestamp", FieldValue.serverTimestamp());
+                                                            data.put("ques_content",ques_con.getText().toString());
+                                                            data.put("ques_title",ques_tit.getText().toString());
+
+                                                            postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                                    .addOnSuccessListener(documentReference -> {
+                                                                    })
+                                                                    .addOnFailureListener(e -> {
+                                                                    });
+                                                        }
+                                                    }
+                                                }
+                                            });
                                 });
+                        try {
+                            future1.get(); // 非同期処理が終わるまでブロック
+                        } catch (InterruptedException | ExecutionException e) {
+                            // 例外処理
+                        }
+
                     }
                 });
                 dialog.show();

@@ -45,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +72,7 @@ public class BoardChatFragment extends Fragment {
     private TextView txttitle;
     private  TextView txtcon;
     private FirebaseFirestore db;
+    String userId;
     public BoardChatFragment() {
         // Required empty public constructor
     }
@@ -193,20 +196,46 @@ public class BoardChatFragment extends Fragment {
                 public void onClick(View v) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    String userId = user.getUid();
+                    String userUid = user.getUid();
 
-                    CollectionReference postCollection = db.collection("answer");
 
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("user_id", userId);
-                    data.put("timestamp", FieldValue.serverTimestamp());
-                    data.put("ques_id",documentID);
-                    data.put("answer_content", ans_con.getText().toString());
-                    postCollection.document(UUID.randomUUID().toString()).set(data)
-                            .addOnSuccessListener(documentReference -> {
-                            })
-                            .addOnFailureListener(e -> {
-                            });
+                    CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                        CollectionReference collectionRefId = db.collection("userId");
+                        collectionRefId.whereEqualTo("uid", userUid)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(Task<QuerySnapshot> task1) {
+                                        if (task1.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                // ドキュメントが見つかった場合、IDを取得
+                                                userId = document1.getId();
+                                                CollectionReference postCollection = db.collection("answer");
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("user_id", userId);
+                                                data.put("timestamp", FieldValue.serverTimestamp());
+                                                data.put("ques_id",documentID);
+                                                data.put("answer_content", ans_con.getText().toString());
+                                                postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                        .addOnSuccessListener(documentReference -> {
+                                                        })
+                                                        .addOnFailureListener(e -> {
+                                                        });
+
+                                            }
+                                        }
+                                    }
+                                });
+                    });
+
+
+                    try {
+                        future1.get(); // 非同期処理が終わるまでブロック
+                    } catch (InterruptedException | ExecutionException e) {
+                        // 例外処理
+                    }
+
                 }
             });
             // データを使用して何かを行う

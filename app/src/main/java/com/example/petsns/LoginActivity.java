@@ -113,60 +113,6 @@ public class LoginActivity  extends AppCompatActivity {
                 }
             });
 
-            test.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                    // コピー元のドキュメントの参照
-                    String sourceCollection = "users";
-                    String sourceDocumentId = "mS8yhvIVEbVysAs4i1jDGAx1coX2";
-
-                    DocumentReference sourceDocumentRef = db.collection(sourceCollection).document(sourceDocumentId);
-
-
-                    // コピー先のドキュメントIDを生成（新しいIDを指定することもできます）
-
-                    sourceDocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                // コピー元のドキュメントを取得
-                                DocumentSnapshot sourceDocumentSnapshot = task.getResult();
-
-
-                                if (sourceDocumentSnapshot.exists()) {
-                                    // コピー先のコレクションとドキュメントを指定してデータをセット
-                                    CollectionReference destinationCollection = db.collection(sourceCollection);
-                                    String newDocumentId=sourceDocumentSnapshot.getString("id");
-                                    DocumentReference destinationDocumentRef = destinationCollection.document(newDocumentId);
-
-                                    Map<String, Object> dataToCopy = sourceDocumentSnapshot.getData();
-                                    if (dataToCopy != null) {
-                                        destinationDocumentRef.set(dataToCopy)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(Task<Void> copyTask) {
-                                                        if (copyTask.isSuccessful()) {
-                                                            // コピーが成功した場合の処理
-                                                            System.out.println("Document copied successfully!");
-                                                        } else {
-                                                            // コピーが失敗した場合の処理
-                                                            System.err.println("Error copying document: " + copyTask.getException().getMessage());
-                                                        }
-                                                    }
-                                                });
-                                    } else {
-                                        System.err.println("No data to copy from the source document.");
-                                    }
-                                } else {
-                                    System.err.println("Source document does not exist.");
-                                }
-                            }
-                        }
-                    });
-                }
-            });
         }
     }
 }

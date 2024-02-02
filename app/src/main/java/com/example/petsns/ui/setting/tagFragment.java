@@ -9,8 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.petsns.MyApplication;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +23,11 @@ import android.widget.Toast;
 import com.example.petsns.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -33,11 +38,13 @@ import org.w3c.dom.Document;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class tagFragment extends Fragment {
 
     private TagViewModel mViewModel;
-
+    String userId;
     public static tagFragment newInstance() {
         return new tagFragment();
     }
@@ -106,43 +113,70 @@ public class tagFragment extends Fragment {
                 FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
                 FirebaseFirestore db=FirebaseFirestore.getInstance();
                 if(user!=null){
-                    String userId= user.getUid();
-                    DocumentReference docRef=db.collection("users").document(userId);
+                    String userUid = user.getUid();
 
-                    Map<String,Object> updates=new HashMap<>();
-                    updates.put("likeMom",mViewModel.getArraylikeMom());
-                    updates.put("DisMom",mViewModel.getArrayDislikeMom());
 
-                    updates.put("likeBir",mViewModel.getArraylikeBir());
-                    updates.put("DisBir",mViewModel.getArrayDislikeBir());
+                    CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                CollectionReference collectionRefId = db.collection("userId");
+                                collectionRefId.whereEqualTo("uid", userUid)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(Task<QuerySnapshot> task1) {
 
-                    updates.put("likeRip",mViewModel.getArraylikeRip());
-                    updates.put("DisRip",mViewModel.getArrayDislikeRip());
+                                                if (task1.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                        // ドキュメントが見つかった場合、IDを取得
+                                                        userId = document1.getId();
+                                                        DocumentReference docRef=db.collection("users").document(userId);
 
-                    updates.put("likeBis",mViewModel.getArraylikeBis());
-                    updates.put("DisBis",mViewModel.getArraylikeBis());
+                                                        Map<String,Object> updates=new HashMap<>();
+                                                        updates.put("likeMom",mViewModel.getArraylikeMom());
+                                                        updates.put("DisMom",mViewModel.getArrayDislikeMom());
 
-                    updates.put("likeAqua",mViewModel.getArraylikeAqua());
-                    updates.put("DisAqua",mViewModel.getArrayDislikeAqua());
+                                                        updates.put("likeBir",mViewModel.getArraylikeBir());
+                                                        updates.put("DisBir",mViewModel.getArrayDislikeBir());
 
-                    updates.put("likeIns",mViewModel.getArraylikeIns());
-                    updates.put("DisIns",mViewModel.getArrayDislikeIns());
+                                                        updates.put("likeRip",mViewModel.getArraylikeRip());
+                                                        updates.put("DisRip",mViewModel.getArrayDislikeRip());
 
-                    docRef.update(updates)
-                            .addOnSuccessListener(
-                                    new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(requireContext(), "タグの登録完了しました", Toast.LENGTH_SHORT).show();
-                                            Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
-                                        }
-                                    })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
+                                                        updates.put("likeBis",mViewModel.getArraylikeBis());
+                                                        updates.put("DisBis",mViewModel.getArraylikeBis());
 
-                                }
+                                                        updates.put("likeAqua",mViewModel.getArraylikeAqua());
+                                                        updates.put("DisAqua",mViewModel.getArrayDislikeAqua());
+
+                                                        updates.put("likeIns",mViewModel.getArraylikeIns());
+                                                        updates.put("DisIns",mViewModel.getArrayDislikeIns());
+
+                                                        docRef.update(updates)
+                                                                .addOnSuccessListener(
+                                                                        new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void unused) {
+                                                                                Toast.makeText(requireContext(), "タグの登録完了しました", Toast.LENGTH_SHORT).show();
+                                                                                Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
+                                                                            }
+                                                                        })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            }
+                                        });
                             });
+                    try {
+                        future1.get(); // 非同期処理が終わるまでブロック
+
+                    } catch (InterruptedException | ExecutionException e) {
+                        // 例外処理
+                    }
+
+
 
                 }
 
