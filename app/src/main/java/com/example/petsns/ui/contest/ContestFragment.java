@@ -46,6 +46,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import  com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -62,6 +64,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class ContestFragment extends Fragment {
@@ -79,6 +83,7 @@ public class ContestFragment extends Fragment {
     Boolean contestPost;
     byte[] imageData;
     Uri selectedImageUri;
+    String userId;
     public static ContestFragment newInstance() {
         return new ContestFragment();
     }
@@ -92,39 +97,64 @@ public class ContestFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         // Firestore の参照を取得
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
-        db.collection("users")
-                .document(userId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                // ドキュメントが存在する場合
-                                Boolean contestEntry = document.getBoolean("contestEntry");
-                                Boolean contestPost=document.getBoolean("contestPost");
+        userId = user.getUid();
+        String userUid = user.getUid();
 
-                                if(!contestEntry){
-                                    btnEntry.setEnabled(true);
-                                }else {
-                                    btnEntry.setEnabled(false);
+
+        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                    CollectionReference collectionRefId = db.collection("userId");
+                    collectionRefId.whereEqualTo("uid", userUid)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(Task<QuerySnapshot> task1) {
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                            // ドキュメントが見つかった場合、IDを取得
+                                            userId = document1.getId();
+                                            db.collection("users")
+                                                    .document(userId)
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                DocumentSnapshot document = task.getResult();
+                                                                if (document.exists()) {
+                                                                    // ドキュメントが存在する場合
+                                                                    Boolean contestEntry = document.getBoolean("contestEntry");
+                                                                    Boolean contestPost=document.getBoolean("contestPost");
+
+                                                                    if(!contestEntry){
+                                                                        btnEntry.setEnabled(true);
+                                                                    }else {
+                                                                        btnEntry.setEnabled(false);
+                                                                    }
+                                                                    if(!contestPost&&contestEntry){
+                                                                        btnPost.setEnabled(true);
+                                                                    }else {
+                                                                        btnPost.setEnabled(false);
+                                                                    }
+                                                                    // fieldValueには指定したフィールドの値が含まれる
+                                                                } else {
+                                                                    // ドキュメントが存在しない場合
+                                                                }
+                                                            } else {
+                                                                // 取得に失敗した場合
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
                                 }
-                                if(!contestPost&&contestEntry){
-                                    btnPost.setEnabled(true);
-                                }else {
-                                    btnPost.setEnabled(false);
-                                }
-                                // fieldValueには指定したフィールドの値が含まれる
-                            } else {
-                                // ドキュメントが存在しない場合
-                            }
-                        } else {
-                            // 取得に失敗した場合
-                        }
-                    }
+                            });
                 });
+        try {
+            future1.get(); // 非同期処理が終わるまでブロック
+        } catch (InterruptedException | ExecutionException e) {
+            // 例外処理
+        }
+
 
 
         return inflater.inflate(R.layout.fragment_contest, container, false);
@@ -219,7 +249,30 @@ public class ContestFragment extends Fragment {
 
                 db = FirebaseFirestore.getInstance();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String userId = user.getUid();
+                String userUid = user.getUid();
+
+
+                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                    CollectionReference collectionRefId = db.collection("userId");
+                    collectionRefId.whereEqualTo("uid", userUid)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(Task<QuerySnapshot> task1) {
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                            // ドキュメントが見つかった場合、IDを取得
+                                            userId = document1.getId();
+                                        }
+                                    }
+                                }
+                            });
+                });
+                try {
+                    future1.get(); // 非同期処理が終わるまでブロック
+                } catch (InterruptedException | ExecutionException e) {
+                    // 例外処理
+                }
 
                 DocumentReference docRef=db.collection("users").document(userId);
 
