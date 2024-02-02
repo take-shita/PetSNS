@@ -1,7 +1,6 @@
 package com.example.petsns;
 
 import com.example.petsns.ui.setting.TagViewModel;
-
 import com.google.firebase.Timestamp;
 import java.util.List;
 
@@ -19,9 +18,7 @@ public class TestPost {
     private String icon;
     private Timestamp timestamp;
     private String documentId;
-
     private int likeCount;
-
     private String[] nameMommalians={"ネコ","イヌ","ウサギ","ハリネズミ","ハムスター","カワウソ","チンチラ",
             "フェレット","モモンガ","キツネ","リス"};
     private String[] nameReptiles={"ヘビ","トカゲ","カメ","ワニ","ヤモリ","カメレオン"};
@@ -29,71 +26,28 @@ public class TestPost {
     private String[] nameBisexual={"カエル","イモリ"};
     private String[] nameBird={"オウム","インコ","スズメ","カナリア","フクロウ","ブンチョウ","ニワトリ","アヒル"};
     private String[] nameAquatic={"ザリガニ","メガカ","キンギョ","クラゲ"};
-
-    public TestPost() {
-        // 必要に応じて初期化の処理を追加
-    }
-
-    public Timestamp gettimestamp(){return timestamp;}
-
-    public void setDocumentId(String documentId){
-        this.documentId=documentId;
-    }
-    public String getDocumentId(){return documentId;}
-
-    // ゲッター・セッターなど必要な処理を実装
-    public void setId(String id){
-        this.id=id;
-    }
-    public String getid(){
-        return id;
-    }
-
-    public void setSentence(String sentence){
-        this.sentence=sentence;
-    }
-    public String getSentence(){
-        return sentence;
-    }
-
-    public void setImageUrl(String imageUrl){
-        this.imageUrl=imageUrl;
-    }
-    public String getImageUrl(){ return imageUrl;}
-
-    public void setIcon(String icon){this.icon=icon;}
-    public String getIcon(){ return icon;}
-
-    public void setTimestamp(Timestamp timestamp){
-        this.timestamp=timestamp;
-    }
-    public Timestamp timestamp(){ return  timestamp;}
-
-
-    public void setLikeCount(int likeCount){
-        this.likeCount=likeCount;
-    }
-    public int getLikeCount(){return likeCount;}
-    public void setTagMom(List<Boolean> tagMom) {
-        this.tagMom = tagMom;
-    }
-    public void setTagBir(List<Boolean> tagBir) {
-        this.tagBir=tagBir;
-    }
-    public void setTagRip(List<Boolean> tagRip){
-        this.tagRip=tagRip;
-    }
-    public void setTagBis(List<Boolean> tagBis){
-        this.tagBis=tagBis;
-    }
-    public void setTagAqua(List<Boolean> tagAqua){
-        this.tagAqua=tagAqua;
-    }
-    public void setTagIns(List<Boolean> tagIns){
-        this.tagIns=tagIns;
-    }
-
-
+    public TestPost() {}
+    public Timestamp gettimestamp(){ return timestamp; }
+    public void setDocumentId(String documentId){ this.documentId=documentId; }
+    public String getDocumentId(){ return documentId; }
+    public void setId(String id){ this.id=id; }
+    public String getid(){ return id; }
+    public void setSentence(String sentence){ this.sentence=sentence; }
+    public String getSentence(){ return sentence; }
+    public void setImageUrl(String imageUrl){ this.imageUrl=imageUrl; }
+    public String getImageUrl(){ return imageUrl; }
+    public void setIcon(String icon){ this.icon=icon; }
+    public String getIcon(){ return icon; }
+    public void setTimestamp(Timestamp timestamp){ this.timestamp=timestamp; }
+    public Timestamp timestamp(){ return  timestamp; }
+    public void setLikeCount(int likeCount){ this.likeCount=likeCount; }
+    public int getLikeCount(){ return likeCount; }
+    public void setTagMom(List<Boolean> tagMom) { this.tagMom = tagMom; }
+    public void setTagBir(List<Boolean> tagBir) { this.tagBir=tagBir; }
+    public void setTagRip(List<Boolean> tagRip){ this.tagRip=tagRip; }
+    public void setTagBis(List<Boolean> tagBis){ this.tagBis=tagBis; }
+    public void setTagAqua(List<Boolean> tagAqua){ this.tagAqua=tagAqua; }
+    public void setTagIns(List<Boolean> tagIns){ this.tagIns=tagIns; }
     public String  tagConversion(){
             String tagName="#";
             if(tagMom!=null){
@@ -110,7 +64,6 @@ public class TestPost {
             }else{
                 tagName="aaa";
             }
-
             if(tagBir!=null){
                 for(int i=0;i<8;i++){
                     if(tagBir.get(i)){
@@ -122,7 +75,6 @@ public class TestPost {
                     }
                 }
             }
-
             if(tagRip!=null){
                 for(int i=0;i<6;i++){
                     if(tagRip.get(i)){
@@ -134,7 +86,6 @@ public class TestPost {
                     }
                 }
             }
-
             if(tagBis!=null){
                 for(int i=0;i<2;i++){
                     if(tagBis.get(i)){
@@ -146,7 +97,6 @@ public class TestPost {
                     }
                 }
             }
-
             if(tagAqua!=null){
                 for(int i=0;i<4;i++){
                     if(tagAqua.get(i)){
@@ -158,7 +108,6 @@ public class TestPost {
                     }
                 }
             }
-
             if(tagIns!=null){
                 for(int i=0;i<6;i++){
                     if(tagIns.get(i)){
@@ -172,6 +121,4 @@ public class TestPost {
             }
         return tagName;
     }
-
-
 }
