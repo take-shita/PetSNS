@@ -24,14 +24,18 @@ import android.widget.TextView;
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.TagPostViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -41,6 +45,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class ContestPostFragment extends Fragment {
 
@@ -50,7 +56,7 @@ public class ContestPostFragment extends Fragment {
     private TagPostViewModel viewModel;
 
     Uri selectedImageUri;
-
+    String userId;
     public static ContestPostFragment newInstance() {
         return new ContestPostFragment();
     }
@@ -119,71 +125,95 @@ public class ContestPostFragment extends Fragment {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                String userId = user.getUid();
+                String userUid = user.getUid();
 
+
+                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                    CollectionReference collectionRefId = db.collection("userId");
+                    collectionRefId.whereEqualTo("uid", userUid)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(Task<QuerySnapshot> task1) {
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                            // ドキュメントが見つかった場合、IDを取得
+                                            userId = document1.getId();
+
+                                            CollectionReference postCollection = db.collection("contestPosts");
+
+                                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                                            StorageReference storageRef = storage.getReference().child("contestPost");
+
+                                            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                                            String imageFileName = "image_" + timestamp + ".jpg";
+
+                                            /* 画像のUriを取得するコード */;
+                                            storageRef.child(imageFileName).putFile(selectedImageUri)
+                                                    .addOnSuccessListener(taskSnapshot -> {
+
+                                                        storageRef.child(imageFileName).getDownloadUrl()
+
+                                                                .addOnSuccessListener(uri -> {
+
+                                                                    // Firestoreにドキュメントを作成してURLを保存
+                                                                    Map<String, Object> data = new HashMap<>();
+                                                                    data.put("id",userId);
+                                                                    data.put("imageUrl", uri.toString());
+                                                                    data.put("tagMom",viewModel.getArraylikeMom());
+                                                                    data.put("tagBir",viewModel.getArraylikeBir());
+                                                                    data.put("tagRip",viewModel.getArraylikeRip());
+                                                                    data.put("tagBis",viewModel.getArraylikeBis());
+                                                                    data.put("tagAqua",viewModel.getArraylikeAqua());
+                                                                    data.put("tagIns",viewModel.getArraylikeIns());
+                                                                    data.put("likeCount",0);
+                                                                    data.put("timestamp", FieldValue.serverTimestamp());
+                                                                    // Firestoreにドキュメントを作成
+                                                                    postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                                            .addOnSuccessListener(documentReference -> {
+                                                                                // documentReference.getId() で作成されたドキュメントのIDを取得できます
+
+                                                                                DocumentReference docRef=db.collection("users").document(userId);
+
+                                                                                Map<String,Object> updates=new HashMap<>();
+                                                                                updates.put("contestPost",true);
+
+                                                                                docRef.update(updates)
+                                                                                        .addOnSuccessListener(
+                                                                                                new OnSuccessListener<Void>() {
+                                                                                                    @Override
+                                                                                                    public void onSuccess(Void unused) {
+                                                                                                        Navigation.findNavController(v).navigate(R.id.action_navigation_contest_post_to_navigation_contest);
+                                                                                                    }
+                                                                                                })
+                                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                                            @Override
+                                                                                            public void onFailure(@NonNull Exception e) {
+
+                                                                                            }
+                                                                                        });
+                                                                            })
+                                                                            .addOnFailureListener(e -> {
+
+                                                                            });
+                                                                })
+
+                                                                .addOnFailureListener(e -> {
+                                                                    // ダウンロードURLの取得が失敗した場合の処理
+                                                                });
+                                                    });
+                                        }
+                                    }
+                                }
+                            });
+                });
+                try {
+                    future1.get(); // 非同期処理が終わるまでブロック
+                } catch (InterruptedException | ExecutionException e) {
+                    // 例外処理
+                }
 //                DocumentReference docRef = db.collection("post").document(userId);
-                CollectionReference postCollection = db.collection("contestPosts");
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference().child("contestPost");
-
-                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                String imageFileName = "image_" + timestamp + ".jpg";
-
-                /* 画像のUriを取得するコード */;
-                storageRef.child(imageFileName).putFile(selectedImageUri)
-                        .addOnSuccessListener(taskSnapshot -> {
-
-                            storageRef.child(imageFileName).getDownloadUrl()
-
-                                    .addOnSuccessListener(uri -> {
-
-                                        // Firestoreにドキュメントを作成してURLを保存
-                                        Map<String, Object> data = new HashMap<>();
-                                        data.put("id",userId);
-                                        data.put("imageUrl", uri.toString());
-                                        data.put("tagMom",viewModel.getArraylikeMom());
-                                        data.put("tagBir",viewModel.getArraylikeBir());
-                                        data.put("tagRip",viewModel.getArraylikeRip());
-                                        data.put("tagBis",viewModel.getArraylikeBis());
-                                        data.put("tagAqua",viewModel.getArraylikeAqua());
-                                        data.put("tagIns",viewModel.getArraylikeIns());
-                                        data.put("likeCount",0);
-                                        data.put("timestamp", FieldValue.serverTimestamp());
-                                        // Firestoreにドキュメントを作成
-                                        postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                .addOnSuccessListener(documentReference -> {
-                                                    // documentReference.getId() で作成されたドキュメントのIDを取得できます
-
-                                                    DocumentReference docRef=db.collection("users").document(userId);
-
-                                                    Map<String,Object> updates=new HashMap<>();
-                                                    updates.put("contestPost",true);
-
-                                                    docRef.update(updates)
-                                                            .addOnSuccessListener(
-                                                                    new OnSuccessListener<Void>() {
-                                                                        @Override
-                                                                        public void onSuccess(Void unused) {
-                                                                            Navigation.findNavController(v).navigate(R.id.action_navigation_contest_post_to_navigation_contest);
-                                                                        }
-                                                                    })
-                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-
-                                                                }
-                                                            });
-                                                })
-                                                .addOnFailureListener(e -> {
-
-                                                });
-                                    })
-
-                                    .addOnFailureListener(e -> {
-                                        // ダウンロードURLの取得が失敗した場合の処理
-                                    });
-                        });
 
 
             }

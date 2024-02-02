@@ -23,18 +23,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class iconFragment extends Fragment {
 
@@ -44,7 +51,7 @@ public class iconFragment extends Fragment {
 
     private Uri selectedImageUri;
     private FirebaseAuth mAuth;
-
+    String userId;
     public static iconFragment newInstance() {
         return new iconFragment();
     }
@@ -113,41 +120,71 @@ public class iconFragment extends Fragment {
         ImageView iconNow = view.findViewById(R.id.imageView);
         FirebaseUser user = mAuth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // ... 他の処理を追加
-        db.collection("users") // コレクション名
-                .document(user.getUid()) // ドキュメント名
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
 
-                            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("icon"));
-                            try {
+        String userUid = user.getUid();
 
-                                final File localFile = File.createTempFile("images", "png");
-                                storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                                    // ローカルファイルから画像を読み込んで ImageView にセット
-                                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                    iconNow.setImageBitmap(bitmap);
 
-                                }).addOnFailureListener(exception -> {
-                                    // 失敗時の処理
+        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                    CollectionReference collectionRefId = db.collection("userId");
+                    collectionRefId.whereEqualTo("uid", userUid)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(Task<QuerySnapshot> task1) {
 
-                                });
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                            // ドキュメントが見つかった場合、IDを取得
+                                            userId = document1.getId();
+                                            db.collection("users") // コレクション名
+                                                    .document(userId) // ドキュメント名
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                            if (documentSnapshot.exists()) {
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // エラーが発生した場合の処理
-                    }
+                                                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(documentSnapshot.getString("icon"));
+                                                                try {
+
+                                                                    final File localFile = File.createTempFile("images", "png");
+                                                                    storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                                                                        // ローカルファイルから画像を読み込んで ImageView にセット
+                                                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                                        iconNow.setImageBitmap(bitmap);
+
+                                                                    }).addOnFailureListener(exception -> {
+                                                                        // 失敗時の処理
+
+                                                                    });
+
+                                                                } catch (IOException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // エラーが発生した場合の処理
+                                                        }
+                                                    });
+
+                                        }
+                                    }
+                                }
+                            });
                 });
+        try {
+            future1.get(); // 非同期処理が終わるまでブロック
+
+        } catch (InterruptedException | ExecutionException e) {
+            // 例外処理
+        }
+
+        // ... 他の処理を追加
+
     }
 
     // Firebase Storage へ画像をアップロードするメソッド
@@ -156,29 +193,47 @@ public class iconFragment extends Fragment {
         String storagePath = "images/";
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (currentUser != null) {
-            String userId = currentUser.getUid();
-            StorageReference storageRef = storage.getReference().child(storagePath + userId + ".png");
+            String userUid = currentUser.getUid();
+            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                CollectionReference collectionRefId = db.collection("userId");
+                collectionRefId.whereEqualTo("uid", userUid)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(Task<QuerySnapshot> task1) {
 
-            storageRef.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                    String downloadUrl = uri.toString();
-                                    // Firebase Firestore にダウンロードURLを保存するメソッド
-                                    saveImageDownloadUrlToFirestore(downloadUrl);
-                                })
-                                .addOnFailureListener(exception -> {
-                                    // アップロードが失敗した場合の処理
-                                    exception.printStackTrace();
-                                    Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
-                                });
-                    })
-                    .addOnFailureListener(exception -> {
-                        // アップロードが失敗した場合の処理
-                        exception.printStackTrace();
-                        Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
-                    });
+                                if (task1.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                        // ドキュメントが見つかった場合、IDを取得
+                                        userId = document1.getId();
+                                        StorageReference storageRef = storage.getReference().child(storagePath + userId + ".png");
+
+                                        storageRef.putFile(imageUri)
+                                                .addOnSuccessListener(taskSnapshot -> {
+                                                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                                                String downloadUrl = uri.toString();
+                                                                // Firebase Firestore にダウンロードURLを保存するメソッド
+                                                                saveImageDownloadUrlToFirestore(downloadUrl);
+                                                            })
+                                                            .addOnFailureListener(exception -> {
+                                                                // アップロードが失敗した場合の処理
+                                                                exception.printStackTrace();
+                                                                Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
+                                                            });
+                                                })
+                                                .addOnFailureListener(exception -> {
+                                                    // アップロードが失敗した場合の処理
+                                                    exception.printStackTrace();
+                                                    Toast.makeText(requireContext(), "画像のアップロードに失敗しました", Toast.LENGTH_SHORT).show();
+                                                });
+                                    }
+                                }
+                            }
+                        });
+            });
+
         }
     }
 
@@ -188,7 +243,6 @@ public class iconFragment extends Fragment {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
-            String userId = currentUser.getUid();
             DocumentReference userDocRef = db.collection("users").document(userId);
 
             // ダウンロードURLを Firestore に保存
