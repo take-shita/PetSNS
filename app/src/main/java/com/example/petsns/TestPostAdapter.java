@@ -292,7 +292,19 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 // ユーザーのプロフィール画面に遷移する
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", post.getid());
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other, bundle);
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    String currentUserId = currentUser.getUid();
+
+                    // クリックされた投稿のユーザーIDが現在ログインしているユーザーのIDと一致する場合は、プロフィール画面に遷移する
+                    if (post.getid().equals(currentUserId)) {
+                        // プロフィール画面に遷移する処理を追加
+                        Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile);
+                    } else {
+                        Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other, bundle);
+
+                    }
+                }
             }
         });
 // ドキュメントを取得

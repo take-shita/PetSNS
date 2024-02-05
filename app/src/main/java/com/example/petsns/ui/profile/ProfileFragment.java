@@ -217,16 +217,27 @@ public class ProfileFragment extends Fragment {
         public PostViewHolder(@NonNull View itemView, View rootView) {
             super(itemView);
             this.rootView = rootView;  // rootViewを設定
-            hartbtn=itemView.findViewById(R.id.hartbtn);
+            hartbtn = itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
             otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
-            tagText=itemView.findViewById(R.id.tagText);
-            likeCount=itemView.findViewById(R.id.iinecount);
+            tagText = itemView.findViewById(R.id.tagText);
+            likeCount = itemView.findViewById(R.id.iinecount);
             posttime = itemView.findViewById(R.id.posttime);
             report_btn = itemView.findViewById(R.id.report_btn);
             profileicon = itemView.findViewById(R.id.profileicon);
+            profileicon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // プロフィール画面への遷移処理を呼び出す
+                    navigateToProfile();
+                }
+            });
+        }
+        private void navigateToProfile() {
+            // Navigation Component を使用して自分のプロフィール画面へ遷移
+            Navigation.findNavController(rootView).navigate(R.id.action_navigation_snstop_to_navigation_profile);
         }
     }
 }
