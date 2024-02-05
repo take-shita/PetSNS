@@ -113,25 +113,27 @@ public class ProfileFragment extends Fragment {
                                                     List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                                     List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                                     Number likeCountDouble = ((Number) data.get("likeCount"));
+                                                    if(((String)data.get("id")).equals(userId)){
+                                                        post.setId((String) data.get("id"));
+                                                        post.setSentence((String) data.get("sentence"));
+                                                        post.setImageUrl((String) data.get("imageUrl"));
+                                                        post.setDocumentId(documentId);
+                                                        post.setLikeCount(likeCountDouble.intValue());
+                                                        post.setTagMom(tagMom);
 
-                                                    post.setId((String) data.get("id"));
-                                                    post.setSentence((String) data.get("sentence"));
-                                                    post.setImageUrl((String) data.get("imageUrl"));
-                                                    post.setDocumentId(documentId);
-                                                    post.setLikeCount(likeCountDouble.intValue());
-                                                    post.setTagMom(tagMom);
+                                                        post.setTagBir(tagBir);
 
-                                                    post.setTagBir(tagBir);
+                                                        post.setTagRip(tagRip);
 
-                                                    post.setTagRip(tagRip);
+                                                        post.setTagBis(tagBis);
 
-                                                    post.setTagBis(tagBis);
+                                                        post.setTagAqua(tagAqua);
 
-                                                    post.setTagAqua(tagAqua);
+                                                        post.setTagIns(tagIns);
 
-                                                    post.setTagIns(tagIns);
+                                                        posts.add(post);
+                                                    }
 
-                                                    posts.add(post);
                                                 }
                                                 postAdapter.setPosts(posts);
 
