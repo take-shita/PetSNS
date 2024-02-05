@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +61,10 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
     private Context context;
     private FirebaseFirestore db;
     String userId;
+    private FirebaseUser user;
+    private CollectionReference collectionRef;
+    private DocumentReference documentRef;
+    private String fieldName = "iinePostId";
     FirebaseFirestore db1 = FirebaseFirestore.getInstance();
 
 
@@ -123,7 +128,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // FirebaseAuthからユーザーを取得
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        user = auth.getCurrentUser();
 
         // 投稿時間を取得
         Timestamp timestamp = post.gettimestamp();
@@ -295,59 +300,85 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                                                 holder.hartbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
                                                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                                                         if(isChecked){
-                                                            holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                                                            //いいねを押したときの処理
+                                                            List<TestPost> posts = new ArrayList<>();
+                                                            user = FirebaseAuth.getInstance().getCurrentUser();
+                                                            String userUid = user.getUid();
 
-                                                            DocumentReference docRef=db.collection("posts").document(documentId);
+                                                            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                                                CollectionReference collectionRefId = db.collection("userId");
+                                                                collectionRefId.whereEqualTo("uid", userUid)
+                                                                        .get()
+                                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onComplete(Task<QuerySnapshot> task1) {
 
-                                                            Map<String,Object> updates=new HashMap<>();
-                                                            updates.put("likeCount",post.getLikeCount()+1);
+                                                                                if (task1.isSuccessful()) {
+                                                                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                                                        // ドキュメントが見つかった場合、IDを取得
+                                                                                        userId = document1.getId();
 
-                                                            docRef.update(updates)
-                                                                    .addOnSuccessListener(
-                                                                            new OnSuccessListener<Void>() {
-                                                                                @Override
-                                                                                public void onSuccess(Void unused) {
-                                                                                    if(!holder.likeCount.getText().equals("")){
-                                                                                        int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())+1;
-                                                                                        holder.likeCount.setText(String.valueOf(likeCountPlus));
-                                                                                    }else{
-                                                                                        holder.likeCount.setText("1");
+                                                                                        collectionRef = db.collection("users");
+                                                                                        documentRef = collectionRef.document(userId);
+                                                                                        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                            @Override
+                                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                if (task.isSuccessful()) {
+                                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                                    if (document.exists()) {
+                                                                                                        List<String> currentList = (List<String>) document.get(fieldName);
+                                                                                                        if (currentList == null) {
+                                                                                                            // リストがまだ存在しない場合、新しいリストを作成
+                                                                                                            currentList = new ArrayList<>();
+                                                                                                        }
+                                                                                                        currentList.add(post.getDocumentId());
+                                                                                                        documentRef.update(fieldName, currentList).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                            @Override
+                                                                                                            public void onSuccess(Void unused) {
+                                                                                                                // 成功時の処理
+                                                                                                                holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_pressed_image);
+                                                                                                                DocumentReference docRef = db.collection("posts").document(documentId);
+
+                                                                                                                Map<String, Object> updates = new HashMap<>();
+                                                                                                                if (post.getLikeCount() != 0) {
+                                                                                                                    int likeCountPlus = post.getLikeCount() + 1;
+                                                                                                                    post.setLikeCount(likeCountPlus);
+                                                                                                                } else {
+                                                                                                                    int likeCountPlus = 1;
+                                                                                                                    post.setLikeCount(likeCountPlus);
+                                                                                                                }
+                                                                                                                updates.put("likeCount", post.getLikeCount());
+                                                                                                                docRef.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                                    @Override
+                                                                                                                    public void onSuccess(Void unused) {
+                                                                                                                        if (post.getLikeCount() != 1) {
+                                                                                                                            holder.likeCount.setText(String.valueOf(post.getLikeCount()));
+                                                                                                                        } else {
+                                                                                                                            holder.likeCount.setText("");
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                                                                                    @Override
+                                                                                                                    public void onFailure(@NonNull Exception e) {
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            }
+                                                                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                                                                            @Override
+                                                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                                                // 失敗時の処理
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        });
                                                                                     }
-
                                                                                 }
-                                                                            })
-                                                                    .addOnFailureListener(new OnFailureListener() {
-                                                                        @Override
-                                                                        public void onFailure(@NonNull Exception e) {
-
-                                                                        }
-                                                                    });
-                                                        }else {
-
-                                                            holder.hartbtn.setBackgroundResource(R.drawable.rounded_button_normal_image);
-                                                            DocumentReference docRef=db.collection("posts").document(documentId);
-
-                                                            Map<String,Object> updates=new HashMap<>();
-                                                            updates.put("likeCount",post.getLikeCount()-1);
-
-                                                            docRef.update(updates)
-                                                                    .addOnSuccessListener(
-                                                                            new OnSuccessListener<Void>() {
-                                                                                @Override
-                                                                                public void onSuccess(Void unused) {
-                                                                                    int likeCountPlus=Integer.parseInt(holder.likeCount.getText().toString())-1;
-                                                                                    holder.likeCount.setText(String.valueOf(likeCountPlus));
-
-                                                                                }
-                                                                            })
-                                                                    .addOnFailureListener(new OnFailureListener() {
-                                                                        @Override
-                                                                        public void onFailure(@NonNull Exception e) {
-
-                                                                        }
-                                                                    });
+                                                                            }
+                                                                        });
+                                                            });
                                                         }
                                                     }
                                                 });
