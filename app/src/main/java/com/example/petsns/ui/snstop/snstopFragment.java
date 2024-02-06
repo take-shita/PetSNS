@@ -88,7 +88,6 @@ public class snstopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_snstop, container, false);
-
         MyApplication myApplication = (MyApplication) requireActivity().getApplication();
         if (myApplication != null) {
             viewModel = myApplication.getSharedTagSearchViewModel();
@@ -133,6 +132,7 @@ public class snstopFragment extends Fragment {
 
 
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+            Log.d("ありがとう","悪口");
                     CollectionReference collectionRefId = db.collection("userId");
                     collectionRefId.whereEqualTo("uid", userUid)
                             .get()
@@ -177,14 +177,18 @@ public class snstopFragment extends Fragment {
                                                         @Override
                                                         public void onFailure(@NonNull Exception e) {
                                                             // エラーが発生した場合の処理
+
                                                         }
                                                     });
                                         }
                                     }
                                 }
                             });
+
                 });
+
         try {
+
             future1.get(); // 非同期処理が終わるまでブロック
 
         } catch (InterruptedException | ExecutionException e) {
@@ -312,22 +316,22 @@ public class snstopFragment extends Fragment {
             DocumentReference documentRef = collectionRef.document(userId);
             String fieldName = "follow";
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                List<String> currentList = (List<String>) document.get(fieldName);
-                                if (currentList.contains(documentId)) {
-                                    like = true;
-                                }
-
-                            }
-                        }
-                    }
-
-                });
+//                documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            DocumentSnapshot document = task.getResult();
+//                            if (document.exists()) {
+//                                List<String> currentList = (List<String>) document.get(fieldName);
+//                                if (currentList.contains(documentId)) {
+//                                    like = true;
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//
+//                });
             });
             try {
                 future.get(); // 非同期処理が終わるまでブロック
