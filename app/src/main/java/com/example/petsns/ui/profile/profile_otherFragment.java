@@ -2,8 +2,6 @@ package com.example.petsns.ui.profile;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,8 +23,6 @@ import android.widget.ToggleButton;
 import com.example.petsns.OtherPostAdapter;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
-import com.example.petsns.Profile_TestPostAdapter;
-import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -34,9 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;

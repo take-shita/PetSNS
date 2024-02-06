@@ -49,7 +49,6 @@ public class LoginActivity  extends AppCompatActivity {
             EditText textPass = findViewById(R.id.loginPass);
             Button btnLogin = findViewById(R.id.btnLogin);
             Button btnSignUp = findViewById(R.id.btnSignUp);
-            Button test = findViewById(R.id.buttonSample);
 
             btnSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -58,54 +57,6 @@ public class LoginActivity  extends AppCompatActivity {
 
                     Intent intent = new Intent(context, Signup.class);
                     startActivity(intent);
-                }
-            });
-            test.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    // コピー元のドキュメントの参照
-                    String sourceCollection = "users";
-                    String sourceDocumentId = "Q7niUr2zyzR9uHpyy7Fp1Vqr08N2";
-                    DocumentReference sourceDocumentRef = db.collection(sourceCollection).document(sourceDocumentId);
-
-                    // コピー先のドキュメントIDを生成（新しいIDを指定することもできます）
-                    String newDocumentId = "yu";
-
-                    try {
-                        // コピー元のドキュメントを取得
-//                        DocumentSnapshot sourceDocumentSnapshot = sourceDocumentRef.get().getResult();
-                        sourceDocumentRef.get().addOnSuccessListener(sourceDocumentSnapshot -> {
-                        if (sourceDocumentSnapshot.exists()) {
-                            // コピー先のコレクションとドキュメントを指定してデータをセット
-                            CollectionReference destinationCollection = db.collection(sourceCollection);
-                            DocumentReference destinationDocumentRef = destinationCollection.document(newDocumentId);
-
-                            Map<String, Object> dataToCopy = sourceDocumentSnapshot.getData();
-
-                            if (dataToCopy != null) {
-                                destinationDocumentRef.set(dataToCopy)
-                                        .addOnSuccessListener(aVoid -> {
-                                            // コピーが成功した場合の処理
-                                            System.out.println("Document copied successfully!");
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            // コピーが失敗した場合の処理
-                                            System.err.println("Error copying document: " + e.getMessage());
-                                        });
-                            } else {
-                                System.err.println("No data to copy from the source document.");
-                            }
-                        } else {
-                            System.err.println("Source document does not exist.");
-                        }
-                        }).addOnFailureListener(e -> {
-                            // ソースドキュメントの取得が失敗した場合の処理
-                            e.printStackTrace();
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             });
             btnLogin.setOnClickListener(new View.OnClickListener() {
