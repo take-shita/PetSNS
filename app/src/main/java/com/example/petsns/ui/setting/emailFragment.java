@@ -129,52 +129,57 @@ public class emailFragment extends Fragment {
 
                                                                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                                                                 DocumentReference docRef = db.collection("userId").document(userId);
+                                                                                DocumentReference docRefUser=db.collection("users").document(userId);
 
-                                                                                docRef.get().addOnSuccessListener(documentSnapshot2 -> {
-                                                                                    if (documentSnapshot2.exists()) {
-                                                                                        Map<String, Object> updateData = new HashMap<>();
-                                                                                        updateData.put("uid", userUid);
+                                                                                Map<String, Object>updateDataMail=new HashMap<>();
+                                                                                updateDataMail.put("mail",newEmail);
+                                                                                docRefUser.update(updateDataMail).addOnSuccessListener(unused -> {
 
-                                                                                        docRef.update(updateData).addOnSuccessListener(unused -> {
-                                                                                            Log.d("aaaa", "aaaaaaaaaaaaa");
-                                                                                            Log.d("？？？？？？",userUid+" "+userOld.getEmail());
-                                                                                            if (userOld != null) {
-                                                                                                AuthCredential credential = EmailAuthProvider.getCredential(userOld.getEmail(), pass);
-                                                                                                userOld.reauthenticate(credential)
-                                                                                                        .addOnCompleteListener(reauthTask -> {
-                                                                                                            if (reauthTask.isSuccessful()) {
-                                                                                                                userOld.delete().addOnCompleteListener(task2 -> {
-                                                                                                                    if (task2.isSuccessful()) {
-                                                                                                                        // Firebase Authenticationでの削除が成功した場合の処理
-                                                                                                                        Log.d("FirebaseAuth", "User account deleted successfully!");
+                                                                                    docRef.get().addOnSuccessListener(documentSnapshot2 -> {
+                                                                                        if (documentSnapshot2.exists()) {
+                                                                                            Map<String, Object> updateData = new HashMap<>();
+                                                                                            updateData.put("uid", userUid);
 
-                                                                                                                        Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
-                                                                                                                        // ログアウトや画面遷移などの処理が必要であればここで行う
-                                                                                                                        Context context = requireActivity();
-                                                                                                                        Intent intent = new Intent(context, LoginActivity.class);
-                                                                                                                        startActivity(intent);
+                                                                                            docRef.update(updateData).addOnSuccessListener(unused2 -> {
+                                                                                                Log.d("aaaa", "aaaaaaaaaaaaa");
+                                                                                                Log.d("？？？？？？",userUid+" "+userOld.getEmail());
+                                                                                                if (userOld != null) {
+                                                                                                    AuthCredential credential = EmailAuthProvider.getCredential(userOld.getEmail(), pass);
+                                                                                                    userOld.reauthenticate(credential)
+                                                                                                            .addOnCompleteListener(reauthTask -> {
+                                                                                                                if (reauthTask.isSuccessful()) {
+                                                                                                                    userOld.delete().addOnCompleteListener(task2 -> {
+                                                                                                                        if (task2.isSuccessful()) {
+                                                                                                                            // Firebase Authenticationでの削除が成功した場合の処理
+                                                                                                                            Log.d("FirebaseAuth", "User account deleted successfully!");
 
-                                                                                                                    } else {
-                                                                                                                        // Firebase Authenticationでの削除が失敗した場合の処理
-                                                                                                                        Log.w("FirebaseAuth", "Error deleting user account", task.getException());
-                                                                                                                        //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
-                                                                                                                        if (task.getException() != null) {
-                                                                                                                            task.getException().printStackTrace();
-                                                                                                                            Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                                                                                                                            Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
+                                                                                                                            // ログアウトや画面遷移などの処理が必要であればここで行う
+                                                                                                                            Context context = requireActivity();
+                                                                                                                            Intent intent = new Intent(context, LoginActivity.class);
+                                                                                                                            startActivity(intent);
+
+                                                                                                                        } else {
+                                                                                                                            // Firebase Authenticationでの削除が失敗した場合の処理
+                                                                                                                            Log.w("FirebaseAuth", "Error deleting user account", task.getException());
+                                                                                                                            //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                                                                                                            if (task.getException() != null) {
+                                                                                                                                task.getException().printStackTrace();
+                                                                                                                                Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                                                                                                                            }
                                                                                                                         }
-                                                                                                                    }
-                                                                                                                });
-                                                                                                            }
-                                                                                                        });
-                                                                                            }
-                                                                                        }).addOnFailureListener(e -> {
-                                                                                            // データの更新が失敗した場合の処理を追加
-                                                                                        });
+                                                                                                                    });
+                                                                                                                }
+                                                                                                            });
+                                                                                                }
+                                                                                            });
 
-                                                                                    }
-                                                                                }).addOnFailureListener(e -> {
-                                                                                    // ドキュメントの取得が失敗した場合の処理を追加
+                                                                                        }
+                                                                                    });
+
                                                                                 });
+
+
                                                                             }
                                                                         });
 
