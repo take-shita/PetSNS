@@ -22,17 +22,24 @@ import android.widget.Toast;
 import com.example.petsns.LoginActivity;
 import com.example.petsns.MainActivity;
 import com.example.petsns.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.concurrent.CompletableFuture;
 
 public class settingFragment extends Fragment {
 
@@ -41,7 +48,7 @@ public class settingFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private Firebase db;
-
+    private String userId;
     public static settingFragment newInstance() {
         return new settingFragment();
     }
@@ -121,59 +128,80 @@ public class settingFragment extends Fragment {
                         // 現在ログインしているユーザーを取得
                         FirebaseUser user = mAuth.getCurrentUser();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        String userUid = user.getUid();
 
-                        db.collection("users") // コレクション名
-                                .document(user.getUid()) // ドキュメント名
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        if (documentSnapshot.exists()) {
 
-                                            String pass = documentSnapshot.getString("password");
+                        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                    CollectionReference collectionRefId = db.collection("userId");
+                                    collectionRefId.whereEqualTo("uid", userUid)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(Task<QuerySnapshot> task1) {
 
-                                            if (user != null) {
-                                                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), pass); // ユーザーの実際のパスワードを使用してください
-                                                user.reauthenticate(credential)
-                                                        .addOnCompleteListener(reauthTask -> {
-                                                            if (reauthTask.isSuccessful()) {
-                                                                user.delete().addOnCompleteListener(task -> {
-                                                                    if (task.isSuccessful()) {
-                                                                        // Firebase Authenticationでの削除が成功した場合の処理
-                                                                        // ここでFirestoreのユーザーデータを削除するコードを追加
-                                                                        deleteFirestoreUserData(user.getUid());
-                                                                        Log.d("FirebaseAuth", "User account deleted successfully!");
+                                                    if (task1.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                            // ドキュメントが見つかった場合、IDを取得
+                                                            userId = document1.getId();
 
-                                                                        Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
-                                                                        // ログアウトや画面遷移などの処理が必要であればここで行う
-                                                                        Context context = v.getContext();
+                                                            db.collection("users") // コレクション名
+                                                                    .document(userId) // ドキュメント名
+                                                                    .get()
+                                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                            if (documentSnapshot.exists()) {
 
-                                                                        Intent intent = new Intent(context, LoginActivity.class);
-                                                                        startActivity(intent);
+                                                                                String pass = documentSnapshot.getString("password");
 
-                                                                    } else {
-                                                                        // Firebase Authenticationでの削除が失敗した場合の処理
-                                                                        Log.w("FirebaseAuth", "Error deleting user account", task.getException());
-                                                                        //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
-                                                                        if (task.getException() != null) {
-                                                                            task.getException().printStackTrace();
-                                                                            Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                                                                                if (user != null) {
+                                                                                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), pass); // ユーザーの実際のパスワードを使用してください
+                                                                                    user.reauthenticate(credential)
+                                                                                            .addOnCompleteListener(reauthTask -> {
+                                                                                                if (reauthTask.isSuccessful()) {
+                                                                                                    user.delete().addOnCompleteListener(task -> {
+                                                                                                        if (task.isSuccessful()) {
+                                                                                                            // Firebase Authenticationでの削除が成功した場合の処理
+                                                                                                            // ここでFirestoreのユーザーデータを削除するコードを追加
+                                                                                                            deleteFirestoreUserData(userId);
+                                                                                                            Log.d("FirebaseAuth", "User account deleted successfully!");
+
+                                                                                                            Toast.makeText(requireContext(), "アカウントが削除されました", Toast.LENGTH_SHORT).show();
+                                                                                                            // ログアウトや画面遷移などの処理が必要であればここで行う
+                                                                                                            Context context = v.getContext();
+
+                                                                                                            Intent intent = new Intent(context, LoginActivity.class);
+                                                                                                            startActivity(intent);
+
+                                                                                                        } else {
+                                                                                                            // Firebase Authenticationでの削除が失敗した場合の処理
+                                                                                                            Log.w("FirebaseAuth", "Error deleting user account", task.getException());
+                                                                                                            //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                                                                                            if (task.getException() != null) {
+                                                                                                                task.getException().printStackTrace();
+                                                                                                                Log.e("DeleteFragment", "Error during account deletion", task.getException());
+                                                                                                            }
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            });
+                                                                                }
+
+                                                                            }
                                                                         }
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
-                                            }
-
-                                        }
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // エラーが発生した場合の処理
-                                    }
+                                                                    })
+                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NonNull Exception e) {
+                                                                            // エラーが発生した場合の処理
+                                                                        }
+                                                                    });
+                                                        }
+                                                    }
+                                                }
+                                            });
                                 });
+
 
                     }
                     private void deleteFirestoreUserData(String userId) {
@@ -181,10 +209,14 @@ public class settingFragment extends Fragment {
                         db.collection("users").document(userId)
                                 .delete()
                                 .addOnSuccessListener(aVoid -> {
-                                    Log.d("Firestore", "DocumentSnapshot successfully deleted!");
-                                    // 他の処理を追加する
-                                    // ドキュメントの削除が成功した場合の処理
-                                    // ここに適切な処理を追加する（例: ユーザーのデータが正常に削除されたときの処理）
+
+
+                                    db.collection("userId").document(userId)
+                                            .delete()
+                                            .addOnCompleteListener(aVoid2 ->{
+                                                Log.d("Firestore", "DocumentSnapshot successfully deleted!");
+                                            });
+
                                 })
                                 .addOnFailureListener(e -> {
                                     Log.w("Firestore", "Error deleting document", e);

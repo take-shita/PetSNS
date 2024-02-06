@@ -19,11 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.petsns.MyApplication;
-import com.example.petsns.Profile_TestPostAdapter;
 import com.example.petsns.R;
 import com.example.petsns.TagSearchViewModel;
-import com.example.petsns.TestPost;
-import com.example.petsns.TestPostAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,7 +36,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import android.widget.ImageButton;
-import android.widget.ToggleButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

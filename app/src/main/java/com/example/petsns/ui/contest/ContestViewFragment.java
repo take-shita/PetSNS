@@ -17,14 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.TagSearchViewModel;
-import com.example.petsns.TestPost;
-import com.example.petsns.TestPostAdapter;
-import com.example.petsns.ui.snstop.SnstopViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

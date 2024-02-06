@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.tagAnimal;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class popup_birdFragment extends Fragment {
+import com.example.petsns.R;
 
-    private PopupBirdViewModel mViewModel;
+public class popup_aquaticFragment extends Fragment {
 
-    public static popup_birdFragment newInstance() {
-        return new popup_birdFragment();
+    private PopupAquaticViewModel mViewModel;
+
+    public static popup_aquaticFragment newInstance() {
+        return new popup_aquaticFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_popup_bird, container, false);
+        return inflater.inflate(R.layout.fragment_popup_aquatic, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PopupBirdViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(PopupAquaticViewModel.class);
         // TODO: Use the ViewModel
     }
 

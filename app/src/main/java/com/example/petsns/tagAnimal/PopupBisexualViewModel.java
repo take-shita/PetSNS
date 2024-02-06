@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.tagAnimal;
 
 import androidx.lifecycle.ViewModel;
 
