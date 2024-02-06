@@ -57,8 +57,6 @@ public class Signup3 extends AppCompatActivity {
         btnSb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (true) {
-
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(viewModel.getEmail(), viewModel.getPassword())
                             .addOnCompleteListener(task -> {
 
@@ -69,9 +67,11 @@ public class Signup3 extends AppCompatActivity {
                                     String uid = user.getUid();//id取得
 
 
-                                    DocumentReference documentRef = db.collection("users").document(uid);
+                                    DocumentReference documentRef = db.collection("users").document(viewModel.getUserId());
+                                    DocumentReference documentRefUid=db.collection("userId").document(viewModel.getUserId());
                                     // アカウント情報のデータ
                                     Map<String, Object> accountData = new HashMap<>();
+                                    Map<String, Object> accountDataUid =new HashMap<>();
                                     accountData.put("icon","https://firebasestorage.googleapis.com/v0/b/sample-eaf65.appspot.com/o/icon%2Fdefault_icon.png?alt=media&token=b500b036-ed2f-4d2a-837e-efe91c107d53");
                                     accountData.put("id", viewModel.getUserId());
                                     accountData.put("name", viewModel.getUserName());
@@ -92,23 +92,27 @@ public class Signup3 extends AppCompatActivity {
                                     accountData.put("follow",new ArrayList<>());
                                     accountData.put("contestEntry",false);
                                     accountData.put("contestPost",false);
+                                    accountData.put("iiePostId",new ArrayList<>());
                                     documentRef.set(accountData)
                                             .addOnSuccessListener(aVoid -> {
-                                                Context context = v.getContext();
 
-                                                Intent intent = new Intent(context, MainActivity.class);
-                                                startActivity(intent);
-                                            })
-                                            .addOnFailureListener(e -> {
+                                                accountDataUid.put("uid",uid);
+                                                documentRefUid.set(accountDataUid)
+                                                        .addOnSuccessListener(aVoid2 ->{
+                                                            Context context = v.getContext();
+                                                            Intent intent = new Intent(context, MainActivity.class);
+                                                            startActivity(intent);
+                                                        });
 
                                             });
+
+
 
 
                                 } else {
 
                                 }
                             });
-                }
             }
         });
     }

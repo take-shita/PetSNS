@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginActivity">
+    tools:context=".LoginActivity">
 
 
     <TextView
@@ -119,5 +119,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.296" />
+
+    <Button
+        android:id="@+id/buttonSample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="471dp"
+        tools:layout_editor_absoluteY="316dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

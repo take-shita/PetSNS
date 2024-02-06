@@ -54,6 +54,8 @@ import java.io.File;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+
 import androidx.lifecycle.ViewModel;
 import android.util.Log;
 
@@ -138,34 +140,56 @@ public class profile_otherFragment extends Fragment {
 
             db = FirebaseFirestore.getInstance();
             user = FirebaseAuth.getInstance().getCurrentUser();
-            userId = user.getUid();
-            collectionRef = db.collection("users");
-            documentRef = collectionRef.document(userId);
+            String userUid = user.getUid();
 
-            documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            List<String> currentList = (List<String>) document.get(fieldName);
 
-                            if (currentList != null) {
-                                if(currentList.contains(value)){
-                                    followbtn.setChecked(true);
+            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                CollectionReference collectionRefId = db.collection("userId");
+                collectionRefId.whereEqualTo("uid", userUid)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(Task<QuerySnapshot> task1) {
+
+                                if (task1.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                        // ドキュメントが見つかった場合、IDを取得
+                                        userId = document1.getId();
+
+                                        collectionRef = db.collection("users");
+                                        documentRef = collectionRef.document(userId);
+
+
+                                        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        List<String> currentList = (List<String>) document.get(fieldName);
+
+                                                        if (currentList != null) {
+                                                            if(currentList.contains(value)){
+                                                                followbtn.setChecked(true);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+
+
+                                        if (followbtn.isChecked()) {
+                                            followbtn.setBackgroundResource(R.drawable.forotyuutouka);
+                                        } else {
+                                            followbtn.setBackgroundResource(R.drawable.forotouka);
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                }
+                        });
             });
 
-
-            if (followbtn.isChecked()) {
-                followbtn.setBackgroundResource(R.drawable.forotyuutouka);
-            } else {
-                followbtn.setBackgroundResource(R.drawable.forotouka);
-            }
 
 
 
@@ -184,6 +208,7 @@ public class profile_otherFragment extends Fragment {
                             db = FirebaseFirestore.getInstance();
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String userId = user.getUid();
+
                             DocumentReference docRef = db.collection("users").document(value);
 
 
