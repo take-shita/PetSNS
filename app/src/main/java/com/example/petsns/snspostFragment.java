@@ -49,7 +49,8 @@ public class snspostFragment extends Fragment {
     private SnspostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
-    private TagPostViewModel viewModel;
+    private TagPostViewModel tagViewModel;
+    private PostInfoViewModel postViewModel;
     String userId;
     Uri selectedImageUri;
 
@@ -105,12 +106,13 @@ public class snspostFragment extends Fragment {
         Button back = view.findViewById(R.id.cancel_btn);
         MyApplication myApplication = (MyApplication) requireActivity().getApplication();
         if (myApplication != null) {
-            viewModel = myApplication.getSharedTagPostViewModel();
+            tagViewModel = myApplication.getSharedTagPostViewModel();
+            postViewModel= myApplication.getSharedPostInfoViewModel();
         } else {
             // エラーハンドリング
         }
-        if(viewModel.getTagNameAll()!=null){
-            txtTag.setText(viewModel.getTagNameAll());
+        if(tagViewModel.getTagNameAll()!=null){
+            txtTag.setText(tagViewModel.getTagNameAll());
         }
 
 
@@ -118,7 +120,7 @@ public class snspostFragment extends Fragment {
             @Override
 
             public void onClick(View v) {
-                viewModel.tagCancel();
+                tagViewModel.tagCancel();
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
@@ -166,12 +168,12 @@ public class snspostFragment extends Fragment {
                                                                             data.put("id",userId);
                                                                             data.put("sentence",sentene.getText().toString());
                                                                             data.put("imageUrl", uri.toString());
-                                                                            data.put("tagMom",viewModel.getArraylikeMom());
-                                                                            data.put("tagBir",viewModel.getArraylikeBir());
-                                                                            data.put("tagRip",viewModel.getArraylikeRip());
-                                                                            data.put("tagBis",viewModel.getArraylikeBis());
-                                                                            data.put("tagAqua",viewModel.getArraylikeAqua());
-                                                                            data.put("tagIns",viewModel.getArraylikeIns());
+                                                                            data.put("tagMom",tagViewModel.getArraylikeMom());
+                                                                            data.put("tagBir",tagViewModel.getArraylikeBir());
+                                                                            data.put("tagRip",tagViewModel.getArraylikeRip());
+                                                                            data.put("tagBis",tagViewModel.getArraylikeBis());
+                                                                            data.put("tagAqua",tagViewModel.getArraylikeAqua());
+                                                                            data.put("tagIns",tagViewModel.getArraylikeIns());
                                                                             data.put("likeCount",0);
                                                                             data.put("timestamp", FieldValue.serverTimestamp());
                                                                             // Firestoreにドキュメントを作成
