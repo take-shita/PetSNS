@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.content.Intent;
+import android.widget.TextView;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -103,7 +104,8 @@ public class LoginActivity  extends AppCompatActivity {
                                                 startActivity(intent);
                                             } else {
                                                 // ログイン失敗
-                                                textID.setText(id);
+                                                showError("メールアドレスまたはパスワードが間違っています");
+//                                                textID.setText(id);
                                             }
                                         });
 
@@ -113,6 +115,11 @@ public class LoginActivity  extends AppCompatActivity {
             });
 
         }
+    }
+    private void showError(String errorMessage) {
+        TextView errorTextView = findViewById(R.id.errorMessage);
+        errorTextView.setText(errorMessage);
+        errorTextView.setVisibility(View.VISIBLE);
     }
 }
 
