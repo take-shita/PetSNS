@@ -65,5 +65,14 @@ public class Signup extends AppCompatActivity {
 
             }
         });
+        Button btnBack = findViewById(R.id.button5);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 現在のアクティビティを終了して前の画面に戻る
+                finish();
+            }
+        });
     }
 }

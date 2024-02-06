@@ -33,6 +33,7 @@ public class Signup3 extends AppCompatActivity {
 
         Button btnSb=findViewById(R.id.btnSubmit);
 
+
         TextView txtId=findViewById(R.id.textId);
         TextView txtName=findViewById(R.id.textName);
         TextView txtMail=findViewById(R.id.textMail);
@@ -109,6 +110,16 @@ public class Signup3 extends AppCompatActivity {
                                 }
                             });
                 }
+            }
+        });
+        Button btnBack=findViewById(R.id.button);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Intent intent = new Intent(context, Signup.class);
+                startActivity(intent);
             }
         });
     }
