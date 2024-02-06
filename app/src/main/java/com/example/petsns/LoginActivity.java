@@ -66,6 +66,10 @@ public class LoginActivity  extends AppCompatActivity {
                     id = textID.getText().toString();
                     String pass = textPass.getText().toString();
 
+                    if (id.isEmpty() || pass.isEmpty()) {
+                        showError("メールアドレスとパスワードを入力してください");
+                        return;
+                    }
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     CollectionReference usersCollection = db.collection("users");
 
