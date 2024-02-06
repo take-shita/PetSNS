@@ -49,7 +49,8 @@ public class snspostFragment extends Fragment {
     private SnspostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
-    private TagPostViewModel viewModel;
+    private TagPostViewModel tagViewModel;
+    private PostInfoViewModel postViewModel;
     String userId;
     Uri selectedImageUri;
 
@@ -78,9 +79,8 @@ public class snspostFragment extends Fragment {
 
         if (getView() != null && requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.getData();
-
+            postViewModel.setImage(selectedImageUri);
             // ここで取得したURIを使用して画像を表示または処理する
-            // 例: ImageViewに画像を表示
              ImageView imageView = getView().findViewById(R.id.imageView);
              imageView.setImageURI(selectedImageUri);
         }
@@ -105,12 +105,20 @@ public class snspostFragment extends Fragment {
         Button back = view.findViewById(R.id.cancel_btn);
         MyApplication myApplication = (MyApplication) requireActivity().getApplication();
         if (myApplication != null) {
-            viewModel = myApplication.getSharedTagPostViewModel();
+            tagViewModel = myApplication.getSharedTagPostViewModel();
+            postViewModel= myApplication.getSharedPostInfoViewModel();
         } else {
             // エラーハンドリング
         }
-        if(viewModel.getTagNameAll()!=null){
-            txtTag.setText(viewModel.getTagNameAll());
+        if(tagViewModel.getTagNameAll()!=null){
+            txtTag.setText(tagViewModel.getTagNameAll());
+        }
+        if(postViewModel.getImage()!=null){
+            ImageView imageView = getView().findViewById(R.id.imageView);
+            imageView.setImageURI(postViewModel.getImage());
+        }
+        if(postViewModel.getSentence()!=null){
+            sentene.setText(postViewModel.getSentence());
         }
 
 
@@ -118,7 +126,8 @@ public class snspostFragment extends Fragment {
             @Override
 
             public void onClick(View v) {
-                viewModel.tagCancel();
+                tagViewModel.tagCancel();
+                postViewModel.postCancel();
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
@@ -166,12 +175,12 @@ public class snspostFragment extends Fragment {
                                                                             data.put("id",userId);
                                                                             data.put("sentence",sentene.getText().toString());
                                                                             data.put("imageUrl", uri.toString());
-                                                                            data.put("tagMom",viewModel.getArraylikeMom());
-                                                                            data.put("tagBir",viewModel.getArraylikeBir());
-                                                                            data.put("tagRip",viewModel.getArraylikeRip());
-                                                                            data.put("tagBis",viewModel.getArraylikeBis());
-                                                                            data.put("tagAqua",viewModel.getArraylikeAqua());
-                                                                            data.put("tagIns",viewModel.getArraylikeIns());
+                                                                            data.put("tagMom",tagViewModel.getArraylikeMom());
+                                                                            data.put("tagBir",tagViewModel.getArraylikeBir());
+                                                                            data.put("tagRip",tagViewModel.getArraylikeRip());
+                                                                            data.put("tagBis",tagViewModel.getArraylikeBis());
+                                                                            data.put("tagAqua",tagViewModel.getArraylikeAqua());
+                                                                            data.put("tagIns",tagViewModel.getArraylikeIns());
                                                                             data.put("likeCount",0);
                                                                             data.put("timestamp", FieldValue.serverTimestamp());
                                                                             // Firestoreにドキュメントを作成
@@ -213,6 +222,12 @@ public class snspostFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("key", false);
+
+                if(sentene.getText().toString()!=null){
+                    postViewModel.setSentence(sentene.getText().toString());
+                }else {
+                    postViewModel.setSentence(" ");
+                }
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
             }
         });

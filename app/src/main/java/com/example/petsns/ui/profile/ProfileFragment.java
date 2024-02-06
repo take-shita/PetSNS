@@ -17,7 +17,6 @@ import android.widget.ToggleButton;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
-import com.example.petsns.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
