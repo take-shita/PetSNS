@@ -156,6 +156,10 @@
         <action
             android:id="@+id/action_navigation_contest_to_navigation_contest_post"
             app:destination="@id/navigation_contest_post" />
+        <action
+            android:id="@+id/action_navigation_contest_view_to_navigation_contest_ranking"
+            app:destination="@+id/navigation_contest_ranking"/>
+
     </fragment>
 
     <fragment
@@ -169,6 +173,8 @@
         <action
             android:id="@+id/action_navigation_contest_view_to_navigation_tag_search"
             app:destination="@+id/navigation_tag_search"/>
+
+
     </fragment>
 
     <fragment
