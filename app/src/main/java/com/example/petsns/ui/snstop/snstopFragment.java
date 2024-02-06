@@ -125,6 +125,9 @@ public class snstopFragment extends Fragment {
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
+
 //        ボタンのクリックリスナー
         ImageButton prof_bt = view.findViewById(R.id.top_prof);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -143,6 +146,8 @@ public class snstopFragment extends Fragment {
                                         for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                             // ドキュメントが見つかった場合、IDを取得
                                             userId = document1.getId();
+
+
                                             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                                             db.collection("users") // コレクション名

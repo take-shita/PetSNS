@@ -229,17 +229,7 @@ public class ProfileFragment extends Fragment {
             posttime = itemView.findViewById(R.id.posttime);
             report_btn = itemView.findViewById(R.id.report_btn);
             profileicon = itemView.findViewById(R.id.profileicon);
-            profileicon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // プロフィール画面への遷移処理を呼び出す
-                    navigateToProfile();
-                }
-            });
         }
-        private void navigateToProfile() {
-            // Navigation Component を使用して自分のプロフィール画面へ遷移
-            Navigation.findNavController(rootView).navigate(R.id.action_navigation_snstop_to_navigation_profile);
-        }
+
     }
 }
