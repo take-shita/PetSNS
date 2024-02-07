@@ -236,9 +236,9 @@ public class routeFragment extends DashboardFragment {
                                                                     String documentId = document.getId();
 
                                                                     route.setOrigin((Double) data.get("originLatitude"),(Double) data.get("originLongitude"));
-                                                                    route.setPoint1((Double) data.get("point1Longitude"),(Double) data.get("point1Latitude"));
-                                                                    route.setPoint2((Double) data.get("point2Longitude"),(Double) data.get("point2Latitude"));
-                                                                    route.setPoint3((Double) data.get("point3Longitude"),(Double) data.get("point3Latitude"));
+                                                                    route.setPoint1((Double) data.get("point1Latitude"),(Double) data.get("point1Longitude"));
+                                                                    route.setPoint2((Double) data.get("point2Latitude"),(Double) data.get("point2Longitude"));
+                                                                    route.setPoint3((Double) data.get("point3Latitude"),(Double) data.get("point3Longitude"));
 
                                                                     route.setName((String)data.get("name"));
 

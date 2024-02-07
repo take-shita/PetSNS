@@ -116,6 +116,7 @@ public class snspostFragment extends Fragment {
         if(postViewModel.getImage()!=null){
             ImageView imageView = getView().findViewById(R.id.imageView);
             imageView.setImageURI(postViewModel.getImage());
+            selectedImageUri=postViewModel.getImage();
         }
         if(postViewModel.getSentence()!=null){
             sentene.setText(postViewModel.getSentence());

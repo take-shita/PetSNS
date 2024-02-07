@@ -1,5 +1,7 @@
 package com.example.petsns.ui.route;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class FavoriteRoute {
         origin=new LatLng(Latitude,Longitude);
     }
     public void setPoint1(Double Latitude,Double Longitude){
+        Log.d("??????",Double.toString(Latitude));
         point1=new LatLng(Latitude,Longitude);
     }
     public void setPoint2(Double Latitude,Double Longitude){
