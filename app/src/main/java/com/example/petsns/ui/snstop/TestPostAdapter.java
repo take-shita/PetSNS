@@ -53,6 +53,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     private String userId;
     private DocumentReference documentRef;
     private List<QueryDocumentSnapshot> data;
+
     public TestPostAdapter(Context context) {
         this.data =new ArrayList<>();
         this.context = context;
@@ -79,6 +80,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         int adapterPosition = holder.getAdapterPosition();
 
         TestPost post = posts.get(adapterPosition);
+        setLikeButtonState(holder, posts.get(position));
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String documentId=post.getDocumentId();
         // 投稿時間を取得
@@ -171,7 +173,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                     List<TestPost> posts = new ArrayList<>();
                     user = FirebaseAuth.getInstance().getCurrentUser();
                     String userUid = user.getUid();
-
                     CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                                 CollectionReference collectionRefId = db.collection("userId");
                                 collectionRefId.whereEqualTo("uid", userUid)
@@ -447,6 +448,53 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 // エラーが発生した場合の処理
             }
         });
+    }
+    // Firestoreからいいね情報を取得し、適切な状態でいいねボタンを表示するメソッド
+    private void setLikeButtonState(PostViewHolder holder, TestPost post) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+            String userUid = user.getUid();
+
+            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                        CollectionReference collectionRefId = db.collection("userId");
+                        collectionRefId.whereEqualTo("uid", userUid)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(Task<QuerySnapshot> task1) {
+
+                                        if (task1.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                // ドキュメントが見つかった場合、IDを取得
+                                                userId = document1.getId();
+
+                                                DocumentReference userRef = db.collection("users").document(userId);
+                                                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                                                    if (documentSnapshot.exists()) {
+                                                        List<String> iinePostIds = (List<String>) documentSnapshot.get("iinePostId");
+                                                        if (iinePostIds != null && iinePostIds.contains(post.getDocumentId())) {
+                                                            // いいねした投稿のIDがユーザーのiinePostIdフィールドに含まれている場合、いいねボタンを押した状態に設定
+                                                            holder.hartbtn.setChecked(true);
+                                                        } else {
+                                                            // 含まれていない場合は通常の状態に設定
+                                                            holder.hartbtn.setChecked(false);
+                                                        }
+                                                    }
+                                                }).addOnFailureListener(e -> {
+                                                    // エラーが発生した場合の処理
+                                                });
+                                            }
+                                        }
+                                    }
+                                });
+                    });
+
+
+        }
     }
     @Override
     public int getItemCount() { return posts != null ? posts.size() : 0; }

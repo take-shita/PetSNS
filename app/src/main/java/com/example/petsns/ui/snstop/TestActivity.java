@@ -36,7 +36,7 @@ public class TestActivity extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        postAdapter = new TestPostAdapter(requireContext());
+//        postAdapter = new TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
 
         // Firestoreからデータを取得して表示

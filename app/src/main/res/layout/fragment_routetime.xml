@@ -38,18 +38,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/route1"
+        android:id="@+id/btnFavorite"
         android:layout_width="129dp"
         android:layout_height="53dp"
         android:layout_marginStart="115dp"
         android:layout_marginTop="592dp"
         android:background="@drawable/frame_style"
-        android:text="@string/ルート"
+        android:text="保存済み"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
         />
 
     <EditText

@@ -34,6 +34,8 @@ import com.example.petsns.MainActivity;
 import com.example.petsns.R;
 import android.content.Context;
 
+import com.example.petsns.Signup;
+import com.example.petsns.contest_rankingFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -171,6 +173,7 @@ public class ContestFragment extends Fragment {
 
 
 
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -181,6 +184,13 @@ public class ContestFragment extends Fragment {
 
 
 
+        Button btnresult = view.findViewById(R.id.btnresult);
+        btnresult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_ranking);
+            }
+        });
 
 
 
