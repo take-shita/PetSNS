@@ -177,13 +177,6 @@ public class ContestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = FirebaseFirestore.getInstance();
-        // ボタンのクリックリスナーを設定
-
-        sampleText=view.findViewById(R.id.textView38);
-
-
-
         Button btnresult = view.findViewById(R.id.btnresult);
         btnresult.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +184,14 @@ public class ContestFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_ranking);
             }
         });
+
+        db = FirebaseFirestore.getInstance();
+        // ボタンのクリックリスナーを設定
+
+        sampleText=view.findViewById(R.id.textView38);
+
+
+
 
 
 
