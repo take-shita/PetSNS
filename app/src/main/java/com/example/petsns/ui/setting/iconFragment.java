@@ -113,6 +113,8 @@ public class iconFragment extends Fragment {
                 if (selectedImageUri != null) {
                     // Firebase Storage へのアップロード処理
                     uploadImageToFirebaseStorage(selectedImageUri);
+                }else {
+                    Toast.makeText(requireContext(),"画像が選択されていません",Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -134,7 +136,7 @@ public class iconFragment extends Fragment {
 
                                     if (task1.isSuccessful()) {
                                         for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                            // ドキュメントが見つかった場合、IDを取得
+                                            // ドキュメントが見つかった場合、ID を取得
                                             userId = document1.getId();
                                             db.collection("users") // コレクション名
                                                     .document(userId) // ドキュメント名
@@ -206,7 +208,7 @@ public class iconFragment extends Fragment {
 
                                 if (task1.isSuccessful()) {
                                     for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                        // ドキュメントが見つかった場合、IDを取得
+                                        // ドキュメントが見つかった場合、ID を取得
                                         userId = document1.getId();
                                         StorageReference storageRef = storage.getReference().child(storagePath + userId + ".png");
 
@@ -214,7 +216,7 @@ public class iconFragment extends Fragment {
                                                 .addOnSuccessListener(taskSnapshot -> {
                                                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                                                 String downloadUrl = uri.toString();
-                                                                // Firebase Firestore にダウンロードURLを保存するメソッド
+                                                                // Firebase Firestore にダウンロード URL を保存するメソッド
                                                                 saveImageDownloadUrlToFirestore(downloadUrl);
                                                             })
                                                             .addOnFailureListener(exception -> {
@@ -237,7 +239,7 @@ public class iconFragment extends Fragment {
         }
     }
 
-    // Firebase Firestore へダウンロードURLを保存するメソッド
+    // Firebase Firestore へダウンロード URL を保存するメソッド
     private void saveImageDownloadUrlToFirestore(String downloadUrl) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -245,7 +247,7 @@ public class iconFragment extends Fragment {
         if (currentUser != null) {
             DocumentReference userDocRef = db.collection("users").document(userId);
 
-            // ダウンロードURLを Firestore に保存
+            // ダウンロード URL を Firestore に保存
             userDocRef.update("icon", downloadUrl)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(requireContext(), "画像の更新が完了しました", Toast.LENGTH_SHORT).show();
@@ -261,7 +263,7 @@ public class iconFragment extends Fragment {
 }
 
 
-    // Firebase Firestore へダウンロードURLを保存するメソッド
+    // Firebase Firestore へダウンロード URL を保存するメソッド
 //    private void saveImageDownloadUrlToFirestore(String downloadUrl) {
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -271,7 +273,7 @@ public class iconFragment extends Fragment {
 //            String userId = currentUser.getUid();
 //            DocumentReference userDocRef = db.collection("users").document(userId);
 //
-//            // ダウンロードURLを Firestore に保存
+//            // ダウンロード URL を Firestore に保存
 //            userDocRef.update("icon", downloadUrl)  // フィールド名は適切なものに変更すること
 //                    .addOnSuccessListener(aVoid -> {
 //                        Toast.makeText(requireContext(), "画像の更新が完了しました", Toast.LENGTH_SHORT).show();

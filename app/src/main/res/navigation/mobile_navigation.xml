@@ -157,8 +157,20 @@
             android:id="@+id/action_navigation_contest_to_navigation_contest_post"
             app:destination="@id/navigation_contest_post" />
         <action
-            android:id="@+id/action_navigation_contest_view_to_navigation_contest_ranking"
-            app:destination="@+id/navigation_contest_ranking"/>
+            android:id="@+id/action_navigation_contest_to_navigation_contest_ranking"
+            app:destination="@id/navigation_contest_ranking" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_contest_ranking"
+        android:name="com.example.petsns.ui.contest.Contest_rankingFragment"
+        android:label="Contest"
+        tools:layout="@layout/fragment_contest_ranking" >
+    <action
+        android:id="@+id/action_navigation_contest_ranking_to_navigation_contest"
+        app:destination="@+id/navigation_contest"/>
 
     </fragment>
 

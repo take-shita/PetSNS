@@ -16,12 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.RouteViewViewModel;
@@ -40,6 +40,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
@@ -47,8 +57,13 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
 
@@ -63,9 +78,11 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
     private List<LatLng> routePoints; // ルートの座標リストを保持するリスト
     private Polyline routePolyline;
-
+    private FirebaseFirestore db;
+    Boolean checkSearch;
     LatLng currentLatLng;
     TextView txtSmp;
+    LatLng origin;
     LatLng intermediatePoint1;
     LatLng intermediatePoint2;
     LatLng intermediatePoint3;
@@ -73,6 +90,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     int totalDistance;
     int distance;
     Button generateRouteButton;
+
     public static RouteViewFragment newInstance() {
         return new RouteViewFragment();
     }
@@ -82,6 +100,9 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_view, container, false);
         MyApplication myApplication = (MyApplication) requireActivity().getApplication();
+
+        checkSearch = false;
+
         if (myApplication != null) {
             viewModel = myApplication.getSharedRouteViewModel();
         } else {
@@ -108,22 +129,27 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
 
 
         Button backButton = view.findViewById(R.id.backButton);
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_route_view_to_navigation_route);
-                }
-            });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_route_view_to_navigation_route);
+            }
+        });
 
         generateRouteButton = view.findViewById(R.id.routeButton);
         generateRouteButton.setOnClickListener(v -> {
             // 権限の確認とリクエスト
 //            txtSmp.setText(String.valueOf(viewModel.getDistance()));
-            totalDistance=viewModel.getDistance();
-            distance=totalDistance/6;
+            totalDistance = viewModel.getDistance();
+            distance = totalDistance / 6;
             checkLocationPermission();
             googleMap.clear();
-            generateRoute();
+            if (viewModel.favoriteCheck) {
+                Log.d("??????",Double.toString(viewModel.getPoint1().latitude));
+                new FetchDirectionsTask().execute(viewModel.getOrigin(),viewModel.getPoint1(),viewModel.getPoint2(),viewModel.getPoint3(),viewModel.getOrigin());
+            } else {
+                generateRoute();
+            }
         });
 
         return view;
@@ -147,7 +173,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     private class FetchDirectionsTask extends AsyncTask<LatLng, Void, DirectionsResult> {
         @Override
         protected DirectionsResult doInBackground(LatLng... params) {
-            LatLng origin = params[0];
+            origin = params[0];
             intermediatePoint1 = params[1];
             intermediatePoint2 = params[2];
             intermediatePoint3 = params[3];
@@ -216,7 +242,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                     }
                 }
 
-
+                checkSearch=true;
                 return concatenatedRoute;
             } else {
                 return null;
@@ -413,6 +439,63 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
         txtSmp = view.findViewById(R.id.textsample);
 
+        Button favoriteButton = view.findViewById(R.id.favoriteButton);
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    CollectionReference collectionRefId = db.collection("userId");
+                    if (checkSearch) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        String userUid = user.getUid();
+                        collectionRefId.whereEqualTo("uid", userUid)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(Task<QuerySnapshot> task1) {
+                                        if (task1.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                // ドキュメントが見つかった場合、IDを取得
+                                                String userId = document1.getId();
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("id", userId);
+
+                                                data.put("originLongitude", origin.longitude);
+                                                data.put("originLatitude", origin.latitude);
+
+                                                data.put("point1Longitude", intermediatePoint1.longitude);
+                                                data.put("point1Latitude", intermediatePoint1.latitude);
+
+                                                data.put("point2Longitude", intermediatePoint2.longitude);
+                                                data.put("point2Latitude", intermediatePoint2.latitude);
+
+                                                data.put("point3Longitude", intermediatePoint3.longitude);
+                                                data.put("point3Latitude", intermediatePoint3.latitude);
+
+                                                data.put("name", "sample");
+                                                data.put("timestamp", FieldValue.serverTimestamp());
+
+                                                CollectionReference routeCollection = db.collection("routeFavorite");
+
+                                                routeCollection.document(UUID.randomUUID().toString()).set(data);
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+                });
+                try {
+                    future1.get(); // 非同期処理が終わるまでブロック
+
+                } catch (InterruptedException | ExecutionException e) {
+                    // 例外処理
+                }
+            }
+        });
     }
 
     @Override

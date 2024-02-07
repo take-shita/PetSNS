@@ -79,8 +79,9 @@ public class snspostFragment extends Fragment {
 
         if (getView() != null && requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.getData();
-            postViewModel.setImage(selectedImageUri);
+
             // ここで取得したURIを使用して画像を表示または処理する
+            // 例: ImageViewに画像を表示
              ImageView imageView = getView().findViewById(R.id.imageView);
              imageView.setImageURI(selectedImageUri);
         }
@@ -113,13 +114,6 @@ public class snspostFragment extends Fragment {
         if(tagViewModel.getTagNameAll()!=null){
             txtTag.setText(tagViewModel.getTagNameAll());
         }
-        if(postViewModel.getImage()!=null){
-            ImageView imageView = getView().findViewById(R.id.imageView);
-            imageView.setImageURI(postViewModel.getImage());
-        }
-        if(postViewModel.getSentence()!=null){
-            sentene.setText(postViewModel.getSentence());
-        }
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +121,6 @@ public class snspostFragment extends Fragment {
 
             public void onClick(View v) {
                 tagViewModel.tagCancel();
-                postViewModel.postCancel();
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
             }
         });
@@ -222,12 +215,6 @@ public class snspostFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("key", false);
-
-                if(sentene.getText().toString()!=null){
-                    postViewModel.setSentence(sentene.getText().toString());
-                }else {
-                    postViewModel.setSentence(" ");
-                }
                 Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_tag_post);
             }
         });

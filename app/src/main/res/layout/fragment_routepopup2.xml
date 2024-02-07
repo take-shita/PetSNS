@@ -6,36 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.route.routeFragment">
 
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_marginTop="10dp"
+        tools:context=".TimelineActivity">
 
-    <Button
-        android:id="@+id/place"
-        android:layout_width="126dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="520dp"
-        android:background="@drawable/frame_style"
-        android:text="指定場所"
-        android:textColor="@color/black"
-        app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/favorite"
-        android:layout_width="139dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="596dp"
-        android:background="@drawable/frame_style"
-        android:text="お気に入り"
-        android:textColor="@color/black"
-        app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

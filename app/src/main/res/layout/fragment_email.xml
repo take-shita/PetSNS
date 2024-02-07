@@ -51,13 +51,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF9999"
-        android:text="追加"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
+        android:text="変更"
+        tools:layout_editor_absoluteX="345dp"
+        tools:layout_editor_absoluteY="441dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btncan"
