@@ -6,6 +6,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -145,7 +147,6 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
             checkLocationPermission();
             googleMap.clear();
             if (viewModel.favoriteCheck) {
-                Log.d("??????",Double.toString(viewModel.getPoint1().latitude));
                 new FetchDirectionsTask().execute(viewModel.getOrigin(),viewModel.getPoint1(),viewModel.getPoint2(),viewModel.getPoint3(),viewModel.getOrigin());
             } else {
                 generateRoute();
@@ -299,20 +300,6 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                             LatLng startLatLng = routePoints.get(0); // ルートの最初の座標を開始地点とする
                             addStartMarker(startLatLng);
                         }
-//                        MarkerOptions intermediateMarkerOptions = new MarkerOptions()
-//                                .position(new LatLng(intermediatePoint1.latitude, intermediatePoint1.longitude))
-//                                .title("Intermediate Point 1");
-//                        googleMap.addMarker(intermediateMarkerOptions);
-////
-//                        MarkerOptions intermediateMarkerOptions2 = new MarkerOptions()
-//                                .position(new LatLng(intermediatePoint2.latitude, intermediatePoint2.longitude))
-//                                .title("Intermediate Point 2");
-//                        googleMap.addMarker(intermediateMarkerOptions2);
-//
-//                        MarkerOptions intermediateMarkerOptions3 = new MarkerOptions()
-//                                .position(new LatLng(intermediatePoint3.latitude, intermediatePoint3.longitude))
-//                                .title("Intermediate Point 3");
-//                        googleMap.addMarker(intermediateMarkerOptions3);
                     }else{
                         generateRoute();
                     }
@@ -443,57 +430,77 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                Context context = requireContext();
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.popup_route_submit);
 
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    CollectionReference collectionRefId = db.collection("userId");
-                    if (checkSearch) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 500; // 幅を変更
+                params.height = 400; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-                        String userUid = user.getUid();
-                        collectionRefId.whereEqualTo("uid", userUid)
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(Task<QuerySnapshot> task1) {
-                                        if (task1.isSuccessful()) {
-                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                                // ドキュメントが見つかった場合、IDを取得
-                                                String userId = document1.getId();
+                Button btnCancel = dialog.findViewById(R.id.btnRouteCan);
+                Button btnSub = dialog.findViewById(R.id.btnRouteSub);
 
-                                                Map<String, Object> data = new HashMap<>();
-                                                data.put("id", userId);
-
-                                                data.put("originLongitude", origin.longitude);
-                                                data.put("originLatitude", origin.latitude);
-
-                                                data.put("point1Longitude", intermediatePoint1.longitude);
-                                                data.put("point1Latitude", intermediatePoint1.latitude);
-
-                                                data.put("point2Longitude", intermediatePoint2.longitude);
-                                                data.put("point2Latitude", intermediatePoint2.latitude);
-
-                                                data.put("point3Longitude", intermediatePoint3.longitude);
-                                                data.put("point3Latitude", intermediatePoint3.latitude);
-
-                                                data.put("name", "sample");
-                                                data.put("timestamp", FieldValue.serverTimestamp());
-
-                                                CollectionReference routeCollection = db.collection("routeFavorite");
-
-                                                routeCollection.document(UUID.randomUUID().toString()).set(data);
-                                            }
-                                        }
-                                    }
-                                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-                try {
-                    future1.get(); // 非同期処理が終わるまでブロック
 
-                } catch (InterruptedException | ExecutionException e) {
-                    // 例外処理
-                }
+                dialog.show();
+//                CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+//
+//                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                    CollectionReference collectionRefId = db.collection("userId");
+//                    if (checkSearch) {
+//                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//
+//                        String userUid = user.getUid();
+//                        collectionRefId.whereEqualTo("uid", userUid)
+//                                .get()
+//                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                    @Override
+//                                    public void onComplete(Task<QuerySnapshot> task1) {
+//                                        if (task1.isSuccessful()) {
+//                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
+//                                                // ドキュメントが見つかった場合、IDを取得
+//                                                String userId = document1.getId();
+//
+//                                                Map<String, Object> data = new HashMap<>();
+//                                                data.put("id", userId);
+//
+//                                                data.put("originLongitude", origin.longitude);
+//                                                data.put("originLatitude", origin.latitude);
+//
+//                                                data.put("point1Longitude", intermediatePoint1.longitude);
+//                                                data.put("point1Latitude", intermediatePoint1.latitude);
+//
+//                                                data.put("point2Longitude", intermediatePoint2.longitude);
+//                                                data.put("point2Latitude", intermediatePoint2.latitude);
+//
+//                                                data.put("point3Longitude", intermediatePoint3.longitude);
+//                                                data.put("point3Latitude", intermediatePoint3.latitude);
+//
+//                                                data.put("name", "sample");
+//                                                data.put("timestamp", FieldValue.serverTimestamp());
+//
+//                                                CollectionReference routeCollection = db.collection("routeFavorite");
+//
+//                                                routeCollection.document(UUID.randomUUID().toString()).set(data);
+//                                            }
+//                                        }
+//                                    }
+//                                });
+//                    }
+//                });
+//                try {
+//                    future1.get(); // 非同期処理が終わるまでブロック
+//
+//                } catch (InterruptedException | ExecutionException e) {
+//                    // 例外処理
+//                }
             }
         });
     }

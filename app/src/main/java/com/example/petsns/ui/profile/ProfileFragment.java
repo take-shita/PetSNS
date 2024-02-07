@@ -216,16 +216,17 @@ public class ProfileFragment extends Fragment {
         public PostViewHolder(@NonNull View itemView, View rootView) {
             super(itemView);
             this.rootView = rootView;  // rootViewを設定
-            hartbtn=itemView.findViewById(R.id.hartbtn);
+            hartbtn = itemView.findViewById(R.id.hartbtn);
             textUsername = itemView.findViewById(R.id.textUsername);
             textPost = itemView.findViewById(R.id.textPost);
             imagePost = itemView.findViewById(R.id.imagePost);
             otherprofilebtn = itemView.findViewById(R.id.otherprofilebtn);
-            tagText=itemView.findViewById(R.id.tagText);
-            likeCount=itemView.findViewById(R.id.iinecount);
+            tagText = itemView.findViewById(R.id.tagText);
+            likeCount = itemView.findViewById(R.id.iinecount);
             posttime = itemView.findViewById(R.id.posttime);
             report_btn = itemView.findViewById(R.id.report_btn);
             profileicon = itemView.findViewById(R.id.profileicon);
         }
+
     }
 }
