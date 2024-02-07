@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.petsns.R;
 import com.example.petsns.ui.setting.RepotViewModel;
@@ -45,6 +46,7 @@ public class repotFragment extends Fragment {
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // 前の画面に戻る
                 Navigation.findNavController(v).navigate(R.id.action_navigation_repot_to_navigation_setting);
             }
@@ -56,16 +58,28 @@ public class repotFragment extends Fragment {
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // EditTextから文書を取得
+
+
+                // EditText から文書を取得
                 String subject = "報告の件名";  // 任意の件名を設定
                 String message = editText.getText().toString();
 
-                // Firebase Firestoreに報告を送信
-                mViewModel.sendReportToFirestore(subject, message, getContext());
+                int minMessageLength = 1;
 
-                Navigation.findNavController(getView()).navigateUp();
-                // 送信後の処理をここに追加（例えば、Toastメッセージを表示するなど）
+                // 文字数が制限を超えていないかチェック
+                if (message.length() < minMessageLength) {
+                    // 文字数が制限を超えている場合はエラーメッセージを表示するなどの処理を行う
+                    // 例えば、Toast メッセージを表示
+                    Toast.makeText(getContext(), "報告・要望を " +  "入力してください", Toast.LENGTH_SHORT).show();
+                } else {
 
+                    // Firebase Firestore に報告を送信
+                    mViewModel.sendReportToFirestore(subject, message, getContext());
+
+                    Navigation.findNavController(getView()).navigateUp();
+                    // 送信後の処理をここに追加（例えば、Toast メッセージを表示するなど）
+
+                }
             }
         });
     }

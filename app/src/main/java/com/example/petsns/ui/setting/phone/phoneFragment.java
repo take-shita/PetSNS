@@ -27,10 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-
-
-
+import android.widget.TextView;
 
 public class phoneFragment extends Fragment {
 
@@ -82,6 +79,7 @@ public class phoneFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TextView numberinfo = view.findViewById(R.id.numberinfo);
         Button btnTw = view.findViewById(R.id.btnTw);
         Button btncan = view.findViewById(R.id.btncan);
 
@@ -106,6 +104,13 @@ public class phoneFragment extends Fragment {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 if (documentSnapshot.exists()) {
                                     String currentPhoneNumber = documentSnapshot.getString("phoneNumber");
+                                    if (currentPhoneNumber != null) {
+                                        // 現在の電話番号が登録されている場合は表示する
+                                        numberinfo.setText("現在の登録電話番号は " + currentPhoneNumber + " です。");
+                                    } else {
+                                        // 現在の電話番号が登録されていない場合は適切なメッセージを表示する
+                                        numberinfo.setText("現在電話番号は登録されていません。");
+                                    }
                                     if (currentPhoneNumber != null && currentPhoneNumber.equals(phoneNumber)) {
                                         // 入力された電話番号と現在の電話番号が同じ場合はエラーを表示
                                         Toast.makeText(requireContext(), "入力された電話番号は既に登録されています", Toast.LENGTH_SHORT).show();

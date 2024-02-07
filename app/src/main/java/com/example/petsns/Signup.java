@@ -65,5 +65,16 @@ public class Signup extends AppCompatActivity {
 
             }
         });
+        Button btnBack = findViewById(R.id.button5);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.petsns.Answer;
 import com.example.petsns.AnswerAdapter;
@@ -118,7 +119,7 @@ public class BoardChatFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        // Firestoreからデータを取得して表示
+        // Firestore からデータを取得して表示
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("answer")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -158,7 +159,7 @@ public class BoardChatFragment extends Fragment {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
                 firestore.collection("question")  // コレクション名
-                        .document(documentID)      // ドキュメントID
+                        .document(documentID)      // ドキュメント ID
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -194,48 +195,63 @@ public class BoardChatFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                    String userUid = user.getUid();
 
 
-                    CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
-                        CollectionReference collectionRefId = db.collection("userId");
-                        collectionRefId.whereEqualTo("uid", userUid)
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(Task<QuerySnapshot> task1) {
-                                        if (task1.isSuccessful()) {
-                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                                // ドキュメントが見つかった場合、IDを取得
-                                                userId = document1.getId();
-                                                CollectionReference postCollection = db.collection("answer");
+                    String answerContent = ans_con.getText().toString().trim();
 
-                                                Map<String, Object> data = new HashMap<>();
-                                                data.put("user_id", userId);
-                                                data.put("timestamp", FieldValue.serverTimestamp());
-                                                data.put("ques_id",documentID);
-                                                data.put("answer_content", ans_con.getText().toString());
-                                                postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                        .addOnSuccessListener(documentReference -> {
-                                                        })
-                                                        .addOnFailureListener(e -> {
-                                                        });
+                    int minMessageLength = 1;
 
+                    // 文字数が制限を超えていないかチェック
+                    if (ans_con.length() < minMessageLength) {
+                        // 文字数が制限を超えている場合はエラーメッセージを表示するなどの処理を行う
+                        // 例えば、Toast メッセージを表示
+                        Toast.makeText(getContext(), "回答を " +  "入力してください", Toast.LENGTH_SHORT).show();
+                    } else {
+
+
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        String userUid = user.getUid();
+
+
+                        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                            CollectionReference collectionRefId = db.collection("userId");
+                            collectionRefId.whereEqualTo("uid", userUid)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(Task<QuerySnapshot> task1) {
+                                            if (task1.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                    // ドキュメントが見つかった場合、ID を取得
+                                                    userId = document1.getId();
+                                                    CollectionReference postCollection = db.collection("answer");
+
+                                                    Map<String, Object> data = new HashMap<>();
+                                                    data.put("user_id", userId);
+                                                    data.put("timestamp", FieldValue.serverTimestamp());
+                                                    data.put("ques_id", documentID);
+                                                    data.put("answer_content", ans_con.getText().toString());
+                                                    postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                            .addOnSuccessListener(documentReference -> {
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                            });
+
+                                                }
                                             }
                                         }
-                                    }
-                                });
-                    });
+                                    });
+                        });
 
 
-                    try {
-                        future1.get(); // 非同期処理が終わるまでブロック
-                    } catch (InterruptedException | ExecutionException e) {
-                        // 例外処理
+                        try {
+                            future1.get(); // 非同期処理が終わるまでブロック
+                        } catch (InterruptedException | ExecutionException e) {
+                            // 例外処理
+                        }
+
                     }
-
                 }
             });
             // データを使用して何かを行う
