@@ -72,17 +72,22 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
-        return new PostViewHolder(view);
+        PostViewHolder viewHolder = new PostViewHolder(view);
+        // posts リストが空でない場合にのみ setLikeButtonState メソッドを呼び出す
+        if (posts != null && !posts.isEmpty() && viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+            setLikeButtonState(viewHolder, posts.get(viewHolder.getAdapterPosition()));
+        }
+        return viewHolder;
     }
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
         int adapterPosition = holder.getAdapterPosition();
 
-        TestPost post = posts.get(adapterPosition);
-        setLikeButtonState(holder, posts.get(position));
+        TestPost post = posts.get(position);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String documentId=post.getDocumentId();
+        setLikeButtonState(holder, posts.get(position));
         // 投稿時間を取得
         Timestamp timestamp = post.gettimestamp();
         // 取得した投稿時間を適切なフォーマットに変換
@@ -455,10 +460,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
             String userUid = user.getUid();
-
             CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                         CollectionReference collectionRefId = db.collection("userId");
                         collectionRefId.whereEqualTo("uid", userUid)
@@ -466,7 +468,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(Task<QuerySnapshot> task1) {
-
                                         if (task1.isSuccessful()) {
                                             for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                                 // ドキュメントが見つかった場合、IDを取得
@@ -478,10 +479,18 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                                                         List<String> iinePostIds = (List<String>) documentSnapshot.get("iinePostId");
                                                         if (iinePostIds != null && iinePostIds.contains(post.getDocumentId())) {
                                                             // いいねした投稿のIDがユーザーのiinePostIdフィールドに含まれている場合、いいねボタンを押した状態に設定
+
                                                             holder.hartbtn.setChecked(true);
                                                         } else {
                                                             // 含まれていない場合は通常の状態に設定
                                                             holder.hartbtn.setChecked(false);
+                                                        }
+                                                        // すでに取得済みのいいね数を利用していいね数を更新する
+                                                        if (documentSnapshot.contains("likeCount")) {
+                                                            Long likeCount = documentSnapshot.getLong("likeCount");
+                                                            if (likeCount != null) {
+                                                                holder.likeCount.setText(String.valueOf(likeCount));
+                                                            }
                                                         }
                                                     }
                                                 }).addOnFailureListener(e -> {
