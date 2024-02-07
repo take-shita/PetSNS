@@ -52,8 +52,6 @@ public class TagPostViewModel extends ViewModel {
                 }else {
                     chkMommalians+=(" "+nameMommalians[i]);
                 }
-
-
             }
         }
         return chkMommalians;

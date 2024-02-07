@@ -31,27 +31,27 @@ public class routepopup2Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button bt = view.findViewById(R.id.place);
-        bt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routeplace);
-            }
-        });
-
-        Button btn = view.findViewById(R.id.favorite);
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routefavorite);
-            }
-        });
+//        Button bt = view.findViewById(R.id.place);
+//        bt.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routeplace);
+//            }
+//        });
+//
+//        Button btn = view.findViewById(R.id.favorite);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Navigation.findNavController(v).navigate(R.id.action_navigation_routepopup2_to_navigation_routefavorite);
+//            }
+//        });
 
     }
 }

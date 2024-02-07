@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +83,6 @@ public class ProfileFragment extends Fragment {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userUid = user.getUid();
 
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
 
                     CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                         CollectionReference collectionRefId = db.collection("userId");
@@ -96,6 +96,7 @@ public class ProfileFragment extends Fragment {
                                             for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                                 // ドキュメントが見つかった場合、IDを取得
                                                 userId = document1.getId();
+
                                                 DocumentReference docRef = db.collection("users").document(userId);
 
 
@@ -112,22 +113,19 @@ public class ProfileFragment extends Fragment {
                                                     List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                                     List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                                     Number likeCountDouble = ((Number) data.get("likeCount"));
+
                                                     if(((String)data.get("id")).equals(userId)){
+
                                                         post.setId((String) data.get("id"));
                                                         post.setSentence((String) data.get("sentence"));
                                                         post.setImageUrl((String) data.get("imageUrl"));
                                                         post.setDocumentId(documentId);
                                                         post.setLikeCount(likeCountDouble.intValue());
                                                         post.setTagMom(tagMom);
-
                                                         post.setTagBir(tagBir);
-
                                                         post.setTagRip(tagRip);
-
                                                         post.setTagBis(tagBis);
-
                                                         post.setTagAqua(tagAqua);
-
                                                         post.setTagIns(tagIns);
 
                                                         posts.add(post);
@@ -180,7 +178,7 @@ public class ProfileFragment extends Fragment {
                                     }
                                 });
                     });
-                }
+
             }
         });
     }

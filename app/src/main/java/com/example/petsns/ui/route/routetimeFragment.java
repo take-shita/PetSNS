@@ -181,7 +181,6 @@ public class routetimeFragment extends Fragment {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         dialog.dismiss();
                     }
                 });
@@ -189,11 +188,37 @@ public class routetimeFragment extends Fragment {
             }
         });
 
-        Button btn1 = view.findViewById(R.id.route1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        Button btnFavorite = view.findViewById(R.id.btnFavorite);//投稿削除確認ポップアップ画面
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_routetime_to_navigation_routepopup2);
+                Context context = requireContext();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.fragment_routepopup2);
+
+                ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = 811; // 幅を変更
+                params.height = 900; // 高さを変更
+                dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+//                Button c = dialog.findViewById(R.id.place);
+//                Button d = dialog.findViewById(R.id.favorite);
+//
+//                c.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+////                dialog.show();
+//                d.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Navigation.findNavController(view).navigate(R.id.action_navigation_routepopup2_to_navigation_routefavorite);
+//                        dialog.dismiss();
+//                    }
+//                });
+                dialog.show();
             }
         });
     }

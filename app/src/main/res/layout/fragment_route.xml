@@ -30,18 +30,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/route1"
+        android:id="@+id/btnFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
         android:layout_marginTop="576dp"
         android:background="@drawable/frame_style"
-        android:text="@string/ルート"
+        android:text="保存済み"
         android:textColor="@color/black"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/setButton"
