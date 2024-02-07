@@ -70,8 +70,10 @@ public class Signup extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 現在のアクティビティを終了して前の画面に戻る
-                finish();
+                Context context = v.getContext();
+
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
