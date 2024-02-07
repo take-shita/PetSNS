@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,8 @@ public class userchanFragment extends Fragment {
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 // ひとつ前の画面に戻る
                 Navigation.findNavController(requireView()).navigateUp();
             }
@@ -96,6 +99,8 @@ public class userchanFragment extends Fragment {
         private void displayUserInfo() {
             FirebaseUser user = mAuth.getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
 
             if (user != null) {
                 String userUid = user.getUid();
@@ -111,7 +116,7 @@ public class userchanFragment extends Fragment {
 
                                             if (task1.isSuccessful()) {
                                                 for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                                    // ドキュメントが見つかった場合、IDを取得
+                                                    // ドキュメントが見つかった場合、ID を取得
                                                     userId = document1.getId();
 
                                                     DocumentReference userDocRef = db.collection("users").document(userId);
@@ -158,6 +163,14 @@ public class userchanFragment extends Fragment {
             FirebaseUser user = mAuth.getCurrentUser();
             String newUsername = editTextNewUsername.getText().toString().trim();
 
+            int minUsernameLength = 1;
+
+            if (TextUtils.isEmpty(newUsername)) {
+                // 新しいユーザー名が未入力の場合のエラーメッセージを表示
+                Toast.makeText(requireContext(), "新しいユーザー名を入力してください", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -177,10 +190,10 @@ public class userchanFragment extends Fragment {
 
                                     if (task1.isSuccessful()) {
                                         for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                            // ドキュメントが見つかった場合、IDを取得
+                                            // ドキュメントが見つかった場合、ID を取得
                                             userId = document1.getId();
 
-                                            // Firestoreの"users"コレクション内のユーザードキュメントにアクセス
+                                            // Firestore の"users"コレクション内のユーザードキュメントにアクセス
                                             DocumentReference userDocRef = db.collection("users").document(userId);
 
                                             // 新しい名前

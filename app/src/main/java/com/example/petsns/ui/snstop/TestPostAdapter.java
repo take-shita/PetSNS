@@ -327,6 +327,7 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                 }
             }
         });
+
 // コレクションとドキュメントのパスを指定
         String collectionPath = "users";
         String documentPath = post.getid();
@@ -335,10 +336,42 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         holder.otherprofilebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ユーザーのプロフィール画面に遷移する
-                Bundle bundle = new Bundle();
-                bundle.putString("userId", post.getid());
-                Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other, bundle);
+                String clickedUserId = post.getid();
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (currentUser != null) {
+                    String currentUserId = currentUser.getUid();
+
+                    CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                        CollectionReference collectionRefId = db.collection("userId");
+                        collectionRefId.whereEqualTo("uid", currentUserId)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(Task<QuerySnapshot> task1) {
+                                        if (task1.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                // ドキュメントが見つかった場合、IDを取得
+                                                userId = document1.getId();
+
+                                                if (clickedUserId.equals(userId)) {
+                                                    // プロフィール画面に遷移する処理を追加
+                                                    Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile);
+                                                } else {
+                                                    // プロフィール画面に遷移する処理を追加（ユーザーIDを渡す）
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("userId", clickedUserId);
+                                                    Navigation.findNavController(v).navigate(R.id.action_navigation_snstop_to_navigation_profile_other, bundle);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                });
+                    });
+
+
+                }
             }
         });
 // ドキュメントを取得
