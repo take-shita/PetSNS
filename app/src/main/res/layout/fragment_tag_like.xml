@@ -6,24 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.setting.TagLikeFragment">
 
-    <!--    <androidx.appcompat.widget.LinearLayoutCompat-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:gravity="center"-->
-    <!--        android:orientation="vertical">-->
-
-    <!--        &lt;!&ndash;        <androidx.appcompat.widget.AppCompatTextView&ndash;&gt;-->
-    <!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--        &lt;!&ndash;            android:text="fragment_tab_01 を表示"&ndash;&gt;-->
-    <!--        &lt;!&ndash;            android:textSize="20sp"&ndash;&gt;-->
-    <!--        &lt;!&ndash;            android:textStyle="bold" />&ndash;&gt;-->
-
-    <!--        -->
-
-
-    <!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
-
     <TextView
         android:id="@+id/textView21"
         android:layout_width="441dp"
