@@ -84,7 +84,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         return posts != null ? posts.size() : 0;
     }
 
-    public Profile_TestPostAdapter(Context context) {
+    public Profile_TestPostAdapter() {
         this.context = context;
     }
 

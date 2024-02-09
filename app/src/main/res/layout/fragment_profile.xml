@@ -20,15 +20,16 @@
             <Space
                 android:layout_width="491dp"
                 android:layout_height="80dp" />
+
             <ImageButton
                 android:id="@+id/toukoubtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="60dp"
+                android:background="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/toukoutouka"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds"
-                android:background="@null"/>
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/profile_textUsername"
@@ -116,31 +117,6 @@
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:scaleType="fitXY"-->
-<!--                        android:src="@drawable/loadingtouka"-->
-<!--                        tools:ignore="ContentDescription" />-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_marginLeft="-15dp"-->
-<!--                        android:scaleType="fitXY"-->
-<!--                        android:src="@drawable/loadingtouka"-->
-<!--                        tools:ignore="ContentDescription,RtlHardcoded" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="210dp"-->
-<!--                        android:layout_height="60dp"-->
-<!--                        android:layout_row="1"-->
-<!--                        android:layout_column="1"-->
-<!--                        android:layout_marginTop="-13dp"-->
-<!--                        android:gravity="left|center"-->
-<!--                        android:text="follow"-->
-<!--                        android:textSize="20dp"-->
-<!--                        tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,TextSizeCheck" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -152,8 +128,6 @@
                     <Space
                         android:layout_width="30dp"
                         android:layout_height="60dp" />
-
-
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -167,20 +141,54 @@
                         android:layout_height="2dp"
                         android:background="@color/black" />
                 </LinearLayout>
-<!--                ここから投稿-->
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
+                <!--                ここから投稿-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    tools:context=".TimelineActivity">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Space
+                        android:layout_width="42dp"
+                        android:layout_height="1dp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </RelativeLayout>
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="516dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.494"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView20"
+                        app:layout_constraintVertical_bias="0.743"
+                        tools:ignore="MissingConstraints">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#f2a955"
+                            android:text="投稿"
+                            android:textSize="24dp"/>
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="いいね"
+                            android:textSize="24dp"/>
+                    </com.google.android.material.tabs.TabLayout>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+        <!-- Fragmentがここに配置される -->
+    </FrameLayout>
 </FrameLayout>

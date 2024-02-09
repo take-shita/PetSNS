@@ -1,4 +1,6 @@
 package com.example.petsns.ui.profile;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -12,15 +14,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.example.petsns.R;
 import com.example.petsns.Profile_TestPost;
 import com.example.petsns.Profile_TestPostAdapter;
+import com.example.petsns.ui.setting.TagDislikeFragment;
+import com.example.petsns.ui.setting.TagLikeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,6 +50,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class ProfileFragment extends Fragment {
@@ -58,12 +68,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         //        主要な要素
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        postAdapter = new Profile_TestPostAdapter(requireContext());
+        postAdapter = new Profile_TestPostAdapter(); // 引数なしのコンストラクタを使用
         recyclerView.setAdapter(postAdapter);
 
         holder = new PostViewHolder(rootView, rootView);  // ここでrootViewを渡す
@@ -198,6 +209,40 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_profile_to_navigation_snspost);
             }
         });
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);  // この行を適切なIDに変更してください
+
+        // タブが選択されたときのリスナー
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // タブが選択されたときに対応するFragmentを表示
+                switch (tab.getPosition()) {
+                    case 0:
+                        replaceFragment(new Profile_TestPostFragment());
+                        break;
+                    case 1:
+                        replaceFragment(new profile_iinepostFragment());
+                        break;
+                    // 必要に応じて他のタブに対する処理を追加
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // 他のタブが選択されたときの処理
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // 同じタブが再度選択されたときの処理
+            }
+        });
+        // 最初のタブを表示
+        replaceFragment(new Profile_TestPostAdapter());
+
+
+
+
     }
     public class PostViewHolder extends RecyclerView.ViewHolder {
         TextView textUsername;
@@ -227,6 +272,11 @@ public class ProfileFragment extends Fragment {
             report_btn = itemView.findViewById(R.id.report_btn);
             profileicon = itemView.findViewById(R.id.profileicon);
         }
-
+    }
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);  // この行を適切なIDに変更してください
+        transaction.commit();
     }
 }
