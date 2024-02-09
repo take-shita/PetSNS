@@ -59,24 +59,29 @@ public class passchanFragment extends Fragment {
         EditText passwordEditText = view.findViewById(R.id.passwordEditText);
         EditText editTextTextPassword3 = view.findViewById(R.id.editTextTextPassword3);
         EditText editTextTextPassword4 = view.findViewById(R.id.editTextTextPassword4);
+        EditText editTextTextPasswordConfirm = view.findViewById(R.id.editTextTextPasswordConfirm); // 新しいパスワードの確認用
         Button button14 = view.findViewById(R.id.button14);
         errorTextView = view.findViewById(R.id.errorTextView);
 
         button14.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String currentPassword = editTextTextPassword3.getText().toString();
                 String newPassword = editTextTextPassword4.getText().toString();
+                String newPasswordConfirm = editTextTextPasswordConfirm.getText().toString(); // 新しいパスワードの確認用
 
-                if (currentPassword.isEmpty() || newPassword.isEmpty()) {
+                if (currentPassword.isEmpty() || newPassword.isEmpty() || newPasswordConfirm.isEmpty()) {
                     // パスワードが未入力の場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("現在のパスワードと新しいパスワードを入力してください");
-                } else if (newPassword.length() < 8) {
+                } else if (newPassword.length() < 8 || newPasswordConfirm.length() < 8) {
                     // 新しいパスワードが短すぎる場合、エラーメッセージを表示
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("新しいパスワードは 8 文字以上入力してください");
+                } else if (!newPassword.equals(newPasswordConfirm)) {
+                    // 新しいパスワードが一致しない場合、エラーメッセージを表示
+                    errorTextView.setVisibility(View.VISIBLE);
+                    errorTextView.setText("新しいパスワードが一致しません");
                 } else {
                     // パスワードが一致していれば、エラーメッセージを非表示にして次の画面に遷移
                     errorTextView.setVisibility(View.GONE);
@@ -117,12 +122,9 @@ public class passchanFragment extends Fragment {
             }
         });
 
-
-
         Button btncan = view.findViewById(R.id.btncan);
 
         btncan.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_passchan_to_navigation_setting);
