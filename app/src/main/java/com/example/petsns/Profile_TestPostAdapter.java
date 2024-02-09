@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.petsns.ui.profile.ProfileFragment;
 import com.example.petsns.ui.snstop.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,23 +45,24 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import com.google.firebase.Timestamp;
-
-
-
-
-
-
-
 public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPostAdapter.PostViewHolder> {
 
     private List<Profile_TestPost> posts;
     private Context context;
     private FirebaseFirestore db;
-    String userId;
     private FirebaseUser user;
     private CollectionReference collectionRef;
     private DocumentReference documentRef;
     private String fieldName = "iinePostId";
+    private FirebaseFirestore firestore;
+    private String userId;
+    private Profile_TestPostAdapter postAdapter;
+    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
+    private View rootView;
+
+
+
+
     FirebaseFirestore db1 = FirebaseFirestore.getInstance();
 
 
@@ -84,13 +86,16 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         return posts != null ? posts.size() : 0;
     }
 
-    public Profile_TestPostAdapter() {
+    public Profile_TestPostAdapter(Context context, List<Profile_TestPost> posts) {
         this.context = context;
+        this.posts = posts;
     }
 
     public void setPosts(List<com.example.petsns.Profile_TestPost> posts) {
         this.posts = posts;
         notifyDataSetChanged();
+        this.posts = posts;
+
     }
 
     @NonNull
