@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -156,46 +157,52 @@ public class BoardFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String questionTitle = ques_tit.getText().toString();
+                        String questionContent = ques_con.getText().toString();
 
-                        String userUid = user.getUid();
+                        // 質問タイトルと内容が空でないかを確認
+                        if (questionTitle.isEmpty() || questionContent.isEmpty()) {
+                            // エラーメッセージを表示
+                            Toast.makeText(requireContext(), "質問タイトルと内容を入力してください", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 入力されている場合は質問を追加する処理を実行
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String userUid = user.getUid();
+                            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+                                CollectionReference collectionRefId = db.collection("userId");
+                                collectionRefId.whereEqualTo("uid", userUid)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(Task<QuerySnapshot> task1) {
+                                                if (task1.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                        // ドキュメントが見つかった場合、IDを取得
+                                                        userId = document1.getId();
+                                                        CollectionReference postCollection = db.collection("question");
 
+                                                        Map<String, Object> data = new HashMap<>();
+                                                        data.put("user_id", userId);
+                                                        data.put("timestamp", FieldValue.serverTimestamp());
+                                                        data.put("ques_content", ques_con.getText().toString());
+                                                        data.put("ques_title", ques_tit.getText().toString());
 
-                        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
-                                    CollectionReference collectionRefId = db.collection("userId");
-                                    collectionRefId.whereEqualTo("uid", userUid)
-                                            .get()
-                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(Task<QuerySnapshot> task1) {
-                                                    if (task1.isSuccessful()) {
-                                                        for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                                            // ドキュメントが見つかった場合、IDを取得
-                                                            userId = document1.getId();
-                                                            CollectionReference postCollection = db.collection("question");
-
-                                                            Map<String, Object> data = new HashMap<>();
-                                                            data.put("user_id",userId);
-                                                            data.put("timestamp", FieldValue.serverTimestamp());
-                                                            data.put("ques_content",ques_con.getText().toString());
-                                                            data.put("ques_title",ques_tit.getText().toString());
-
-                                                            postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                                    .addOnSuccessListener(documentReference -> {
-                                                                    })
-                                                                    .addOnFailureListener(e -> {
-                                                                    });
-                                                        }
+                                                        postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                                .addOnSuccessListener(documentReference -> {
+                                                                })
+                                                                .addOnFailureListener(e -> {
+                                                                });
                                                     }
                                                 }
-                                            });
-                                });
-                        try {
-                            future1.get(); // 非同期処理が終わるまでブロック
-                        } catch (InterruptedException | ExecutionException e) {
-                            // 例外処理
+                                            }
+                                        });
+                            });
+                            try {
+                                future1.get(); // 非同期処理が終わるまでブロック
+                            } catch (InterruptedException | ExecutionException e) {
+                                // 例外処理
+                            }
                         }
-
                     }
                 });
                 dialog.show();
