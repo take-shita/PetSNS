@@ -70,11 +70,11 @@ public class repotFragment extends Fragment {
                 if (message.length() < minMessageLength) {
                     // 文字数が制限を超えている場合はエラーメッセージを表示するなどの処理を行う
                     // 例えば、Toast メッセージを表示
-                    Toast.makeText(getContext(), "報告・要望を " +  "入力してください", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "報告・要望を入力してください " , Toast.LENGTH_SHORT).show();
                 } else {
 
                     // Firebase Firestore に報告を送信
-                    mViewModel.sendReportToFirestore(subject, message, getContext());
+                    mViewModel.sendReportToFirestore(message, getContext());
 
                     Navigation.findNavController(getView()).navigateUp();
                     // 送信後の処理をここに追加（例えば、Toast メッセージを表示するなど）
