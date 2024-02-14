@@ -73,7 +73,12 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.other_item_post, parent, false);
-        return new PostViewHolder(view);
+        PostViewHolder viewHolder = new PostViewHolder(view);
+        // posts リストが空でない場合にのみ setLikeButtonState メソッドを呼び出す
+        if (posts != null && !posts.isEmpty() && viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+            setLikeButtonState(viewHolder, posts.get(viewHolder.getAdapterPosition()));
+        }
+        return viewHolder;
     }
     public void removeItem(int position) {
         if (position >= 0 && position < posts.size()) {
@@ -96,6 +101,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
         // FirebaseAuthからユーザーを取得
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        setLikeButtonState(holder, posts.get(position));
         // 投稿時間を取得
         Timestamp timestamp = post.gettimestamp();
         // 取得した投稿時間を適切なフォーマットに変換
@@ -392,7 +398,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
             });
         }
     }
-    private void setLikeButtonState(OtherPostAdapter.PostViewHolder holder, TestPost post) {
+    private void setLikeButtonState(OtherPostAdapter.PostViewHolder holder, Profile_TestPost post) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
