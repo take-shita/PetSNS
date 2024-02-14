@@ -11,13 +11,12 @@ import java.util.Map;
 public class RepotViewModel extends ViewModel {
 
     // Firestoreへのデータ送信メソッド
-    public void sendReportToFirestore(String subject, String message, Context context) {
+    public void sendReportToFirestore(String message, Context context) {
         // Firestoreへのデータ送信処理
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // データの作成
         Map<String, Object> data = new HashMap<>();
-        data.put("subject", subject);
         data.put("message", message);
 
         // データの送信

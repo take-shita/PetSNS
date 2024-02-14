@@ -74,7 +74,7 @@ public class repotFragment extends Fragment {
                 } else {
 
                     // Firebase Firestore に報告を送信
-                    mViewModel.sendReportToFirestore(subject, message, getContext());
+                    mViewModel.sendReportToFirestore(message, getContext());
 
                     Navigation.findNavController(getView()).navigateUp();
                     // 送信後の処理をここに追加（例えば、Toast メッセージを表示するなど）
