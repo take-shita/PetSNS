@@ -4,29 +4,123 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.profiFragment">
+    tools:context=".ui.profile.ProfileFragment">
 
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="プロフィール紹介文"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+    <ImageButton
+        android:id="@+id/toukoubtn"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="556dp"
+        android:layout_marginTop="12dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/toukoutouka"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,VisualLintBounds,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="いらない"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/profile_textUsername"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="12dp"
+        android:gravity="left|center"
+        android:text="userid"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage,TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="421dp"
+        android:layout_height="90dp"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="54dp"
+        android:gravity="left|bottom"
+        android:text="username"
+        android:textSize="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <TextView
+        android:layout_width="541dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="184dp"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_row="0"
+        android:layout_rowSpan="2"
+        android:layout_column="2"
+        android:layout_marginStart="450dp"
+        android:layout_marginTop="90dp"
+        app:cardCornerRadius="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profileicon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:layout_column="2"
+            android:scaleType="fitXY"
+            android:src="@drawable/loadingtouka"
+            tools:ignore="ContentDescription" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="516dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#f2a955"
+            android:text="投稿"
+            android:textSize="24dp" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="いいね"
+            android:textSize="24dp" />
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="586dp"
+        android:layout_height="560dp"
+        android:layout_below="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.984">
+
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

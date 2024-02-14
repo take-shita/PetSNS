@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -86,6 +87,12 @@ public class ContestFragment extends Fragment {
     byte[] imageData;
     Uri selectedImageUri;
     String userId;
+
+    Date entrySt;
+    Date entryFn;
+    Date postSt;
+    Date postFn;
+    String info;
     public static ContestFragment newInstance() {
         return new ContestFragment();
     }
@@ -128,12 +135,12 @@ public class ContestFragment extends Fragment {
                                                                     Boolean contestPost=document.getBoolean("contestPost");
 
                                                                     if(!contestEntry){
-                                                                        btnEntry.setEnabled(true);
+
                                                                     }else {
                                                                         btnEntry.setEnabled(false);
                                                                     }
                                                                     if(!contestPost&&contestEntry){
-                                                                        btnPost.setEnabled(true);
+
                                                                     }else {
                                                                         btnPost.setEnabled(false);
                                                                     }
@@ -157,6 +164,39 @@ public class ContestFragment extends Fragment {
             // 例外処理
         }
 
+        Long currentTime=System.currentTimeMillis();
+        Date currentDate=new Date(currentTime);
+        db.collection("contestInfo")
+                .document("ZGNHbqF7tAj3givX3bFB")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                entrySt= document.getTimestamp("entryStart").toDate();
+                                entryFn=document.getTimestamp("entryFinish").toDate();
+                                postSt=document.getTimestamp("postStart").toDate();
+                                postFn=document.getTimestamp("postFinish").toDate();
+
+                                info=document.getString("info");
+
+                                if(!currentDate.after(entrySt)){
+                                    btnEntry.setEnabled(false);
+                                }else if (!currentDate.before(entryFn)){
+                                    btnEntry.setEnabled(false);
+                                }
+
+                                if(!currentDate.after(postSt)){
+                                    btnPost.setEnabled(false);
+                                }else if(!currentDate.after(entryFn)){
+                                    btnPost.setEnabled(false);
+                                }
+                            }
+                        }
+                    }
+                });
 
 
         return inflater.inflate(R.layout.fragment_contest, container, false);

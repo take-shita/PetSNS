@@ -18,4 +18,6 @@ public class Contest_rankingFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_contest_ranking, container, false);
         return view;
     }
+
+
 }

@@ -72,6 +72,7 @@ public class snstopFragment extends Fragment {
     List<Boolean> DisIns;
     String userId;
     boolean like;
+
     public static snstopFragment newInstance() {
         return new snstopFragment();
     }
@@ -90,7 +91,6 @@ public class snstopFragment extends Fragment {
 //        主要な要素
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
         postAdapter = new TestPostAdapter(requireContext());
         recyclerView.setAdapter(postAdapter);
 
@@ -127,7 +127,6 @@ public class snstopFragment extends Fragment {
 
 
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
-            Log.d("ありがとう","悪口");
                     CollectionReference collectionRefId = db.collection("userId");
                     collectionRefId.whereEqualTo("uid", userUid)
                             .get()

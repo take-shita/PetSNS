@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.profile;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.petsns.R;
 import com.example.petsns.ui.snstop.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -72,7 +73,7 @@ public class OtherPostAdapter extends RecyclerView.Adapter<OtherPostAdapter.Post
     public OtherPostAdapter(Context context) {
         this.context = context;
     }
-    public void setPosts(List<com.example.petsns.Profile_TestPost> posts) {
+    public void setPosts(List<Profile_TestPost> posts) {
         this.posts = posts;
         notifyDataSetChanged();
     }

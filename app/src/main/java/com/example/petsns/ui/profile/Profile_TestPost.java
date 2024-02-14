@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.profile;
 import com.example.petsns.ui.setting.TagViewModel;
 import com.google.firebase.Timestamp;
 
