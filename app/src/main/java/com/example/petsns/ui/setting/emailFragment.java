@@ -91,6 +91,15 @@ public class emailFragment extends Fragment {
         btnChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String newEmail = editTextNewEmail.getText().toString();
+                if (TextUtils.isEmpty(newEmail)) {
+                    // メールアドレスが空の場合、エラーメッセージを表示
+                    Toast.makeText(requireContext(), "メールアドレスを入力してください", Toast.LENGTH_SHORT).show();
+                    return; // 以降の処理を中止
+                }
+
+
                 FirebaseUser userOld = mAuth.getCurrentUser();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -107,7 +116,7 @@ public class emailFragment extends Fragment {
 
                                     if (task1.isSuccessful()) {
                                         for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                            // ドキュメントが見つかった場合、IDを取得
+                                            // ドキュメントが見つかった場合、ID を取得
                                             userId = document1.getId();
 
                                             db.collection("users") // コレクション名
@@ -150,7 +159,7 @@ public class emailFragment extends Fragment {
                                                                                                                 if (reauthTask.isSuccessful()) {
                                                                                                                     userOld.delete().addOnCompleteListener(task2 -> {
                                                                                                                         if (task2.isSuccessful()) {
-                                                                                                                            // Firebase Authenticationでの削除が成功した場合の処理
+                                                                                                                            // Firebase Authentication での削除が成功した場合の処理
                                                                                                                             Log.d("FirebaseAuth", "User account deleted successfully!");
 
                                                                                                                             Toast.makeText(requireContext(), "メールアドレスが変更されました", Toast.LENGTH_SHORT).show();
@@ -160,7 +169,7 @@ public class emailFragment extends Fragment {
                                                                                                                             startActivity(intent);
 
                                                                                                                         } else {
-                                                                                                                            // Firebase Authenticationでの削除が失敗した場合の処理
+                                                                                                                            // Firebase Authentication での削除が失敗した場合の処理
                                                                                                                             Log.w("FirebaseAuth", "Error deleting user account", task.getException());
                                                                                                                             //                            Toast.makeText(requireContext(), "アカウントの削除に失敗しました", Toast.LENGTH_SHORT).show();
                                                                                                                             if (task.getException() != null) {
