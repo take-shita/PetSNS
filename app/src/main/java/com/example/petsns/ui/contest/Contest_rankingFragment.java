@@ -51,7 +51,7 @@ public class Contest_rankingFragment extends Fragment {
     int likeCount1;
     int likeCount2;
     int likeCount3;
-
+    int userNumber=0;
     private FirebaseFirestore db;
     String userId;
     @Override
@@ -67,7 +67,7 @@ public class Contest_rankingFragment extends Fragment {
         ImageView rank1 = view.findViewById(R.id.imagePost1);
         ImageView rank2 = view.findViewById(R.id.imagePost2);
         ImageView rank3 = view.findViewById(R.id.imagePost3);
-
+        TextView txtNumber=view.findViewById(R.id.txtNumber);
         likeCount1 = 0;
         likeCount2 = 0;
         likeCount3 = 0;
@@ -182,11 +182,18 @@ public class Contest_rankingFragment extends Fragment {
                                     // ドキュメントが見つかった場合、IDを取得
                                     userId = document1.getId();
 
+
                                     firestore = FirebaseFirestore.getInstance();
                                     firestore.collection("contestPosts").orderBy("likeCount", Query.Direction.DESCENDING).get().addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Map<String, Object> data = document.getData();
+                                                userNumber++;
+
+                                                if(((String)data.get("id")).equals(userId)){
+                                                    txtNumber.setText(Integer.toString(userNumber)+"位");
+                                                }
+
                                             }
                                         }
                                     });
