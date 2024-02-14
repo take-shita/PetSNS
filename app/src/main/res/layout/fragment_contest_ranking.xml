@@ -10,8 +10,8 @@
     <ImageView
         android:layout_width="274dp"
         android:layout_height="526dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="296dp"
         android:contentDescription="triangle_image"
         android:src="@drawable/triangle"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +64,28 @@
         android:layout_marginTop="750dp"
         android:text="トップに戻る"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="202dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="474dp"
+        android:layout_marginEnd="18dp"
+        android:text="あなたの順位は"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtNumber"
+        android:layout_width="150dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginEnd="16dp"
+        android:text=""
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
