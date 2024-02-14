@@ -66,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -98,6 +99,7 @@ public class ContestFragment extends Fragment {
 
     Date currentDate;
     String info;
+    String title;
     public static ContestFragment newInstance() {
         return new ContestFragment();
     }
@@ -187,7 +189,7 @@ public class ContestFragment extends Fragment {
                                 postFn=document.getDate("postFinish");
                                 resultSt=document.getDate("resultStart");
                                 resultFn=document.getDate("resultFinish");
-
+                                title=document.getString("info");
                                 info=document.getString("info");
 
                                 if(!currentDate.after(entrySt)){
@@ -266,11 +268,31 @@ public class ContestFragment extends Fragment {
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.fragment_contest_info);
 
+                TextView txtEntBefore=dialog.findViewById(R.id.txtEntryBefore);
+                TextView txtEntAfter=dialog.findViewById(R.id.txtEntryAfter);
+                TextView txtPostBefore=dialog.findViewById(R.id.txtPostBefore);
+                TextView txtPostAfter=dialog.findViewById(R.id.txtPostAfter);
+
+                TextView txtTitle=dialog.findViewById(R.id.txtTitle);
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
                 params.width = 700; // 幅を変更
                 params.height = 900; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
+
+                String entryStDate = sdf.format(entrySt);
+                String entryFnDate = sdf.format(entryFn);
+                String postStDate = sdf.format(postSt);
+                String postFnDate = sdf.format(postFn);
+
+                txtEntBefore.setText(entryStDate);
+                txtEntAfter.setText(entryFnDate);
+                txtPostBefore.setText(postStDate);
+                txtPostAfter.setText(postFnDate);
+
+                txtTitle.setText(title);
                 Button btnClose = dialog.findViewById(R.id.btnContestTopBack);
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
