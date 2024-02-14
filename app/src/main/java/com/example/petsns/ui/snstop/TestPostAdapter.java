@@ -515,10 +515,10 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
         TextView textPost;
         ImageView imagePost;
         ImageButton otherprofilebtn;
-        ToggleButton hartbtn;
+        public ToggleButton hartbtn;
         TextView timestamp;
         TextView tagText;
-        TextView likeCount;
+        public TextView likeCount;
         TextView posttime;
         ImageButton report_btn;
         public PostViewHolder(@NonNull View itemView) {
