@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.profile;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.petsns.ui.profile.ProfileFragment;
+import com.example.petsns.R;
 import com.example.petsns.ui.snstop.TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +57,7 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
     private FirebaseFirestore firestore;
     private String userId;
     private Profile_TestPostAdapter postAdapter;
-    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
+//    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
     private View rootView;
 
 
@@ -80,7 +80,6 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
                 });
     }
 
-
     @Override
     public int getItemCount() {
         return posts != null ? posts.size() : 0;
@@ -90,8 +89,11 @@ public class Profile_TestPostAdapter extends RecyclerView.Adapter<Profile_TestPo
         this.context = context;
         this.posts = posts;
     }
+    public Profile_TestPostAdapter(Context context) {
+        this.context = context;
+    }
 
-    public void setPosts(List<com.example.petsns.Profile_TestPost> posts) {
+    public void setPosts(List<Profile_TestPost> posts) {
         this.posts = posts;
         notifyDataSetChanged();
         this.posts = posts;

@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.petsns.Profile_TestPost;
-import com.example.petsns.Profile_TestPostAdapter;
+
+import com.example.petsns.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;

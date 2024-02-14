@@ -20,9 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.example.petsns.OtherPostAdapter;
 import com.example.petsns.R;
-import com.example.petsns.Profile_TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -73,10 +71,10 @@ public class profile_otherFragment extends Fragment {
     private TextView other_userid;
     private TextView other_username;
     private ImageView other_icon;
-    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
+//    private ProfileFragment.PostViewHolder holder; // PostViewHolderのインスタンスをメンバ変数として宣言
 
     private View rootView;
-    private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
+//    private PostViewHolder postViewHolder;  // PostViewHolderをメンバ変数として宣言
     private static final String TAG = "ProfileOtherFragment";
     private OtherPostAdapter postAdapter;
 
@@ -123,11 +121,11 @@ public class profile_otherFragment extends Fragment {
             // ユーザーIDとユーザー名のTextViewを初期化
             other_userid = view.findViewById(R.id.other_userid);
             other_username = view.findViewById(R.id.other_username);
-
+            other_icon=view.findViewById(R.id.other_icon);
             // ユーザーIDを取得
 
 // PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
-            postViewHolder = new PostViewHolder(view);
+//            postViewHolder = new PostViewHolder(view);
 
             // 初回表示時にボタンの状態に合わせて背景を設定
             ToggleButton followbtn = view.findViewById(R.id.followbtn);
@@ -205,7 +203,6 @@ public class profile_otherFragment extends Fragment {
 
                             DocumentReference docRef = db.collection("users").document(value);
 
-
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Profile_TestPost post = document.toObject(Profile_TestPost.class);  // クラスの型もProfile_TestPostに変更
 
@@ -219,24 +216,20 @@ public class profile_otherFragment extends Fragment {
                                 List<Boolean> tagAqua = (List<Boolean>) data.get("tagAqua");
                                 List<Boolean> tagIns = (List<Boolean>) data.get("tagIns");
                                 Number likeCountDouble = ((Number) data.get("likeCount"));
+
                                 if(((String) data.get("id")).equals(value)){
+
                                     post.setId((String) data.get("id"));
                                     post.setSentence((String) data.get("sentence"));
                                     post.setImageUrl((String) data.get("imageUrl"));
                                     post.setDocumentId(documentId);
                                     post.setLikeCount(likeCountDouble.intValue());
                                     post.setTagMom(tagMom);
-
                                     post.setTagBir(tagBir);
-
                                     post.setTagRip(tagRip);
-
                                     post.setTagBis(tagBis);
-
                                     post.setTagAqua(tagAqua);
-
                                     post.setTagIns(tagIns);
-
                                     posts.add(post);
                                 }else {
 
@@ -259,7 +252,7 @@ public class profile_otherFragment extends Fragment {
                                             storageReference.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
                                                 // 成功時の処理
                                                 Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                postViewHolder.other_icon.setImageBitmap(bitmap);
+                                                other_icon.setImageBitmap(bitmap);
                                             }).addOnFailureListener(exception -> {
                                                 // 失敗時の処理
                                             });
@@ -303,7 +296,7 @@ public class profile_otherFragment extends Fragment {
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
             // PostViewHolder クラスをインスタンス化し、itemView を使用して findViewById メソッドを呼び出す
-            postViewHolder = new PostViewHolder(view);
+//            postViewHolder = new PostViewHolder(view);
 
             ImageButton toukou = view.findViewById(R.id.toukoubtn);
             toukou.setOnClickListener(new View.OnClickListener() {
@@ -405,28 +398,28 @@ public class profile_otherFragment extends Fragment {
             });
         }
 
-        public class PostViewHolder extends RecyclerView.ViewHolder {
-            TextView other_userid;
-            TextView other_username;
-            ImageView other_icon;
-            ImageView profileicon;
-            ToggleButton hartbtn;
-            TextView posttime;
-            TextView tagText;
-            TextView likeCount;
-            ImageButton delete_btn;
-            public PostViewHolder(@NonNull View itemView) {
-                super(itemView);
-                hartbtn = itemView.findViewById(R.id.hartbtn);
-                other_userid = itemView.findViewById(R.id.other_userid);
-                other_username = itemView.findViewById(R.id.other_username);
-                other_icon = itemView.findViewById(R.id.other_icon);
-                profileicon = itemView.findViewById(R.id.profileicon);
-                posttime = itemView.findViewById(R.id.posttime);
-                tagText=itemView.findViewById(R.id.tagText);
-                likeCount=itemView.findViewById(R.id.iinecount);
-                delete_btn=itemView.findViewById(R.id.delete_btn);
-
-            }
-        }
+//        public class PostViewHolder extends RecyclerView.ViewHolder {
+//            TextView other_userid;
+//            TextView other_username;
+//            ImageView other_icon;
+//            ImageView profileicon;
+//            ToggleButton hartbtn;
+//            TextView posttime;
+//            TextView tagText;
+//            TextView likeCount;
+//            ImageButton delete_btn;
+//            public PostViewHolder(@NonNull View itemView) {
+//                super(itemView);
+//                hartbtn = itemView.findViewById(R.id.hartbtn);
+//                other_userid = itemView.findViewById(R.id.other_userid);
+//                other_username = itemView.findViewById(R.id.other_username);
+//                other_icon = itemView.findViewById(R.id.other_icon);
+//                profileicon = itemView.findViewById(R.id.profileicon);
+//                posttime = itemView.findViewById(R.id.posttime);
+//                tagText=itemView.findViewById(R.id.tagText);
+//                likeCount=itemView.findViewById(R.id.iinecount);
+//                delete_btn=itemView.findViewById(R.id.delete_btn);
+//
+//            }
+//        }
     }

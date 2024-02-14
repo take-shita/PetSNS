@@ -179,7 +179,6 @@ public class TestPostAdapter extends RecyclerView.Adapter<TestPostAdapter.PostVi
                         //いいねを押したときの処理
                         likeCheck=true;
                         List<TestPost> posts = new ArrayList<>();
-
                         String userUid = user.getUid();
                         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                             CollectionReference collectionRefId = db.collection("userId");
