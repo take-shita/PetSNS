@@ -19,5 +19,12 @@ public class Contest_rankingFragment extends Fragment {
         return view;
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
+    }
+
 
 }

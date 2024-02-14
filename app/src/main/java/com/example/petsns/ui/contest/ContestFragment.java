@@ -81,6 +81,7 @@ public class ContestFragment extends Fragment {
     Button btnPost;
     Button btnInfo;
     Button btnEntry;
+    Button btnresult;
     TextView txtTest;
     Boolean contestEntry;
     Boolean contestPost;
@@ -92,6 +93,10 @@ public class ContestFragment extends Fragment {
     Date entryFn;
     Date postSt;
     Date postFn;
+    Date resultSt;
+    Date resultFn;
+
+    Date currentDate;
     String info;
     public static ContestFragment newInstance() {
         return new ContestFragment();
@@ -165,7 +170,8 @@ public class ContestFragment extends Fragment {
         }
 
         Long currentTime=System.currentTimeMillis();
-        Date currentDate=new Date(currentTime);
+        currentDate=new Date(currentTime);
+
         db.collection("contestInfo")
                 .document("ZGNHbqF7tAj3givX3bFB")
                 .get()
@@ -175,10 +181,12 @@ public class ContestFragment extends Fragment {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                entrySt= document.getTimestamp("entryStart").toDate();
-                                entryFn=document.getTimestamp("entryFinish").toDate();
-                                postSt=document.getTimestamp("postStart").toDate();
-                                postFn=document.getTimestamp("postFinish").toDate();
+                                entrySt= document.getDate("entryStart");
+                                entryFn=document.getDate("entryFinish");
+                                postSt=document.getDate("postStart");
+                                postFn=document.getDate("postFinish");
+                                resultSt=document.getDate("resultStart");
+                                resultFn=document.getDate("resultFinish");
 
                                 info=document.getString("info");
 
@@ -190,8 +198,14 @@ public class ContestFragment extends Fragment {
 
                                 if(!currentDate.after(postSt)){
                                     btnPost.setEnabled(false);
-                                }else if(!currentDate.after(entryFn)){
+                                }else if(!currentDate.before(entryFn)){
                                     btnPost.setEnabled(false);
+                                }
+
+                                if(!currentDate.after(resultSt)){
+                                    btnresult.setVisibility(View.INVISIBLE);
+                                }else if(!currentDate.before(resultFn)){
+                                    btnresult.setVisibility(View.INVISIBLE);
                                 }
                             }
                         }
@@ -217,27 +231,13 @@ public class ContestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnresult = view.findViewById(R.id.btnresult);
+        btnresult = view.findViewById(R.id.btnresult);
         btnresult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_ranking);
             }
         });
-
-        db = FirebaseFirestore.getInstance();
-        // ボタンのクリックリスナーを設定
-
-        sampleText=view.findViewById(R.id.textView38);
-
-
-
-
-
-
-        TextView txt= view.findViewById(R.id.textView25);
-
-
 
         btnView = view.findViewById(R.id.btnContestView);
         btnView.setOnClickListener(new View.OnClickListener() {
@@ -247,15 +247,11 @@ public class ContestFragment extends Fragment {
 
             }
         });
-
-
-
         btnPost = view.findViewById(R.id.btnContestPost);
         popupText = view.findViewById(R.id.popupText);
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
 //                btnPost.setEnabled(false);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
             }
@@ -336,7 +332,12 @@ public class ContestFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         btnEntry.setEnabled(false);
-                                        btnPost.setEnabled(true);
+                                        if(currentDate.after(postSt)){
+                                            if(currentDate.before(entryFn)){
+                                                btnPost.setEnabled(true);
+                                            }
+                                        }
+
                                         showPopup();
                                     }
                                 })
