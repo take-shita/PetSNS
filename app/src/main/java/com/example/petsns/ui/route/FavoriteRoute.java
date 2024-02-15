@@ -24,7 +24,6 @@ public class FavoriteRoute {
         origin=new LatLng(Latitude,Longitude);
     }
     public void setPoint1(Double Latitude,Double Longitude){
-        Log.d("??????",Double.toString(Latitude));
         point1=new LatLng(Latitude,Longitude);
     }
     public void setPoint2(Double Latitude,Double Longitude){
