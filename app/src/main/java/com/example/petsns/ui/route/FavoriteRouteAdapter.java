@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class FavoriteRouteAdapter extends RecyclerView.Adapter<FavoriteRouteAdap
     private FragmentActivity fragment;
     private View routeView;
     private Dialog dialog;
+
     public FavoriteRouteAdapter(Context context, FragmentActivity fragment, View view, Dialog dialog) {
         this.data =new ArrayList<>();
         this.context = context;
@@ -80,9 +82,8 @@ public class FavoriteRouteAdapter extends RecyclerView.Adapter<FavoriteRouteAdap
         FavoriteRoute route=routes.get(adapterPosition);
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         String routeName=route.getName();
-
+        String documentId=route.getDocumentId();
         holder.txtRouteName.setText(routeName);
-
         holder.btnSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,15 +96,33 @@ public class FavoriteRouteAdapter extends RecyclerView.Adapter<FavoriteRouteAdap
                 dialog.dismiss();
             }
         });
+
+        holder.btnDeleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("routeFavorite").document(documentId)
+                        .delete()
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(context, "ルートが削除されました", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        })
+                        .addOnFailureListener(e -> {
+                            // 削除失敗時の処理
+                            // 例: エラーメッセージを表示
+                        });
+            }
+        });
     }
     public int getItemCount() { return routes != null ? routes.size() : 0; }
     public class RouteViewHolder extends RecyclerView.ViewHolder {
         TextView txtRouteName;
         Button btnSelected;
+        Button btnDeleted;
         public RouteViewHolder(@NonNull View itemView) {
             super(itemView);
             txtRouteName = itemView.findViewById(R.id.route_name);
             btnSelected=itemView.findViewById(R.id.selected_btn);
+            btnDeleted=itemView.findViewById(R.id.deleted_btn);
         }
     }
 }

@@ -242,6 +242,8 @@ public class routeFragment extends DashboardFragment {
 
                                                                     route.setName((String)data.get("name"));
 
+                                                                    route.setDocumentId(documentId);
+
                                                                     routes.add(route);
                                                                 }
                                                             }

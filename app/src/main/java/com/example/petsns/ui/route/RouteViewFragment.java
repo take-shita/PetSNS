@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.RouteViewViewModel;
@@ -489,6 +491,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                                                             CollectionReference routeCollection = db.collection("routeFavorite");
 
                                                             routeCollection.document(UUID.randomUUID().toString()).set(data);
+                                                            Toast.makeText(requireContext(), "ルートが登録されました", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 }
