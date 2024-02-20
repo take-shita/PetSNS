@@ -36,7 +36,6 @@ import java.util.concurrent.ExecutionException;
 
 public class userchanFragment extends Fragment {
 
-    private UserchanViewModel mViewModel;
 
     private FirebaseAuth mAuth;
     private TextView textViewUsername;
@@ -64,8 +63,6 @@ public class userchanFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(UserchanViewModel.class);
-        // TODO: Use the ViewModel
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

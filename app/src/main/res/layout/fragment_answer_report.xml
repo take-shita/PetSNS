@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="578dp"
     android:layout_height="248dp"
-    tools:context=".answer_reportFragment">
+    tools:context=".ui.board.answer_reportFragment">
     <LinearLayout
         android:layout_width="578dp"
         android:layout_height="248dp"

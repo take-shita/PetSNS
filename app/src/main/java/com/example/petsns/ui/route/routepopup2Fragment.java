@@ -16,8 +16,6 @@ import com.example.petsns.R;
 
 public class routepopup2Fragment extends Fragment {
 
-    private Routepopup2ViewModel mViewModel;
-
     public static routepopup2Fragment newInstance() {
         return new routepopup2Fragment();
     }

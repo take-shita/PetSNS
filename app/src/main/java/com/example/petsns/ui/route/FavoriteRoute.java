@@ -12,6 +12,7 @@ public class FavoriteRoute {
     LatLng point2;
     LatLng point3;
     String name;
+    String documentId;
 
     public void setLatLng(List<Double> origin, List<Double> point1, List<Double> point2, List<Double> point3){
 //        this.origin=origin;
@@ -32,6 +33,10 @@ public class FavoriteRoute {
     public void setPoint3(Double Latitude,Double Longitude){
         point3=new LatLng(Latitude,Longitude);
     }
+    public void setDocumentId(String documentId){
+        this.documentId=documentId;
+    }
+
 
     public LatLng getOrigin(){
         return origin;
@@ -52,5 +57,6 @@ public class FavoriteRoute {
     public String getName(){
         return name;
     }
+    public String getDocumentId(){return  documentId;}
 
 }

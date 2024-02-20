@@ -11,21 +11,28 @@
 
         <TextView
             android:id="@+id/route_name"
-            android:layout_width="490dp"
+            android:layout_width="406dp"
             android:layout_height="wrap_content"
-            android:text=""
+            android:ellipsize="end"
             android:paddingLeft="15sp"
             android:paddingBottom="20dp"
-            android:textSize="20dp"
-            android:ellipsize="end"/>
+            android:text=""
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/selected_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="69dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="選択"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/deleted_btn"
+            android:layout_width="69dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:backgroundTint="#e83929"
-            android:text="選択"
+            android:text="削除"
             android:textStyle="bold" />
     </LinearLayout>
 

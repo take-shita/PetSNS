@@ -151,9 +151,6 @@
             android:id="@+id/action_navigation_contest_to_navigation_contest_view"
             app:destination="@id/navigation_contest_view" />
         <action
-            android:id="@+id/action_navigation_contest_to_navigation_contest_info"
-            app:destination="@id/navigation_contest_info" />
-        <action
             android:id="@+id/action_navigation_contest_to_navigation_contest_post"
             app:destination="@id/navigation_contest_post" />
         <action
@@ -189,15 +186,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_contest_info"
-        android:name="com.example.petsns.ui.contest.ContestInfoFragment"
-        android:label="ContestInfo"
-        tools:layout="@layout/fragment_contest_info" >
-        <action
-            android:id="@+id/action_navigation_contest_info_to_navigation_contest"
-            app:destination="@id/navigation_contest" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_contest_post"

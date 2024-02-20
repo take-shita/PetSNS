@@ -43,7 +43,6 @@ public class routetimeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private RoutetimeViewModel mViewModel;
     private RouteViewModel viewModel;
     public static routetimeFragment newInstance() {
         return new routetimeFragment();

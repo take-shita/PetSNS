@@ -51,7 +51,6 @@ import com.google.firebase.storage.StorageReference;
 public class snstopFragment extends Fragment {
 
     private TagSearchViewModel viewModel;
-    private SnstopViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private TestPostAdapter postAdapter;
@@ -109,8 +108,6 @@ public class snstopFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SnstopViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
@@ -252,6 +249,7 @@ public class snstopFragment extends Fragment {
                                                 for (QueryDocumentSnapshot document1 : task1.getResult()) {
                                                     // ドキュメントが見つかった場合、IDを取得
                                                     userId = document1.getId();
+
                                                     DocumentReference docRef = db.collection("users").document(userId);
 
                                                     docRef.get().addOnSuccessListener(documentSnapshot -> {

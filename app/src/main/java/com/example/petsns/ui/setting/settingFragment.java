@@ -1,7 +1,5 @@
 package com.example.petsns.ui.setting;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,8 +17,7 @@ import android.widget.Button;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.petsns.LoginActivity;
-import com.example.petsns.MainActivity;
+import com.example.petsns.ui.login_signup.LoginActivity;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,14 +33,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.concurrent.CompletableFuture;
 
 public class settingFragment extends Fragment {
 
-    private SettingViewModel mViewModel;
     private FirebaseAuth mAuth;
     private Firebase db;
     private String userId;
@@ -59,8 +53,6 @@ public class settingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
-        // TODO: Use the ViewModel
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

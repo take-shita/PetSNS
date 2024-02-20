@@ -1,7 +1,5 @@
 package com.example.petsns.ui.setting;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.petsns.LoginActivity;
+import com.example.petsns.ui.login_signup.LoginActivity;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -41,11 +38,9 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class emailFragment extends Fragment {
 
-    private EmailViewModel mViewModel;
     private EditText editTextNewEmail;  // EditText を格納する変数
     private String userId;
     private Boolean changeCheck;
@@ -62,8 +57,6 @@ public class emailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EmailViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

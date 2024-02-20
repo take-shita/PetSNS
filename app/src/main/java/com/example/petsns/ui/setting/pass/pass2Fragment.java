@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 public class pass2Fragment extends Fragment {
 
-    private Pass2ViewModel mViewModel;
 
     private TextView errorTextView; // クラスのメンバ変数として定義
     public static pass2Fragment newInstance() {
@@ -41,8 +40,6 @@ public class pass2Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Pass2ViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

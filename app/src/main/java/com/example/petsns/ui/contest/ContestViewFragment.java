@@ -42,7 +42,6 @@ import java.util.concurrent.ExecutionException;
 public class ContestViewFragment extends Fragment {
 
     private TagSearchViewModel viewModel;
-    private ContestViewViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private ContestPostAdapter postAdapter;
@@ -93,8 +92,6 @@ public class ContestViewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ContestViewViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

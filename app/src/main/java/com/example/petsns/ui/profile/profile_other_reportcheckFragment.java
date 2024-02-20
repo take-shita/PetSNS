@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class profile_other_reportcheckFragment extends Fragment {
 
-    private ProfileOtherReportcheckViewModel mViewModel;
 
     public static profile_other_reportcheckFragment newInstance() {
         return new profile_other_reportcheckFragment();
@@ -31,8 +30,6 @@ public class profile_other_reportcheckFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileOtherReportcheckViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

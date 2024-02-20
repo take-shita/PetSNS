@@ -3,7 +3,6 @@ package com.example.petsns.ui.route;
 import static com.example.petsns.LocationUtils.calculateDestinationLatLng;
 
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -18,16 +17,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
-import com.example.petsns.RouteViewViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -44,7 +43,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -489,6 +487,7 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
                                                             CollectionReference routeCollection = db.collection("routeFavorite");
 
                                                             routeCollection.document(UUID.randomUUID().toString()).set(data);
+                                                            Toast.makeText(requireContext(), "ルートが登録されました", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 }
@@ -522,8 +521,6 @@ public class RouteViewFragment extends Fragment  implements OnMapReadyCallback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(RouteViewViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

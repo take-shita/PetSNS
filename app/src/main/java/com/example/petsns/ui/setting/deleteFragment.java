@@ -31,7 +31,6 @@ public class deleteFragment extends Fragment {
     public class deleteViewModel extends ViewModel {
         // ViewModel の実装を追加する
     }
-    private deleteViewModel mViewModel;
     public static deleteFragment newInstance() {
         return new deleteFragment();
     }
@@ -43,8 +42,6 @@ public class deleteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(deleteViewModel.class);
-        // TODO: Use the ViewModel
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class routefavoriteFragment extends Fragment {
 
-    private RoutefavoriteViewModel mViewModel;
 
     public static routefavoriteFragment newInstance() {
         return new routefavoriteFragment();

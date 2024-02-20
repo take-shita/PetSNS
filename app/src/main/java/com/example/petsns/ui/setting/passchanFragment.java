@@ -32,7 +32,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 public class passchanFragment extends Fragment {
 
-    private PasschanViewModel mViewModel;
 
     private TextView errorTextView; // クラスのメンバ変数として定義
 
@@ -49,8 +48,6 @@ public class passchanFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PasschanViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

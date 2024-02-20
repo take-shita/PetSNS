@@ -1,10 +1,10 @@
 package com.example.petsns;
 
 import android.app.Application;
-import android.text.PrecomputedText;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.petsns.ui.login_signup.SigupViewModel;
 import com.example.petsns.ui.route.RouteViewModel;
 import com.example.petsns.ui.setting.TagViewModel;
 

@@ -19,7 +19,6 @@ import com.example.petsns.R;
 
 public class routeplaceFragment extends Fragment {
 
-    private RouteplaceViewModel mViewModel;
 
     public static routeplaceFragment newInstance() {
         return new routeplaceFragment();
