@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class routepopupFragment extends DialogFragment {
 
-    private RoutepopupViewModel mViewModel;
 
     public static routepopupFragment newInstance() {
         return new routepopupFragment();

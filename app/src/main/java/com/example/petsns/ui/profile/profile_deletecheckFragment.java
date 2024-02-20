@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class profile_deletecheckFragment extends Fragment {
 
-    private ProfileDeletecheckViewModel mViewModel;
 
     public static profile_deletecheckFragment newInstance() {
         return new profile_deletecheckFragment();
@@ -31,8 +30,6 @@ public class profile_deletecheckFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileDeletecheckViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

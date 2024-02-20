@@ -45,7 +45,6 @@ import java.util.concurrent.ExecutionException;
 
 public class iconFragment extends Fragment {
 
-    private IconViewModel mViewModel;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -88,8 +87,6 @@ public class iconFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(IconViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

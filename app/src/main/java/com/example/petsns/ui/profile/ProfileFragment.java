@@ -48,7 +48,6 @@ import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
     private List<Profile_TestPost> postList = new ArrayList<>();
-    private ProfileViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
 //    private Profile_TestPostAdapter postAdapter;
@@ -154,8 +153,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

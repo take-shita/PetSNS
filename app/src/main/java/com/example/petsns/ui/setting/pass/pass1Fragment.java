@@ -27,7 +27,6 @@ import android.text.InputFilter;
 
 public class pass1Fragment extends Fragment {
 
-    private Pass1ViewModel mViewModel;
 
     private TextView errorTextView; // クラスのメンバ変数として定義
 
@@ -47,8 +46,6 @@ public class pass1Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Pass1ViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

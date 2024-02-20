@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class routestopFragment extends Fragment {
 
-    private RoutestopViewModel mViewModel;
 
     public static routestopFragment newInstance() {
         return new routestopFragment();

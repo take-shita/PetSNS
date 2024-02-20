@@ -1,7 +1,5 @@
 package com.example.petsns.ui.board;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.petsns.Question;
-import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +43,6 @@ import java.util.concurrent.ExecutionException;
 
 public class BoardFragment extends Fragment {
 
-    private BoardViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
     private QuestionAdapter QuestionAdapter;
@@ -116,8 +111,6 @@ public class BoardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(BoardViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

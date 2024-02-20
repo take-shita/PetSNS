@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class logoutFragment extends Fragment {
 
-    private LogoutViewModel mViewModel;
 
     public static logoutFragment newInstance() {
         return new logoutFragment();
@@ -31,8 +30,6 @@ public class logoutFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(LogoutViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

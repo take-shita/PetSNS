@@ -1,7 +1,5 @@
 package com.example.petsns.ui.board;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.petsns.Answer;
-import com.example.petsns.AnswerAdapter;
-import com.example.petsns.Question;
-import com.example.petsns.QuestionAdapter;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +32,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,10 +48,9 @@ import java.util.concurrent.ExecutionException;
  */
 public class BoardChatFragment extends Fragment {
 
-    private BoardViewModel mViewModel;
     private FirebaseFirestore firestore;
     private RecyclerView recyclerView;
-    private com.example.petsns.AnswerAdapter AnswerAdapter;
+    private com.example.petsns.ui.board.AnswerAdapter AnswerAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

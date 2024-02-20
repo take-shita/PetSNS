@@ -1,4 +1,4 @@
-package com.example.petsns;
+package com.example.petsns.ui.login_signup;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,22 +12,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class recycle_postFragment extends Fragment {
+import com.example.petsns.R;
 
+public class loginFragment extends Fragment {
 
-    public static recycle_postFragment newInstance() {
-        return new recycle_postFragment();
+    private LoginViewModel mViewModel;
+
+    public static loginFragment newInstance() {
+        return new loginFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recycle_post, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        // TODO: Use the ViewModel
     }
 
 }

@@ -10,18 +10,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class TagViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
-//    private boolean boolCt;
-//    private boolean boolDg;
-//    private boolean boolRb;
-//    private boolean boolHg;
-//    private boolean boolHm;
-//    private boolean boolOt;
-//    private boolean boolCh;
-//    private boolean boolFl;
-//    private boolean boolMg;
-//    private boolean boolFx;
-//    private boolean boolSq;
     private boolean[] boolLkeMom=new boolean[11];
     private boolean[] boolDisLkeMom=new boolean[11];
     private String[] nameMommalians={"ネコ","イヌ","ウサギ","ハリネズミ","ハムスター","カワウソ","チンチラ",

@@ -46,7 +46,6 @@ import java.util.concurrent.ExecutionException;
 
 public class snspostFragment extends Fragment {
 
-    private SnspostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
     private TagPostViewModel tagViewModel;
@@ -93,8 +92,6 @@ public class snspostFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SnspostViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState) {
@@ -163,42 +160,40 @@ public class snspostFragment extends Fragment {
                                                     String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                                                     String imageFileName = "image_" + timestamp + ".jpg";
 
-                                                    /* 画像のUriを取得するコード */;
-                                                    storageRef.child(imageFileName).putFile(selectedImageUri)
-                                                            .addOnSuccessListener(taskSnapshot -> {
+                                                    if(selectedImageUri!=null){
+                                                        storageRef.child(imageFileName).putFile(selectedImageUri)
+                                                                .addOnSuccessListener(taskSnapshot -> {
+                                                                    storageRef.child(imageFileName).getDownloadUrl()
+                                                                            .addOnSuccessListener(uri -> {
+                                                                                // Firestoreにドキュメントを作成してURLを保存
+                                                                                Map<String, Object> data = new HashMap<>();
+                                                                                data.put("id",userId);
+                                                                                data.put("sentence",sentene.getText().toString());
+                                                                                data.put("imageUrl", uri.toString());
+                                                                                data.put("tagMom",tagViewModel.getArraylikeMom());
+                                                                                data.put("tagBir",tagViewModel.getArraylikeBir());
+                                                                                data.put("tagRip",tagViewModel.getArraylikeRip());
+                                                                                data.put("tagBis",tagViewModel.getArraylikeBis());
+                                                                                data.put("tagAqua",tagViewModel.getArraylikeAqua());
+                                                                                data.put("tagIns",tagViewModel.getArraylikeIns());
+                                                                                data.put("likeCount",0);
+                                                                                data.put("timestamp", FieldValue.serverTimestamp());
+                                                                                // Firestoreにドキュメントを作成
+                                                                                postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                                                        .addOnSuccessListener(documentReference -> {
+                                                                                            // documentReference.getId() で作成されたドキュメントのIDを取得できます
+                                                                                        })
+                                                                                        .addOnFailureListener(e -> {
 
-                                                                storageRef.child(imageFileName).getDownloadUrl()
+                                                                                        });
+                                                                            })
 
-                                                                        .addOnSuccessListener(uri -> {
-
-                                                                            // Firestoreにドキュメントを作成してURLを保存
-                                                                            Map<String, Object> data = new HashMap<>();
-                                                                            data.put("id",userId);
-                                                                            data.put("sentence",sentene.getText().toString());
-                                                                            data.put("imageUrl", uri.toString());
-                                                                            data.put("tagMom",tagViewModel.getArraylikeMom());
-                                                                            data.put("tagBir",tagViewModel.getArraylikeBir());
-                                                                            data.put("tagRip",tagViewModel.getArraylikeRip());
-                                                                            data.put("tagBis",tagViewModel.getArraylikeBis());
-                                                                            data.put("tagAqua",tagViewModel.getArraylikeAqua());
-                                                                            data.put("tagIns",tagViewModel.getArraylikeIns());
-                                                                            data.put("likeCount",0);
-                                                                            data.put("timestamp", FieldValue.serverTimestamp());
-                                                                            // Firestoreにドキュメントを作成
-                                                                            postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                                                    .addOnSuccessListener(documentReference -> {
-                                                                                        // documentReference.getId() で作成されたドキュメントのIDを取得できます
-                                                                                    })
-                                                                                    .addOnFailureListener(e -> {
-
-                                                                                    });
-                                                                        })
-
-                                                                        .addOnFailureListener(e -> {
-                                                                            // ダウンロードURLの取得が失敗した場合の処理
-                                                                        });
-                                                            });
-                                                    Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+                                                                            .addOnFailureListener(e -> {
+                                                                                // ダウンロードURLの取得が失敗した場合の処理
+                                                                            });
+                                                                });
+                                                        Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+                                                    }
                                                 }
                                             }
                                         }

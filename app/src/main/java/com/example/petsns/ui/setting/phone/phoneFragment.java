@@ -39,7 +39,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class phoneFragment extends Fragment {
 
-    private PhoneViewModel mViewModel;
     String phone;
     private EditText phoneNumberEditText;
     private int editTextPhoneMax = 11;
@@ -80,8 +79,6 @@ public class phoneFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

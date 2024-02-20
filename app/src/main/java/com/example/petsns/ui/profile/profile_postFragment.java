@@ -50,7 +50,7 @@ public class profile_postFragment extends Fragment {
     private FirebaseFirestore firestore;
     private FirebaseFirestore db;
     private String userId;
-    private OtherPostAdapter postAdapter; // PostViewHolderのインスタンスをメンバ変数として宣言
+    private Profile_TestPostAdapter postAdapter; // PostViewHolderのインスタンスをメンバ変数として宣言
     private List<Profile_TestPost> postList = new ArrayList<>();
     private RecyclerView recyclerView; // recyclerView をフィールド変数として定義
 
@@ -69,7 +69,7 @@ public class profile_postFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile_post, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerView);
         try {
-            postAdapter = new OtherPostAdapter(requireContext());
+            postAdapter = new Profile_TestPostAdapter(requireContext());
             recyclerView.setAdapter(postAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         }catch (Exception e){

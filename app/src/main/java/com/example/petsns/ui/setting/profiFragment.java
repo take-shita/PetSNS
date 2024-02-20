@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class profiFragment extends Fragment {
 
-    private ProfiViewModel mViewModel;
 
     public static profiFragment newInstance() {
         return new profiFragment();
@@ -31,8 +30,6 @@ public class profiFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfiViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

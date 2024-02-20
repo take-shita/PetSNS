@@ -1,7 +1,5 @@
 package com.example.petsns.ui.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.petsns.ProfileIinepostViewModel;
 import com.example.petsns.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +34,6 @@ import java.util.concurrent.ExecutionException;
 
 public class profile_iinepostFragment extends Fragment {
 
-    private ProfileIinepostViewModel mViewModel;
     private FirebaseFirestore firestore;
     private FirebaseFirestore db;
     private String userId;
@@ -156,8 +152,6 @@ public class profile_iinepostFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileIinepostViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

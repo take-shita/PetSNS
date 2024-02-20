@@ -50,7 +50,6 @@ import java.util.concurrent.ExecutionException;
 
 public class ContestPostFragment extends Fragment {
 
-    private ContestPostViewModel mViewModel;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
     private TagPostViewModel viewModel;
@@ -91,8 +90,6 @@ public class ContestPostFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ContestPostViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

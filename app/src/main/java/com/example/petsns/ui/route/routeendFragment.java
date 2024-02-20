@@ -16,7 +16,6 @@ import com.example.petsns.R;
 
 public class routeendFragment extends Fragment {
 
-    private RouteendViewModel mViewModel;
 
     public static routeendFragment newInstance() {
         return new routeendFragment();
