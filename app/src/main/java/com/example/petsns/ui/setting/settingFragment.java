@@ -39,13 +39,11 @@ import java.util.concurrent.CompletableFuture;
 public class settingFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-
     private Firebase db;
     private String userId;
     public static settingFragment newInstance() {
         return new settingFragment();
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -56,7 +54,6 @@ public class settingFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
-
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -68,18 +65,14 @@ public class settingFragment extends Fragment {
             }
         });
         Button bt2 = view.findViewById(R.id.bt2);
-
         bt2.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_pass2));
             }
         });
         Button bt3 = view.findViewById(R.id.bt3);
-
         bt3.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_passchan));
@@ -87,31 +80,24 @@ public class settingFragment extends Fragment {
         });
         Button bt4 = view.findViewById(R.id.bt4);
         bt4.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public  void onClick(View v) {
                 Context context = requireContext();
                 Dialog dialog= new Dialog(context);
-
                 // レイアウトファイルをインフレート
                 dialog.setContentView(R.layout.fragment_delete);
-
                 // ダイアログのサイズを設定
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
                 params.width = 500; // 幅を変更
                 params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-
                 // FirebaseAuth インスタンスを取得
                 mAuth = FirebaseAuth.getInstance();
-
-
                 // btnyes ボタンを取得
                 Button btnYes = dialog.findViewById(R.id.btnyes);
                 // btnno ボタンを取得
                 Button btnNo = dialog.findViewById(R.id.btnno);
-
                 // btnyes ボタンにクリックリスナーを設定
                 btnYes.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -120,7 +106,6 @@ public class settingFragment extends Fragment {
                         FirebaseUser user = mAuth.getCurrentUser();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         String userUid = user.getUid();
-
 
                         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                                     CollectionReference collectionRefId = db.collection("userId");
@@ -192,8 +177,6 @@ public class settingFragment extends Fragment {
                                                 }
                                             });
                                 });
-
-
                     }
                     private void deleteFirestoreUserData(String userId) {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -201,13 +184,11 @@ public class settingFragment extends Fragment {
                                 .delete()
                                 .addOnSuccessListener(aVoid -> {
 
-
                                     db.collection("userId").document(userId)
                                             .delete()
                                             .addOnCompleteListener(aVoid2 ->{
                                                 Log.d("Firestore", "DocumentSnapshot successfully deleted!");
                                             });
-
                                 })
                                 .addOnFailureListener(e -> {
                                     Log.w("Firestore", "Error deleting document", e);
@@ -221,40 +202,30 @@ public class settingFragment extends Fragment {
                     }
                 });
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) { dialog.dismiss(); }
-
                 });
                     dialog.show();
                 }
         });
 
-
-
         Button btnLogOut = view.findViewById(R.id.btnLogOut);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public  void onClick(View v) {
                 Context context = requireContext();
                 Dialog dialog= new Dialog(context);
                 dialog.setContentView(R.layout.fragment_logout);
-
                 // レイアウトファイルをインフレート
                 dialog.setContentView(R.layout.fragment_logout);
-
                 // ダイアログのサイズを設定
                 ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
                 params.width = 500; // 幅を変更
                 params.height = 300; // 高さを変更
                 dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
                 Button btnYes = dialog.findViewById(R.id.btnyes);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -266,39 +237,29 @@ public class settingFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) { dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
-
         });
         Button bt6 = view.findViewById(R.id.bt6);
-
         bt6.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_icon));
             }
         });
         Button bt7 = view.findViewById(R.id.bt7);
-
         bt7.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_userchan));
             }
         });
         Button bt8 = view.findViewById(R.id.bt8);
-
         bt8.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_tag));
@@ -306,9 +267,7 @@ public class settingFragment extends Fragment {
         });
 
         Button bt9 = view.findViewById(R.id.bt9);
-
         bt9.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate((R.id.action_navigation_setting_to_navigation_repot));
@@ -316,7 +275,3 @@ public class settingFragment extends Fragment {
         });
     }
 }
-
-
-
-

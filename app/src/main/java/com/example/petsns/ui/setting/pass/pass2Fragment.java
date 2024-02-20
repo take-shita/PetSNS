@@ -48,7 +48,6 @@ public class pass2Fragment extends Fragment {
         EditText passwordEditText = view.findViewById(R.id.passwordEditText);
         Button bt5 = view.findViewById(R.id.bt5);
         errorTextView = view.findViewById(R.id.errorTextView);
-
         bt5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,10 +64,8 @@ public class pass2Fragment extends Fragment {
                 } else {
                     // パスワードが入力されており、8文字以上である場合
                     errorTextView.setVisibility(View.GONE);
-
                     // FirebaseUserを取得
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                     // Firebaseのユーザーを再認証
                     AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
                     user.reauthenticate(credential)
@@ -90,7 +87,6 @@ public class pass2Fragment extends Fragment {
         });
 
         Button btncan = view.findViewById(R.id.btncan);
-
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

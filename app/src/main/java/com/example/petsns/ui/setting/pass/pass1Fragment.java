@@ -39,8 +39,6 @@ public class pass1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_pass1, container, false);
-
-
     }
 
     @Override
@@ -54,10 +52,7 @@ public class pass1Fragment extends Fragment {
         EditText passwordEditText = view.findViewById(R.id.passwordEditText); // ここで適切な ID を指定する
         Button bt01 = view.findViewById(R.id.bt01);
         errorTextView = view.findViewById(R.id.errorTextView); // TextView の初期化
-        
         bt01.setOnClickListener(new View.OnClickListener() {
-
-//            EditText passwordEditText = view.findViewById(R.id.passwordEditText);
             @Override
             public void onClick(View v) {
                 String password = passwordEditText.getText().toString();
@@ -73,10 +68,8 @@ public class pass1Fragment extends Fragment {
                 } else {
                     // パスワードが入力されており、8文字以上である場合
                     errorTextView.setVisibility(View.GONE);
-
                     // FirebaseUserを取得
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                     // Firebaseのユーザーを再認証
                     AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
                     user.reauthenticate(credential)
@@ -98,7 +91,6 @@ public class pass1Fragment extends Fragment {
         });
 
         Button bt02 = view.findViewById(R.id.bt02);
-
         bt02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,5 +98,4 @@ public class pass1Fragment extends Fragment {
             }
         });
     }
-
 }

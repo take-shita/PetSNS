@@ -40,30 +40,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
 public class tagFragment extends Fragment {
-
     private TagViewModel mViewModel;
     String userId;
     public static tagFragment newInstance() {
         return new tagFragment();
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         return inflater.inflate(R.layout.fragment_tag, container, false);
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        mViewModel = new ViewModelProvider(this).get(TagViewModel.class);
         // TODO: Use the ViewModel
     }
-
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MyApplication myApplication = (MyApplication) requireActivity().getApplication();
@@ -74,7 +68,6 @@ public class tagFragment extends Fragment {
             // エラーハンドリング
         }
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);  // この行を適切なIDに変更してください
-
         // タブが選択されたときのリスナー
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -90,12 +83,10 @@ public class tagFragment extends Fragment {
                     // 必要に応じて他のタブに対する処理を追加
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 // 他のタブが選択されたときの処理
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 // 同じタブが再度選択されたときの処理
@@ -106,7 +97,6 @@ public class tagFragment extends Fragment {
 
         Button btnSub =view.findViewById(R.id.btnSub);
         Button btnback = view.findViewById(R.id.btnback);
-
         btnSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +104,6 @@ public class tagFragment extends Fragment {
                 FirebaseFirestore db=FirebaseFirestore.getInstance();
                 if(user!=null){
                     String userUid = user.getUid();
-
 
                     CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                                 CollectionReference collectionRefId = db.collection("userId");
@@ -175,27 +164,16 @@ public class tagFragment extends Fragment {
                     } catch (InterruptedException | ExecutionException e) {
                         // 例外処理
                     }
-
-
-
                 }
-
-
             }
         });
         btnback.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_tag_to_navigation_setting);
             }
         });
-
-
-
-
     }
-
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

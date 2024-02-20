@@ -36,21 +36,17 @@ import java.util.List;
  */
 public class TagLikeFragment extends Fragment {
 
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private TagViewModel viewModel;
     public TagLikeFragment() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -68,7 +64,6 @@ public class TagLikeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +80,7 @@ public class TagLikeFragment extends Fragment {
         } else {
             // エラーハンドリング
         }
-        
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,13 +88,10 @@ public class TagLikeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_tag_like, container, false);
     }
 
-
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         Button bth = view.findViewById(R.id.bth);
-
         bth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,12 +116,8 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkFx=dialog.findViewById(R.id.chkFx);
                 CheckBox chkSq=dialog.findViewById(R.id.chkSq);
 
-
-
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayLikeMom(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
@@ -141,12 +127,10 @@ public class TagLikeFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
         });
         Button btb = view.findViewById(R.id.btb);
-
         btb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,9 +152,7 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkCh=dialog.findViewById(R.id.chkCh);
                 CheckBox chkFl=dialog.findViewById(R.id.chkDc);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayLikeBir(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
@@ -178,12 +160,10 @@ public class TagLikeFragment extends Fragment {
                                 chkFl.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button bti = view.findViewById(R.id.bti);
-
         bti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,21 +182,17 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkHm=dialog.findViewById(R.id.chkSp);
                 CheckBox chkOt=dialog.findViewById(R.id.chkLc);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayLikeIns(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button btr = view.findViewById(R.id.btr);
-
         btr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,20 +209,16 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkDg=dialog.findViewById(R.id.chkNw);
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayLikeBis(chkCt.isChecked(),chkDg.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button bts = view.findViewById(R.id.bts);
-
         bts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,21 +235,17 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkRb=dialog.findViewById(R.id.chkGf);
                 CheckBox chkHg=dialog.findViewById(R.id.chkJr);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayLikeAqua(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button btha = view.findViewById(R.id.btha);
-
         btha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,15 +266,12 @@ public class TagLikeFragment extends Fragment {
                 CheckBox chkOt=dialog.findViewById(R.id.chkCm);
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) { viewModel.setArrayLikeRip(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                             chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });

@@ -44,8 +44,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class iconFragment extends Fragment {
-
-
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private Uri selectedImageUri;
@@ -54,8 +52,6 @@ public class iconFragment extends Fragment {
     public static iconFragment newInstance() {
         return new iconFragment();
     }
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -65,13 +61,11 @@ public class iconFragment extends Fragment {
         view.findViewById(R.id.selectImageBtn).setOnClickListener(v -> pickImage());
         return view;
     }
-
     private void pickImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -122,7 +116,6 @@ public class iconFragment extends Fragment {
 
         String userUid = user.getUid();
 
-
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                     CollectionReference collectionRefId = db.collection("userId");
                     collectionRefId.whereEqualTo("uid", userUid)
@@ -154,7 +147,6 @@ public class iconFragment extends Fragment {
 
                                                                     }).addOnFailureListener(exception -> {
                                                                         // 失敗時の処理
-
                                                                     });
 
                                                                 } catch (IOException e) {
@@ -169,7 +161,6 @@ public class iconFragment extends Fragment {
                                                             // エラーが発生した場合の処理
                                                         }
                                                     });
-
                                         }
                                     }
                                 }
@@ -181,9 +172,7 @@ public class iconFragment extends Fragment {
         } catch (InterruptedException | ExecutionException e) {
             // 例外処理
         }
-
         // ... 他の処理を追加
-
     }
 
     // Firebase Storage へ画像をアップロードするメソッド
@@ -258,29 +247,3 @@ public class iconFragment extends Fragment {
         }
     }
 }
-
-
-    // Firebase Firestore へダウンロード URL を保存するメソッド
-//    private void saveImageDownloadUrlToFirestore(String downloadUrl) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//
-//
-//        if (currentUser != null) {
-//            String userId = currentUser.getUid();
-//            DocumentReference userDocRef = db.collection("users").document(userId);
-//
-//            // ダウンロード URL を Firestore に保存
-//            userDocRef.update("icon", downloadUrl)  // フィールド名は適切なものに変更すること
-//                    .addOnSuccessListener(aVoid -> {
-//                        Toast.makeText(requireContext(), "画像の更新が完了しました", Toast.LENGTH_SHORT).show();
-//                        // 画像変更成功の場合、前の画面に戻る
-//                        Navigation.findNavController(getView()).navigateUp();
-//                    })
-//                    .addOnFailureListener(e -> {
-//                        Toast.makeText(requireContext(), "画像の更新に失敗しました", Toast.LENGTH_SHORT).show();
-//                        e.printStackTrace();
-//                    });
-//        }
-//    }
-//}
