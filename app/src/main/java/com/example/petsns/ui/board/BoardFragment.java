@@ -149,7 +149,7 @@ public class BoardFragment extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+
                         String questionTitle = ques_tit.getText().toString();
                         String questionContent = ques_con.getText().toString();
 
@@ -159,6 +159,7 @@ public class BoardFragment extends Fragment {
                             Toast.makeText(requireContext(), "質問タイトルと内容を入力してください", Toast.LENGTH_SHORT).show();
                         } else {
                             // 入力されている場合は質問を追加する処理を実行
+                            dialog.dismiss();
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String userUid = user.getUid();
                             CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {

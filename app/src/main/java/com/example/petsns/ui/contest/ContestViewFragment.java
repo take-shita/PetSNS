@@ -21,6 +21,8 @@ import android.widget.ImageButton;
 import com.example.petsns.MyApplication;
 import com.example.petsns.R;
 import com.example.petsns.TagSearchViewModel;
+import com.example.petsns.ui.profile.OtherPostAdapter;
+import com.example.petsns.ui.profile.Profile_TestPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
