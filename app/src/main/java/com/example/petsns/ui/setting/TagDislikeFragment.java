@@ -37,7 +37,6 @@ public class TagDislikeFragment extends Fragment {
     public TagDislikeFragment() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -55,7 +54,6 @@ public class TagDislikeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +71,9 @@ public class TagDislikeFragment extends Fragment {
             // エラーハンドリング
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
 
         return inflater.inflate(R.layout.fragment_tag_dislike, container, false);
     }
@@ -86,7 +81,6 @@ public class TagDislikeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button bth = view.findViewById(R.id.bth);
-
         bth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,9 +106,7 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkSq=dialog.findViewById(R.id.chkSq);
 
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeMom(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
@@ -122,12 +114,10 @@ public class TagDislikeFragment extends Fragment {
                                 chkFl.isChecked(),chkMg.isChecked(),chkFx.isChecked(),chkSq.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button btb = view.findViewById(R.id.btb);
-
         btb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,9 +138,7 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkCh=dialog.findViewById(R.id.chkCh);
                 CheckBox chkFl=dialog.findViewById(R.id.chkDc);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeBir(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
@@ -158,12 +146,10 @@ public class TagDislikeFragment extends Fragment {
                                 chkFl.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button bti = view.findViewById(R.id.bti);
-
         bti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,21 +168,17 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkHm=dialog.findViewById(R.id.chkSp);
                 CheckBox chkOt=dialog.findViewById(R.id.chkLc);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeIns(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button btr = view.findViewById(R.id.btr);
-
         btr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,20 +193,16 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkCt=dialog.findViewById(R.id.chkFr);
                 CheckBox chkDg=dialog.findViewById(R.id.chkNw);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeBis(chkCt.isChecked(),chkDg.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button bts = view.findViewById(R.id.bts);
-
         bts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,21 +219,17 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkRb=dialog.findViewById(R.id.chkGf);
                 CheckBox chkHg=dialog.findViewById(R.id.chkJr);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeAqua(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });
         Button btha = view.findViewById(R.id.btha);
-
         btha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,16 +248,13 @@ public class TagDislikeFragment extends Fragment {
                 CheckBox chkHm=dialog.findViewById(R.id.chkGc);
                 CheckBox chkOt=dialog.findViewById(R.id.chkCm);
                 Button btnClose = dialog.findViewById(R.id.btnno);
-
                 btnClose.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         viewModel.setArrayDisLikeRip(chkCt.isChecked(),chkDg.isChecked(),chkRb.isChecked(),
                                 chkHg.isChecked(),chkHm.isChecked(),chkOt.isChecked());
                         dialog.dismiss(); }
                 });
-
                 dialog.show();
             }
         });

@@ -46,7 +46,6 @@ public class repotFragment extends Fragment {
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // 前の画面に戻る
                 Navigation.findNavController(v).navigate(R.id.action_navigation_repot_to_navigation_setting);
             }
@@ -54,12 +53,9 @@ public class repotFragment extends Fragment {
 
         Button btnsend = view.findViewById(R.id.btnsend);
         EditText editText = view.findViewById(R.id.editTextTextMultiLine);
-
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 // EditText から文書を取得
                 String subject = "報告の件名";  // 任意の件名を設定
                 String message = editText.getText().toString();
@@ -72,13 +68,10 @@ public class repotFragment extends Fragment {
                     // 例えば、Toast メッセージを表示
                     Toast.makeText(getContext(), "報告・要望を入力してください " , Toast.LENGTH_SHORT).show();
                 } else {
-
                     // Firebase Firestore に報告を送信
                     mViewModel.sendReportToFirestore(message, getContext());
-
                     Navigation.findNavController(getView()).navigateUp();
                     // 送信後の処理をここに追加（例えば、Toast メッセージを表示するなど）
-
                 }
             }
         });

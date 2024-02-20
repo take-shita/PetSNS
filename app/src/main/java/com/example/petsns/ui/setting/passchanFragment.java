@@ -62,7 +62,6 @@ public class passchanFragment extends Fragment {
         EditText editTextTextPasswordConfirm = view.findViewById(R.id.editTextTextPasswordConfirm); // 新しいパスワードの確認用
         Button button14 = view.findViewById(R.id.button14);
         errorTextView = view.findViewById(R.id.errorTextView);
-
         button14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +86,6 @@ public class passchanFragment extends Fragment {
                     errorTextView.setVisibility(View.GONE);
                     // FirebaseUserを取得
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                     // Firebaseのユーザーを再認証
                     AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
                     user.reauthenticate(credential)

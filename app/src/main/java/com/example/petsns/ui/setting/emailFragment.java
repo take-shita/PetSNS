@@ -71,16 +71,10 @@ public class emailFragment extends Fragment {
 
         // FirebaseAuth インスタンスを取得
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        // 現在のユーザーを取得
-//        FirebaseUser user = mAuth.getCurrentUser();
-
         // EditText を初期化
         editTextNewEmail = view.findViewById(R.id.editTextTextEmailAddress);
-
         Button btnChangeEmail = view.findViewById(R.id.button12);
         Button btncan = view.findViewById(R.id.btncan);
-
         btncan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,12 +93,9 @@ public class emailFragment extends Fragment {
                     return; // 以降の処理を中止
                 }
 
-
                 FirebaseUser userOld = mAuth.getCurrentUser();
-
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userUid = userOld.getUid();
-
 
                 CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
                     CollectionReference collectionRefId = db.collection("userId");
