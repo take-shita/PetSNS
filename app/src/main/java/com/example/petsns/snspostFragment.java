@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
@@ -52,6 +53,7 @@ public class snspostFragment extends Fragment {
     private PostInfoViewModel postViewModel;
     String userId;
     Uri selectedImageUri;
+    Boolean containsTrue = false;
 
     public static snspostFragment newInstance() {
         return new snspostFragment();
@@ -167,32 +169,90 @@ public class snspostFragment extends Fragment {
                                                                             .addOnSuccessListener(uri -> {
                                                                                 // Firestoreにドキュメントを作成してURLを保存
                                                                                 Map<String, Object> data = new HashMap<>();
-                                                                                data.put("id",userId);
-                                                                                data.put("sentence",sentene.getText().toString());
-                                                                                data.put("imageUrl", uri.toString());
-                                                                                data.put("tagMom",tagViewModel.getArraylikeMom());
-                                                                                data.put("tagBir",tagViewModel.getArraylikeBir());
-                                                                                data.put("tagRip",tagViewModel.getArraylikeRip());
-                                                                                data.put("tagBis",tagViewModel.getArraylikeBis());
-                                                                                data.put("tagAqua",tagViewModel.getArraylikeAqua());
-                                                                                data.put("tagIns",tagViewModel.getArraylikeIns());
-                                                                                data.put("likeCount",0);
-                                                                                data.put("timestamp", FieldValue.serverTimestamp());
-                                                                                // Firestoreにドキュメントを作成
-                                                                                postCollection.document(UUID.randomUUID().toString()).set(data)
-                                                                                        .addOnSuccessListener(documentReference -> {
-                                                                                            // documentReference.getId() で作成されたドキュメントのIDを取得できます
-                                                                                        })
-                                                                                        .addOnFailureListener(e -> {
 
-                                                                                        });
+                                                                                List<Boolean> tagMom=tagViewModel.getArraylikeMom();
+                                                                                List<Boolean> tagBir=tagViewModel.getArraylikeBir();
+                                                                                List<Boolean> tagRip=tagViewModel.getArraylikeRip();
+                                                                                List<Boolean> tagBis=tagViewModel.getArraylikeBis();
+                                                                                List<Boolean> tagAqua=tagViewModel.getArraylikeAqua();
+                                                                                List<Boolean> tagIns=tagViewModel.getArraylikeIns();
+
+                                                                                containsTrue=false;
+
+                                                                                for (boolean value : tagMom) {
+                                                                                    if (value) {
+                                                                                        containsTrue = true;
+                                                                                        break;
+                                                                                    }
+                                                                                }
+                                                                                if(!containsTrue){
+                                                                                    for (boolean value : tagBir) {
+                                                                                        if (value) {
+                                                                                            containsTrue = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                if(!containsTrue){
+                                                                                    for (boolean value : tagRip) {
+                                                                                        if (value) {
+                                                                                            containsTrue = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                if(!containsTrue){
+                                                                                    for (boolean value : tagBis) {
+                                                                                        if (value) {
+                                                                                            containsTrue = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                if(!containsTrue){
+                                                                                    for (boolean value : tagAqua) {
+                                                                                        if (value) {
+                                                                                            containsTrue = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                if(!containsTrue){
+                                                                                    for (boolean value : tagIns) {
+                                                                                        if (value) {
+                                                                                            containsTrue = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                if(containsTrue){
+                                                                                    data.put("id",userId);
+                                                                                    data.put("sentence",sentene.getText().toString());
+                                                                                    data.put("imageUrl", uri.toString());
+                                                                                    data.put("tagMom",tagMom);
+                                                                                    data.put("tagBir",tagBir);
+                                                                                    data.put("tagRip",tagRip);
+                                                                                    data.put("tagBis",tagBis);
+                                                                                    data.put("tagAqua",tagAqua);
+                                                                                    data.put("tagIns",tagIns);
+                                                                                    data.put("likeCount",0);
+                                                                                    data.put("timestamp", FieldValue.serverTimestamp());
+                                                                                    // Firestoreにドキュメントを作成
+                                                                                    postCollection.document(UUID.randomUUID().toString()).set(data)
+                                                                                            .addOnSuccessListener(documentReference -> {
+                                                                                                Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+                                                                                            })
+                                                                                            .addOnFailureListener(e -> {
+
+                                                                                            });
+                                                                                }
                                                                             })
 
                                                                             .addOnFailureListener(e -> {
                                                                                 // ダウンロードURLの取得が失敗した場合の処理
                                                                             });
                                                                 });
-                                                        Navigation.findNavController(v).navigate(R.id.action_navigation_snspost_to_navigation_snstop);
+
                                                     }
                                                 }
                                             }

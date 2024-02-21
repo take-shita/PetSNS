@@ -16,7 +16,8 @@
         android:text="エントリー"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/btnContestPost"
@@ -27,7 +28,8 @@
         android:onClick="btnContestPostClicked"
         android:text="投稿"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/btnContestInfo"

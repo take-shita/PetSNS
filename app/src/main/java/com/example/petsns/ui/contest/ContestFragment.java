@@ -112,12 +112,12 @@ public class ContestFragment extends Fragment {
                                                                     Boolean contestPost=document.getBoolean("contestPost");
 
                                                                     if(!contestEntry){
-
+                                                                        btnEntry.setEnabled(true);
                                                                     }else {
                                                                         btnEntry.setEnabled(false);
                                                                     }
                                                                     if(!contestPost&&contestEntry){
-
+                                                                        btnPost.setEnabled(true);
                                                                     }else {
                                                                         btnPost.setEnabled(false);
                                                                     }
@@ -223,7 +223,6 @@ public class ContestFragment extends Fragment {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                btnPost.setEnabled(false);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_contest_to_navigation_contest_post);
             }
         });
